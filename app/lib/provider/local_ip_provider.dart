@@ -17,6 +17,7 @@ final _logger = Logger('NetworkInfo');
 final localIpProvider = ReduxProvider<LocalIpService, NetworkState>((ref) {
   return LocalIpService(
     ref.notifier(settingsProvider),
+    ref.notifier(parentIsolateProvider),
   );
 });
 
@@ -25,8 +26,13 @@ Timer? _interfacePollTimer;
 
 class LocalIpService extends ReduxNotifier<NetworkState> {
   final SettingsService _settingsService;
+  final IsolateController _parentIsolateController;
 
-  LocalIpService(this._settingsService);
+  /// Monotonic id of the most recently started [FetchLocalIpAction].
+  /// Fetches that were overtaken by a newer one discard their result.
+  int _fetchId = 0;
+
+  LocalIpService(this._settingsService, this._parentIsolateController);
 
   @override
   NetworkState init() {
@@ -53,13 +59,24 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
         // https://github.com/localsend/localsend/issues/78
         //
         // Windows is excluded from the connectivity stream because of the
-        // false positives above. Poll the interface list instead: polling is
-        // cheap and [FetchLocalIpAction] only reacts when the interface set
-        // actually changed, which still picks up new networks (e.g. an
-        // enabled hotspot) without the spurious restarts of #12/#78.
+        // false positives above. Poll the interface list instead. The poll
+        // must not call the Wi-Fi plugin: getWifiIP performs a
+        // location-sensitive WLAN query on Windows, which is why the former
+        // periodic polling was removed upstream (221f40a9, "fix(windows):
+        // unwanted location permission" for #78). The native interface list
+        // alone detects address set changes, and [FetchLocalIpAction] only
+        // rebinds the discovery when the set actually changed, so new
+        // networks (e.g. an enabled hotspot) are picked up without the
+        // spurious restarts of #12/#78.
         _interfacePollTimer?.cancel();
         _interfacePollTimer = Timer.periodic(const Duration(seconds: 10), (_) async {
-          await dispatchAsync(FetchLocalIpAction());
+          try {
+            await dispatchAsync(FetchLocalIpAction(includeWifiIp: false));
+          } catch (e, stackTrace) {
+            // Keep polling even when a single fetch fails (e.g. a VPN
+            // adapter disappearing mid-enumeration).
+            _logger.warning('Interface poll failed', e, stackTrace);
+          }
         });
       } else {
         _subscription = Connectivity().onConnectivityChanged.listen((_) async {
@@ -79,29 +96,46 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
 }
 
 class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> {
+  FetchLocalIpAction({this.includeWifiIp = true});
+
+  /// Whether [_getIp] may query the Wi-Fi plugin for the address of the
+  /// active Wi-Fi interface. Must be false for the Windows interface poll
+  /// (see [InitLocalIpAction]): the query is location-sensitive on Windows.
+  final bool includeWifiIp;
+
   @override
   Future<NetworkState> reduce() async {
+    final fetchId = ++notifier._fetchId;
+    final firstFetchDone = state.initialized;
     final previousIps = state.localIps;
     final newState = NetworkState(
       localIps: await _getIp(
         whitelist: notifier._settingsService.state.networkWhitelist,
         blacklist: notifier._settingsService.state.networkBlacklist,
+        includeWifiIp: includeWifiIp,
       ),
       initialized: true,
     );
+
+    // A newer fetch started while this one was awaiting the platform calls;
+    // its result is at least as fresh, so discard this one instead of
+    // overwriting the newer state with older data.
+    if (fetchId != notifier._fetchId) {
+      return state;
+    }
 
     // The multicast sockets are bound once when the discovery starts and are
     // never rebound on their own, so an interface change (e.g. a hotspot that
     // was just enabled) would stay invisible until a manual restart.
     // Rebind the discovery whenever the set of local addresses actually
-    // changed. A set comparison (not a list comparison) avoids restarts that
-    // would only be caused by re-ranking. The first fetch is also skipped:
-    // the discovery is not running yet or was just started with fresh state.
-    final setChanged = previousIps.isNotEmpty && previousIps.toSet() != newState.localIps.toSet();
-    if (setChanged) {
-      final parentState = global.read(parentIsolateProvider);
-      if (parentState.discovery != null) {
-        global.dispatch(IsolateDiscoveryRestartAction());
+    // changed (see [shouldRebindDiscovery]).
+    if (shouldRebindDiscovery(
+      previousIps: previousIps,
+      nextIps: newState.localIps,
+      firstFetchDone: firstFetchDone,
+    )) {
+      if (notifier._parentIsolateController.state.discovery != null) {
+        external(notifier._parentIsolateController).dispatch(IsolateDiscoveryRestartAction());
       }
     }
 
@@ -109,16 +143,37 @@ class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> 
   }
 }
 
+/// Whether the discovery should be rebound after the local address list
+/// changed from [previousIps] to [nextIps].
+///
+/// The first fetch ([firstFetchDone] is false) never rebinds: the discovery
+/// is not running yet or was just started with fresh state. The comparison
+/// is a set comparison (dart:core Set has no value equality), so a new order
+/// of the same addresses (re-ranking) does not rebind, while a list that
+/// grows from empty (the device was offline when the discovery started)
+/// does rebind.
+@visibleForTesting
+bool shouldRebindDiscovery({
+  required List<String> previousIps,
+  required List<String> nextIps,
+  required bool firstFetchDone,
+}) {
+  return firstFetchDone && !setEquals(previousIps.toSet(), nextIps.toSet());
+}
+
 Future<List<String>> _getIp({
   required List<String>? whitelist,
   required List<String>? blacklist,
+  bool includeWifiIp = true,
 }) async {
   final info = plugin.NetworkInfo();
   String? ip;
-  try {
-    ip = await info.getWifiIP();
-  } catch (e) {
-    _logger.warning('Failed to get wifi IP', e);
+  if (includeWifiIp) {
+    try {
+      ip = await info.getWifiIP();
+    } catch (e) {
+      _logger.warning('Failed to get wifi IP', e);
+    }
   }
 
   final nativeResult =
@@ -147,14 +202,22 @@ List<String> rankIpAddresses(List<String> nativeResult, String? thirdPartyResult
     // merge but prefer result from third party library
     //
     // The third party result is the address of the active Wi-Fi interface,
-    // so it is also trusted when it ends with ".1": a hotspot gateway
-    // (e.g. 192.168.43.1 on Android, 192.168.137.1 on Windows,
-    // 172.20.10.1 on iOS) is exactly the network whose clients must be
-    // scanned when this device provides the hotspot. Ranking it last made
-    // the hotspot subnet miss the "maxInterfaces" cut on multi-adapter
-    // machines and disabled automatic discovery exactly where it is needed
-    // most. Native addresses ending with ".1" are still ranked last by
-    // [_rankIpAddresses]; only the actively reported interface wins.
+    // so it is also trusted when it ends with ".1": a hotspot gateway (e.g.
+    // 192.168.43.1 on Android below 12, 192.168.137.1 on Windows) is
+    // exactly the network whose clients must be scanned when this device
+    // provides the hotspot. Ranking it last made the hotspot subnet miss
+    // the "maxInterfaces" cut on multi-adapter machines. Native addresses
+    // ending with ".1" are still ranked last by [_rankIpAddresses]; only
+    // the actively reported interface wins.
+    //
+    // Platform reality check: Android 12+ reports the cellular uplink
+    // address (or null) while a hotspot is enabled, and iOS reports null
+    // because the hotspot bridge interface is not an en* interface, so the
+    // .1 preference mainly benefits older Android and some Windows
+    // hotspot forms. The reliable fix for hotspot visibility on Windows is
+    // the interface poll above (rebind on address set change), not this
+    // ranking. The third party preference itself is pre-existing upstream
+    // behavior and is kept unchanged.
     return {thirdPartyResult, ...nativeResult}.toList()._rankIpAddresses(thirdPartyResult);
   }
 }

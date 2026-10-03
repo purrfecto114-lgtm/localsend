@@ -31,6 +31,14 @@ class DiscoveryService {
   /// opposed to stopping itself because the multicast sockets failed.
   bool _restartRequested = false;
 
+  /// Whether a restart was requested while a rebind was already in flight
+  /// (between reading the synced settings and binding the new sockets).
+  /// The freshly bound discovery is stopped again immediately, so the next
+  /// loop iteration rebinds with the latest synced settings. Without this,
+  /// such a restart would be silently lost and the discovery would keep
+  /// running with outdated settings.
+  bool _restartPending = false;
+
   /// Starts the discovery and emits every device confirmation:
   /// answered announcements, scan results and devices fed in
   /// via [addDevice] all arrive on this one stream.
@@ -57,6 +65,10 @@ class DiscoveryService {
     });
 
     while (true) {
+      // A restart request that arrived before this point is satisfied by
+      // the fresh settings read below; only requests arriving during the
+      // bind need the post-bind stop.
+      _restartPending = false;
       final syncState = _ref.read(syncProvider);
 
       final RsDiscovery discovery;
@@ -96,8 +108,20 @@ class DiscoveryService {
 
       _discovery = discovery;
 
-      // Tell everyone in the network that I am online.
-      unawaited(discovery.announce());
+      if (_restartPending) {
+        // A restart was requested while this discovery was being bound:
+        // the bind used the synced settings from the start of this
+        // iteration, which may be outdated. Stop it right away (before the
+        // announcement, so no burst is wasted) and let the loop rebind with
+        // the latest state.
+        _restartPending = false;
+        _restartRequested = true;
+        _logger.info('Restart requested during rebind; rebinding with the latest state');
+        unawaited(discovery.stop());
+      } else {
+        // Tell everyone in the network that I am online.
+        unawaited(discovery.announce());
+      }
 
       await for (final device in discovery.listen()) {
         if (!devices.isClosed) {
@@ -128,10 +152,21 @@ class DiscoveryService {
       // Ends the listen stream, which makes [startListener] rebind.
       _restartRequested = true;
       unawaited(discovery.stop());
-    } else if (!_retryCompleter.isCompleted) {
-      // Starting failed previously; let [startListener] try again.
+      return;
+    }
+
+    // The discovery is not bound right now: either a start failed earlier
+    // (the retry completer below unblocks the wait and the next iteration
+    // reads the latest settings anyway), or a rebind is currently in
+    // flight. In the latter case the incoming restart cannot act on
+    // anything yet; remember it so the freshly bound discovery is stopped
+    // again and the next iteration picks up the latest settings. Without
+    // this, the restart would be silently dropped (completing the retry
+    // completer has no effect while nobody awaits it).
+    if (!_retryCompleter.isCompleted) {
       _retryCompleter.complete();
     }
+    _restartPending = true;
   }
 
   /// Sends an announcement which triggers a response on every LocalSend member of the network.

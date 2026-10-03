@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:localsend_app/config/init.dart';
@@ -20,6 +22,11 @@ import 'package:refena_flutter/addons.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 import 'package:routerino/routerino.dart';
 import 'package:system_date_time_format/system_date_time_format.dart';
+
+/// Debounces the discovery rebind on Android resume (see
+/// [LocalSendApp] lifecycle handling): Android delivers inactive/resumed
+/// for every file picker, dialog and notification shade interaction.
+Timer? _resumeDiscoveryRebindDebounce;
 
 Future<void> main(List<String> args) async {
   final RefenaContainer container;
@@ -70,14 +77,31 @@ class LocalSendApp extends StatelessWidget {
                 if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
                   // The multicast sockets die the same silent way but cannot be probed, so always rebind them.
                   // Android is included because its sockets are bound once at
-                  // startup and never follow network changes (e.g. an enabled
-                  // hotspot or a band switch), which is the most reported
-                  // "device not visible" scenario on mobile.
-                  // Note for upstream discussion: the iOS-only gate was an
-                  // explicit decision (see 63efbe6b); a probe-based rebind
-                  // (own multicast echo liveness check) would be the
-                  // alternative that avoids restarts on every resume.
-                  ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
+                  // startup and never follow interface changes (e.g. an
+                  // enabled hotspot). The iOS-only gate of 63efbe6b was an
+                  // explicit decision for the suspend-kills-sockets case;
+                  // the interface-set rebind of [FetchLocalIpAction] covers
+                  // ordinary network changes, so this resume rebind is the
+                  // remaining bootstrap for silently invalidated sockets.
+                  //
+                  // The rebind is debounced on Android: it reports
+                  // inactive/resumed for every file picker, dialog and
+                  // notification shade interaction, and every rebind clears
+                  // the confirmed-device store on the Rust side and emits an
+                  // announcement burst. iOS keeps the immediate rebind of
+                  // 63efbe6b.
+                  void rebindDiscovery() {
+                    if (ref.read(parentIsolateProvider).discovery != null) {
+                      ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
+                    }
+                  }
+
+                  if (checkPlatform([TargetPlatform.android])) {
+                    _resumeDiscoveryRebindDebounce?.cancel();
+                    _resumeDiscoveryRebindDebounce = Timer(const Duration(milliseconds: 750), rebindDiscovery);
+                  } else {
+                    rebindDiscovery();
+                  }
                 }
                 break;
               case AppLifecycleState.detached:
