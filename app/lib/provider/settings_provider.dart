@@ -108,6 +108,7 @@ class SettingsService extends PureNotifier<SettingsState> {
     verifyChecksums: _persistence.getVerifyChecksums(),
     discoveryTimeout: _persistence.getDiscoveryTimeout(),
     maxInterfaces: _persistence.getMaxInterfaces(),
+    bleDiscoveryEnabled: _persistence.getBleDiscoveryEnabled(),
     advancedSettings: _persistence.getAdvancedSettingsEnabled(),
   );
 
@@ -193,6 +194,20 @@ class SettingsService extends PureNotifier<SettingsState> {
     await _persistence.setMaxInterfaces(value);
     state = state.copyWith(
       maxInterfaces: value,
+    );
+  }
+
+  /// Enables or disables the BLE-assisted discovery (phase 1).
+  ///
+  /// The flag is purely app-side: while it is off, no BLE transport is ever
+  /// constructed, so no platform API is touched and no permission is
+  /// requested. Toggling it starts or stops the running BLE discovery via
+  /// [bleDiscoveryProvider]; it needs no SyncState propagation and no
+  /// discovery restart.
+  Future<void> setBleDiscoveryEnabled(bool enabled) async {
+    await _persistence.setBleDiscoveryEnabled(enabled);
+    state = state.copyWith(
+      bleDiscoveryEnabled: enabled,
     );
   }
 

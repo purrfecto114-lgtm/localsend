@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  bluetooth_low_energy_linux
   desktop_drop
   dynamic_color
   file_selector_linux

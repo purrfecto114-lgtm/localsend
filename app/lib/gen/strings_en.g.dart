@@ -1247,6 +1247,13 @@ class Translations$settingsTab$network$en {
   /// en: 'You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})'
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'You might not be detected by other devices because you are using a custom multicast address. (default: ${defaultMulticast})';
+
+  /// en: 'BLE discovery (experimental)'
+  String get bleDiscovery => 'BLE discovery (experimental)';
+
+  /// en: 'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network.'
+  String get bleDiscoveryHint =>
+      'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network.';
 }
 
 // Path: settingsTab.other

@@ -26,6 +26,22 @@
          FOREGROUND_SERVICE and POST_NOTIFICATIONS come from the flutter_foreground_task manifest. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
+    <!-- localsend: BLE-assisted discovery (experimental, default off).
+         The permissions are only requested at runtime (plugin authorize())
+         when the user enables BLE discovery in the settings; while the flag
+         is off nothing bluetooth-related is ever accessed. neverForLocation:
+         the scan results are never used to derive a location. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" tools:targetApi="31" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" tools:targetApi="31" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" tools:targetApi="31" />
+    <!-- legacy bluetooth permissions, up to Android 11 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+
+    <!-- The bluetooth permissions imply BLE hardware; without this, the Play
+         Store would filter out devices without a bluetooth radio. -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+
     <!-- Android TV -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />

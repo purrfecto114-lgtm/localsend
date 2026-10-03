@@ -78,6 +78,7 @@ const _networkWhitelistKey = 'ls_network_whitelist';
 const _networkBlacklistKey = 'ls_network_blacklist';
 const _timeoutKey = 'ls_timeout';
 const _maxInterfacesKey = 'ls_max_interfaces';
+const _bleDiscoveryEnabledKey = 'ls_ble_discovery_enabled';
 const _multicastGroupKey = 'ls_multicast_group';
 const _destinationKey = 'ls_destination';
 const _saveToGallery = 'ls_save_to_gallery';
@@ -388,6 +389,14 @@ class PersistenceService {
 
   Future<void> setMaxInterfaces(int maxInterfaces) async {
     await _prefs.setInt(_maxInterfacesKey, maxInterfaces.clamp(minMaxInterfaces, maxMaxInterfaces));
+  }
+
+  bool getBleDiscoveryEnabled() {
+    return _prefs.getBool(_bleDiscoveryEnabledKey) ?? false;
+  }
+
+  Future<void> setBleDiscoveryEnabled(bool enabled) async {
+    await _prefs.setBool(_bleDiscoveryEnabledKey, enabled);
   }
 
   bool getShareViaLinkAutoAccept() {

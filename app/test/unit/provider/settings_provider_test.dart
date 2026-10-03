@@ -160,6 +160,54 @@ void main() {
     final settings2 = container2.notifier(settingsProvider);
     expect(settings2.state.maxInterfaces, 8);
   });
+
+  test('bleDiscoveryEnabled defaults to false and loads from persistence on init', () async {
+    // The fresh container above uses the default stub: false.
+    expect(settings.state.bleDiscoveryEnabled, isFalse);
+
+    final container2 = RefenaContainer(
+      observers: [_NoopObserver()],
+      overrides: [
+        persistenceProvider.overrideWithValue(_persistence(bleDiscoveryEnabled: true)),
+        parentIsolateProvider.overrideWithNotifier(
+          (ref) => IsolateController(
+            initialState: ParentIsolateState(
+              syncState: _syncState(),
+              discovery: null,
+              httpUpload: null,
+              httpServer: null,
+            ),
+          ),
+        ),
+      ],
+    );
+    final settings2 = container2.notifier(settingsProvider);
+    expect(settings2.state.bleDiscoveryEnabled, isTrue);
+  });
+
+  test('setBleDiscoveryEnabled persists the value', () async {
+    await settings.setBleDiscoveryEnabled(true);
+    expect(settings.state.bleDiscoveryEnabled, isTrue);
+    expect(persistence.calls[#setBleDiscoveryEnabled], [
+      [true],
+    ]);
+
+    await settings.setBleDiscoveryEnabled(false);
+    expect(settings.state.bleDiscoveryEnabled, isFalse);
+    expect(persistence.calls[#setBleDiscoveryEnabled], [
+      [true],
+      [false],
+    ]);
+  });
+
+  test('bleDiscoveryEnabled change never touches the discovery', () async {
+    // The BLE flag is consumed on the main isolate only (the BLE service
+    // starts and stops with it); it needs no SyncState propagation and no
+    // discovery restart.
+    await settings.setBleDiscoveryEnabled(true);
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(connector.sent, isEmpty);
+  });
 }
 
 class _RecordingConnector implements IsolateConnector<IsolateTaskStreamResult<DiscoveryResult>, SendToIsolateData<IsolateTask<DiscoveryTask>>> {
@@ -200,7 +248,7 @@ class _FakePersistence implements PersistenceService {
   }
 }
 
-_FakePersistence _persistence({int maxInterfaces = 5}) => _FakePersistence({
+_FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled = false}) => _FakePersistence({
   #getShowToken: 'token',
   #getAlias: 'alias',
   #getTheme: ThemeMode.system,
@@ -231,6 +279,7 @@ _FakePersistence _persistence({int maxInterfaces = 5}) => _FakePersistence({
   #getVerifyChecksums: true,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: maxInterfaces,
+  #getBleDiscoveryEnabled: bleDiscoveryEnabled,
   #getAdvancedSettingsEnabled: false,
 });
 
