@@ -313,3 +313,40 @@ Work Log:
 
 Stage Summary:
 - 项目状态：主链路 + 远端持久化 100% 完成；剩余待办不变（Flutter 工具链验证、上游 issue/PR 需用户指令）
+
+---
+Task ID: 16
+Agent: Super Z (main)
+Task: 按用户指令重构持久化：删除分支改推 fork main + review/ 存档 + release workflow
+
+Work Log:
+- 用户指令：不上游 PR（未验证）、删新建分支、直接推 fork main、发布 release（含产物，可用 workflow）、精简 Next.js 为源码储存站
+- 预检发现：用户已亲自通过 fork 内 PR #1 将 p0-discovery-fixes（9a661080）合并进 main（merge commit 571c352f，2026-10-03T06:28:46Z）；上游 main 仍为 9529e915 未动；fork Actions 已启用（enabled: true, allowed_actions: all）
+- 代码实际进度核验（全部通过）：本地克隆 5 文件 MD5 与 HANDOFF 2.1 逐字节一致；测试文件 7 用例（旧 4 + 新 3）；Dart 括号平衡静态检查 5/5 PASS
+- 同步本地 main 到 571c352f（fetch + reset --hard fork/main），合并树 5 文件 MD5 复核一致（用户合并未引入偏差）
+- review/ 存档提交（6d089d15，27 文件 +3433/−367）：评审报告 v2 / 原报告原件 / v1+v2 草稿分片 / P0 补丁 / modified-source / 验证截图 / worklog / HANDOFF（前置 v3 状态注：持久化终态已迁移至 main + release）
+- 新增 .github/workflows/release.yml：p0-review-* tag 触发或 workflow_dispatch，打包 5 产物（patch / review-report-v2.md / original-report.md / modified-source.zip / review-archive.zip），gh release create-or-update（--clobber 幂等）
+- review/deliverables/release-notes.md：Release 说明正文（workflow 与 API 共用同一份）
+
+Stage Summary:
+- fork main = 基线 9529e915 + P0 修复（PR #1）+ review/ 存档（6d089d15）+ workflow；单一持久化目标达成
+- 上游 localsend/localsend 未做任何改动（用户指令遵守）
+
+---
+Task ID: 17
+Agent: Super Z (main)
+Task: 站点 v2 精简重构（源码储存站）+ 端到端验证 + 终态提交
+
+Work Log:
+- 重写 src/lib/content.ts：数据源全部改为 fork main 克隆（/home/z/my-project/localsend）内的自包含路径（review/ 存档 + 工作树源文件），新增 readRepoState()（execSync 实时读 branch/HEAD/clean/log）与 readReleaseInfo()（download/release-info.json，缺失时返回确定性"待发布"预置态）
+- 修复 execSync shell 注入问题：git log --pretty=format:'%h|%s' 的管道符必须加引号（症状：/bin/sh: %s: not found）
+- 新组件 source-browser.tsx（取代 patch-viewer.tsx）：5 文件 chips 选择器 + 完整源码（行号）/ Diff 双模式切换；精简删除脚手架残留 api/route.ts
+- 新 page.tsx 3 tab：源码（git 实时状态卡 + 源码浏览器）/ 评审报告 / 发布与交付（Release 表 + 实际进度[已完成/待办/明确不做] + 静态验证证据 + 原报告 details 折叠）
+- layout.tsx metadata 更新为"LocalSend P0 · 源码储存站"
+- bun run lint 通过（exit 0）
+- agent-browser 端到端验证：3 tab 全渲染；源码浏览器文件切换（main.dart→settings_provider.dart）、Diff 模式（新缺陷 1 徽章 + 增删行）、完整源码模式（真实代码 onChanged: (_, next, ref) { 可见）；发布 tab 待发布徽章 + 5 产物表；原报告 details 展开渲染；console 零错误；390×844 移动端 footer 正常、tablist 不溢出；截图 4 张存档 download/preview-site-v2-*.png 并复制 2 张入 review/deliverables/
+- 终态提交：review/site-src/ 更新为 v2（README 映射表 + 5 源文件）+ 截图 + 本 worklog
+
+Stage Summary:
+- 站点从"4 tab 交付展示站"精简为"3 tab 源码储存站"：源码成为一等公民（完整文件浏览 + diff），全部内容服务端磁盘读自 fork main 克隆，替换即自动更新
+- 待 release 发布后回写 download/release-info.json，站点发布 tab 自动从"待发布"切换为"已发布"并显示真实产物大小

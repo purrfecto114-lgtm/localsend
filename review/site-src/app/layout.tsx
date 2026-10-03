@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LocalSend 传输优化 · 评审与修复交付",
+  title: "LocalSend P0 · 源码储存站",
   description:
-    "LocalSend 传输链路优化总报告的独立评审（79 处引用逐条核查、5 视角评审团反审查）与 P0 代码修复交付：评审报告、补丁与修改后源码持久化。",
-  keywords: ["LocalSend", "评审报告", "源码核查", "BLE 发现", "组播", "代码修复"],
+    "LocalSend 传输链路优化独立评审的源码储存站：fork main（基线 9529e915 + P0 修复 9a661080）源码浏览器、评审报告 v2、Release p0-review-v1 发布产物。",
+  keywords: ["LocalSend", "源码存档", "独立评审", "P0 修复", "diff 浏览器"],
 };
 
 export default function RootLayout({
