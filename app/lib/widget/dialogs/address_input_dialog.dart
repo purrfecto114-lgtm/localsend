@@ -12,7 +12,7 @@ import 'package:localsend_app/provider/last_devices.provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/util/address_input_validator.dart';
-import 'package:localsend_app/widget/dialogs/error_dialog.dart';
+import 'package:localsend_app/widget/dialogs/connection_error_dialog.dart';
 import 'package:localsend_isolates/model/device.dart';
 import 'package:localsend_isolates/rust/api/model.dart';
 import 'package:localsend_isolates/util/rust.dart';
@@ -46,12 +46,14 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
   _InputMode _mode = _InputMode.hashtag;
   String _input = '';
   bool _fetching = false;
-  String? _error;
+  Object? _error;
+  String? _lastCandidate;
   ManualAddressError? _validationError;
 
   Future<void> _submit(List<String> localIps, int port, [String? candidate]) async {
     final List<String> candidates;
     final String input = _input.trim();
+    _lastCandidate = candidate;
     if (candidate != null) {
       candidates = [_normalizeCandidate(candidate)];
     } else if (_mode == _InputMode.ip) {
@@ -73,7 +75,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
 
     final deviceCompleter = Completer<void>();
     Device? foundDevice;
-    String? error;
+    Object? error;
 
     final payload = ref.read(deviceFullInfoProvider).toRegisterDto();
 
@@ -94,7 +96,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
             foundDevice = response.body.toDevice(ip, port, https);
             deviceCompleter.complete();
           } catch (e) {
-            error = e.toString();
+            error = e;
             rethrow;
           }
         }(),
@@ -258,22 +260,28 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
-                  if (_error != null) ...[
-                    const SizedBox(width: 5),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (_) => ErrorDialog(error: _error!),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
-                      ),
+                  Expanded(
+                    child: Text(
+                      connectionErrorMessage(_error!),
+                      style: TextStyle(color: Theme.of(context).colorScheme.warning),
                     ),
-                  ],
+                  ),
+                  const SizedBox(width: 5),
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => ConnectionErrorDialog(
+                          error: _error!,
+                          onRetry: () => _submit(localIps, settings.port, _lastCandidate),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                    ),
+                  ),
                 ],
               ),
             ),

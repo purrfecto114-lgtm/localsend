@@ -761,6 +761,7 @@ class Translations$dialogs$en {
   late final Translations$dialogs$openFile$en openFile = Translations$dialogs$openFile$en.internal(_root);
   late final Translations$dialogs$addressInput$en addressInput = Translations$dialogs$addressInput$en.internal(_root);
   late final Translations$dialogs$cancelSession$en cancelSession = Translations$dialogs$cancelSession$en.internal(_root);
+  late final Translations$dialogs$connectionError$en connectionError = Translations$dialogs$connectionError$en.internal(_root);
   late final Translations$dialogs$cannotOpenFile$en cannotOpenFile = Translations$dialogs$cannotOpenFile$en.internal(_root);
   late final Translations$dialogs$encryptionDisabledNotice$en encryptionDisabledNotice = Translations$dialogs$encryptionDisabledNotice$en.internal(
     _root,
@@ -1508,6 +1509,29 @@ class Translations$dialogs$cancelSession$en {
   String get content => 'Do you really want to cancel the files transfer?';
 }
 
+// Path: dialogs.connectionError
+class Translations$dialogs$connectionError$en {
+  Translations$dialogs$connectionError$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Connection failed'
+  String get title => 'Connection failed';
+
+  late final Translations$dialogs$connectionError$timeout$en timeout = Translations$dialogs$connectionError$timeout$en.internal(_root);
+  late final Translations$dialogs$connectionError$refused$en refused = Translations$dialogs$connectionError$refused$en.internal(_root);
+  late final Translations$dialogs$connectionError$forbidden$en forbidden = Translations$dialogs$connectionError$forbidden$en.internal(_root);
+  late final Translations$dialogs$connectionError$other$en other = Translations$dialogs$connectionError$other$en.internal(_root);
+
+  /// en: 'Retry'
+  String get retry => 'Retry';
+
+  /// en: 'Error details:'
+  String get details => 'Error details:';
+}
+
 // Path: dialogs.cannotOpenFile
 class Translations$dialogs$cannotOpenFile$en {
   Translations$dialogs$cannotOpenFile$en.internal(this._root);
@@ -2059,6 +2083,70 @@ class Translations$dialogs$addressInput$validation$en {
 
   /// en: 'Enter the address only. The port is taken from the settings.'
   String get port => 'Enter the address only. The port is taken from the settings.';
+}
+
+// Path: dialogs.connectionError.timeout
+class Translations$dialogs$connectionError$timeout$en {
+  Translations$dialogs$connectionError$timeout$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device did not respond in time.'
+  String get message => 'The device did not respond in time.';
+
+  /// en: 'It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network.'
+  String get advice =>
+      'It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network.';
+}
+
+// Path: dialogs.connectionError.refused
+class Translations$dialogs$connectionError$refused$en {
+  Translations$dialogs$connectionError$refused$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device refused the connection.'
+  String get message => 'The device refused the connection.';
+
+  /// en: 'LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port.'
+  String get advice =>
+      'LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class Translations$dialogs$connectionError$forbidden$en {
+  Translations$dialogs$connectionError$forbidden$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device rejected the request.'
+  String get message => 'The device rejected the request.';
+
+  /// en: 'A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device.'
+  String get advice =>
+      'A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device.';
+}
+
+// Path: dialogs.connectionError.other
+class Translations$dialogs$connectionError$other$en {
+  Translations$dialogs$connectionError$other$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The connection could not be established.'
+  String get message => 'The connection could not be established.';
+
+  /// en: 'Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection.'
+  String get advice =>
+      'Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection.';
 }
 
 // Path: dialogs.startupError.windowsAccessDenied
