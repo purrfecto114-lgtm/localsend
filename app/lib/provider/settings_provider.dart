@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:localsend_app/gen/strings.g.dart';
@@ -13,6 +15,11 @@ import 'package:refena_flutter/refena_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
 final _listEq = const ListEquality().equals;
+
+/// Debounces the discovery restart triggered from settings changes: the
+/// timeout text field fires onChanged on every keystroke and every restart
+/// costs a full multicast rebind plus an announcement burst.
+Timer? _discoveryRestartDebounce;
 
 final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
   (ref) {
@@ -37,6 +44,28 @@ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
             discoveryTimeout: next.discoveryTimeout,
           ),
         );
+
+    // The running discovery only applies the synced settings when it is
+    // restarted: the discovery service reads the syncState once per loop
+    // iteration and blocks on its event stream otherwise. The child isolate
+    // processes isolate messages in order, so a restart task always sees
+    // the syncState published by the action above (also when debounced:
+    // the sync itself is dispatched immediately, only the restart waits).
+    // Skip when the discovery is not initialized yet (e.g. during startup).
+    //
+    // The restart is debounced because some settings widgets report every
+    // keystroke: converging rapid changes into one rebind avoids a burst of
+    // stop/announce cycles and races with the rebind window in the child
+    // isolate (restarts arriving during a rebind are retried there, but
+    // each one still costs an announcement burst).
+    if (ref.read(parentIsolateProvider).discovery != null) {
+      _discoveryRestartDebounce?.cancel();
+      _discoveryRestartDebounce = Timer(const Duration(milliseconds: 500), () {
+        if (ref.read(parentIsolateProvider).discovery != null) {
+          ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
+        }
+      });
+    }
   },
 );
 
