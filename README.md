@@ -31,7 +31,7 @@ This is a delivery-focused fork (default branch: [`radical`](../../tree/radical)
 - **Backlog**: [`ROADMAP.md`](ROADMAP.md) (feasibility-ranked, with research archives under `review/research/`)
 - **Changelog**: see `v1.18.2-fork.1` in [`CHANGELOG.md`](CHANGELOG.md)
 - **Development gates**: `flutter pub get && flutter analyze && flutter test && dart format --set-exit-if-changed .` (app and `packages/localsend_isolates`)
-- Platform-sensitive behavior (BLE, error dialogs on real OSes) is verified by unit tests here; a real-device matrix is still recommended before relying on it.
+- Platform-sensitive behavior (BLE, error dialogs on real OSes) is exercised by unit tests (logic only); a real-device matrix is still recommended before relying on it.
 
 - [About](#about)
 - [Sponsors](#sponsors)

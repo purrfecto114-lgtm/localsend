@@ -16,19 +16,18 @@ Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol 
 - fix: rebind discovery on Android resume (750 ms debounce); rank external IPs and self-heal empty IP sets
 - fix: register the container observer in release builds so settings changes propagate
 - fix: no longer lose a discovery restart that arrives inside the rebind window
-- fix: show an actionable error dialog when the server port cannot be bound (errno 10013 family guidance)
-- fix: validate manual address input and support IPv6 literals (#549)
-- fix: friendly, retryable errors for favorites and manual connections (#2121)
+- fix: show an actionable error dialog when the server port cannot be bound (errno 10013 family guidance; localsend/localsend#125, #2884)
+- fix: validate manual address input and support IPv6 literals (localsend/localsend#549)
+- fix: friendly, retryable errors for favorites and manual connections (localsend/localsend#2121)
 
 ### Feat
 
 - feat(android): hold a multicast lock while discovery is running
 - feat: make the smart-scan interface cap user-configurable (1–10, default 5)
-- feat: batch-friendly transfers — 50 ms progress throttling and off-main-isolate directory enumeration (#489)
+- feat: batch-friendly transfers — 50 ms progress throttling and off-main-isolate directory enumeration (localsend/localsend#489)
 - feat: layered no-devices diagnosis (no interface / no multicast / empty scan) with in-app guidance
+- feat(ble): experimental BLE-assisted discovery — beacon + GATT handshake feeding the existing HTTP channel; feature-flagged, default off (localsend/localsend#850, #144)
 - feat: guidance CTA on the empty device list (favorites / manual input)
-- feat(ble): experimental BLE-assisted discovery — beacon + GATT handshake feeding the existing HTTP channel; feature-flagged, default off (#850, #144)
-- feat: discovery scan lifecycle logging
 
 ### Tip
 

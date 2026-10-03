@@ -1,7 +1,7 @@
 # LocalSend 传输链路优化报告 · 独立评审存档
 
 > 评审基线：localsend/localsend `main` @ [`9529e915`](https://github.com/localsend/localsend/commit/9529e915f438d8edd8bdf23e9f7aab2261a8b3e6)（2026-10-03，app `1.18.2+64`）
-> 本目录：独立评审全程智力产出与交付物的持久化存档，位于本 fork 的 `main` 分支
+> 本目录：独立评审全程智力产出与交付物的持久化存档，位于本 fork 的 `radical` 分支（默认分支；原 `main` 已删除，其提交全部在 `radical` 祖先链中）
 > 发布产物：GitHub Release [`p0-review-v2`](https://github.com/purrfecto114-lgtm/localsend/releases/tag/p0-review-v2)（补丁 / 报告 / 源码 zip / 升级成本评估 / 工具链验证日志 / 双轮审查报告）
 
 ## v2 阶段（本轮更新）：双轮 subagent 审查 + 真实工具链验证
@@ -14,7 +14,7 @@ v1 发布后，owner 要求下载工具链并做全方位独立审查。v2 阶�
 4. **round-2 验证团**：5 个验证 subagent（V-1~V-5，存档于 `verification-round2/`），可亲自运行工具链；结论 PASS×1 + PASS-with-notes×4，残留均为 Info/Minor 且已文档化。
 5. **终态门禁**：`flutter analyze` 0 issues、`dart format` 0 changed、app **97/97**、isolates 18+4 rust-skipped；突变验证确认回归测试真实钉死 C-1b/I-1。
 
-## main 分支的构成
+## radical 分支的构成（原 main 历史 + 后续演进）
 
 | commit | 内容 |
 |---|---|
@@ -64,6 +64,11 @@ review/
 ├── review-parts/                    ← 评审报告 v1/v2 草稿分片（决策过程留痕）
 │   ├── part1.md / part2.md / part3.md           （v1）
 │   └── v2_part1.md / v2_part2.md / v2_part3.md
+├── research/                        ← fork 研究归档（缺陷/蓝牙/陈旧审计，2026-10-03）
+├── pr-bodies/                       ← 上游 PR 文案存档
+├── verification-round1/             ← round-1 审查团 9 份报告
+├── verification-round2/             ← round-2 验证团 5 份报告
+├── verification-round3/             ← round-3 PR 准备验证（V-6..V-9）
 ├── deliverables/                    ← P0 修复交付物
 │   ├── localsend-p0-fixes.patch     （git apply 可直接应用）
 │   ├── modified-source/             （5 个修改后文件完整副本）
