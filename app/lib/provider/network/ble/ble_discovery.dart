@@ -101,7 +101,14 @@ class BleDiscoveryService {
     _running = true;
     _transport = transport;
 
-    final self = _selfDeviceInfo();
+    final Device self;
+    try {
+      self = _selfDeviceInfo();
+    } catch (e, stackTrace) {
+      _logger.warning('Reading the local device info failed; stopping the BLE discovery', e, stackTrace);
+      await _shutdown();
+      return;
+    }
     final ip = self.ip;
     final hasUsableAddress = ip != null && ip.isNotEmpty && ip != '-' && self.port > 0 && self.port <= 0xFFFF;
 

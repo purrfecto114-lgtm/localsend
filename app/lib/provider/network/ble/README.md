@@ -1,0 +1,121 @@
+# BLE-assisted discovery (phase 1)
+
+This module adds an opt-in discovery path for networks where multicast does
+not work (AP isolation, guest Wi-Fi, restricted corporate networks - upstream
+issues #850 and #144). Bluetooth Low Energy is only used to **find** peers
+and exchange their IP:port; the file transfer itself always goes over the
+regular HTTP v2 protocol, byte-for-byte unchanged. This mirrors AirDrop
+(BLE discovery -> AWDL transfer), Windows Nearby Sharing (MS-CDP: a 30 byte
+BLE beacon -> transport over LAN/BT/WiFi Direct) and Quick Share.
+
+## Design
+
+```
+app/lib/provider/network/ble/
+  ble_codec.dart               # pure dart: 24 byte beacon + GATT JSON codec
+  ble_transport.dart           # BleTransport interface + inert NoopBleTransport
+  ble_low_energy_transport.dart# bluetooth_low_energy adapter (central+peripheral)
+  ble_discovery.dart           # BleDiscoveryService orchestration
+  ble_discovery_provider.dart  # refena providers (feature-flag gated)
+```
+
+Everything lives on the app-side main isolate (platform channels cannot run
+in the child isolate), and nothing here touches `localsend_isolates` or the
+Rust side. A discovered peer is fed through the existing injection seam
+(`IsolateDiscoveryAddDeviceAction` - the same one the HTTP `/register`
+request uses), merged by the Rust discovery store and re-emitted by the
+running discovery listener, so the send flow, progress UI and session model
+are untouched.
+
+Wire format:
+
+- **Beacon** (manufacturer data, 24 bytes, MS-CDP scale):
+  `protoVer (1) | port (2, BE) | fpHash (8) | salt (4) | reserved (9)`.
+  `fpHash = SHA-256(fingerprint || salt)[0..8]`.
+- **GATT characteristic** `2e1b0bc9-...`: UTF-8 JSON with
+  `alias, fingerprint, ip, port, https, deviceModel, deviceType, download,
+  version` (a superset of the multicast announcement fields; the IP is
+  mandatory because the Rust store drops devices without one).
+- **Service UUID** `c5945864-...`: advertised and scanned for. iOS/macOS
+  app advertisements can only carry the service UUID (+ local name), so
+  those peers are recognized by the UUID alone and contacted over GATT
+  without a decodable beacon.
+- **Company id** `0xFFFF`: reserved-for-development. Register a real
+  Bluetooth SIG company id before any wider rollout.
+
+## Security notes
+
+- The certificate fingerprint never travels in clear text over the air: the
+  beacon carries only `SHA-256(fingerprint || salt)` with a fresh random
+  salt per advertising session, so a passive listener can neither recover
+  the fingerprint nor link two sessions of the same device (same scheme as
+  MS-CDP).
+- The GATT characteristic is readable without pairing, like the beacon, so
+  it must not contain secrets - it carries exactly the fields a multicast
+  announcement already broadcasts to the whole network.
+- Self-detection recomputes the salted hash with the own fingerprint, and a
+  GATT payload claiming the own fingerprint is dropped.
+
+## Enabling it
+
+The feature flag `ls_ble_discovery_enabled` (advanced settings, default
+**off**) gates the whole module. While it is off no transport is ever
+built: zero platform API calls, zero permissions requested, zero behavior
+difference. Toggling it starts/stops the discovery at runtime.
+
+The required platform permission **declarations ship with the app** (they
+are dormant metadata until the flag is turned on - declarations alone
+trigger no prompt and no API access; only the runtime request started by
+enabling the flag does):
+
+- **Android** (`AndroidManifest.xml`): `BLUETOOTH_SCAN`
+  (`neverForLocation`: the scan results are never used to derive a
+  location), `BLUETOOTH_ADVERTISE`, `BLUETOOTH_CONNECT`, plus the legacy
+  `BLUETOOTH`/`BLUETOOTH_ADMIN` with `maxSdkVersion="30"`, and
+  `android.hardware.bluetooth_le` as a non-required feature. If the
+  runtime request is denied, the plugin's `authorize()` returns false, BLE
+  logs it and stays off.
+- **iOS** (`Info.plist`): `NSBluetoothAlwaysUsageDescription`. This key is
+  mandatory hardware-side: touching CoreBluetooth without it terminates
+  the app, which is exactly why it ships instead of being left to anyone
+  compiling a "BLE-enabled" variant. No background modes: phase 1 only
+  runs while the app is in the foreground, which matches the "receiving
+  requires an open app" model anyway.
+- **macOS** (Debug and Release entitlements):
+  `com.apple.security.device.bluetooth` (the app is sandboxed).
+- **Windows**: no manifest change; the OS may require location to be
+  enabled for BLE. Watch out for `ResourceInUse` when the system's Nearby
+  Sharing occupies the advertising radio - the failure is caught and
+  logged, and scanning still works.
+- **Linux**: scanning works (BlueZ central), but bluetooth_low_energy has
+  no peripheral API, so a Linux device can find others but cannot be found
+  via BLE. `supportsAdvertising` reports false and advertising is skipped.
+
+## Dependencies
+
+`bluetooth_low_energy: ^6.2.1` (MIT, publisher zeekr.dev) is the only
+addition: one package covering both the central and the peripheral role.
+`flutter_blue_plus` was rejected (non-OSI license since 2.0.0, build-time
+license ping since 2.3.5, central-only). Track the 7.x pre-release line
+for breaking changes before upgrading.
+
+## Known limits (honesty section)
+
+- The advertising payload (IP, port, alias) is captured when the discovery
+  starts and is not refreshed when the network changes mid-session; a
+  restart of the app (or toggling the flag) picks up the new address.
+- The GATT handshake is serialized (one connection at a time); a crowd of
+  peers takes correspondingly longer to appear.
+- Devices found via BLE but unreachable over unicast (full client
+  isolation) show up and fail on send, like a manual favorite would.
+- This fork is developed in a headless environment without Bluetooth
+  hardware: the module is verified by `flutter analyze` + `flutter test`
+  (codec roundtrips, orchestration with a fake transport, flag gating)
+  only. The radio behavior (advertising visibility, iOS overflow area,
+  Windows Nearby Sharing conflicts, Android vendor stacks) needs a
+  real-device matrix before any product claim - see the fork ROADMAP
+  "Verification honesty" section.
+- Phase 2 (small-text fallback transfer over GATT) and phase 3 (BLE large
+  files) are explicitly out of scope here; see
+  `review/research/bluetooth-report.md` for the throughput evidence
+  (0.1-0.5 MB/s phone-to-phone) behind that decision.

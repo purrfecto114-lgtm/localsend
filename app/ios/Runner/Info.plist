@@ -149,6 +149,8 @@
     <string>The app requires the local IP to communicate.</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>The app uses the local network to find and connect to nearby devices.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>The app uses Bluetooth to find nearby devices when the network blocks the discovery. It is only accessed if you enable the experimental BLE discovery in the settings.</string>
     <key>NSBonjourServices</key>
     <array>
         <string>_http._tcp</string>
