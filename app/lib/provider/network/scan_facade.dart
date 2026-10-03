@@ -12,7 +12,13 @@ import 'package:refena_flutter/refena_flutter.dart';
 class StartSmartScan extends AsyncGlobalAction {
   /// Maximum number of interfaces to scan.
   /// If there are more interfaces, the first ones will be used or the user needs to select one.
-  static const maxInterfaces = 3;
+  ///
+  /// 5 instead of 3: multi-adapter desktop machines (ethernet + Wi-Fi + VPN +
+  /// virtual adapters) plus an active hotspot easily exceed 3 networks, which
+  /// dropped the hotspot subnet out of the automatic scan. Each interface
+  /// only costs a `/24` scan when the cheap stages (multicast and favorite
+  /// probes) found nothing, so the extra candidates are rarely paid for.
+  static const maxInterfaces = 5;
 
   @override
   Future<void> reduce() async {

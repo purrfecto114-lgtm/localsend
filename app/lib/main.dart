@@ -67,8 +67,16 @@ class LocalSendApp extends StatelessWidget {
                   // ignore: discarded_futures
                   ref.notifier(serverProvider).ensureRunning();
                 }
-                if (checkPlatform([TargetPlatform.iOS])) {
+                if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
                   // The multicast sockets die the same silent way but cannot be probed, so always rebind them.
+                  // Android is included because its sockets are bound once at
+                  // startup and never follow network changes (e.g. an enabled
+                  // hotspot or a band switch), which is the most reported
+                  // "device not visible" scenario on mobile.
+                  // Note for upstream discussion: the iOS-only gate was an
+                  // explicit decision (see 63efbe6b); a probe-based rebind
+                  // (own multicast echo liveness check) would be the
+                  // alternative that avoids restarts on every resume.
                   ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
                 }
                 break;
