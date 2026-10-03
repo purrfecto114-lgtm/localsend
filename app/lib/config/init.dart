@@ -229,12 +229,19 @@ Future<void> postInit(BuildContext context, Ref ref, bool appStart) async {
       // Show an actionable dialog instead of dumping the raw error into a
       // snackbar: bind failures have well-known causes (e.g. Windows errno
       // 10013 excluded port ranges) with concrete fixes (#125, #2884).
-      await showDialog(
-        context: context,
-        builder: (_) => StartupErrorDialog(
-          classification: classifyStartupError(e),
-          port: ref.read(settingsProvider).port,
-          onOpenSettings: () => ref.redux(homePageControllerProvider).dispatch(ChangeTabAction(HomeTab.settings)),
+      // The dialog is deliberately not awaited: a failed server start is an
+      // exceptional path, and blocking postInit here would delay the
+      // discovery listener, BLE startup and the share-intent subscription
+      // until the user closes the dialog. The whats-new page may stack on
+      // top of it; that is acceptable for this rare error case.
+      unawaited(
+        showDialog(
+          context: context,
+          builder: (_) => StartupErrorDialog(
+            classification: classifyStartupError(e),
+            port: ref.read(settingsProvider).port,
+            onOpenSettings: () => ref.redux(homePageControllerProvider).dispatch(ChangeTabAction(HomeTab.settings)),
+          ),
         ),
       );
     }

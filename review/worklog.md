@@ -234,7 +234,7 @@ Task: 从交接包恢复工作区 + 网络核验 PAT 与上游基线 + 重建 lo
 Work Log:
 - 解压 upload/localsend-review-handoff-20261003.zip，22 个关键文件 MD5 与 HANDOFF 2.1 节记录逐字节一致（含评审报告 f470dca4、补丁 19698cb8、原报告 710600c4、worklog b9b42830）
 - 按恢复规程归位：worklog.md → 工作区根目录；评审报告+补丁+modified-source → download/；原报告 → upload/；交接包本体 → localsend-review-handoff/
-- 网络核验（用户提供的细粒度 PAT github_pat_11BVN...）：账号 purrfecto114-lgtm（id 224034298），认证后 API 限额 5000（上一会话的 403 限流问题消除）
+- 网络核验（用户提供的细粒度 PAT [REDACTED]）：账号 purrfecto114-lgtm（id 224034298），认证后 API 限额 5000（上一会话的 403 限流问题消除）
 - 网络核验上游基线：api.github.com 确认 localsend/localsend commit 9529e915 真实存在（2026-10-03T01:39:51Z，"feat: respect system date and time formats (#3472)"，作者 Shlomo）——评审基线无漂移的在线证据
 - 发现账号已有 purrfecto114-lgtm/localsend fork（2026-10-03T06:05:33Z 创建），其 main HEAD 恰为 9529e915，token 对其有 push 权限
 - git clone localsend → checkout 9529e915 → git apply localsend-p0-fixes.patch：--check 预检通过，恰 5 个 M 文件，5 个文件 MD5 与 HANDOFF 2.1 逐字节一致（95fe9aca/8887b404/e1d1cf50/aa0ed189/eb78b2b5）
