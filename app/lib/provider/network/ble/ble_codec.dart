@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
@@ -211,8 +212,15 @@ Uint8List encodeBleDeviceInfo(BleDeviceInfo info) {
 ///
 /// Returns `null` when the payload is malformed in any way: not valid
 /// UTF-8, not a JSON object, wrong or missing field types, an empty
-/// alias/fingerprint/ip, a port outside 1..65535 or an unknown device
+/// alias/fingerprint, an [BleDeviceInfo.ip] that is not an IP literal
+/// (IPv4 or IPv6, optionally scoped like `fe80::1%3` - host names are
+/// rejected, see below), a port outside 1..65535 or an unknown device
 /// type. Unknown extra fields are ignored (forward compatibility).
+///
+/// The ip validation is deliberately stricter than the manual address
+/// input: the payload comes from an unrelated device in radio range, so it
+/// must never be able to redirect the file transfer to an arbitrary host -
+/// only literals the announcing device can actually serve on are accepted.
 BleDeviceInfo? decodeBleDeviceInfo(List<int> data) {
   if (data.isEmpty || data.length > bleGattPayloadMaxLength) {
     return null;
@@ -242,6 +250,12 @@ BleDeviceInfo? decodeBleDeviceInfo(List<int> data) {
   if (alias is! String || alias.isEmpty) return null;
   if (fingerprint is! String || fingerprint.isEmpty) return null;
   if (ip is! String || ip.isEmpty) return null;
+  if (InternetAddress.tryParse(ip) == null) {
+    // Not an IP literal: reject the whole payload. Unlike the manual
+    // address input, a BLE peer is not trusted with host names (it could
+    // point the file transfer at any server on the internet).
+    return null;
+  }
   if (port is! int || port < 1 || port > 0xFFFF) return null;
   if (https is! bool) return null;
   if (deviceModel is! String?) return null;

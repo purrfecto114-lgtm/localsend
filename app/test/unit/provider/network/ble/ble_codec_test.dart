@@ -162,6 +162,54 @@ void main() {
       expect(rebuilt.deviceType, info.deviceType);
     });
 
+    test('accepts only IP literals as the ip field', () {
+      // The GATT payload comes from an unrelated device in radio range,
+      // so the ip must be a literal the announcer can serve on - host
+      // names would let a spoofed peer redirect the file transfer.
+      BleDeviceInfo withIp(String ip) => BleDeviceInfo(
+        alias: info.alias,
+        fingerprint: info.fingerprint,
+        ip: ip,
+        port: info.port,
+        https: info.https,
+        deviceModel: info.deviceModel,
+        deviceType: info.deviceType,
+        download: info.download,
+        version: info.version,
+      );
+
+      const accepted = [
+        '192.168.1.42', // IPv4
+        '10.0.0.1',
+        'fd00::1', // IPv6
+        '::1',
+        'fe80::1%3', // scoped IPv6 (zone id preserved)
+        'fe80::1%eth0',
+      ];
+      for (final ip in accepted) {
+        expect(decodeBleDeviceInfo(encodeBleDeviceInfo(withIp(ip))), isNotNull, reason: ip);
+      }
+
+      String mutateIp(String ip) {
+        final map = jsonDecode(utf8.decode(encodeBleDeviceInfo(info))) as Map<String, dynamic>;
+        map['ip'] = ip;
+        return jsonEncode(map);
+      }
+
+      const rejected = [
+        'example.com', // host name
+        'banana',
+        '[::1]', // bracketed form (accepted for manual input, not here)
+        '192.168.1.42:53317', // port suffix
+        'http://192.168.1.42', // scheme
+        ' 192.168.1.42', // whitespace
+        '0177.0.0.1', // leading zeros (Dart rejects as IPv4)
+      ];
+      for (final ip in rejected) {
+        expect(decodeBleDeviceInfo(utf8.encode(mutateIp(ip))), isNull, reason: ip);
+      }
+    });
+
     test('tolerates unknown extra fields', () {
       final raw = utf8.decode(encodeBleDeviceInfo(info));
       final extended = raw.replaceFirst('}', ',"futureField":42}');
