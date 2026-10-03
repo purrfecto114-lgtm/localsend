@@ -1,0 +1,239 @@
+Resolving dependencies in `/home/z/my-project/localsend`...
+Downloading packages...
+  _fe_analyzer_shared 93.0.0 (108.0.0 available)
+  analyzer 10.0.1 (14.4.0 available)
+  animated_vector 0.2.2 (0.2.3 available)
+  animated_vector_annotations 0.2.2 (0.3.0 available)
+  archive 4.0.9 (4.3.0 available)
+  assorted_layout_widgets 11.0.0 (13.1.0 available)
+  build 4.0.7 (4.0.11 available)
+  build_config 1.3.2 (1.3.3 available)
+  build_daemon 4.1.5 (4.1.6 available)
+  build_runner 2.15.1 (2.16.1 available)
+  built_collection 5.1.1 (5.1.2 available)
+  built_value 8.12.7 (8.13.0 available)
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  code_builder 4.11.1 (4.12.0 available)
+  connectivity_plus 7.3.1 (7.3.2 available)
+  cross_file 0.3.5+4 (0.4.0 available)
+  dart_mappable 4.8.0 (4.10.0 available)
+  dart_mappable_builder 4.8.0 (4.10.0 available)
+  dart_style 3.1.7 (3.1.13 available)
+  dbus 0.7.13 (0.8.0 available)
+  desktop_drop 0.7.1 (0.8.4 available)
+! device_apps 2.2.0 from git https://github.com/Tienisto/device_apps.git at 5dc795 (overridden)
+  device_info_plus 12.4.0 (13.3.0 available)
+  device_info_plus_platform_interface 7.0.3 (8.1.0 available)
+  dynamic_color 1.8.1 (2.1.0 available)
+  file_picker 11.0.3 (13.1.0 available)
+  file_selector_android 0.5.2+6 (0.5.2+11 available)
+  file_selector_ios 0.5.3+5 (0.5.3+6 available)
+  file_selector_linux 0.9.4 (0.9.4+1 available)
+  file_selector_macos 0.9.5 (0.9.5+1 available)
+  file_selector_windows 0.9.3+5 (0.9.3+6 available)
+  flex_color_picker 3.8.0 (4.0.0 available)
+  flex_seed_scheme 4.0.1 (5.0.1 available)
+  flutter_foreground_task 9.2.2 (11.0.3 available)
+  flutter_rust_bridge 2.12.0 (2.13.0 available)
+  freezed 3.2.5 (4.0.2 available)
+  frontend_server_client 4.0.0 (4.1.0 available)
+  glob 2.1.3 (2.2.0 available)
+  gsettings 0.2.8 (0.2.9 available)
+  hooks 2.0.2 (2.2.0 available)
+  html 0.15.6 (0.15.7 available)
+  image 4.9.1 (4.10.1 available)
+  image_picker_android 0.8.13+17 (0.8.13+25 available)
+  image_picker_ios 0.8.13+6 (0.8.13+9 available)
+  in_app_purchase 3.3.0 (3.3.1 available)
+  in_app_purchase_android 0.5.0 (0.5.3 available)
+  in_app_purchase_storekit 0.4.11+1 (0.4.13 available)
+  intl 0.20.2 (0.20.3 available)
+  io 1.0.5 (1.1.0 available)
+  jni 1.0.3 (1.1.0 available)
+  jni_flutter 1.0.2 (1.0.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.17.0 (1.19.0 available)
+  mime 2.0.0 (2.1.0 available)
+  mockito 5.6.4 (5.8.1 available)
+  nanoid2 2.0.1 (2.1.0 available)
+  network_info_plus 7.0.0 (8.2.2 available)
+  network_info_plus_platform_interface 2.0.2 (3.1.0 available)
+  nm 0.5.0 (0.6.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  package_config 2.2.0 (3.0.0 available)
+  package_info_plus 9.0.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+! pasteboard 0.3.0 from git https://github.com/Seidko/flutter-plugins.git at 58748d in packages/pasteboard (overridden)
+  permission_handler 12.0.3 (13.0.2 available)
+  permission_handler_android 13.0.1 (14.1.0 available)
+  permission_handler_apple 9.6.1 (9.6.2 available)
+  permission_handler_platform_interface 4.4.0 (4.4.1 available)
+! permission_handler_windows 0.1.2 from git https://github.com/localsend/permission_handler_windows_noop.git at 2dadd8 (overridden)
+  petitparser 7.0.2 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  pool 1.5.2 (1.5.3 available)
+  pub_semver 2.2.0 (2.2.1 available)
+  pubspec_parse 1.5.0 (1.6.0 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  refena 3.5.0 (3.6.0 available)
+  refena_flutter 3.5.0 (3.6.0 available)
+  share_handler 0.0.22 (0.0.25 available)
+  shared_preferences_android 2.4.23 (2.4.28 available)
+  shared_preferences_foundation 2.5.6 (2.5.7 available)
+  shelf_web_socket 2.0.1 (3.0.0 available)
+  slang 4.19.0 (4.19.2 available)
+  source_gen 4.2.4 (4.3.0 available)
+  source_maps 0.10.13 (0.10.14 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  stream_transform 2.1.1 (2.1.2 available)
+  system_date_time_format 1.4.0 (1.5.1 available)
+  test 1.30.0 (1.32.0 available)
+  test_api 0.7.10 (0.7.14 available)
+  test_core 0.6.16 (0.6.20 available)
+  tray_manager 0.5.3 (0.7.0 available)
+  uri_content 3.1.1 (4.0.1 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.30 (6.3.33 available)
+  url_launcher_ios 6.4.1 (6.4.2 available)
+  url_launcher_linux 3.2.2 (3.2.3 available)
+  url_launcher_macos 3.2.5 (3.2.6 available)
+  url_launcher_windows 3.1.5 (3.1.6 available)
+  vector_math 2.2.0 (2.4.3 available)
+  video_player 2.11.1 (2.14.1 available)
+  video_player_android 2.9.5 (2.12.2 available)
+  video_player_avfoundation 2.11.0 (2.12.0 available)
+  vm_service 15.2.0 (15.3.0 available)
+  wakelock_plus 1.5.2 (1.8.1 available)
+  wakelock_plus_platform_interface 1.6.0 (1.7.0 available)
+  win32 5.15.0 (6.4.0 available)
+  win32_registry 2.1.0 (3.0.3 available)
+  xml 7.0.1 (7.1.0 available)
+  yaml 3.1.3 (3.1.4 available)
+Got dependencies in `/home/z/my-project/localsend`!
+109 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /home/z/my-project/localsend/app/test/unit/model/device_test.dart
+00:00 +0: /home/z/my-project/localsend/app/test/unit/model/device_test.dart: Should not have duplicate DeviceChannel
+00:00 +1: loading /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart
+00:00 +1: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should allow any IP
+00:00 +2: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should only allow explicit whitelisted IP
+00:00 +3: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should allow wildcard whitelisted IP
+00:00 +4: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should allow wildcard whitelisted ipv6
+00:00 +5: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should ignore explicit blacklisted IP
+00:00 +6: /home/z/my-project/localsend/app/test/unit/util/network_interfaces_test.dart: Should ignore wildcard blacklisted IP
+00:00 +7: loading /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart
+00:01 +7: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime shows seconds for duration less than 1 minute
+00:01 +8: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime shows minutes and seconds for duration less than 1 hour
+00:01 +9: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime shows hours and minutes for duration 1 hour or more
+00:01 +10: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime handles zero remaining bytes
+00:01 +11: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime handles zero speed with remaining bytes
+00:01 +12: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getRemainingTime handles edge cases
+00:01 +13: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_test.dart: getFileSpeed calculates bytes per second correctly
+00:01 +14: loading /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart
+00:01 +14: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: iconAlphabet no two icons share a glyph
+00:01 +15: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: fingerprintToIcons renders 16 icons
+00:01 +16: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: fingerprintToIcons is deterministic and input-sensitive
+00:01 +17: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: convertFingerprintToAlphabet converts hex to a hex alphabet
+00:01 +18: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: convertFingerprintToAlphabet preserves leading zeros
+00:01 +19: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: convertFingerprintToAlphabet converts to a smaller alphabet
+00:01 +20: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: convertFingerprintToAlphabet has a fixed length for a non-power-of-two alphabet
+00:01 +21: /home/z/my-project/localsend/app/test/unit/util/fingerprint_alphabet_test.dart: convertFingerprintToAlphabet round-trips for any alphabet size
+00:01 +22: loading /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart
+00:03 +22: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: (setUpAll)
+00:03 +22: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Displayed dates and times follow the system patterns for an unsupported intl region
+00:03 +23: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Day period uses the device language
+00:03 +24: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Device language wins over the app language
+00:03 +25: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Without system patterns, a regional app locale is used
+00:03 +26: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Flexible day period falls back to the locale default
+00:03 +27: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: .NET-style weekday falls back to the locale default
+00:03 +28: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Short weekday falls back to the locale default
+00:03 +29: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: Time zone falls back to the locale default
+00:03 +30: /home/z/my-project/localsend/app/test/unit/util/system_date_time_formatter_test.dart: (tearDownAll)
+00:03 +30: loading /home/z/my-project/localsend/app/test/unit/util/shared_preferences/shared_preferences_portable_test.dart
+00:04 +30: /home/z/my-project/localsend/app/test/unit/util/shared_preferences/shared_preferences_portable_test.dart: should put settings.json next to the executable
+00:04 +31: /home/z/my-project/localsend/app/test/unit/util/shared_preferences/shared_preferences_portable_test.dart: should fall back to the working directory when the executable is unknown
+00:04 +32: loading /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart
+00:04 +32: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: (setUpAll)
+00:04 +32: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 0:10:54.000000 → 10:54
+00:04 +33: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 1:00:00.000000 → שעה
+00:04 +34: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 1:01:00.000000 → שעה ודקה
+00:04 +35: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 2:02:00.000000 → שעתיים ו־2 דקות
+00:04 +36: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 1:05:00.000000 → שעה ו־5 דקות
+00:04 +37: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 24:00:00.000000 → 24 שעות
+00:04 +38: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 26:05:00.000000 → 26 שעות ו־5 דקות
+00:04 +39: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: 1:05:09.000000 → שעה ו־5 דקות
+00:04 +40: /home/z/my-project/localsend/app/test/unit/util/file_speed_helper_he_test.dart: (tearDownAll)
+00:04 +40: loading /home/z/my-project/localsend/app/test/unit/util/file_path_helper_test.dart
+00:05 +40: /home/z/my-project/localsend/app/test/unit/util/file_path_helper_test.dart: rename a file without an extension does not add a trailing dot
+00:05 +41: /home/z/my-project/localsend/app/test/unit/util/file_path_helper_test.dart: rename a file preserves its extension
+00:05 +42: /home/z/my-project/localsend/app/test/unit/util/file_path_helper_test.dart: fileName with counter
+00:05 +43: loading /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart
+00:05 +43: /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart: ApiRoute server urls register
+00:05 +44: /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart: ApiRoute server urls prepareUpload
+00:05 +45: /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart: ApiRoute typed client urls register
+00:05 +46: /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart: ApiRoute typed client urls prepareUpload
+00:05 +47: /home/z/my-project/localsend/app/test/unit/util/api_route_builder_test.dart: ApiRoute raw client urls register
+00:05 +48: loading /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart
+00:06 +48: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getPathFromTreeUri should return the root folder path from the content uri
+00:06 +49: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getPathFromTreeUri should return the folder path from the content uri
+00:06 +50: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getPathFromTreeUri should return folder path from content uri in SD card
+00:06 +51: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getEntityNameFromPath should return the entity name from the path
+00:06 +52: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getEntityNameFromPath should return the entity name from the path with a folder
+00:06 +53: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: getEntityNameFromPath should return the entity name from the path with a folder in SD card
+00:06 +54: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: guessRelativePathFromPickedFileContentUri should return the relative path from the picked file content uri
+00:06 +55: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: guessRelativePathFromPickedFileContentUri should return the relative path from the picked file content uri without the folder
+00:06 +56: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: guessRelativePathFromPickedFileContentUri should return the relative path from the picked file content uri in SD card
+00:06 +57: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: guessRelativePathFromPickedFileContentUri should return the relative path from the picked file content uri in SD card root
+00:06 +58: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: convertTreeUriToDocumentUri should return the document uri from the tree uri
+00:06 +59: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: convertTreeUriToDocumentUri should return the document uri from the tree uri with a folder
+00:06 +60: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: encodeTreeUri should return the encoded tree uri
+00:06 +61: /home/z/my-project/localsend/app/test/unit/util/native/content_uri_helper_test.dart: encodeTreeUri should return the encoded tree uri with a folder in SD card
+00:06 +62: loading /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart
+00:06 +62: /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart: Should add a favorite device
+00:06 +63: /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart: Should update a favorite device
+00:06 +64: /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart: Should not update a favorite device if unknown id
+00:06 +65: /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart: Should delete favorite device
+00:06 +66: /home/z/my-project/localsend/app/test/unit/provider/favorites_provider_test.dart: Should not delete favorite device if unknown fingerprint
+00:06 +67: loading /home/z/my-project/localsend/app/test/unit/provider/selected_receiving_files_provider_test.dart
+00:07 +67: /home/z/my-project/localsend/app/test/unit/provider/selected_receiving_files_provider_test.dart: pads counters to the width of the file count
+00:07 +68: loading /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart
+00:08 +68: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: (setUpAll)
+00:08 +68: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should add an entry
+00:08 +69: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should not add an entry if disabled
+00:08 +70: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should remove the 30th entry when adding another
+00:08 +71: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should remove an entry
+00:08 +72: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should not remove an entry if not found
+00:08 +73: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: Should remove all entries
+00:08 +74: /home/z/my-project/localsend/app/test/unit/provider/receive_history_provider_test.dart: (tearDownAll)
+00:08 +74: loading /home/z/my-project/localsend/app/test/unit/provider/settings_provider_test.dart
+00:08 +74: /home/z/my-project/localsend/app/test/unit/provider/settings_provider_test.dart: whitelist change sends sync first, then restart after the debounce
+00:09 +75: /home/z/my-project/localsend/app/test/unit/provider/settings_provider_test.dart: unrelated settings change sends nothing to the discovery
+00:10 +76: /home/z/my-project/localsend/app/test/unit/provider/settings_provider_test.dart: discovery == null during startup does not throw StateError
+00:10 +77: /home/z/my-project/localsend/app/test/unit/provider/settings_provider_test.dart: rapid consecutive changes converge into one restart with the final value
+00:11 +78: loading /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart
+00:12 +78: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should only sort list if no primary
+00:12 +79: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should only take primary
+00:12 +80: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should sort primary first
+00:12 +81: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should sort primary first and remove duplicates
+00:12 +82: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should prefer third party hotspot gateway (".1") address
+00:12 +83: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should prefer third party iOS hotspot gateway address
+00:12 +84: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: rankIpAddresses should still rank native ".1" addresses last when primary is another network
+00:12 +85: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should not rebind when the address set is unchanged
+00:12 +86: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should not rebind when the addresses are only re-ranked
+00:12 +87: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should not rebind on duplicates appearing or disappearing
+00:12 +88: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should rebind when an address was added
+00:12 +89: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should rebind when an address was removed
+00:12 +90: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should rebind when the network appears after an offline start
+00:12 +91: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should not rebind when staying offline
+00:12 +92: /home/z/my-project/localsend/app/test/unit/provider/network_info_provider_test.dart: shouldRebindDiscovery should never rebind on the first fetch
+00:12 +93: loading /home/z/my-project/localsend/app/test/unit/provider/last_devices_provider_test.dart
+00:12 +93: /home/z/my-project/localsend/app/test/unit/provider/last_devices_provider_test.dart: Should add a device
+00:12 +94: /home/z/my-project/localsend/app/test/unit/provider/last_devices_provider_test.dart: Should remove the 5th device
+00:12 +95: loading /home/z/my-project/localsend/app/test/unit/i18n_test.dart
+00:13 +95: /home/z/my-project/localsend/app/test/unit/i18n_test.dart: i18n Should compile
+00:13 +96: /home/z/my-project/localsend/app/test/unit/i18n_test.dart: i18n All locales should be supported by Flutter
+00:13 +97: All tests passed!
+EXIT=0

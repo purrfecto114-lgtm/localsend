@@ -2,16 +2,29 @@
 
 > 评审基线：localsend/localsend `main` @ [`9529e915`](https://github.com/localsend/localsend/commit/9529e915f438d8edd8bdf23e9f7aab2261a8b3e6)（2026-10-03，app `1.18.2+64`）
 > 本目录：独立评审全程智力产出与交付物的持久化存档，位于本 fork 的 `main` 分支
-> 发布产物：GitHub Release [`p0-review-v1`](https://github.com/purrfecto114-lgtm/localsend/releases/tag/p0-review-v1)（补丁 / 报告 / 源码 zip）
+> 发布产物：GitHub Release [`p0-review-v2`](https://github.com/purrfecto114-lgtm/localsend/releases/tag/p0-review-v2)（补丁 / 报告 / 源码 zip / 升级成本评估 / 工具链验证日志 / 双轮审查报告）
+
+## v2 阶段（本轮更新）：双轮 subagent 审查 + 真实工具链验证
+
+v1 发布后，owner 要求下载工具链并做全方位独立审查。v2 阶段：
+
+1. **环境去理想化**：下载钉死的 Flutter 3.41.9 SDK（1.41GB）+ obra/superpowers 技能库；`flutter analyze` 实证 v1 补丁有 **2 个编译错误**（`global.read/global.dispatch` 在 refena 3.5.0 不存在）与 **1 个逻辑反转**（`toSet() !=` 同一性比较恒真 → Windows 上每 10 秒全网 announce/register 风暴）。
+2. **round-1 审查团**：10 个 subagent 多角度审查（R-1~R-10：调用链/网络层/多播/生命周期/测试/上游一致性联网核实/用户环境矩阵/并发竞态/CI 发版链/升级成本），9 份报告存档于 `verification-round1/`。
+3. **自行修复**：两个加固 commit（`7d25f792` + `1ac3fea3`，11 文件），另发现并修复 **上游也有 release 死代码 bug**（refena onChanged 仅在有 observer 时触发，而 init.dart 只在 debug 传）。
+4. **round-2 验证团**：5 个验证 subagent（V-1~V-5，存档于 `verification-round2/`），可亲自运行工具链；结论 PASS×1 + PASS-with-notes×4，残留均为 Info/Minor 且已文档化。
+5. **终态门禁**：`flutter analyze` 0 issues、`dart format` 0 changed、app **97/97**、isolates 18+4 rust-skipped；突变验证确认回归测试真实钉死 C-1b/I-1。
 
 ## main 分支的构成
 
 | commit | 内容 |
 |---|---|
 | `9529e915` | 上游基线（与被评审报告声称的基线同一 commit，无版本漂移） |
-| `9a661080` | P0 修复（5 文件 +83/−6，经 fork PR #1 合并） |
+| `9a661080` | P0 修复 v1（5 文件 +83/−6，经 fork PR #1 合并） |
 | `571c352f` | PR #1 合并提交 |
-| 之后提交 | 本存档（review/）+ release workflow |
+| `6d089d15` + `6fbfa5c3` | v1 存档（review/）+ release workflow + 站点源码 v2 |
+| `7d25f792` | P0 修复 v2 加固（round-1 审查后：编译修复/setEquals/去抖×2/_restartPending/Windows 轮询跳过 getWifiIP/+8 测试） |
+| `1ac3fea3` | round-2 加固（release observer 死代码修复/首轮语义/类型导出/+4 settings 测试） |
+| 之后提交 | v2 存档更新（验证日志/双轮审查报告/升级成本/发版物料） |
 
 ## 项目是什么
 
@@ -83,13 +96,12 @@ review/
 
 ## 验证状态
 
-- ✅ 补丁对 `9529e915` 干净应用（`git apply --check` 通过）；main 合并树 5 文件 MD5 与交付记录逐字节一致；测试文件 7 用例（旧 4 + 新 3）；Dart 括号平衡静态检查通过
-- ⚠️ **未经工具链验证**：编写环境无 `cargo`/`rustc`/`flutter`/`fvm`。验证命令：
-  ```bash
-  fvm flutter analyze && fvm flutter test app/test/unit/provider/network_info_provider_test.dart
-  # 预期：新增 3 用例 + 原有 4 用例全绿
-  ```
-- ⛔ 未向上游提交任何 issue/PR（owner 决策：先验证）
+- ✅ **真实工具链验证（Flutter 3.41.9 = CI 钉死版本）**：`flutter analyze` 0 issues（v1 为 2 errors）；`flutter test`（app）**97/97**；`flutter test`（localsend_isolates）18 passed + 4 rust-skipped（本机无 cargo，与 CI rust job 解耦）；`dart format --set-exit-if-changed` 0 changed；日志存档 `deliverables/verification/`
+- ✅ 突变验证：`setEquals`→`!=` 则 4 测试红；首轮判定→`isNotEmpty` 则 1 测试红（回归测试真实钉死）
+- ✅ 上游一致性联网核实：上游 main 冻结于 9529e915 无撞车；63efbe6b / 221f40a9 逐 diff 核实；issue #3509（2026-10-03 新开，Windows 热点互不可见）直接佐证修复价值
+- ⛔ 未向上游提交任何 issue/PR（owner 决策；CONTRIBUTING AI 条款已再次核实仍然有效）
+
+> v1 时期的静态验证（补丁干净应用 / MD5 链 / 括号平衡）已被上表工具链验证取代；v1 补丁的 MD5 记录见 git 历史（`19698cb8…`）。v2 全量补丁的校验和以 Release 附带的 `SHA256SUMS` 为准。
 
 ## 出处声明
 

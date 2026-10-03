@@ -1,27 +1,107 @@
+diff --git a/app/lib/config/init.dart b/app/lib/config/init.dart
+index 02c6c690..adfbdf4f 100644
+--- a/app/lib/config/init.dart
++++ b/app/lib/config/init.dart
+@@ -147,7 +147,7 @@ Future<RefenaContainer> preInit(List<String> args) async {
+   setDefaultRouteTransition();
+ 
+   final container = RefenaContainer(
+-    observers: kDebugMode ? [CustomRefenaObserver()] : [],
++    observers: kDebugMode ? [CustomRefenaObserver()] : [OnChangeEnablingObserver()],
+     overrides: [
+       persistenceProvider.overrideWithValue(persistenceService),
+       deviceRawInfoProvider.overrideWithValue(await getDeviceInfo()),
+diff --git a/app/lib/config/refena.dart b/app/lib/config/refena.dart
+index 7773ac4a..414ea5ac 100644
+--- a/app/lib/config/refena.dart
++++ b/app/lib/config/refena.dart
+@@ -24,11 +24,23 @@ class CustomRefenaObserver extends RefenaMultiObserver {
+       );
+ }
+ 
++/// Refena 3.5.0 only invokes provider-level `onChanged` callbacks when the
++/// container has at least one observer (BaseNotifier._setState gates
++/// `_onChangedListener` on `_observer != null`). The observer list used to
++/// be empty outside debug mode, which silently disabled the settings sync
++/// (`IsolateSyncSettingsAction`) and the discovery restart in release and
++/// profile builds. This no-op observer keeps `onChanged` alive there
++/// without adding any logging overhead.
++class OnChangeEnablingObserver extends RefenaObserver {
++  @override
++  void handleEvent(RefenaEvent event) {}
++}
++
+ bool _exclude(RefenaEvent event) {
+   return switch (event) {
+     ChangeEvent() => event.notifier is DiscoveryLogger || event.notifier is LocalIpService || event.notifier is FileTransferNotifier,
+-    ActionDispatchedEvent() => event.action.runtimeType.toString() == '_FetchLocalIpAction',
+-    ActionFinishedEvent() => event.action.runtimeType.toString() == '_FetchLocalIpAction',
++    ActionDispatchedEvent() => event.action.runtimeType.toString() == 'FetchLocalIpAction',
++    ActionFinishedEvent() => event.action.runtimeType.toString() == 'FetchLocalIpAction',
+     _ => false,
+   };
+ }
 diff --git a/app/lib/main.dart b/app/lib/main.dart
-index b3caed80..bc9223b4 100644
+index b3caed80..0531aa93 100644
 --- a/app/lib/main.dart
 +++ b/app/lib/main.dart
-@@ -67,8 +67,16 @@ class LocalSendApp extends StatelessWidget {
+@@ -1,3 +1,5 @@
++import 'dart:async';
++
+ import 'package:flutter/material.dart';
+ import 'package:flutter_localizations/flutter_localizations.dart';
+ import 'package:localsend_app/config/init.dart';
+@@ -21,6 +23,11 @@ import 'package:refena_flutter/refena_flutter.dart';
+ import 'package:routerino/routerino.dart';
+ import 'package:system_date_time_format/system_date_time_format.dart';
+ 
++/// Debounces the discovery rebind on Android resume (see
++/// [LocalSendApp] lifecycle handling): Android delivers inactive/resumed
++/// for every file picker, dialog and notification shade interaction.
++Timer? _resumeDiscoveryRebindDebounce;
++
+ Future<void> main(List<String> args) async {
+   final RefenaContainer container;
+   try {
+@@ -67,9 +74,34 @@ class LocalSendApp extends StatelessWidget {
                    // ignore: discarded_futures
                    ref.notifier(serverProvider).ensureRunning();
                  }
 -                if (checkPlatform([TargetPlatform.iOS])) {
 +                if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
                    // The multicast sockets die the same silent way but cannot be probed, so always rebind them.
+-                  ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
 +                  // Android is included because its sockets are bound once at
-+                  // startup and never follow network changes (e.g. an enabled
-+                  // hotspot or a band switch), which is the most reported
-+                  // "device not visible" scenario on mobile.
-+                  // Note for upstream discussion: the iOS-only gate was an
-+                  // explicit decision (see 63efbe6b); a probe-based rebind
-+                  // (own multicast echo liveness check) would be the
-+                  // alternative that avoids restarts on every resume.
-                   ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
++                  // startup and never follow interface changes (e.g. an
++                  // enabled hotspot). The iOS-only gate of 63efbe6b was an
++                  // explicit decision for the suspend-kills-sockets case;
++                  // the interface-set rebind of [FetchLocalIpAction] covers
++                  // ordinary network changes, so this resume rebind is the
++                  // remaining bootstrap for silently invalidated sockets.
++                  //
++                  // The rebind is debounced on Android: it reports
++                  // inactive/resumed for every file picker, dialog and
++                  // notification shade interaction, and every rebind clears
++                  // the confirmed-device store on the Rust side and emits an
++                  // announcement burst. iOS keeps the immediate rebind of
++                  // 63efbe6b.
++                  void rebindDiscovery() {
++                    if (ref.read(parentIsolateProvider).discovery != null) {
++                      ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
++                    }
++                  }
++
++                  if (checkPlatform([TargetPlatform.android])) {
++                    _resumeDiscoveryRebindDebounce?.cancel();
++                    _resumeDiscoveryRebindDebounce = Timer(const Duration(milliseconds: 750), rebindDiscovery);
++                  } else {
++                    rebindDiscovery();
++                  }
                  }
                  break;
+               case AppLifecycleState.detached:
 diff --git a/app/lib/provider/local_ip_provider.dart b/app/lib/provider/local_ip_provider.dart
-index 6a32cfe1..28f7c469 100644
+index 6a32cfe1..ab4f5ba7 100644
 --- a/app/lib/provider/local_ip_provider.dart
 +++ b/app/lib/provider/local_ip_provider.dart
 @@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
@@ -32,7 +112,12 @@ index 6a32cfe1..28f7c469 100644
  import 'package:localsend_isolates/util/network_interfaces.dart';
  import 'package:logging/logging.dart';
  import 'package:network_info_plus/network_info_plus.dart' as plugin;
-@@ -20,6 +21,7 @@ final localIpProvider = ReduxProvider<LocalIpService, NetworkState>((ref) {
+@@ -16,15 +17,22 @@ final _logger = Logger('NetworkInfo');
+ final localIpProvider = ReduxProvider<LocalIpService, NetworkState>((ref) {
+   return LocalIpService(
+     ref.notifier(settingsProvider),
++    ref.notifier(parentIsolateProvider),
+   );
  });
  
  StreamSubscription? _subscription;
@@ -40,49 +125,95 @@ index 6a32cfe1..28f7c469 100644
  
  class LocalIpService extends ReduxNotifier<NetworkState> {
    final SettingsService _settingsService;
-@@ -49,6 +51,16 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
++  final IsolateController _parentIsolateController;
+ 
+-  LocalIpService(this._settingsService);
++  /// Monotonic id of the most recently started [FetchLocalIpAction].
++  /// Fetches that were overtaken by a newer one discard their result.
++  int _fetchId = 0;
++
++  LocalIpService(this._settingsService, this._parentIsolateController);
+ 
+   @override
+   NetworkState init() {
+@@ -49,6 +57,27 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
        if (checkPlatform([TargetPlatform.windows])) {
          // https://github.com/localsend/localsend/issues/12
          // https://github.com/localsend/localsend/issues/78
 +        //
 +        // Windows is excluded from the connectivity stream because of the
-+        // false positives above. Poll the interface list instead: polling is
-+        // cheap and [FetchLocalIpAction] only reacts when the interface set
-+        // actually changed, which still picks up new networks (e.g. an
-+        // enabled hotspot) without the spurious restarts of #12/#78.
++        // false positives above. Poll the interface list instead. The poll
++        // must not call the Wi-Fi plugin: getWifiIP performs a
++        // location-sensitive WLAN query on Windows, which is why the former
++        // periodic polling was removed upstream (221f40a9, "fix(windows):
++        // unwanted location permission" for #78). The native interface list
++        // alone detects address set changes, and [FetchLocalIpAction] only
++        // rebinds the discovery when the set actually changed, so new
++        // networks (e.g. an enabled hotspot) are picked up without the
++        // spurious restarts of #12/#78.
 +        _interfacePollTimer?.cancel();
 +        _interfacePollTimer = Timer.periodic(const Duration(seconds: 10), (_) async {
-+          await dispatchAsync(FetchLocalIpAction());
++          try {
++            await dispatchAsync(FetchLocalIpAction(includeWifiIp: false));
++          } catch (e, stackTrace) {
++            // Keep polling even when a single fetch fails (e.g. a VPN
++            // adapter disappearing mid-enumeration).
++            _logger.warning('Interface poll failed', e, stackTrace);
++          }
 +        });
        } else {
          _subscription = Connectivity().onConnectivityChanged.listen((_) async {
            await dispatchAsync(FetchLocalIpAction());
-@@ -69,13 +81,31 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
+@@ -67,28 +96,89 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
+ }
+ 
  class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> {
++  FetchLocalIpAction({this.includeWifiIp = true});
++
++  /// Whether [_getIp] may query the Wi-Fi plugin for the address of the
++  /// active Wi-Fi interface. Must be false for the Windows interface poll
++  /// (see [InitLocalIpAction]): the query is location-sensitive on Windows.
++  final bool includeWifiIp;
++
    @override
    Future<NetworkState> reduce() async {
 -    return NetworkState(
++    final fetchId = ++notifier._fetchId;
++    // Not the "first fetch" when an earlier fetch already completed (state
++    // initialized) or merely started: a first fetch that hangs or throws
++    // must not downgrade the next fetch to a no-rebind first fetch, or a
++    // device that was offline at startup keeps its empty discovery binding
++    // forever once the network appears.
++    final firstFetchDone = state.initialized || fetchId > 1;
 +    final previousIps = state.localIps;
 +    final newState = NetworkState(
        localIps: await _getIp(
          whitelist: notifier._settingsService.state.networkWhitelist,
          blacklist: notifier._settingsService.state.networkBlacklist,
++        includeWifiIp: includeWifiIp,
        ),
        initialized: true,
      );
++
++    // A newer fetch started while this one was awaiting the platform calls;
++    // its result is at least as fresh, so discard this one instead of
++    // overwriting the newer state with older data.
++    if (fetchId != notifier._fetchId) {
++      return state;
++    }
 +
 +    // The multicast sockets are bound once when the discovery starts and are
 +    // never rebound on their own, so an interface change (e.g. a hotspot that
 +    // was just enabled) would stay invisible until a manual restart.
 +    // Rebind the discovery whenever the set of local addresses actually
-+    // changed. A set comparison (not a list comparison) avoids restarts that
-+    // would only be caused by re-ranking. The first fetch is also skipped:
-+    // the discovery is not running yet or was just started with fresh state.
-+    final setChanged = previousIps.isNotEmpty && previousIps.toSet() != newState.localIps.toSet();
-+    if (setChanged) {
-+      final parentState = global.read(parentIsolateProvider);
-+      if (parentState.discovery != null) {
-+        global.dispatch(IsolateDiscoveryRestartAction());
++    // changed (see [shouldRebindDiscovery]).
++    if (shouldRebindDiscovery(
++      previousIps: previousIps,
++      nextIps: newState.localIps,
++      firstFetchDone: firstFetchDone,
++    )) {
++      if (notifier._parentIsolateController.state.discovery != null) {
++        external(notifier._parentIsolateController).dispatch(IsolateDiscoveryRestartAction());
 +      }
 +    }
 +
@@ -90,7 +221,45 @@ index 6a32cfe1..28f7c469 100644
    }
  }
  
-@@ -113,11 +143,18 @@ List<String> rankIpAddresses(List<String> nativeResult, String? thirdPartyResult
++/// Whether the discovery should be rebound after the local address list
++/// changed from [previousIps] to [nextIps].
++///
++/// The first fetch ([firstFetchDone] is false) never rebinds: the discovery
++/// is not running yet or was just started with fresh state. The comparison
++/// is a set comparison (dart:core Set has no value equality), so a new order
++/// of the same addresses (re-ranking) does not rebind, while a list that
++/// grows from empty (the device was offline when the discovery started)
++/// does rebind.
++@visibleForTesting
++bool shouldRebindDiscovery({
++  required List<String> previousIps,
++  required List<String> nextIps,
++  required bool firstFetchDone,
++}) {
++  return firstFetchDone && !setEquals(previousIps.toSet(), nextIps.toSet());
++}
++
+ Future<List<String>> _getIp({
+   required List<String>? whitelist,
+   required List<String>? blacklist,
++  bool includeWifiIp = true,
+ }) async {
+   final info = plugin.NetworkInfo();
+   String? ip;
+-  try {
+-    ip = await info.getWifiIP();
+-  } catch (e) {
+-    _logger.warning('Failed to get wifi IP', e);
++  if (includeWifiIp) {
++    try {
++      ip = await info.getWifiIP();
++    } catch (e) {
++      _logger.warning('Failed to get wifi IP', e);
++    }
+   }
+ 
+   final nativeResult =
+@@ -113,11 +203,26 @@ List<String> rankIpAddresses(List<String> nativeResult, String? thirdPartyResult
    } else if (nativeResult.isEmpty) {
      // only take the first IP from third party library
      return [thirdPartyResult];
@@ -101,14 +270,22 @@ index 6a32cfe1..28f7c469 100644
      // merge but prefer result from third party library
 +    //
 +    // The third party result is the address of the active Wi-Fi interface,
-+    // so it is also trusted when it ends with ".1": a hotspot gateway
-+    // (e.g. 192.168.43.1 on Android, 192.168.137.1 on Windows,
-+    // 172.20.10.1 on iOS) is exactly the network whose clients must be
-+    // scanned when this device provides the hotspot. Ranking it last made
-+    // the hotspot subnet miss the "maxInterfaces" cut on multi-adapter
-+    // machines and disabled automatic discovery exactly where it is needed
-+    // most. Native addresses ending with ".1" are still ranked last by
-+    // [_rankIpAddresses]; only the actively reported interface wins.
++    // so it is also trusted when it ends with ".1": a hotspot gateway (e.g.
++    // 192.168.43.1 on Android below 12, 192.168.137.1 on Windows) is
++    // exactly the network whose clients must be scanned when this device
++    // provides the hotspot. Ranking it last made the hotspot subnet miss
++    // the "maxInterfaces" cut on multi-adapter machines. Native addresses
++    // ending with ".1" are still ranked last by [_rankIpAddresses]; only
++    // the actively reported interface wins.
++    //
++    // Platform reality check: Android 12+ reports the cellular uplink
++    // address (or null) while a hotspot is enabled, and iOS reports null
++    // because the hotspot bridge interface is not an en* interface, so the
++    // .1 preference mainly benefits older Android and some Windows
++    // hotspot forms. The reliable fix for hotspot visibility on Windows is
++    // the interface poll above (rebind on address set change), not this
++    // ranking. The third party preference itself is pre-existing upstream
++    // behavior and is kept unchanged.
      return {thirdPartyResult, ...nativeResult}.toList()._rankIpAddresses(thirdPartyResult);
    }
  }
@@ -132,10 +309,28 @@ index 9f3a1c5c..7713d94f 100644
    @override
    Future<void> reduce() async {
 diff --git a/app/lib/provider/settings_provider.dart b/app/lib/provider/settings_provider.dart
-index 1e80bc23..57c644e6 100644
+index 1e80bc23..02011729 100644
 --- a/app/lib/provider/settings_provider.dart
 +++ b/app/lib/provider/settings_provider.dart
-@@ -37,6 +37,16 @@ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
+@@ -1,3 +1,5 @@
++import 'dart:async';
++
+ import 'package:collection/collection.dart';
+ import 'package:flutter/material.dart';
+ import 'package:localsend_app/gen/strings.g.dart';
+@@ -14,6 +16,11 @@ import 'package:window_manager/window_manager.dart';
+ 
+ final _listEq = const ListEquality().equals;
+ 
++/// Debounces the discovery restart triggered from settings changes: the
++/// timeout text field fires onChanged on every keystroke and every restart
++/// costs a full multicast rebind plus an announcement burst.
++Timer? _discoveryRestartDebounce;
++
+ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
+   (ref) {
+     return SettingsService(ref.read(persistenceProvider));
+@@ -37,6 +44,28 @@ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
              discoveryTimeout: next.discoveryTimeout,
            ),
          );
@@ -143,20 +338,45 @@ index 1e80bc23..57c644e6 100644
 +    // The running discovery only applies the synced settings when it is
 +    // restarted: the discovery service reads the syncState once per loop
 +    // iteration and blocks on its event stream otherwise. The child isolate
-+    // processes isolate messages in order, so this restart task always sees
-+    // the syncState published by the action above. Skip when the discovery
-+    // is not initialized yet (e.g. during startup).
++    // processes isolate messages in order, so a restart task always sees
++    // the syncState published by the action above (also when debounced:
++    // the sync itself is dispatched immediately, only the restart waits).
++    // Skip when the discovery is not initialized yet (e.g. during startup).
++    //
++    // The restart is debounced because some settings widgets report every
++    // keystroke: converging rapid changes into one rebind avoids a burst of
++    // stop/announce cycles and races with the rebind window in the child
++    // isolate (restarts arriving during a rebind are retried there, but
++    // each one still costs an announcement burst).
 +    if (ref.read(parentIsolateProvider).discovery != null) {
-+      ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
++      _discoveryRestartDebounce?.cancel();
++      _discoveryRestartDebounce = Timer(const Duration(milliseconds: 500), () {
++        if (ref.read(parentIsolateProvider).discovery != null) {
++          ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
++        }
++      });
 +    }
    },
  );
  
+diff --git a/app/pubspec.yaml b/app/pubspec.yaml
+index d41d4f0d..271719e2 100644
+--- a/app/pubspec.yaml
++++ b/app/pubspec.yaml
+@@ -63,6 +63,8 @@ dependencies:
+   system_date_time_format: ^1.4.0
+   system_settings_2: 3.0.2
+   tray_manager: 0.5.3
++  typed_isolates:
++    path: ../packages/typed_isolates
+   uri_content: 3.1.1
+   url_launcher: 6.3.2
+   uuid: 4.6.0
 diff --git a/app/test/unit/provider/network_info_provider_test.dart b/app/test/unit/provider/network_info_provider_test.dart
-index 6c47bd4b..588e0684 100644
+index 6c47bd4b..1a08a42f 100644
 --- a/app/test/unit/provider/network_info_provider_test.dart
 +++ b/app/test/unit/provider/network_info_provider_test.dart
-@@ -18,5 +18,21 @@ void main() {
+@@ -18,5 +18,83 @@ void main() {
      test('should sort primary first and remove duplicates', () {
        expect(rankIpAddresses(['123.456', '123.123', '222.1', '222.1', '321.222'], '123.123'), ['123.123', '123.456', '321.222', '222.1']);
      });
@@ -176,5 +396,360 @@ index 6c47bd4b..588e0684 100644
 +    test('should still rank native ".1" addresses last when primary is another network', () {
 +      expect(rankIpAddresses(['123.456', '222.1'], '123.123'), ['123.123', '123.456', '222.1']);
 +    });
++  });
++
++  group('shouldRebindDiscovery', () {
++    test('should not rebind when the address set is unchanged', () {
++      // dart:core Set has no value equality: a naive `!=` on the sets is an
++      // identity comparison and would rebind on every fetch.
++      expect(
++        shouldRebindDiscovery(previousIps: ['192.168.1.5', '10.0.0.5'], nextIps: ['192.168.1.5', '10.0.0.5'], firstFetchDone: true),
++        isFalse,
++      );
++    });
++
++    test('should not rebind when the addresses are only re-ranked', () {
++      expect(
++        shouldRebindDiscovery(previousIps: ['192.168.1.5', '10.0.0.5'], nextIps: ['10.0.0.5', '192.168.1.5'], firstFetchDone: true),
++        isFalse,
++      );
++    });
++
++    test('should not rebind on duplicates appearing or disappearing', () {
++      expect(
++        shouldRebindDiscovery(previousIps: ['192.168.1.5', '192.168.1.5'], nextIps: ['192.168.1.5'], firstFetchDone: true),
++        isFalse,
++      );
++    });
++
++    test('should rebind when an address was added', () {
++      expect(
++        shouldRebindDiscovery(previousIps: ['192.168.1.5'], nextIps: ['192.168.1.5', '192.168.137.1'], firstFetchDone: true),
++        isTrue,
++      );
++    });
++
++    test('should rebind when an address was removed', () {
++      expect(
++        shouldRebindDiscovery(previousIps: ['192.168.1.5', '10.0.0.5'], nextIps: ['192.168.1.5'], firstFetchDone: true),
++        isTrue,
++      );
++    });
++
++    test('should rebind when the network appears after an offline start', () {
++      // The device was offline when the discovery started (empty list after
++      // the first fetch); the discovery must rebind once a network exists.
++      expect(
++        shouldRebindDiscovery(previousIps: [], nextIps: ['192.168.1.5'], firstFetchDone: true),
++        isTrue,
++      );
++    });
++
++    test('should not rebind when staying offline', () {
++      expect(
++        shouldRebindDiscovery(previousIps: [], nextIps: [], firstFetchDone: true),
++        isFalse,
++      );
++    });
++
++    test('should never rebind on the first fetch', () {
++      expect(
++        shouldRebindDiscovery(previousIps: [], nextIps: ['192.168.1.5'], firstFetchDone: false),
++        isFalse,
++      );
++    });
    });
  }
+diff --git a/app/test/unit/provider/settings_provider_test.dart b/app/test/unit/provider/settings_provider_test.dart
+new file mode 100644
+index 00000000..c366876a
+--- /dev/null
++++ b/app/test/unit/provider/settings_provider_test.dart
+@@ -0,0 +1,194 @@
++import 'dart:isolate';
++
++import 'package:flutter/material.dart' show Color, ThemeMode;
++import 'package:localsend_app/model/persistence/color_mode.dart';
++import 'package:localsend_app/model/persistence/quick_save_mode.dart';
++import 'package:localsend_app/model/send_mode.dart';
++import 'package:localsend_app/provider/persistence_provider.dart';
++import 'package:localsend_app/provider/settings_provider.dart';
++import 'package:localsend_isolates/isolate.dart';
++import 'package:localsend_isolates/model/device.dart';
++import 'package:localsend_isolates/model/device_info_result.dart';
++import 'package:localsend_isolates/model/dto/multicast_dto.dart';
++import 'package:localsend_isolates/model/stored_security_context.dart';
++import 'package:refena_flutter/refena_flutter.dart';
++import 'package:test/test.dart';
++import 'package:typed_isolates/typed_isolates.dart';
++
++/// Regression tests for the settings -> discovery restart chain.
++///
++/// Note: an observer is REQUIRED for provider-level onChanged to fire in
++/// refena 3.5.0 (BaseNotifier._setState only calls _onChangedListener when
++/// _observer != null). The app now always passes an observer
++/// (OnChangeEnablingObserver outside debug mode); these tests mirror that
++/// setup. A hand-rolled noSuchMethod fake is used for the persistence
++/// service because the generated mocks.mocks.dart is stale for some getters.
++void main() {
++  late _RecordingConnector connector;
++  late RefenaContainer container;
++  late SettingsService settings;
++
++  setUp(() {
++    connector = _RecordingConnector();
++    container = RefenaContainer(
++      observers: [_NoopObserver()],
++      overrides: [
++        persistenceProvider.overrideWithValue(_persistence()),
++        parentIsolateProvider.overrideWithNotifier(
++          (ref) => IsolateController(
++            initialState: ParentIsolateState(
++              syncState: _syncState(),
++              discovery: connector,
++              httpUpload: null,
++              httpServer: null,
++            ),
++          ),
++        ),
++      ],
++    );
++    settings = container.notifier(settingsProvider);
++  });
++
++  test('whitelist change sends sync first, then restart after the debounce', () async {
++    await settings.setNetworkWhitelist(['192.168.0.*']);
++
++    // The sync message is dispatched immediately.
++    expect(connector.sent, hasLength(1));
++    expect(connector.sent.first.syncState?.networkWhitelist, ['192.168.0.*']);
++    expect(connector.sent.first.data, isNull);
++
++    // The restart is debounced (500ms) but must still arrive.
++    await Future<void>.delayed(const Duration(milliseconds: 600));
++    expect(connector.sent, hasLength(2));
++    expect(connector.sent.last.syncState, isNull);
++    expect(connector.sent.last.data?.data, isA<DiscoveryRestartTask>());
++  });
++
++  test('unrelated settings change sends nothing to the discovery', () async {
++    await settings.setAlias('x');
++    await Future<void>.delayed(const Duration(milliseconds: 600));
++    expect(connector.sent, isEmpty);
++  });
++
++  test('discovery == null during startup does not throw StateError', () async {
++    final container2 = RefenaContainer(
++      observers: [_NoopObserver()],
++      overrides: [
++        persistenceProvider.overrideWithValue(_persistence()),
++        parentIsolateProvider.overrideWithNotifier(
++          (ref) => IsolateController(
++            initialState: ParentIsolateState(
++              syncState: _syncState(),
++              discovery: null,
++              httpUpload: null,
++              httpServer: null,
++            ),
++          ),
++        ),
++      ],
++    );
++    final settings2 = container2.notifier(settingsProvider);
++    await settings2.setDiscoveryTimeout(2);
++    await Future<void>.delayed(const Duration(milliseconds: 600));
++    // Reaching this point without a StateError is the assertion: the restart
++    // dispatch is guarded by discovery != null.
++  });
++
++  test('rapid consecutive changes converge into one restart with the final value', () async {
++    // Typing "15" into the timeout field fires onChanged twice.
++    await settings.setDiscoveryTimeout(1);
++    await settings.setDiscoveryTimeout(15);
++
++    // Both syncs are dispatched immediately.
++    expect(
++      connector.sent.where((m) => m.syncState != null).map((m) => m.syncState!.discoveryTimeout),
++      [1, 15],
++    );
++
++    // Only one restart arrives after the debounce, and no further messages follow.
++    await Future<void>.delayed(const Duration(milliseconds: 700));
++    expect(connector.sent.where((m) => m.data != null), hasLength(1));
++    expect(connector.sent.last.data?.data, isA<DiscoveryRestartTask>());
++  });
++}
++
++class _RecordingConnector implements IsolateConnector<IsolateTaskStreamResult<DiscoveryResult>, SendToIsolateData<IsolateTask<DiscoveryTask>>> {
++  final sent = <SendToIsolateData<IsolateTask<DiscoveryTask>>>[];
++
++  @override
++  void sendToIsolate(SendToIsolateData<IsolateTask<DiscoveryTask>> message) => sent.add(message);
++
++  @override
++  Stream<IsolateTaskStreamResult<DiscoveryResult>> get receiveFromIsolate => const Stream.empty();
++
++  @override
++  Isolate get isolate => throw UnimplementedError();
++}
++
++class _NoopObserver extends RefenaObserver {
++  @override
++  void handleEvent(RefenaEvent event) {}
++}
++
++class _FakePersistence implements PersistenceService {
++  final Map<Symbol, Object?> stubs;
++
++  _FakePersistence(this.stubs);
++
++  @override
++  dynamic noSuchMethod(Invocation i) {
++    if (stubs.containsKey(i.memberName)) return stubs[i.memberName];
++    // All mutating methods return Future<void>; all value getters used by
++    // SettingsService.init() are stubbed above.
++    if (i.memberName.toString().contains('set')) return Future<void>.value();
++    return super.noSuchMethod(i);
++  }
++}
++
++PersistenceService _persistence() => _FakePersistence({
++  #getShowToken: 'token',
++  #getAlias: 'alias',
++  #getTheme: ThemeMode.system,
++  #getColorMode: ColorMode.system,
++  #getCustomColor: const Color(0xFF000000),
++  #getLocale: null,
++  #getPort: 53317,
++  #getNetworkWhitelist: null,
++  #getNetworkBlacklist: null,
++  #getMulticastGroup: '224.0.0.167',
++  #getDestination: null,
++  #isSaveToGallery: false,
++  #isSaveToHistory: false,
++  #getQuickSave: QuickSaveMode.off,
++  #getReceivePin: null,
++  #isAutoFinish: false,
++  #isMinimizeToTray: false,
++  #isHttps: true,
++  #getSendMode: SendMode.single,
++  #getSaveWindowPlacement: true,
++  #getAlwaysOnTop: false,
++  #getEnableAnimations: true,
++  #getDeviceType: null,
++  #getDeviceModel: null,
++  #getShareViaLinkAutoAccept: false,
++  #getReceiveViaLinkAutoAccept: false,
++  #getCreateChecksums: true,
++  #getVerifyChecksums: true,
++  #getDiscoveryTimeout: 3,
++  #getAdvancedSettingsEnabled: false,
++});
++
++SyncState _syncState() => SyncState(
++  rootIsolateToken: Object(),
++  securityContext: StoredSecurityContext(privateKey: '', publicKey: '', certificate: '', certificateHash: ''),
++  deviceInfo: DeviceInfoResult(deviceType: DeviceType.headless, deviceModel: null, androidSdkInt: null),
++  alias: 'alias',
++  port: 53317,
++  networkWhitelist: null,
++  networkBlacklist: null,
++  protocol: ProtocolType.https,
++  multicastGroup: '224.0.0.167',
++  discoveryTimeout: 3,
++  serverRunning: false,
++  download: false,
++);
+diff --git a/packages/localsend_isolates/lib/isolate.dart b/packages/localsend_isolates/lib/isolate.dart
+index b0a435f9..0f0e78c0 100644
+--- a/packages/localsend_isolates/lib/isolate.dart
++++ b/packages/localsend_isolates/lib/isolate.dart
+@@ -1,3 +1,11 @@
++export 'package:localsend_isolates/src/isolate/child/discovery_isolate.dart'
++    show
++        DiscoveryResult,
++        DiscoveryRestartTask,
++        DiscoveryTask;
++export 'package:localsend_isolates/src/isolate/dto/send_to_isolate_data.dart'
++    show
++        SendToIsolateData;
+ export 'package:localsend_isolates/src/isolate/child/server_isolate.dart'
+     show
+         HttpServerCancelReceivedEvent,
+diff --git a/packages/localsend_isolates/lib/src/task/discovery/discovery.dart b/packages/localsend_isolates/lib/src/task/discovery/discovery.dart
+index d448719f..4e0182aa 100644
+--- a/packages/localsend_isolates/lib/src/task/discovery/discovery.dart
++++ b/packages/localsend_isolates/lib/src/task/discovery/discovery.dart
+@@ -31,6 +31,14 @@ class DiscoveryService {
+   /// opposed to stopping itself because the multicast sockets failed.
+   bool _restartRequested = false;
+ 
++  /// Whether a restart was requested while a rebind was already in flight
++  /// (between reading the synced settings and binding the new sockets).
++  /// The freshly bound discovery is stopped again immediately, so the next
++  /// loop iteration rebinds with the latest synced settings. Without this,
++  /// such a restart would be silently lost and the discovery would keep
++  /// running with outdated settings.
++  bool _restartPending = false;
++
+   /// Starts the discovery and emits every device confirmation:
+   /// answered announcements, scan results and devices fed in
+   /// via [addDevice] all arrive on this one stream.
+@@ -57,6 +65,10 @@ class DiscoveryService {
+     });
+ 
+     while (true) {
++      // A restart request that arrived before this point is satisfied by
++      // the fresh settings read below; only requests arriving during the
++      // bind need the post-bind stop.
++      _restartPending = false;
+       final syncState = _ref.read(syncProvider);
+ 
+       final RsDiscovery discovery;
+@@ -96,8 +108,20 @@ class DiscoveryService {
+ 
+       _discovery = discovery;
+ 
+-      // Tell everyone in the network that I am online.
+-      unawaited(discovery.announce());
++      if (_restartPending) {
++        // A restart was requested while this discovery was being bound:
++        // the bind used the synced settings from the start of this
++        // iteration, which may be outdated. Stop it right away (before the
++        // announcement, so no burst is wasted) and let the loop rebind with
++        // the latest state.
++        _restartPending = false;
++        _restartRequested = true;
++        _logger.info('Restart requested during rebind; rebinding with the latest state');
++        unawaited(discovery.stop());
++      } else {
++        // Tell everyone in the network that I am online.
++        unawaited(discovery.announce());
++      }
+ 
+       await for (final device in discovery.listen()) {
+         if (!devices.isClosed) {
+@@ -128,10 +152,21 @@ class DiscoveryService {
+       // Ends the listen stream, which makes [startListener] rebind.
+       _restartRequested = true;
+       unawaited(discovery.stop());
+-    } else if (!_retryCompleter.isCompleted) {
+-      // Starting failed previously; let [startListener] try again.
++      return;
++    }
++
++    // The discovery is not bound right now: either a start failed earlier
++    // (the retry completer below unblocks the wait and the next iteration
++    // reads the latest settings anyway), or a rebind is currently in
++    // flight. In the latter case the incoming restart cannot act on
++    // anything yet; remember it so the freshly bound discovery is stopped
++    // again and the next iteration picks up the latest settings. Without
++    // this, the restart would be silently dropped (completing the retry
++    // completer has no effect while nobody awaits it).
++    if (!_retryCompleter.isCompleted) {
+       _retryCompleter.complete();
+     }
++    _restartPending = true;
+   }
+ 
+   /// Sends an announcement which triggers a response on every LocalSend member of the network.
