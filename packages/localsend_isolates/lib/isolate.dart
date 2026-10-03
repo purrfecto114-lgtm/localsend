@@ -1,11 +1,6 @@
 export 'package:localsend_isolates/src/isolate/child/discovery_isolate.dart'
-    show
-        DiscoveryResult,
-        DiscoveryRestartTask,
-        DiscoveryTask;
-export 'package:localsend_isolates/src/isolate/dto/send_to_isolate_data.dart'
-    show
-        SendToIsolateData;
+    show DiscoveryDiagnosticsResult, DiscoveryDiagnosticsTask, DiscoveryResult, DiscoveryRestartTask, DiscoveryTask;
+export 'package:localsend_isolates/src/isolate/dto/send_to_isolate_data.dart' show SendToIsolateData;
 export 'package:localsend_isolates/src/isolate/child/server_isolate.dart'
     show
         HttpServerCancelReceivedEvent,

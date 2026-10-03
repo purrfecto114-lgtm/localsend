@@ -82,7 +82,25 @@
     },
     "sendModeHelp": "Explanation",
     "help": "Please ensure that the desired target is also on the same Wi-Fi network.",
-    "placeItems": "Place items to share."
+    "placeItems": "Place items to share.",
+    "diagnosis": {
+      "scanning": "Searching for nearby devices...",
+      "noInterface": {
+        "title": "No network connection",
+        "advice": "This device is not connected to any network. Check the Wi-Fi or cable connection of this device."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast unavailable",
+        "advice": "LocalSend cannot use multicast discovery on this network. Make sure both devices are on the same network, and that AP isolation or a firewall is not blocking UDP port {port}.",
+        "reason": "Reason: {reason}"
+      },
+      "scanNoResult": {
+        "title": "No devices found",
+        "advice": "Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.",
+        "detail": "Sent {announcements} announcements and {scans} network scans without a response."
+      },
+      "rescan": "Search again"
+    }
   },
   "settingsTab": {
     "title": "Settings",

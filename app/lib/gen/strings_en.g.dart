@@ -258,6 +258,8 @@ class Translations$sendTab$en {
 
   /// en: 'Place items to share.'
   String get placeItems => 'Place items to share.';
+
+  late final Translations$sendTab$diagnosis$en diagnosis = Translations$sendTab$diagnosis$en.internal(_root);
 }
 
 // Path: settingsTab
@@ -1044,6 +1046,26 @@ class Translations$sendTab$sendModes$en {
 
   /// en: 'Share via link'
   String get link => 'Share via link';
+}
+
+// Path: sendTab.diagnosis
+class Translations$sendTab$diagnosis$en {
+  Translations$sendTab$diagnosis$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Searching for nearby devices...'
+  String get scanning => 'Searching for nearby devices...';
+
+  late final Translations$sendTab$diagnosis$noInterface$en noInterface = Translations$sendTab$diagnosis$noInterface$en.internal(_root);
+  late final Translations$sendTab$diagnosis$multicastUnavailable$en multicastUnavailable =
+      Translations$sendTab$diagnosis$multicastUnavailable$en.internal(_root);
+  late final Translations$sendTab$diagnosis$scanNoResult$en scanNoResult = Translations$sendTab$diagnosis$scanNoResult$en.internal(_root);
+
+  /// en: 'Search again'
+  String get rescan => 'Search again';
 }
 
 // Path: settingsTab.general
@@ -1834,6 +1856,60 @@ class Translations$dialogs$zoom$en {
 
   /// en: 'URL'
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class Translations$sendTab$diagnosis$noInterface$en {
+  Translations$sendTab$diagnosis$noInterface$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'No network connection'
+  String get title => 'No network connection';
+
+  /// en: 'This device is not connected to any network. Check the Wi-Fi or cable connection of this device.'
+  String get advice => 'This device is not connected to any network. Check the Wi-Fi or cable connection of this device.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class Translations$sendTab$diagnosis$multicastUnavailable$en {
+  Translations$sendTab$diagnosis$multicastUnavailable$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Multicast unavailable'
+  String get title => 'Multicast unavailable';
+
+  /// en: 'LocalSend cannot use multicast discovery on this network. Make sure both devices are on the same network, and that AP isolation or a firewall is not blocking UDP port {port}.'
+  String advice({required Object port}) =>
+      'LocalSend cannot use multicast discovery on this network. Make sure both devices are on the same network, and that AP isolation or a firewall is not blocking UDP port ${port}.';
+
+  /// en: 'Reason: {reason}'
+  String reason({required Object reason}) => 'Reason: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class Translations$sendTab$diagnosis$scanNoResult$en {
+  Translations$sendTab$diagnosis$scanNoResult$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'No devices found'
+  String get title => 'No devices found';
+
+  /// en: 'Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.'
+  String get advice =>
+      'Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.';
+
+  /// en: 'Sent {announcements} announcements and {scans} network scans without a response.'
+  String detail({required Object announcements, required Object scans}) =>
+      'Sent ${announcements} announcements and ${scans} network scans without a response.';
 }
 
 // Path: settingsTab.general.brightnessOptions

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
+import 'package:localsend_app/provider/network/discovery_diagnosis_provider.dart';
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:refena_flutter/refena_flutter.dart';
@@ -17,6 +18,9 @@ class StartSmartScan extends AsyncGlobalAction {
     // The interface limit is user-configurable (advanced settings, default 5).
     final networkInterfaces = ref.read(localIpProvider).localIps.take(settings.maxInterfaces).toList();
 
+    // Void the previous no-devices diagnosis while scanning.
+    ref.notifier(discoveryDiagnosisProvider).scanStarted();
+
     await ref
         .redux(nearbyDevicesProvider)
         .dispatchAsync(
@@ -27,6 +31,19 @@ class StartSmartScan extends AsyncGlobalAction {
             https: settings.https,
             grace: const Duration(seconds: 1),
           ),
+        );
+
+    // The last confirmations of a scan race the completion of the scan by
+    // a few isolate hops; give them a moment to land so the diagnosis does
+    // not declare "no devices" right before a device registers.
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    // Judge why the list is (still) empty, from the freshest state.
+    await ref
+        .notifier(discoveryDiagnosisProvider)
+        .scanFinished(
+          localIps: ref.read(localIpProvider).localIps,
+          devicesFound: ref.read(nearbyDevicesProvider).allDevices.isNotEmpty,
         );
   }
 }

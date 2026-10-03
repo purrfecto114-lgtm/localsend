@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:localsend_isolates/model/device.dart';
+import 'package:localsend_isolates/model/discovery_diagnostics.dart';
 import 'package:localsend_isolates/rust/api/server.dart' show WebParams;
 import 'package:localsend_isolates/src/isolate/child/discovery_isolate.dart';
 import 'package:localsend_isolates/src/isolate/child/server_isolate.dart';
@@ -140,6 +141,30 @@ class IsolateDiscoveryDeviceLogsAction extends AsyncReduxActionWithResult<Isolat
         .first;
 
     return (state, (result as DiscoveryDeviceLogsResult).logs);
+  }
+}
+
+/// Fetches the current diagnostics of the discovery service in the
+/// discovery isolate: whether it is bound, the multicast join result and
+/// its scan counters.
+/// Pull-based (one request, one result) like
+/// [IsolateDiscoveryDeviceLogsAction]; it never touches the device stream
+/// of [IsolateDiscoveryListenAction].
+class IsolateDiscoveryDiagnosticsAction extends AsyncReduxActionWithResult<IsolateController, ParentIsolateState, DiscoveryDiagnostics> {
+  @override
+  Future<(ParentIsolateState, DiscoveryDiagnostics)> reduce() async {
+    final connection = state.discovery;
+    if (connection == null) {
+      throw StateError('discovery is not initialized');
+    }
+
+    final result = await connection
+        .sendWrappedTaskAndListenStream(
+          task: DiscoveryDiagnosticsTask(),
+        )
+        .first;
+
+    return (state, (result as DiscoveryDiagnosticsResult).diagnostics);
   }
 }
 

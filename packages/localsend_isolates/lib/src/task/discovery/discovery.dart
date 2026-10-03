@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:localsend_isolates/constants.dart';
 import 'package:localsend_isolates/model/device.dart';
+import 'package:localsend_isolates/model/discovery_diagnostics.dart';
 import 'package:localsend_isolates/rust/api/discovery.dart';
 import 'package:localsend_isolates/rust/api/model.dart' as rust_model;
 import 'package:localsend_isolates/src/isolate/child/sync_provider.dart';
@@ -38,6 +39,22 @@ class DiscoveryService {
   /// such a restart would be silently lost and the discovery would keep
   /// running with outdated settings.
   bool _restartPending = false;
+
+  /// The last known reason the discovery is not running with multicast: the
+  /// error of a failed start, the multicast error of the last binding, or
+  /// the unexpected end of the listen stream. null while multicast is (as
+  /// far as known) fine.
+  String? _lastMulticastError;
+
+  /// When the discovery was last successfully bound.
+  DateTime? _boundAt;
+
+  /// Diagnostics counters, kept since this service was created.
+  int _announcementsSent = 0;
+  int _subnetScansRequested = 0;
+  int _stagedScansRequested = 0;
+  int _unexpectedRestarts = 0;
+  int _deviceConfirmations = 0;
 
   /// Starts the discovery and emits every device confirmation:
   /// answered announcements, scan results and devices fed in
@@ -91,6 +108,7 @@ class DiscoveryService {
         );
       } catch (e) {
         _logger.warning('Could not start discovery (group: ${syncState.multicastGroup}, port: ${syncState.port})', e);
+        _lastMulticastError = 'Could not start discovery: $e';
         // Wait for the next restart request instead of hot-looping
         _retryCompleter = Completer();
         await _retryCompleter.future;
@@ -101,6 +119,8 @@ class DiscoveryService {
       if (multicastError != null) {
         _logger.warning('Discovery runs without multicast (group: ${syncState.multicastGroup}, port: ${syncState.port}): $multicastError');
       }
+      _lastMulticastError = multicastError;
+      _boundAt = DateTime.now();
 
       if (!_ref.read(syncProvider).serverRunning) {
         await discovery.setAnswerAnnouncements(answer: false);
@@ -121,9 +141,11 @@ class DiscoveryService {
       } else {
         // Tell everyone in the network that I am online.
         unawaited(discovery.announce());
+        _announcementsSent++;
       }
 
       await for (final device in discovery.listen()) {
+        _deviceConfirmations++;
         if (!devices.isClosed) {
           devices.add(device.toDevice());
         }
@@ -140,6 +162,8 @@ class DiscoveryService {
         // The delay avoids hot-looping when binding keeps succeeding but the
         // sockets keep failing right away.
         _logger.warning('Discovery stopped unexpectedly (multicast sockets failed). Restarting discovery.');
+        _unexpectedRestarts++;
+        _lastMulticastError = 'Multicast sockets failed; the discovery is restarting';
         await Future<void>.delayed(const Duration(seconds: 1));
       }
     }
@@ -179,6 +203,7 @@ class DiscoveryService {
 
     _logger.info('Announce via UDP');
     await discovery.announce();
+    _announcementsSent++;
   }
 
   /// Scans the subnet of [networkInterface] by probing every host over HTTP,
@@ -192,6 +217,7 @@ class DiscoveryService {
       return;
     }
 
+    _subnetScansRequested++;
     await discovery.scanSubnet(
       interfaceIp: networkInterface,
       port: port,
@@ -219,6 +245,7 @@ class DiscoveryService {
     }
 
     final protocol = https ? rust_model.ProtocolType.https : rust_model.ProtocolType.http;
+    _stagedScansRequested++;
     await discovery.discoverStaged(
       channels: [
         for (final (host, port) in favorites) RsDeviceChannel(host: host, port: port, protocol: protocol),
@@ -227,6 +254,49 @@ class DiscoveryService {
       port: port,
       protocol: protocol,
       graceMs: BigInt.from(grace.inMilliseconds),
+    );
+  }
+
+  /// A snapshot of the current discovery state for the no-devices
+  /// diagnosis: whether it is bound, the multicast join result and a few
+  /// counters of what this service did so far.
+  /// Pull-based (see [DiscoveryDiagnosticsTask]) and idempotent; it has no
+  /// side effect apart from refreshing the cached multicast error.
+  Future<DiscoveryDiagnostics> diagnostics() async {
+    final discovery = _discovery;
+    if (discovery == null) {
+      return DiscoveryDiagnostics(
+        running: false,
+        multicastError: _lastMulticastError,
+        boundAt: _boundAt,
+        announcementsSent: _announcementsSent,
+        subnetScansRequested: _subnetScansRequested,
+        stagedScansRequested: _stagedScansRequested,
+        unexpectedRestarts: _unexpectedRestarts,
+        deviceConfirmations: _deviceConfirmations,
+      );
+    }
+
+    // The Rust method is side-effect free and reflects the state of the
+    // current binding; reading it again also updates the cache for the next
+    // pull while the discovery is not running.
+    String? multicastError;
+    try {
+      multicastError = await discovery.multicastError();
+    } catch (e) {
+      _logger.warning('Could not read the multicast error', e);
+      multicastError = 'multicastError() failed: $e';
+    }
+    _lastMulticastError = multicastError;
+    return DiscoveryDiagnostics(
+      running: true,
+      multicastError: multicastError,
+      boundAt: _boundAt,
+      announcementsSent: _announcementsSent,
+      subnetScansRequested: _subnetScansRequested,
+      stagedScansRequested: _stagedScansRequested,
+      unexpectedRestarts: _unexpectedRestarts,
+      deviceConfirmations: _deviceConfirmations,
     );
   }
 
