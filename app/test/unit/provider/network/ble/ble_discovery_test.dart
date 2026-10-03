@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:fake_async/fake_async.dart';
 import 'package:localsend_app/provider/network/ble/ble_codec.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
 import 'package:localsend_app/provider/network/ble/ble_transport.dart';
@@ -37,6 +38,8 @@ Uint8List _remotePayload({String fingerprint = 'fp-remote', String ip = '192.168
   );
 }
 
+Uint8List _beacon(String fingerprint) => encodeBleBeacon(port: 1234, fingerprint: fingerprint, salt: Uint8List(4));
+
 /// Flushes the microtask/event queue so the serialized GATT chain of the
 /// service settles; the fakes never use real timers.
 Future<void> _pump([int times = 8]) async {
@@ -58,10 +61,19 @@ class _FakeTransport implements BleTransport {
   bool advertiseShouldThrow = false;
   bool scanShouldThrow = false;
   Object? readError;
+
+  /// While set, [startScan] does not complete until the completer fires
+  /// (used to suspend a start midway).
+  Completer<void>? scanGate;
+
+  /// While set, [readRemotePayload] does not complete until the completer
+  /// fires (used to keep a GATT handshake in flight).
+  Completer<void>? readGate;
+
   final Map<String, Uint8List?> payloads = {};
 
-  void emit(String remoteId, {Uint8List? beacon}) {
-    hits.add(BleAdvertisementHit(remoteId: remoteId, beacon: beacon, rssi: -60));
+  void emit(String remoteId, {Uint8List? beacon, int rssi = -60}) {
+    hits.add(BleAdvertisementHit(remoteId: remoteId, beacon: beacon, rssi: rssi));
   }
 
   @override
@@ -88,6 +100,10 @@ class _FakeTransport implements BleTransport {
     if (scanShouldThrow) {
       throw StateError('scan refused');
     }
+    final gate = scanGate;
+    if (gate != null) {
+      await gate.future;
+    }
   }
 
   @override
@@ -98,6 +114,10 @@ class _FakeTransport implements BleTransport {
   @override
   Future<Uint8List?> readRemotePayload(String remoteId) async {
     gattReads.add(remoteId);
+    final gate = readGate;
+    if (gate != null) {
+      await gate.future;
+    }
     if (readError != null) {
       throw readError!;
     }
@@ -175,10 +195,7 @@ void main() {
     transport.payloads['remote-1'] = _remotePayload();
     await service.start();
 
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List.fromList([1, 2, 3, 4])),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
 
     expect(dispatched, hasLength(1));
@@ -235,11 +252,22 @@ void main() {
     expect(dispatched, isEmpty);
   });
 
+  test('a GATT payload with a non-literal ip is dropped without a dispatch', () async {
+    transport.payloads['evil'] = _remotePayload(ip: 'attacker.example.com');
+    await service.start();
+
+    transport.emit('evil', beacon: _beacon('fp-remote'));
+    await _pump();
+
+    expect(transport.gattReads, ['evil']);
+    expect(dispatched, isEmpty, reason: 'the codec must reject a host name in the ip field');
+  });
+
   test('repeated hits from the same remote within the cooldown read GATT once', () async {
     transport.payloads['remote-1'] = _remotePayload();
     await service.start();
 
-    final beacon = encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4));
+    final beacon = _beacon('fp-remote');
     transport.emit('remote-1', beacon: beacon);
     await _pump();
     transport.emit('remote-1', beacon: beacon);
@@ -263,10 +291,11 @@ void main() {
     transport.payloads['remote-2'] = _remotePayload();
     await service.start();
 
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    // The advertisements arrive one after the other, as they do on the
+    // radio: a hit landing while a handshake is in flight is dropped and
+    // picked up again by the peer's next advertisement.
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
+    await _pump();
     transport.emit(
       'remote-2',
       beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List.fromList([9, 9, 9, 9])),
@@ -277,14 +306,88 @@ void main() {
     expect(dispatched, hasLength(1));
   });
 
+  test('hits weaker than the RSSI floor are dropped', () async {
+    transport.payloads['far'] = _remotePayload();
+    await service.start();
+
+    transport.emit('far', beacon: _beacon('fp-remote'), rssi: -95);
+    await _pump();
+    expect(transport.gattReads, isEmpty, reason: 'a -95 dBm hit is below the -80 dBm floor');
+
+    transport.emit('far', beacon: _beacon('fp-remote'), rssi: -79);
+    await _pump();
+    expect(transport.gattReads, ['far'], reason: 'a -79 dBm hit passes the floor');
+  });
+
+  test('a hit arriving while a GATT handshake is in flight is dropped, not queued', () async {
+    final readGate = Completer<void>();
+    transport.readGate = readGate;
+    await service.start();
+
+    transport.payloads['slow'] = _remotePayload();
+    transport.emit('slow'); // beaconless hit, its GATT read now hangs on the gate
+    await _pump(3);
+    expect(transport.gattReads, ['slow']);
+
+    transport.payloads['other'] = _remotePayload(fingerprint: 'fp-other');
+    transport.emit('other');
+    await _pump(3);
+    expect(transport.gattReads, ['slow'], reason: 'the in-flight handshake must hold the single-flight token');
+
+    readGate.complete();
+    await _pump(3);
+    expect(dispatched, hasLength(1), reason: 'only the slow handshake can dispatch');
+
+    // The dropped peer is picked up by its next advertisement.
+    transport.emit('other');
+    await _pump(3);
+    expect(transport.gattReads, contains('other'));
+    expect(dispatched, hasLength(2));
+  });
+
+  test('the per-remote cooldown bookkeeping is capped (LRU)', () async {
+    final capped = BleDiscoveryService(
+      transportFactory: () => transport,
+      isFeatureEnabled: () => true,
+      selfDeviceInfo: _selfDevice,
+      onDeviceDiscovered: dispatched.add,
+      gattRetryCooldown: const Duration(seconds: 30),
+      fingerprintRefreshInterval: const Duration(seconds: 60),
+      gattAttemptCacheLimit: 2,
+      now: () => clock,
+    );
+    await capped.start();
+
+    transport.payloads['a'] = _remotePayload(fingerprint: 'fp-a');
+    transport.payloads['b'] = _remotePayload(fingerprint: 'fp-b');
+    transport.payloads['c'] = _remotePayload(fingerprint: 'fp-c');
+    for (final id in ['a', 'b']) {
+      transport.emit(id, beacon: _beacon('fp-$id'));
+      await _pump();
+    }
+    expect(transport.gattReads, containsAll(['a', 'b']));
+
+    // 'c' evicts 'a' (the least recently used entry) from the cooldown
+    // map: 'b' is still remembered (its next advertisement stays blocked
+    // within the cooldown), while 'a' is contacted again immediately.
+    transport.emit('c', beacon: _beacon('fp-c'));
+    await _pump();
+    transport.emit('b', beacon: _beacon('fp-b'));
+    await _pump();
+    transport.emit('a', beacon: _beacon('fp-a'));
+    await _pump();
+
+    expect(transport.gattReads.where((id) => id == 'c').length, 1);
+    expect(transport.gattReads.where((id) => id == 'b').length, 1, reason: 'the remembered remote is still within its cooldown');
+    expect(transport.gattReads.where((id) => id == 'a').length, 2, reason: 'the evicted remote is contacted again');
+    await capped.stop();
+  });
+
   test('transport failures are contained and the service keeps working', () async {
     transport.readError = StateError('GATT connection lost');
     await service.start();
 
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
 
     expect(dispatched, isEmpty, reason: 'the failed read must not dispatch anything');
@@ -293,10 +396,7 @@ void main() {
     transport.readError = null;
     transport.payloads['remote-1'] = _remotePayload();
     clock = clock.add(const Duration(seconds: 31));
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
 
     expect(dispatched, hasLength(1));
@@ -310,10 +410,7 @@ void main() {
 
     // Still running and still processing afterwards.
     transport.payloads['remote-1'] = _remotePayload();
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
     expect(dispatched, hasLength(1));
   });
@@ -326,10 +423,7 @@ void main() {
     expect(service.isRunning, isTrue);
 
     transport.payloads['remote-1'] = _remotePayload();
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
     expect(dispatched, hasLength(1));
   });
@@ -368,12 +462,99 @@ void main() {
     expect(transport.actions, containsAll(['advertise', 'scan']));
 
     transport.payloads['remote-1'] = _remotePayload();
-    transport.emit(
-      'remote-1',
-      beacon: encodeBleBeacon(port: 1234, fingerprint: 'fp-remote', salt: Uint8List(4)),
-    );
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
     await _pump();
     expect(dispatched, hasLength(1));
+  });
+
+  test('stop() while start() is still settling leaves no orphan scan', () async {
+    final gate = Completer<void>();
+    transport.scanGate = gate;
+    final starting = service.start();
+    await _pump(2);
+    expect(service.isRunning, isTrue, reason: 'the service counts as running while the scan startup is in flight');
+
+    final stopping = service.stop();
+    gate.complete();
+    await starting;
+    await stopping;
+    await _pump();
+
+    expect(service.isRunning, isFalse);
+    expect(transport.actions.where((a) => a == 'scan'), hasLength(1));
+    expect(transport.actions.where((a) => a == 'stopScan'), hasLength(1), reason: 'the scan that started mid-shutdown must be torn down again');
+    expect(transport.actions, containsAll(['stopAdvertise', 'dispose']));
+
+    // A hit after the shutdown goes nowhere: the subscription is gone.
+    transport.payloads['remote-1'] = _remotePayload();
+    transport.emit('remote-1', beacon: _beacon('fp-remote'));
+    await _pump();
+    expect(transport.gattReads, isEmpty);
+  });
+
+  test('the beacon salt rotates while advertising', () {
+    fakeAsync((async) {
+      final rotating = BleDiscoveryService(
+        transportFactory: () => transport,
+        isFeatureEnabled: () => true,
+        selfDeviceInfo: _selfDevice,
+        onDeviceDiscovered: dispatched.add,
+        gattRetryCooldown: const Duration(seconds: 30),
+        fingerprintRefreshInterval: const Duration(seconds: 60),
+        beaconSaltRotationInterval: const Duration(seconds: 90),
+        now: () => clock,
+      );
+      unawaited(rotating.start());
+      async.flushMicrotasks();
+
+      final initial = decodeBleBeacon(transport.advertisedBeacon!)!;
+      expect(bleFingerprintHash('fp-self', initial.salt), initial.fpHash);
+
+      async.elapse(const Duration(seconds: 90));
+      async.flushMicrotasks();
+
+      final rotated = decodeBleBeacon(transport.advertisedBeacon!)!;
+      expect(rotated.salt, isNot(equals(initial.salt)), reason: 'the salt must change after one rotation interval');
+      expect(
+        bleFingerprintHash('fp-self', rotated.salt),
+        rotated.fpHash,
+        reason: 'the rotated beacon must still hash the own fingerprint',
+      );
+      expect(transport.actions.where((a) => a == 'advertise').length, 2);
+      expect(transport.actions, contains('stopAdvertise'));
+
+      // Stopping cancels the rotation: no further advertisement restarts.
+      unawaited(rotating.stop());
+      async.flushMicrotasks();
+      async.elapse(const Duration(seconds: 180));
+      async.flushMicrotasks();
+      expect(transport.actions.where((a) => a == 'advertise').length, 2, reason: 'the rotation must stop with the service');
+    });
+  });
+
+  test('a failing advertisement is not retried by the salt rotation', () {
+    fakeAsync((async) {
+      transport.advertiseShouldThrow = true;
+      final rotating = BleDiscoveryService(
+        transportFactory: () => transport,
+        isFeatureEnabled: () => true,
+        selfDeviceInfo: _selfDevice,
+        onDeviceDiscovered: dispatched.add,
+        beaconSaltRotationInterval: const Duration(seconds: 90),
+        now: () => clock,
+      );
+      unawaited(rotating.start());
+      async.flushMicrotasks();
+      expect(transport.advertisedBeacon, isNull);
+
+      async.elapse(const Duration(seconds: 180));
+      async.flushMicrotasks();
+      expect(
+        transport.actions.where((a) => a == 'advertise').length,
+        1,
+        reason: 'the rotation must not hammer a radio that refused the advertisement',
+      );
+    });
   });
 
   test('a transport that cannot even be built is tolerated', () async {

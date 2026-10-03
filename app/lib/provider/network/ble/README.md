@@ -1,12 +1,12 @@
 # BLE-assisted discovery (phase 1)
 
 This module adds an opt-in discovery path for networks where multicast does
-not work (AP isolation, guest Wi-Fi, restricted corporate networks - upstream
+not work (AP isolation, guest Wi-Fi, restricted corporate networks — upstream
 issues #850 and #144). Bluetooth Low Energy is only used to **find** peers
 and exchange their IP:port; the file transfer itself always goes over the
 regular HTTP v2 protocol, byte-for-byte unchanged. This mirrors AirDrop
-(BLE discovery -> AWDL transfer), Windows Nearby Sharing (MS-CDP: a 30 byte
-BLE beacon -> transport over LAN/BT/WiFi Direct) and Quick Share.
+(BLE discovery → AWDL transfer), Windows Nearby Sharing (MS-CDP: a 30-byte
+BLE beacon → transport over LAN/BT/WiFi Direct) and Quick Share.
 
 ## Design
 
@@ -20,12 +20,12 @@ app/lib/provider/network/ble/
 ```
 
 Everything lives on the app-side main isolate (platform channels cannot run
-in the child isolate), and nothing here touches `localsend_isolates` or the
-Rust side. A discovered peer is fed through the existing injection seam
-(`IsolateDiscoveryAddDeviceAction` - the same one the HTTP `/register`
-request uses), merged by the Rust discovery store and re-emitted by the
-running discovery listener, so the send flow, progress UI and session model
-are untouched.
+in the child isolate as spawned here), and nothing here touches
+`localsend_isolates` or the Rust side. A discovered peer is fed through the
+existing injection seam (`IsolateDiscoveryAddDeviceAction` — the same one the
+HTTP `/register` request uses), merged by the Rust discovery store and
+re-emitted by the running discovery listener, so the send flow, progress UI
+and session model are untouched.
 
 Wire format:
 
@@ -35,36 +35,71 @@ Wire format:
 - **GATT characteristic** `2e1b0bc9-...`: UTF-8 JSON with
   `alias, fingerprint, ip, port, https, deviceModel, deviceType, download,
   version` (a superset of the multicast announcement fields; the IP is
-  mandatory because the Rust store drops devices without one).
-- **Service UUID** `c5945864-...`: advertised and scanned for. iOS/macOS
-  app advertisements can only carry the service UUID (+ local name), so
-  those peers are recognized by the UUID alone and contacted over GATT
-  without a decodable beacon.
+  mandatory because the Rust store drops devices without one, and it must
+  be an IP literal — see the security notes).
+- **Service UUID** `c5945864-...`: advertised by iOS/macOS peers (the darwin
+  stack drops manufacturer data from app advertisements, so the UUID is the
+  only marker there) and matched by every scanner. Android/Windows peers
+  cannot carry it next to the beacon (see the advertisement budget below)
+  and are recognized by the company id instead.
 - **Company id** `0xFFFF`: reserved-for-development. Register a real
   Bluetooth SIG company id before any wider rollout.
+
+Advertisement budget: a legacy BLE advertisement has 31 bytes for all its AD
+structures. The beacon structure (header + company id + payload) costs 28
+and a 128-bit service UUID costs 18, so carrying both would fail with
+`ADVERTISE_FAILED_DATA_TOO_LARGE` (observed on Android). The payload is
+therefore split per platform: Android and Windows advertise the manufacturer
+data beacon only, iOS/macOS the service UUID only. Scanning consequently
+runs unfiltered (`startDiscovery` with an empty UUID list is a full scan on
+all backends) and the Dart-side filter recognizes both markers.
+
+The beacon layout under company id `0xFFFF` deliberately matches none of the
+formats (iBeacon, AltBeacon, Eddystone) that Android filters from the scan
+results of apps asserting `neverForLocation` — the assertion this app makes
+to keep the BLE scan location-free. Confirming that on the real-device
+matrix is part of the open verification work below.
 
 ## Security notes
 
 - The certificate fingerprint never travels in clear text over the air: the
   beacon carries only `SHA-256(fingerprint || salt)` with a fresh random
-  salt per advertising session, so a passive listener can neither recover
-  the fingerprint nor link two sessions of the same device (same scheme as
-  MS-CDP).
+  salt that is rotated every 90 seconds while advertising, so a passive
+  listener can neither recover the fingerprint nor track a device for
+  longer than one rotation interval (same scheme as MS-CDP, which rotates
+  per advertising session; the shorter period also breaks long-session
+  linkability).
 - The GATT characteristic is readable without pairing, like the beacon, so
-  it must not contain secrets - it carries exactly the fields a multicast
-  announcement already broadcasts to the whole network.
+  it must not contain secrets. It carries the same fields a multicast
+  announcement broadcasts to the whole network, plus the sender's IP: a
+  multicast listener derives that address from the UDP source, a BLE
+  scanner cannot, so the payload has to include it. Because the payload
+  comes from an unrelated device in radio range, the decoder accepts IP
+  literals only (IPv4/IPv6, optionally scoped like `fe80::1%3`) — a host
+  name must never be able to redirect a file transfer to an arbitrary
+  server.
 - Self-detection recomputes the salted hash with the own fingerprint, and a
   GATT payload claiming the own fingerprint is dropped.
+- Scan flooding is mitigated at three layers: hits weaker than −80 dBm are
+  dropped, at most one GATT handshake is in flight (a hit arriving meanwhile
+  is dropped and picked up by that peer's next advertisement, not queued),
+  and the per-remote cooldown bookkeeping is capped at 128 entries (LRU), so
+  an attacker spoofing many remote ids cannot grow memory or connection
+  work without bounds.
 
 ## Enabling it
 
 The feature flag `ls_ble_discovery_enabled` (advanced settings, default
-**off**) gates the whole module. While it is off no transport is ever
-built: zero platform API calls, zero permissions requested, zero behavior
-difference. Toggling it starts/stops the discovery at runtime.
+**off**) gates the whole module. While it is off the real transport is never
+constructed: zero platform API calls, zero permissions requested, zero
+behavior difference. Toggling it starts/stops the discovery at runtime.
+
+While it is on, the discovery follows the app lifecycle on mobile: it is
+stopped when the app is paused and restarted when it resumes, keeping the
+radio work strictly foreground (see `main.dart`).
 
 The required platform permission **declarations ship with the app** (they
-are dormant metadata until the flag is turned on - declarations alone
+are dormant metadata until the flag is turned on — declarations alone
 trigger no prompt and no API access; only the runtime request started by
 enabling the flag does):
 
@@ -85,7 +120,7 @@ enabling the flag does):
   `com.apple.security.device.bluetooth` (the app is sandboxed).
 - **Windows**: no manifest change; the OS may require location to be
   enabled for BLE. Watch out for `ResourceInUse` when the system's Nearby
-  Sharing occupies the advertising radio - the failure is caught and
+  Sharing occupies the advertising radio — the failure is caught and
   logged, and scanning still works.
 - **Linux**: scanning works (BlueZ central), but bluetooth_low_energy has
   no peripheral API, so a Linux device can find others but cannot be found
@@ -101,21 +136,34 @@ for breaking changes before upgrading.
 
 ## Known limits (honesty section)
 
+- **Android 12+ only (SDK >= 31).** On Android 7–11 the plugin's
+  `authorize()` would request `ACCESS_FINE_LOCATION`/`ACCESS_COARSE_LOCATION`
+  — permissions this app deliberately does not declare (the BLE scan must
+  stay location-free) — which the system auto-denies. The transport
+  provider detects SDK < 31 and disables the module with a log line
+  instead of letting it die silently.
+- **Android/Windows advertise the beacon only** (manufacturer data, no
+  service UUID): both together exceed the 31-byte legacy advertisement
+  budget. Scanners therefore run unfiltered and match on the company id;
+  see "Advertisement budget" above.
 - The advertising payload (IP, port, alias) is captured when the discovery
   starts and is not refreshed when the network changes mid-session; a
   restart of the app (or toggling the flag) picks up the new address.
-- The GATT handshake is serialized (one connection at a time); a crowd of
-  peers takes correspondingly longer to appear.
+- The GATT handshake is serialized (one connection at a time) and at most
+  one is in flight; a crowd of peers takes correspondingly longer to
+  appear, and a hit landing during a handshake waits for that peer's next
+  advertisement.
 - Devices found via BLE but unreachable over unicast (full client
   isolation) show up and fail on send, like a manual favorite would.
 - This fork is developed in a headless environment without Bluetooth
   hardware: the module is verified by `flutter analyze` + `flutter test`
   (codec roundtrips, orchestration with a fake transport, flag gating)
-  only. The radio behavior (advertising visibility, iOS overflow area,
-  Windows Nearby Sharing conflicts, Android vendor stacks) needs a
-  real-device matrix before any product claim - see the fork ROADMAP
+  only. The radio behavior (per-platform advertising visibility, the
+  neverForLocation beacon filtering, Windows Nearby Sharing conflicts,
+  Android vendor stacks) needs a real-device matrix before any product
+  claim — see the fork ROADMAP
   "Verification honesty" section.
 - Phase 2 (small-text fallback transfer over GATT) and phase 3 (BLE large
   files) are explicitly out of scope here; see
   `review/research/bluetooth-report.md` for the throughput evidence
-  (0.1-0.5 MB/s phone-to-phone) behind that decision.
+  (0.1–0.5 MB/s phone-to-phone) behind that decision.
