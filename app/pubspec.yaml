@@ -27,7 +27,7 @@ dependencies:
   flutter_displaymode: 0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_markdown: 0.7.7+1
+  flutter_markdown_plus: 1.0.12
   freezed_annotation: 3.1.0
   glob: 2.2.0
   image: 4.10.1
