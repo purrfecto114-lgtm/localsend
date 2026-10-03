@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bluetooth_low_energy/bluetooth_low_energy.dart';
@@ -14,16 +15,50 @@ final UUID _characteristicUuid = UUID.fromString(bleCharacteristicUuidString);
 const _connectTimeout = Duration(seconds: 10);
 const _gattTimeout = Duration(seconds: 5);
 
+/// Which sections of a BLE advertisement this platform's beacon uses.
+enum BleAdvertisementPayload {
+  /// The advertisement carries the LocalSend service UUID only.
+  ///
+  /// iOS/macOS: the darwin stack drops the manufacturer data from app
+  /// advertisements anyway, so the service UUID is the only usable marker.
+  serviceUuid,
+
+  /// The advertisement carries the manufacturer data beacon only.
+  ///
+  /// Android/Windows: a 128-bit service UUID (18 bytes of advertisement
+  /// budget) plus the beacon structure (28 bytes) exceeds the 31 bytes a
+  /// legacy advertisement may carry (`ADVERTISE_FAILED_DATA_TOO_LARGE`),
+  /// so the beacon gets the whole budget. Scanners recognize it by the
+  /// company id instead of a service UUID filter.
+  manufacturerData,
+}
+
+/// Chooses the advertisement payload for a platform (pure, so the platform
+/// matrix is unit-testable).
+BleAdvertisementPayload bleAdvertisementPayloadFor({
+  required bool isAndroid,
+  required bool isIOS,
+  required bool isMacOS,
+}) {
+  if (isIOS || isMacOS) {
+    return BleAdvertisementPayload.serviceUuid;
+  }
+  return BleAdvertisementPayload.manufacturerData;
+}
+
 /// The [BleTransport] adapter on top of the bluetooth_low_energy plugin
 /// (MIT, central role on Android/iOS/macOS/Windows/Linux, peripheral role on
 /// Android/iOS/macOS/Windows).
 ///
-/// - Scanning uses the central manager filtered by the LocalSend service
-///   UUID, the only way iOS advertisers are visible at all.
-/// - Advertising puts the beacon into the manufacturer data section and the
-///   service UUID next to it; the local name is deliberately omitted
-///   (Windows refuses to advertise one and the service UUID is what
-///   scanners filter on).
+/// - Scanning uses the central manager unfiltered: the Android/Windows
+///   beacons no longer carry the service UUID (advertisement budget), so a
+///   UUID filter would hide them. The raw stream is filtered down to
+///   LocalSend peers in Dart ([_tryParseAdvertisement]).
+/// - Advertising puts either the beacon into the manufacturer data section
+///   (Android/Windows) or the service UUID (iOS/macOS) - never both, see
+///   [bleAdvertisementPayloadFor]. The local name is deliberately omitted
+///   (Windows refuses to advertise one and the service UUID variant is what
+///   iOS keeps anyway).
 /// - The device info is served from a read-only GATT characteristic; read
 ///   requests are answered with the latest payload (offset-aware for long
 ///   reads).
@@ -106,15 +141,21 @@ class LowEnergyBleTransport implements BleTransport {
 
     _readRequests ??= peripheral.characteristicReadRequested.listen(_onReadRequested);
 
-    await peripheral.startAdvertising(
-      Advertisement(
-        // No name: the local name section is restricted on Windows and
-        // iOS only keeps ~10 bytes anyway.
-        serviceUUIDs: [_serviceUuid],
+    final payloadShape = bleAdvertisementPayloadFor(
+      isAndroid: Platform.isAndroid,
+      isIOS: Platform.isIOS,
+      isMacOS: Platform.isMacOS,
+    );
+    // No name: the local name section is restricted on Windows and
+    // iOS only keeps ~10 bytes anyway.
+    final advertisement = switch (payloadShape) {
+      BleAdvertisementPayload.serviceUuid => Advertisement(serviceUUIDs: [_serviceUuid]),
+      BleAdvertisementPayload.manufacturerData => Advertisement(
         manufacturerSpecificData: [ManufacturerSpecificData(id: bleManufacturerId, data: beacon)],
       ),
-    );
-    _logger.info('BLE advertising started');
+    };
+    await peripheral.startAdvertising(advertisement);
+    _logger.info('BLE advertising started (${payloadShape.name})');
   }
 
   void _onReadRequested(GATTCharacteristicReadRequestedEventArgs args) {
@@ -126,18 +167,29 @@ class LowEnergyBleTransport implements BleTransport {
       final offset = args.request.offset;
       final payload = _gattPayload;
       if (offset < 0 || offset > payload.length) {
-        unawaited(peripheral.respondReadRequestWithError(args.request, error: GATTError.invalidOffset));
+        _respondWithError(peripheral, args.request, GATTError.invalidOffset);
         return;
       }
-      unawaited(peripheral.respondReadRequestWithValue(args.request, value: Uint8List.sublistView(payload, offset)));
+      unawaited(
+        peripheral.respondReadRequestWithValue(args.request, value: Uint8List.sublistView(payload, offset)).catchError((
+          Object e,
+          StackTrace stackTrace,
+        ) {
+          _logger.warning('Answering a BLE GATT read request failed', e, stackTrace);
+        }),
+      );
     } catch (e, stackTrace) {
       _logger.warning('Answering a BLE GATT read request failed', e, stackTrace);
-      try {
-        unawaited(peripheral.respondReadRequestWithError(args.request, error: GATTError.unlikelyError));
-      } catch (_) {
-        // Nothing left to do; the central will see the failed request.
-      }
+      _respondWithError(peripheral, args.request, GATTError.unlikelyError);
     }
+  }
+
+  void _respondWithError(PeripheralManager peripheral, GATTReadRequest request, GATTError error) {
+    unawaited(
+      peripheral.respondReadRequestWithError(request, error: error).catchError((Object e, StackTrace stackTrace) {
+        _logger.warning('Rejecting a BLE GATT read request failed', e, stackTrace);
+      }),
+    );
   }
 
   @override
@@ -168,9 +220,10 @@ class LowEnergyBleTransport implements BleTransport {
         return BleAdvertisementHit(remoteId: remoteId, beacon: data.data, rssi: args.rssi);
       }
     }
-    // iOS/macOS advertisers cannot carry manufacturer data; the service
-    // UUID is the only marker (it also matches our own advertisements,
-    // which carry both).
+    // Advertisers that cannot carry the manufacturer data (iOS/macOS)
+    // announce the service UUID instead; it is the only marker there.
+    // Beacons of platforms that spent the whole advertisement budget on
+    // the manufacturer data (Android/Windows) are already matched above.
     for (final uuid in args.advertisement.serviceUUIDs) {
       if (uuid == _serviceUuid) {
         return BleAdvertisementHit(remoteId: remoteId, beacon: null, rssi: args.rssi);
@@ -180,7 +233,11 @@ class LowEnergyBleTransport implements BleTransport {
   }
 
   void _rememberPeripheral(String remoteId, Peripheral peripheral) {
-    if (_peripherals.length >= 512 && !_peripherals.containsKey(remoteId)) {
+    // Re-inserting an existing key does not move it to the end of a Dart
+    // map, so remove first: a remote that keeps advertising must count as
+    // recently used, not as the next eviction candidate.
+    _peripherals.remove(remoteId);
+    if (_peripherals.length >= 512) {
       _peripherals.remove(_peripherals.keys.first);
     }
     _peripherals[remoteId] = peripheral;
@@ -200,7 +257,10 @@ class LowEnergyBleTransport implements BleTransport {
       return;
     }
 
-    await _central.startDiscovery(serviceUUIDs: [_serviceUuid]);
+    // Unfiltered on purpose: the Android/Windows beacons carry no service
+    // UUID (advertisement budget), so a UUID filter would hide them. The
+    // Dart side filter ([_tryParseAdvertisement]) keeps the noise out.
+    await _central.startDiscovery(serviceUUIDs: const []);
     _logger.info('BLE scan started');
   }
 

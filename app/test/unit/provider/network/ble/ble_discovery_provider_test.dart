@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart' show TargetPlatform, debugDefaultTargetPlatformOverride;
 import 'package:flutter/material.dart' show Color, ThemeMode;
 import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/model/persistence/quick_save_mode.dart';
@@ -18,6 +19,7 @@ import 'package:localsend_isolates/model/device_info_result.dart';
 import 'package:localsend_isolates/model/dto/multicast_dto.dart';
 import 'package:localsend_isolates/model/stored_security_context.dart';
 import 'package:localsend_isolates/src/isolate/child/discovery_isolate.dart';
+import 'package:logging/logging.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 import 'package:test/test.dart';
 import 'package:typed_isolates/typed_isolates.dart';
@@ -110,6 +112,77 @@ void main() {
     expect(fake.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
     expect(harness.connector.sent, isEmpty);
   });
+
+  group('bleSupportedOnThisDevice', () {
+    test('accepts every non-Android platform regardless of the SDK int', () {
+      expect(bleSupportedOnThisDevice(isAndroid: false, androidSdkInt: null), isTrue);
+      expect(bleSupportedOnThisDevice(isAndroid: false, androidSdkInt: 30), isTrue);
+    });
+
+    test('accepts Android SDK 31 and newer', () {
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 31), isTrue);
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 34), isTrue);
+    });
+
+    test('rejects Android below SDK 31, failing closed on an unknown SDK int', () {
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 30), isFalse);
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 24), isFalse);
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: null), isFalse);
+    });
+  });
+
+  test('the transport provider short-circuits on Android below SDK 31', () {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+    final records = <LogRecord>[];
+    final subscription = Logger.root.onRecord.listen(records.add);
+    addTearDown(subscription.cancel);
+
+    final harness = _Harness(enabled: true, androidSdkInt: 30, overrideTransport: false);
+    final transport = harness.container.read(bleTransportProvider);
+
+    expect(transport, isA<NoopBleTransport>());
+    expect(
+      records.where((record) => record.message.contains('Android 12')),
+      isNotEmpty,
+      reason: 'the SDK gate must fire',
+    );
+    expect(
+      records.where((record) => record.message.contains('not available on this platform')),
+      isEmpty,
+      reason: 'the plugin must not even be constructed on a gated device',
+    );
+  });
+
+  test('the transport provider passes the SDK gate on Android 12+ and tries the plugin', () {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+    final records = <LogRecord>[];
+    final subscription = Logger.root.onRecord.listen(records.add);
+    addTearDown(subscription.cancel);
+
+    final harness = _Harness(enabled: true, androidSdkInt: 31, overrideTransport: false);
+    final transport = harness.container.read(bleTransportProvider);
+
+    // The test VM has no platform channel backend, so the plugin constructor
+    // fails and the provider falls back to the noop transport - but the SDK
+    // gate itself must have passed (no gate log, but the plugin attempt).
+    expect(transport, isA<NoopBleTransport>());
+    expect(records.where((record) => record.message.contains('Android 12')), isEmpty);
+    expect(
+      records.where((record) => record.message.contains('not available on this platform')),
+      isNotEmpty,
+      reason: 'the gate must let SDK 31 through to the real transport constructor',
+    );
+  });
+
+  test('the flag stays the first gate: off means no device info read at all', () {
+    final harness = _Harness(enabled: false, androidSdkInt: 30, overrideTransport: false);
+    final transport = harness.container.read(bleTransportProvider);
+    expect(transport, isA<NoopBleTransport>());
+  });
 }
 
 Future<void> _pump([int times = 8]) async {
@@ -195,7 +268,12 @@ class _FakeTransport implements BleTransport {
 }
 
 class _Harness {
-  _Harness({required bool enabled, bool discoveryRunning = true}) {
+  _Harness({
+    required bool enabled,
+    bool discoveryRunning = true,
+    int? androidSdkInt,
+    bool overrideTransport = true,
+  }) {
     transport = _FakeTransport();
     connector = _RecordingConnector();
     container = RefenaContainer(
@@ -211,7 +289,10 @@ class _Harness {
             ),
           ),
         ),
-        bleTransportProvider.overrideWithValue(transport),
+        if (overrideTransport) bleTransportProvider.overrideWithValue(transport),
+        deviceRawInfoProvider.overrideWithValue(
+          DeviceInfoResult(deviceType: DeviceType.headless, deviceModel: null, androidSdkInt: androidSdkInt),
+        ),
         deviceFullInfoProvider.overrideWithBuilder(
           (ref) => Device(
             signalingId: null,
