@@ -1,0 +1,180 @@
+diff --git a/app/lib/main.dart b/app/lib/main.dart
+index b3caed80..bc9223b4 100644
+--- a/app/lib/main.dart
++++ b/app/lib/main.dart
+@@ -67,8 +67,16 @@ class LocalSendApp extends StatelessWidget {
+                   // ignore: discarded_futures
+                   ref.notifier(serverProvider).ensureRunning();
+                 }
+-                if (checkPlatform([TargetPlatform.iOS])) {
++                if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
+                   // The multicast sockets die the same silent way but cannot be probed, so always rebind them.
++                  // Android is included because its sockets are bound once at
++                  // startup and never follow network changes (e.g. an enabled
++                  // hotspot or a band switch), which is the most reported
++                  // "device not visible" scenario on mobile.
++                  // Note for upstream discussion: the iOS-only gate was an
++                  // explicit decision (see 63efbe6b); a probe-based rebind
++                  // (own multicast echo liveness check) would be the
++                  // alternative that avoids restarts on every resume.
+                   ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
+                 }
+                 break;
+diff --git a/app/lib/provider/local_ip_provider.dart b/app/lib/provider/local_ip_provider.dart
+index 6a32cfe1..28f7c469 100644
+--- a/app/lib/provider/local_ip_provider.dart
++++ b/app/lib/provider/local_ip_provider.dart
+@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
+ import 'package:localsend_app/model/state/network_state.dart';
+ import 'package:localsend_app/provider/settings_provider.dart';
+ import 'package:localsend_app/util/native/platform_check.dart';
++import 'package:localsend_isolates/isolate.dart';
+ import 'package:localsend_isolates/util/network_interfaces.dart';
+ import 'package:logging/logging.dart';
+ import 'package:network_info_plus/network_info_plus.dart' as plugin;
+@@ -20,6 +21,7 @@ final localIpProvider = ReduxProvider<LocalIpService, NetworkState>((ref) {
+ });
+ 
+ StreamSubscription? _subscription;
++Timer? _interfacePollTimer;
+ 
+ class LocalIpService extends ReduxNotifier<NetworkState> {
+   final SettingsService _settingsService;
+@@ -49,6 +51,16 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
+       if (checkPlatform([TargetPlatform.windows])) {
+         // https://github.com/localsend/localsend/issues/12
+         // https://github.com/localsend/localsend/issues/78
++        //
++        // Windows is excluded from the connectivity stream because of the
++        // false positives above. Poll the interface list instead: polling is
++        // cheap and [FetchLocalIpAction] only reacts when the interface set
++        // actually changed, which still picks up new networks (e.g. an
++        // enabled hotspot) without the spurious restarts of #12/#78.
++        _interfacePollTimer?.cancel();
++        _interfacePollTimer = Timer.periodic(const Duration(seconds: 10), (_) async {
++          await dispatchAsync(FetchLocalIpAction());
++        });
+       } else {
+         _subscription = Connectivity().onConnectivityChanged.listen((_) async {
+           await dispatchAsync(FetchLocalIpAction());
+@@ -69,13 +81,31 @@ class InitLocalIpAction extends ReduxAction<LocalIpService, NetworkState> {
+ class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> {
+   @override
+   Future<NetworkState> reduce() async {
+-    return NetworkState(
++    final previousIps = state.localIps;
++    final newState = NetworkState(
+       localIps: await _getIp(
+         whitelist: notifier._settingsService.state.networkWhitelist,
+         blacklist: notifier._settingsService.state.networkBlacklist,
+       ),
+       initialized: true,
+     );
++
++    // The multicast sockets are bound once when the discovery starts and are
++    // never rebound on their own, so an interface change (e.g. a hotspot that
++    // was just enabled) would stay invisible until a manual restart.
++    // Rebind the discovery whenever the set of local addresses actually
++    // changed. A set comparison (not a list comparison) avoids restarts that
++    // would only be caused by re-ranking. The first fetch is also skipped:
++    // the discovery is not running yet or was just started with fresh state.
++    final setChanged = previousIps.isNotEmpty && previousIps.toSet() != newState.localIps.toSet();
++    if (setChanged) {
++      final parentState = global.read(parentIsolateProvider);
++      if (parentState.discovery != null) {
++        global.dispatch(IsolateDiscoveryRestartAction());
++      }
++    }
++
++    return newState;
+   }
+ }
+ 
+@@ -113,11 +143,18 @@ List<String> rankIpAddresses(List<String> nativeResult, String? thirdPartyResult
+   } else if (nativeResult.isEmpty) {
+     // only take the first IP from third party library
+     return [thirdPartyResult];
+-  } else if (thirdPartyResult.endsWith('.1')) {
+-    // merge
+-    return {thirdPartyResult, ...nativeResult}.toList()._rankIpAddresses(null);
+   } else {
+     // merge but prefer result from third party library
++    //
++    // The third party result is the address of the active Wi-Fi interface,
++    // so it is also trusted when it ends with ".1": a hotspot gateway
++    // (e.g. 192.168.43.1 on Android, 192.168.137.1 on Windows,
++    // 172.20.10.1 on iOS) is exactly the network whose clients must be
++    // scanned when this device provides the hotspot. Ranking it last made
++    // the hotspot subnet miss the "maxInterfaces" cut on multi-adapter
++    // machines and disabled automatic discovery exactly where it is needed
++    // most. Native addresses ending with ".1" are still ranked last by
++    // [_rankIpAddresses]; only the actively reported interface wins.
+     return {thirdPartyResult, ...nativeResult}.toList()._rankIpAddresses(thirdPartyResult);
+   }
+ }
+diff --git a/app/lib/provider/network/scan_facade.dart b/app/lib/provider/network/scan_facade.dart
+index 9f3a1c5c..7713d94f 100644
+--- a/app/lib/provider/network/scan_facade.dart
++++ b/app/lib/provider/network/scan_facade.dart
+@@ -12,7 +12,13 @@ import 'package:refena_flutter/refena_flutter.dart';
+ class StartSmartScan extends AsyncGlobalAction {
+   /// Maximum number of interfaces to scan.
+   /// If there are more interfaces, the first ones will be used or the user needs to select one.
+-  static const maxInterfaces = 3;
++  ///
++  /// 5 instead of 3: multi-adapter desktop machines (ethernet + Wi-Fi + VPN +
++  /// virtual adapters) plus an active hotspot easily exceed 3 networks, which
++  /// dropped the hotspot subnet out of the automatic scan. Each interface
++  /// only costs a `/24` scan when the cheap stages (multicast and favorite
++  /// probes) found nothing, so the extra candidates are rarely paid for.
++  static const maxInterfaces = 5;
+ 
+   @override
+   Future<void> reduce() async {
+diff --git a/app/lib/provider/settings_provider.dart b/app/lib/provider/settings_provider.dart
+index 1e80bc23..57c644e6 100644
+--- a/app/lib/provider/settings_provider.dart
++++ b/app/lib/provider/settings_provider.dart
+@@ -37,6 +37,16 @@ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
+             discoveryTimeout: next.discoveryTimeout,
+           ),
+         );
++
++    // The running discovery only applies the synced settings when it is
++    // restarted: the discovery service reads the syncState once per loop
++    // iteration and blocks on its event stream otherwise. The child isolate
++    // processes isolate messages in order, so this restart task always sees
++    // the syncState published by the action above. Skip when the discovery
++    // is not initialized yet (e.g. during startup).
++    if (ref.read(parentIsolateProvider).discovery != null) {
++      ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
++    }
+   },
+ );
+ 
+diff --git a/app/test/unit/provider/network_info_provider_test.dart b/app/test/unit/provider/network_info_provider_test.dart
+index 6c47bd4b..588e0684 100644
+--- a/app/test/unit/provider/network_info_provider_test.dart
++++ b/app/test/unit/provider/network_info_provider_test.dart
+@@ -18,5 +18,21 @@ void main() {
+     test('should sort primary first and remove duplicates', () {
+       expect(rankIpAddresses(['123.456', '123.123', '222.1', '222.1', '321.222'], '123.123'), ['123.123', '123.456', '321.222', '222.1']);
+     });
++
++    test('should prefer third party hotspot gateway (".1") address', () {
++      // The third party result is the address of the active Wi-Fi interface.
++      // When this device provides the hotspot, that address is the gateway
++      // (e.g. 192.168.43.1) and its subnet is the one whose clients must be
++      // scanned, so it must not be ranked last despite ending with ".1".
++      expect(rankIpAddresses(['10.0.0.5', '192.168.43.1'], '192.168.43.1'), ['192.168.43.1', '10.0.0.5']);
++    });
++
++    test('should prefer third party iOS hotspot gateway address', () {
++      expect(rankIpAddresses(['10.0.0.5', '172.20.10.1'], '172.20.10.1'), ['172.20.10.1', '10.0.0.5']);
++    });
++
++    test('should still rank native ".1" addresses last when primary is another network', () {
++      expect(rankIpAddresses(['123.456', '222.1'], '123.123'), ['123.123', '123.456', '222.1']);
++    });
+   });
+ }
