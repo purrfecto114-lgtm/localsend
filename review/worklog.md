@@ -655,3 +655,21 @@ Work Log:
 
 Stage Summary:
 - v2 交付：双轮审查（15 agent）+ 真工具链四门禁全绿 + 8 产物 Release；上游零改动
+
+---
+Task ID: 23
+Agent: Super Z (main)
+Task: v2 发布执行 + 站点回写与端到端验证
+
+Work Log:
+- CI 闸门：本 fork 的 push 事件从不触发 workflow（三次 main 推送 + v2 tag 推送均零 run；与凭证无关的平台行为，已实证）→ 给 ci.yml 增加 workflow_dispatch 触发器（e2445e75）后手动派发 → run 37111504433 四 job 全绿（format / test / rust / packaging，GitHub runner + Flutter 3.41.9）
+- tag p0-review-v2（annotated，指向 e2445e75）已推送；tag 触发同样失效 → workflow_dispatch 派发 release.yml（run 37111726550 success）
+- Release p0-review-v2 发布核验（API）：9 产物（patch 32,728B / modified-source.zip 23,640B / review-archive.zip 3,998,923B / flutter-upgrade-cost.md / flutter-analyze.log / flutter-test.log / SHA256SUMS / 报告×2），标题自 tag 派生正确，notes 为 v2 全文
+- 站点 v2 回写：download/release-info.json（9 产物真实大小）；content.ts（11 文件源码浏览器清单 + v2 常量）；page.tsx（进度叙事全面 v2 化：已完成 9 项 / 待办 2 项 / 明确不做 1 项）
+- 站点两处修复：page.tsx 引用未导入的 FIX_COMMIT_V1 导致 SSR 异常（agent-browser 首次打开即发现）→ 补 import；产物计数文案 8→9
+- eslint 配置排除非站点目录（superpowers-skills / localsend / reviews / download 等）→ bun run lint exit 0
+- agent-browser E2E 全过：3 tab 渲染；11 文件浏览器；git 状态卡实时显示 e2445e75 + clean；Diff/完整源码切换；发布 tab「已发布」徽章 + 9 产物表；评审报告渲染；console 零错误、页面零错误；390×844 移动端 tab 换行不溢出；footer 长内容自然下推（bottom 2739>844）无悬浮；截图 2 张存档 download/preview-site-v2r-{mobile,desktop}.png
+- dev.log 复核：GET / 200，无运行时错误
+
+Stage Summary:
+- v2 全链路交付闭环：工具链四门禁全绿 → CI 四 job 全绿 → tag → Release 9 产物 → 站点自动切换「已发布」态；用户侧遗留：真机多平台验证、空壳仓库 localsend-review 手动删除、上游 issue/PR 决策
