@@ -40,6 +40,7 @@ class SettingsState with SettingsStateMappable {
   final bool verifyChecksums; // verify checksums when receiving files
   final int discoveryTimeout;
   final int maxInterfaces; // maximum number of interfaces covered by the smart scan
+  final bool bleDiscoveryEnabled; // BLE-assisted discovery (beacon + GATT handshake guiding into the HTTP discovery)
   final bool advancedSettings;
 
   const SettingsState({
@@ -74,6 +75,7 @@ class SettingsState with SettingsStateMappable {
     required this.verifyChecksums,
     required this.discoveryTimeout,
     required this.maxInterfaces,
+    required this.bleDiscoveryEnabled,
     required this.advancedSettings,
   });
 }

@@ -514,6 +514,15 @@ class SettingsTab extends StatelessWidget {
                       },
                     ),
                   ),
+                if (vm.advanced)
+                  _BooleanEntry(
+                    label: t.settingsTab.network.bleDiscovery,
+                    description: t.settingsTab.network.bleDiscoveryHint,
+                    value: vm.settings.bleDiscoveryEnabled,
+                    onChanged: (b) async {
+                      await ref.notifier(settingsProvider).setBleDiscoveryEnabled(b);
+                    },
+                  ),
                 AnimatedCrossFade(
                   crossFadeState: vm.settings.port != defaultPort ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                   duration: const Duration(milliseconds: 200),

@@ -174,6 +174,11 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     'maxInterfaces',
     _$maxInterfaces,
   );
+  static bool _$bleDiscoveryEnabled(SettingsState v) => v.bleDiscoveryEnabled;
+  static const Field<SettingsState, bool> _f$bleDiscoveryEnabled = Field(
+    'bleDiscoveryEnabled',
+    _$bleDiscoveryEnabled,
+  );
   static bool _$advancedSettings(SettingsState v) => v.advancedSettings;
   static const Field<SettingsState, bool> _f$advancedSettings = Field(
     'advancedSettings',
@@ -213,6 +218,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     #verifyChecksums: _f$verifyChecksums,
     #discoveryTimeout: _f$discoveryTimeout,
     #maxInterfaces: _f$maxInterfaces,
+    #bleDiscoveryEnabled: _f$bleDiscoveryEnabled,
     #advancedSettings: _f$advancedSettings,
   };
 
@@ -249,6 +255,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       verifyChecksums: data.dec(_f$verifyChecksums),
       discoveryTimeout: data.dec(_f$discoveryTimeout),
       maxInterfaces: data.dec(_f$maxInterfaces),
+      bleDiscoveryEnabled: data.dec(_f$bleDiscoveryEnabled),
       advancedSettings: data.dec(_f$advancedSettings),
     );
   }
@@ -351,6 +358,7 @@ abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
     bool? verifyChecksums,
     int? discoveryTimeout,
     int? maxInterfaces,
+    bool? bleDiscoveryEnabled,
     bool? advancedSettings,
   });
   SettingsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -415,6 +423,7 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     bool? verifyChecksums,
     int? discoveryTimeout,
     int? maxInterfaces,
+    bool? bleDiscoveryEnabled,
     bool? advancedSettings,
   }) => $apply(
     FieldCopyWithData({
@@ -453,6 +462,8 @@ class _SettingsStateCopyWithImpl<$R, $Out>
       if (verifyChecksums != null) #verifyChecksums: verifyChecksums,
       if (discoveryTimeout != null) #discoveryTimeout: discoveryTimeout,
       if (maxInterfaces != null) #maxInterfaces: maxInterfaces,
+      if (bleDiscoveryEnabled != null)
+        #bleDiscoveryEnabled: bleDiscoveryEnabled,
       if (advancedSettings != null) #advancedSettings: advancedSettings,
     }),
   );
@@ -501,6 +512,10 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     verifyChecksums: data.get(#verifyChecksums, or: $value.verifyChecksums),
     discoveryTimeout: data.get(#discoveryTimeout, or: $value.discoveryTimeout),
     maxInterfaces: data.get(#maxInterfaces, or: $value.maxInterfaces),
+    bleDiscoveryEnabled: data.get(
+      #bleDiscoveryEnabled,
+      or: $value.bleDiscoveryEnabled,
+    ),
     advancedSettings: data.get(#advancedSettings, or: $value.advancedSettings),
   );
 

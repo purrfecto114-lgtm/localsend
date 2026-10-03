@@ -169,7 +169,9 @@
       "portWarning": "You might not be detected by other devices because you are using a custom port. (default: {defaultPort})",
       "encryption": "Encryption",
       "multicastGroup": "Multicast address",
-      "multicastGroupWarning": "You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})"
+      "multicastGroupWarning": "You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})",
+      "bleDiscovery": "BLE discovery (experimental)",
+      "bleDiscoveryHint": "Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network."
     },
     "other": {
       "title": "Other",
