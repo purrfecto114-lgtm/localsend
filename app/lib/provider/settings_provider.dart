@@ -37,6 +37,16 @@ final settingsProvider = NotifierProvider<SettingsService, SettingsState>(
             discoveryTimeout: next.discoveryTimeout,
           ),
         );
+
+    // The running discovery only applies the synced settings when it is
+    // restarted: the discovery service reads the syncState once per loop
+    // iteration and blocks on its event stream otherwise. The child isolate
+    // processes isolate messages in order, so this restart task always sees
+    // the syncState published by the action above. Skip when the discovery
+    // is not initialized yet (e.g. during startup).
+    if (ref.read(parentIsolateProvider).discovery != null) {
+      ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryRestartAction());
+    }
   },
 );
 
