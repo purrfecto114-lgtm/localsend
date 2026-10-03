@@ -50,6 +50,10 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
   String? _lastCandidate;
   ManualAddressError? _validationError;
 
+  /// Whether the last hashtag submit found no IPv4 prefix to expand the
+  /// input with (e.g. an IPv6-only network).
+  bool _noHashtagCandidates = false;
+
   Future<void> _submit(List<String> localIps, int port, [String? candidate]) async {
     final List<String> candidates;
     final String input = _input.trim();
@@ -67,8 +71,20 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
       candidates = buildHashtagCandidates(localIps, input);
     }
 
+    if (candidates.isEmpty) {
+      // The hashtag could not be expanded: the current network has no IPv4
+      // address (e.g. IPv6-only), so there is nothing to try. Waiting on an
+      // empty future list would complete immediately and silently return
+      // the dialog to its idle state, so explain the situation instead.
+      setState(() {
+        _noHashtagCandidates = true;
+      });
+      return;
+    }
+
     setState(() {
       _fetching = true;
+      _noHashtagCandidates = false;
     });
 
     final https = ref.read(settingsProvider).https;
@@ -158,6 +174,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
       // the previous mode must not survive in the validation state.
       _input = '';
       _validationError = null;
+      _noHashtagCandidates = false;
     });
   }
 
@@ -255,6 +272,14 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
                 ),
               ),
           ],
+          if (_noHashtagCandidates)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                t.dialogs.addressInput.noHashtagCandidates,
+                style: TextStyle(color: Theme.of(context).colorScheme.warning),
+              ),
+            ),
           if (_error != null)
             Padding(
               padding: const EdgeInsets.only(top: 10),

@@ -1501,6 +1501,10 @@ class Translations$dialogs$addressInput$en {
   /// en: 'Recently used: '
   String get recentlyUsed => 'Recently used: ';
 
+  /// en: 'The current network has no IPv4 address, so the hashtag cannot be expanded to a candidate address. Please enter the full address instead (e.g. 192.168.1.5 or fe80::1).'
+  String get noHashtagCandidates =>
+      'The current network has no IPv4 address, so the hashtag cannot be expanded to a candidate address. Please enter the full address instead (e.g. 192.168.1.5 or fe80::1).';
+
   late final Translations$dialogs$addressInput$validation$en validation = Translations$dialogs$addressInput$validation$en.internal(_root);
 }
 
