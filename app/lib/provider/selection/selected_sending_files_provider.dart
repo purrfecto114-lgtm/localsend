@@ -1,5 +1,6 @@
 import 'dart:convert' show jsonDecode, utf8;
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:localsend_app/model/cross_file.dart';
@@ -9,8 +10,10 @@ import 'package:localsend_app/util/native/cross_file_converters.dart';
 import 'package:localsend_app/util/send_ignore.dart';
 import 'package:localsend_isolates/model/file_type.dart';
 import 'package:localsend_isolates/rust/api/metadata.dart';
+import 'package:localsend_isolates/rust/frb_generated.dart';
 import 'package:localsend_isolates/util/content_uri_helper.dart';
 import 'package:localsend_isolates/util/file_path_helper.dart';
+import 'package:localsend_isolates/util/logger.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:refena_flutter/refena_flutter.dart';
@@ -146,59 +149,101 @@ class AddFilesAction<T> extends AsyncReduxAction<SelectedSendingFilesNotifier, L
   }
 }
 
+/// Collects the files inside [directoryPath] recursively as [CrossFile]s
+/// (with `asset`, `bytes` and `thumbnail` always being `null`).
+///
+/// This is the heavy part of [AddDirectoryAction]: the recursive directory
+/// listing, the per-file stat and the Rust metadata read. In production it
+/// runs on a background isolate (see [enumerateDirectoryInBackground]) and
+/// therefore requires [RustLib] to be initialized and a logger to be set up
+/// in the calling isolate.
+Future<List<CrossFile>> enumerateDirectoryFiles(String directoryPath) async {
+  final newFiles = <CrossFile>[];
+  final directoryName = p.basename(directoryPath);
+  final sendIgnore = SendIgnore();
+  await for (final entity in Directory(directoryPath).list(recursive: true)) {
+    if (entity is File) {
+      final innerRelative = p.relative(entity.path, from: directoryPath).replaceAll('\\', '/');
+      final relative = '$directoryName/$innerRelative';
+      if (sendIgnore.isIgnoreFile(p.basename(entity.path))) {
+        sendIgnore.loadIgnoreContent(
+          parentPath: innerRelative.contains('/') ? p.dirname(innerRelative) : null,
+          ignoreContents: await entity.readAsLines(),
+        );
+        _logger.info('Loaded ignore file: $innerRelative');
+        continue;
+      } else if (sendIgnore.isIgnored(innerRelative)) {
+        _logger.info('Ignored: $innerRelative');
+        continue;
+      }
+
+      _logger.info('Add file $relative');
+
+      final metadata = await readFileMetadata(path: entity.path);
+      final file = CrossFile(
+        name: relative,
+        fileType: relative.guessFileType(),
+        size: entity.lengthSync(),
+        thumbnail: null,
+        asset: null,
+        path: entity.path,
+        bytes: null,
+        lastModified: metadata?.modified,
+        lastAccessed: metadata?.accessed,
+      );
+
+      newFiles.add(file);
+    }
+  }
+
+  return newFiles;
+}
+
+/// Runs [enumerateDirectoryFiles] on a background isolate and returns its result.
+///
+/// Enumerating a directory with 15k+ files performs thousands of stats and
+/// Rust metadata reads; doing that on the main isolate freezes the selection
+/// UI. The isolate closure must only capture sendable data (no
+/// provider/notifier references, no AssetEntity): the directory path and the
+/// log level.
+Future<List<CrossFile>> enumerateDirectoryInBackground(String directoryPath) async {
+  final logLevel = Logger.root.level;
+  return Isolate.run(() async {
+    // The logger and RustLib are per-isolate; both must be set up here
+    // (same as the long-lived child isolates, see isolate/child/main.dart).
+    initLogger(logLevel);
+    await RustLib.init();
+    return enumerateDirectoryFiles(directoryPath);
+  });
+}
+
 /// Adds files inside the directory recursively.
 class AddDirectoryAction extends AsyncReduxAction<SelectedSendingFilesNotifier, List<CrossFile>> {
   final String directoryPath;
+  final Future<List<CrossFile>> Function(String directoryPath) _enumerateDirectory;
 
-  AddDirectoryAction(this.directoryPath);
+  /// [enumerateDirectory] is visible for testing: unit tests cannot use the
+  /// default background isolate because the Rust native library is not
+  /// available inside `flutter test`.
+  AddDirectoryAction(
+    this.directoryPath, {
+    Future<List<CrossFile>> Function(String directoryPath)? enumerateDirectory,
+  }) : _enumerateDirectory = enumerateDirectory ?? enumerateDirectoryInBackground;
 
   @override
   Future<List<CrossFile>> reduce() async {
     _logger.info('Reading files in $directoryPath');
-    final newFiles = <CrossFile>[];
-    final directoryName = p.basename(directoryPath);
-    final sendIgnore = SendIgnore();
-    await for (final entity in Directory(directoryPath).list(recursive: true)) {
-      if (entity is File) {
-        final innerRelative = p.relative(entity.path, from: directoryPath).replaceAll('\\', '/');
-        final relative = '$directoryName/$innerRelative';
-        if (sendIgnore.isIgnoreFile(p.basename(entity.path))) {
-          sendIgnore.loadIgnoreContent(
-            parentPath: innerRelative.contains('/') ? p.dirname(innerRelative) : null,
-            ignoreContents: await entity.readAsLines(),
-          );
-          _logger.info('Loaded ignore file: $innerRelative');
-          continue;
-        } else if (sendIgnore.isIgnored(innerRelative)) {
-          _logger.info('Ignored: $innerRelative');
-          continue;
-        }
 
-        _logger.info('Add file $relative');
+    final newFiles = await _enumerateDirectory(directoryPath);
 
-        final metadata = await readFileMetadata(path: entity.path);
-        final file = CrossFile(
-          name: relative,
-          fileType: relative.guessFileType(),
-          size: entity.lengthSync(),
-          thumbnail: null,
-          asset: null,
-          path: entity.path,
-          bytes: null,
-          lastModified: metadata?.modified,
-          lastAccessed: metadata?.accessed,
-        );
-
-        final isAlreadySelect = state.any((element) => element.isSameFile(otherFile: file));
-        if (!isAlreadySelect) {
-          newFiles.add(file);
-        }
-      }
-    }
+    // The dedup must happen on the main isolate because the current selection
+    // (which may contain album assets that cannot cross isolate boundaries)
+    // lives here.
+    final filesToAdd = newFiles.where((file) => !state.any((element) => element.isSameFile(otherFile: file)));
 
     return List.unmodifiable([
       ...state,
-      ...newFiles,
+      ...filesToAdd,
     ]);
   }
 }
