@@ -18,6 +18,10 @@
     <!-- Android 17+ blocks local network traffic without this runtime permission. -->
     <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
 
+    <!-- localsend: Android filters out multicast packets by default to save battery;
+         discovery relies on receiving them, so MainActivity holds a WifiManager.MulticastLock. -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
     <!-- localsend: keep the app process alive while files are being received.
          FOREGROUND_SERVICE and POST_NOTIFICATIONS come from the flutter_foreground_task manifest. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
@@ -25,6 +29,11 @@
     <!-- Android TV -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <!-- CHANGE_WIFI_MULTICAST_STATE implies android.hardware.wifi; without this,
+         the Play Store would filter out Ethernet-only devices. The multicast lock
+         is a no-op on them anyway (no Wi-Fi multicast filtering there). -->
+    <uses-feature android:name="android.hardware.wifi" android:required="false" />
 
     <application
         android:label="LocalSend"

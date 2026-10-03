@@ -8,7 +8,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
+import android.net.wifi.WifiManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.Settings
@@ -44,6 +46,29 @@ class MainActivity : FlutterActivity() {
     /// replay them through the regular plugin path.
     private val pendingShareIntents = mutableListOf<Intent>()
     private var shareIntentReady = false
+
+    /// Android's Wi-Fi stack filters out packets not explicitly addressed to this
+    /// device to save battery; on many devices they are dropped entirely unless a
+    /// multicast lock is held. Discovery relies on receiving multicast announcements,
+    /// so hold the lock for the lifetime of the activity.
+    private var multicastLock: WifiManager.MulticastLock? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Devices without Wi-Fi hardware (e.g. Ethernet-only TV boxes) have no
+        // Wi-Fi multicast filtering; getSystemService returns null there since API 33.
+        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager ?: return
+        multicastLock = wifiManager.createMulticastLock("LocalSendDiscovery").apply {
+            setReferenceCounted(false)
+            acquire()
+        }
+    }
+
+    override fun onDestroy() {
+        multicastLock?.takeIf { it.isHeld }?.release()
+        multicastLock = null
+        super.onDestroy()
+    }
 
     override fun onNewIntent(intent: Intent) {
         if (!shareIntentReady && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_SEND_MULTIPLE)) {
