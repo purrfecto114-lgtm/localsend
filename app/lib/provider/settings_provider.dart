@@ -9,6 +9,7 @@ import 'package:localsend_app/model/send_mode.dart';
 import 'package:localsend_app/model/state/settings_state.dart';
 import 'package:localsend_app/provider/persistence_provider.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
+import 'package:localsend_isolates/constants.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/model/device.dart';
 import 'package:refena_flutter/refena_flutter.dart';
@@ -106,6 +107,7 @@ class SettingsService extends PureNotifier<SettingsState> {
     createChecksums: _persistence.getCreateChecksums(),
     verifyChecksums: _persistence.getVerifyChecksums(),
     discoveryTimeout: _persistence.getDiscoveryTimeout(),
+    maxInterfaces: _persistence.getMaxInterfaces(),
     advancedSettings: _persistence.getAdvancedSettingsEnabled(),
   );
 
@@ -176,6 +178,21 @@ class SettingsService extends PureNotifier<SettingsState> {
     await _persistence.setDiscoveryTimeout(timeout);
     state = state.copyWith(
       discoveryTimeout: timeout,
+    );
+  }
+
+  /// Sets the maximum number of interfaces covered by the smart scan.
+  ///
+  /// The value is clamped to [minMaxInterfaces]..[maxMaxInterfaces] so that
+  /// user input (or a corrupted stored value) can never produce take(0).
+  /// This setting is purely app-side: it is consumed by the smart scan on
+  /// the main isolate, so it needs no SyncState propagation and no
+  /// discovery restart - the next scan simply reads the new value.
+  Future<void> setMaxInterfaces(int maxInterfaces) async {
+    final value = maxInterfaces.clamp(minMaxInterfaces, maxMaxInterfaces);
+    await _persistence.setMaxInterfaces(value);
+    state = state.copyWith(
+      maxInterfaces: value,
     );
   }
 

@@ -25,15 +25,17 @@ import 'package:typed_isolates/typed_isolates.dart';
 /// service because the generated mocks.mocks.dart is stale for some getters.
 void main() {
   late _RecordingConnector connector;
+  late _FakePersistence persistence;
   late RefenaContainer container;
   late SettingsService settings;
 
   setUp(() {
     connector = _RecordingConnector();
+    persistence = _persistence();
     container = RefenaContainer(
       observers: [_NoopObserver()],
       overrides: [
-        persistenceProvider.overrideWithValue(_persistence()),
+        persistenceProvider.overrideWithValue(persistence),
         parentIsolateProvider.overrideWithNotifier(
           (ref) => IsolateController(
             initialState: ParentIsolateState(
@@ -110,6 +112,54 @@ void main() {
     expect(connector.sent.where((m) => m.data != null), hasLength(1));
     expect(connector.sent.last.data?.data, isA<DiscoveryRestartTask>());
   });
+
+  test('maxInterfaces change is clamped to the 1..10 range', () async {
+    await settings.setMaxInterfaces(0);
+    expect(settings.state.maxInterfaces, 1);
+    await settings.setMaxInterfaces(-5);
+    expect(settings.state.maxInterfaces, 1);
+    await settings.setMaxInterfaces(99);
+    expect(settings.state.maxInterfaces, 10);
+    await settings.setMaxInterfaces(7);
+    expect(settings.state.maxInterfaces, 7);
+
+    // The clamped value is what gets persisted.
+    expect(persistence.calls[#setMaxInterfaces], [
+      [1],
+      [1],
+      [10],
+      [7],
+    ]);
+  });
+
+  test('maxInterfaces change never touches the discovery', () async {
+    // The smart scan reads the setting on the main isolate when it runs, so
+    // maxInterfaces needs no SyncState propagation and no discovery restart.
+    await settings.setMaxInterfaces(3);
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(connector.sent, isEmpty);
+  });
+
+  test('maxInterfaces is loaded from persistence on init', () async {
+    final container2 = RefenaContainer(
+      observers: [_NoopObserver()],
+      overrides: [
+        persistenceProvider.overrideWithValue(_persistence(maxInterfaces: 8)),
+        parentIsolateProvider.overrideWithNotifier(
+          (ref) => IsolateController(
+            initialState: ParentIsolateState(
+              syncState: _syncState(),
+              discovery: null,
+              httpUpload: null,
+              httpServer: null,
+            ),
+          ),
+        ),
+      ],
+    );
+    final settings2 = container2.notifier(settingsProvider);
+    expect(settings2.state.maxInterfaces, 8);
+  });
 }
 
 class _RecordingConnector implements IsolateConnector<IsolateTaskStreamResult<DiscoveryResult>, SendToIsolateData<IsolateTask<DiscoveryTask>>> {
@@ -132,6 +182,7 @@ class _NoopObserver extends RefenaObserver {
 
 class _FakePersistence implements PersistenceService {
   final Map<Symbol, Object?> stubs;
+  final Map<Symbol, List<List<Object?>>> calls = {};
 
   _FakePersistence(this.stubs);
 
@@ -139,13 +190,17 @@ class _FakePersistence implements PersistenceService {
   dynamic noSuchMethod(Invocation i) {
     if (stubs.containsKey(i.memberName)) return stubs[i.memberName];
     // All mutating methods return Future<void>; all value getters used by
-    // SettingsService.init() are stubbed above.
-    if (i.memberName.toString().contains('set')) return Future<void>.value();
+    // SettingsService.init() are stubbed above. Mutating calls are recorded
+    // so tests can assert what the settings service persists.
+    if (i.memberName.toString().contains('set')) {
+      calls.putIfAbsent(i.memberName, () => []).add(i.positionalArguments);
+      return Future<void>.value();
+    }
     return super.noSuchMethod(i);
   }
 }
 
-PersistenceService _persistence() => _FakePersistence({
+_FakePersistence _persistence({int maxInterfaces = 5}) => _FakePersistence({
   #getShowToken: 'token',
   #getAlias: 'alias',
   #getTheme: ThemeMode.system,
@@ -175,6 +230,7 @@ PersistenceService _persistence() => _FakePersistence({
   #getCreateChecksums: true,
   #getVerifyChecksums: true,
   #getDiscoveryTimeout: 3,
+  #getMaxInterfaces: maxInterfaces,
   #getAdvancedSettingsEnabled: false,
 });
 

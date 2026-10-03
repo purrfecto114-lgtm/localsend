@@ -48,6 +48,13 @@ class SettingsTabVmMapper extends ClassMapperBase<SettingsTabVm> {
       v.timeoutController;
   static const Field<SettingsTabVm, TextEditingController>
   _f$timeoutController = Field('timeoutController', _$timeoutController);
+  static TextEditingController _$maxInterfacesController(SettingsTabVm v) =>
+      v.maxInterfacesController;
+  static const Field<SettingsTabVm, TextEditingController>
+  _f$maxInterfacesController = Field(
+    'maxInterfacesController',
+    _$maxInterfacesController,
+  );
   static TextEditingController _$multicastController(SettingsTabVm v) =>
       v.multicastController;
   static const Field<SettingsTabVm, TextEditingController>
@@ -188,6 +195,7 @@ class SettingsTabVmMapper extends ClassMapperBase<SettingsTabVm> {
     #deviceModelController: _f$deviceModelController,
     #portController: _f$portController,
     #timeoutController: _f$timeoutController,
+    #maxInterfacesController: _f$maxInterfacesController,
     #multicastController: _f$multicastController,
     #settings: _f$settings,
     #serverState: _f$serverState,
@@ -216,6 +224,7 @@ class SettingsTabVmMapper extends ClassMapperBase<SettingsTabVm> {
       deviceModelController: data.dec(_f$deviceModelController),
       portController: data.dec(_f$portController),
       timeoutController: data.dec(_f$timeoutController),
+      maxInterfacesController: data.dec(_f$maxInterfacesController),
       multicastController: data.dec(_f$multicastController),
       settings: data.dec(_f$settings),
       serverState: data.dec(_f$serverState),
@@ -309,6 +318,7 @@ abstract class SettingsTabVmCopyWith<$R, $In extends SettingsTabVm, $Out>
     TextEditingController? deviceModelController,
     TextEditingController? portController,
     TextEditingController? timeoutController,
+    TextEditingController? maxInterfacesController,
     TextEditingController? multicastController,
     SettingsState? settings,
     ServerState? serverState,
@@ -359,6 +369,7 @@ class _SettingsTabVmCopyWithImpl<$R, $Out>
     TextEditingController? deviceModelController,
     TextEditingController? portController,
     TextEditingController? timeoutController,
+    TextEditingController? maxInterfacesController,
     TextEditingController? multicastController,
     SettingsState? settings,
     Object? serverState = $none,
@@ -385,6 +396,8 @@ class _SettingsTabVmCopyWithImpl<$R, $Out>
         #deviceModelController: deviceModelController,
       if (portController != null) #portController: portController,
       if (timeoutController != null) #timeoutController: timeoutController,
+      if (maxInterfacesController != null)
+        #maxInterfacesController: maxInterfacesController,
       if (multicastController != null)
         #multicastController: multicastController,
       if (settings != null) #settings: settings,
@@ -421,6 +434,10 @@ class _SettingsTabVmCopyWithImpl<$R, $Out>
     timeoutController: data.get(
       #timeoutController,
       or: $value.timeoutController,
+    ),
+    maxInterfacesController: data.get(
+      #maxInterfacesController,
+      or: $value.maxInterfacesController,
     ),
     multicastController: data.get(
       #multicastController,

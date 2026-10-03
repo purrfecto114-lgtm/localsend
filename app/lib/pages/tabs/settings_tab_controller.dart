@@ -66,6 +66,7 @@ class SettingsTabController extends ReduxNotifier<SettingsTabVm> {
       deviceModelController: TextEditingController(text: _initialDeviceInfo.deviceModel),
       portController: TextEditingController(text: _settingsService.state.port.toString()),
       timeoutController: TextEditingController(text: _settingsService.state.discoveryTimeout.toString()),
+      maxInterfacesController: TextEditingController(text: _settingsService.state.maxInterfaces.toString()),
       multicastController: TextEditingController(text: _settingsService.state.multicastGroup),
       settings: _settingsService.state,
       serverState: _serverService.state,
@@ -176,6 +177,7 @@ class SettingsTabController extends ReduxNotifier<SettingsTabVm> {
     state.deviceModelController.dispose();
     state.portController.dispose();
     state.timeoutController.dispose();
+    state.maxInterfacesController.dispose();
     state.multicastController.dispose();
     super.dispose();
   }

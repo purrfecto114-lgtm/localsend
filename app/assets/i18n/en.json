@@ -145,6 +145,7 @@
         "filtered": "Filtered"
       },
       "discoveryTimeout": "Discovery Timeout",
+      "maxInterfaces": "Max Interfaces (Smart Scan)",
       "useSystemName": "Use system name",
       "generateRandomAlias": "Generate random alias",
       "portWarning": "You might not be detected by other devices because you are using a custom port. (default: {defaultPort})",

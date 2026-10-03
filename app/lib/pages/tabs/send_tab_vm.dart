@@ -26,6 +26,7 @@ class SendTabVm {
   final SendMode sendMode;
   final List<CrossFile> selectedFiles;
   final List<String> localIps;
+  final int maxInterfaces;
   final Iterable<Device> nearbyDevices;
   final List<FavoriteDevice> favoriteDevices;
   final Future<void> Function(BuildContext context) onTapAddress;
@@ -38,6 +39,7 @@ class SendTabVm {
     required this.sendMode,
     required this.selectedFiles,
     required this.localIps,
+    required this.maxInterfaces,
     required this.nearbyDevices,
     required this.favoriteDevices,
     required this.onTapAddress,
@@ -52,6 +54,7 @@ final sendTabVmProvider = ViewProvider((ref) {
   final sendMode = ref.watch(settingsProvider.select((s) => s.sendMode));
   final selectedFiles = ref.watch(selectedSendingFilesProvider);
   final localIps = ref.watch(localIpProvider).localIps;
+  final maxInterfaces = ref.watch(settingsProvider.select((s) => s.maxInterfaces));
   final nearbyDevices = ref.watch(nearbyDevicesProvider).allDevices.values;
   final favoriteDevices = ref.watch(favoritesProvider);
 
@@ -59,6 +62,7 @@ final sendTabVmProvider = ViewProvider((ref) {
     sendMode: sendMode,
     selectedFiles: selectedFiles,
     localIps: localIps,
+    maxInterfaces: maxInterfaces,
     nearbyDevices: nearbyDevices,
     favoriteDevices: favoriteDevices,
     onTapAddress: (context) async {

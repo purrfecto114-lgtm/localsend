@@ -77,6 +77,7 @@ const _portKey = 'ls_port';
 const _networkWhitelistKey = 'ls_network_whitelist';
 const _networkBlacklistKey = 'ls_network_blacklist';
 const _timeoutKey = 'ls_timeout';
+const _maxInterfacesKey = 'ls_max_interfaces';
 const _multicastGroupKey = 'ls_multicast_group';
 const _destinationKey = 'ls_destination';
 const _saveToGallery = 'ls_save_to_gallery';
@@ -376,6 +377,17 @@ class PersistenceService {
 
   Future<void> setDiscoveryTimeout(int timeout) async {
     await _prefs.setInt(_timeoutKey, timeout);
+  }
+
+  int getMaxInterfaces() {
+    // Clamp defensively: a corrupted or manually edited stored value must
+    // never produce take(0) (smart scan scanning nothing) or an unbounded
+    // interface list.
+    return (_prefs.getInt(_maxInterfacesKey) ?? defaultMaxInterfaces).clamp(minMaxInterfaces, maxMaxInterfaces);
+  }
+
+  Future<void> setMaxInterfaces(int maxInterfaces) async {
+    await _prefs.setInt(_maxInterfacesKey, maxInterfaces.clamp(minMaxInterfaces, maxMaxInterfaces));
   }
 
   bool getShareViaLinkAutoAccept() {

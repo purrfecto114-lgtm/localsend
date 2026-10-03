@@ -478,6 +478,20 @@ class SettingsTab extends StatelessWidget {
                     ),
                   ),
                 if (vm.advanced)
+                  _SettingsEntry(
+                    label: t.settingsTab.network.maxInterfaces,
+                    child: TextFieldTv(
+                      name: t.settingsTab.network.maxInterfaces,
+                      controller: vm.maxInterfacesController,
+                      onChanged: (s) async {
+                        final maxInterfaces = int.tryParse(s);
+                        if (maxInterfaces != null) {
+                          await ref.notifier(settingsProvider).setMaxInterfaces(maxInterfaces);
+                        }
+                      },
+                    ),
+                  ),
+                if (vm.advanced)
                   _BooleanEntry(
                     label: t.settingsTab.network.encryption,
                     value: vm.settings.https,

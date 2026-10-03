@@ -179,6 +179,7 @@ class SendTab extends StatelessWidget {
                 const SizedBox(width: 10),
                 _ScanButton(
                   ips: vm.localIps,
+                  maxInterfaces: vm.maxInterfaces,
                 ),
                 Tooltip(
                   message: t.sendTab.manualSending,
@@ -315,9 +316,11 @@ class _CircularPopupButton<T> extends StatelessWidget {
 /// The scan button that uses [_CircularPopupButton].
 class _ScanButton extends StatelessWidget {
   final List<String> ips;
+  final int maxInterfaces;
 
   const _ScanButton({
     required this.ips,
+    required this.maxInterfaces,
   });
 
   @override
@@ -328,7 +331,7 @@ class _ScanButton extends StatelessWidget {
     final spinning = (scanningFavorites || scanningIps.isNotEmpty) && animations;
     final iconColor = !animations && scanningIps.isNotEmpty ? Theme.of(context).colorScheme.warning : null;
 
-    if (ips.length <= StartSmartScan.maxInterfaces) {
+    if (ips.length <= maxInterfaces) {
       return Tooltip(
         message: t.sendTab.scan,
         child: RotatingWidget(

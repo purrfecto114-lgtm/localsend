@@ -1198,6 +1198,9 @@ class Translations$settingsTab$network$en {
   /// en: 'Discovery Timeout'
   String get discoveryTimeout => 'Discovery Timeout';
 
+  /// en: 'Max Interfaces (Smart Scan)'
+  String get maxInterfaces => 'Max Interfaces (Smart Scan)';
+
   /// en: 'Use system name'
   String get useSystemName => 'Use system name';
 

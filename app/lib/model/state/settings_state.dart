@@ -39,6 +39,7 @@ class SettingsState with SettingsStateMappable {
   final bool createChecksums; // create checksums when sending files
   final bool verifyChecksums; // verify checksums when receiving files
   final int discoveryTimeout;
+  final int maxInterfaces; // maximum number of interfaces covered by the smart scan
   final bool advancedSettings;
 
   const SettingsState({
@@ -72,6 +73,7 @@ class SettingsState with SettingsStateMappable {
     required this.createChecksums,
     required this.verifyChecksums,
     required this.discoveryTimeout,
+    required this.maxInterfaces,
     required this.advancedSettings,
   });
 }

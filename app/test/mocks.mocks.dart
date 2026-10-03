@@ -306,6 +306,24 @@ class MockPersistenceService extends _i1.Mock implements _i4.PersistenceService 
           as _i5.Future<void>);
 
   @override
+  int getMaxInterfaces() =>
+      (super.noSuchMethod(
+            Invocation.method(#getMaxInterfaces, []),
+            returnValue: 0,
+            returnValueForMissingStub: 0,
+          )
+          as int);
+
+  @override
+  _i5.Future<void> setMaxInterfaces(int? maxInterfaces) =>
+      (super.noSuchMethod(
+            Invocation.method(#setMaxInterfaces, [maxInterfaces]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
   bool getShareViaLinkAutoAccept() =>
       (super.noSuchMethod(
             Invocation.method(#getShareViaLinkAutoAccept, []),
@@ -618,6 +636,24 @@ class MockPersistenceService extends _i1.Mock implements _i4.PersistenceService 
   bool getSaveWindowPlacement() =>
       (super.noSuchMethod(
             Invocation.method(#getSaveWindowPlacement, []),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i5.Future<void> setAlwaysOnTop(bool? alwaysOnTop) =>
+      (super.noSuchMethod(
+            Invocation.method(#setAlwaysOnTop, [alwaysOnTop]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  bool getAlwaysOnTop() =>
+      (super.noSuchMethod(
+            Invocation.method(#getAlwaysOnTop, []),
             returnValue: false,
             returnValueForMissingStub: false,
           )
