@@ -1,0 +1,27 @@
+# Release notes configuration for GitHub auto-generated notes.
+# Manual releases of this fork use the same fix/feat/tip convention
+# (see CHANGELOG.md "v1.18.2-fork.1" for the reference format).
+changelog:
+  exclude:
+    labels:
+      - 'skip-changelog'
+  categories:
+    - title: '🐛 Fixes'
+      labels:
+        - 'fix'
+        - 'bug'
+    - title: '✨ Features'
+      labels:
+        - 'feat'
+        - 'enhancement'
+    - title: '💡 Tips'
+      labels:
+        - 'tip'
+        - 'documentation'
+    - title: '🔧 Chores'
+      labels:
+        - 'chore'
+        - 'dependencies'
+    - title: 'Other Changes'
+      labels:
+        - '*'
