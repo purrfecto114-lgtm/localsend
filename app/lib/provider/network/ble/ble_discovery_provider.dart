@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show TargetPlatform;
 import 'package:localsend_app/model/state/settings_state.dart';
 import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
 import 'package:localsend_app/provider/network/ble/ble_low_energy_transport.dart';
 import 'package:localsend_app/provider/network/ble/ble_transport.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
+import 'package:localsend_app/util/native/platform_check.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/model/device.dart';
 import 'package:logging/logging.dart';
@@ -13,15 +15,42 @@ import 'package:refena_flutter/refena_flutter.dart';
 
 final _logger = Logger('BleDiscoveryProvider');
 
+/// Whether the BLE plugin can run on this device (pure, so the platform
+/// matrix is unit-testable).
+///
+/// On Android below SDK 31 (Android 12) the plugin's `authorize()` would
+/// request `ACCESS_FINE_LOCATION`/`ACCESS_COARSE_LOCATION` - permissions
+/// the app deliberately does not declare (this fork's BLE scan must stay
+/// location-free) - which the system auto-denies, leaving the whole module
+/// silently dead. Such devices are treated as unsupported instead, and the
+/// discovery runs on the inert noop transport. An unknown SDK int counts
+/// as unsupported (fail closed).
+bool bleSupportedOnThisDevice({required bool isAndroid, required int? androidSdkInt}) {
+  if (!isAndroid) {
+    return true;
+  }
+  return (androidSdkInt ?? 0) >= 31;
+}
+
 /// The [BleTransport] backing the BLE discovery.
 ///
 /// While the feature flag `ls_ble_discovery_enabled` is off (the default),
 /// this is the [NoopBleTransport]: no platform API is touched, the scan
 /// stream is empty and nothing can reach the discovery store. When the flag
 /// is on, the bluetooth_low_energy adapter is used - or the noop transport
-/// again on platforms where the adapter cannot even be constructed.
+/// again on unsupported devices (Android below 12) and on platforms where
+/// the adapter cannot even be constructed.
 final bleTransportProvider = Provider<BleTransport>((ref) {
   if (!ref.read(settingsProvider).bleDiscoveryEnabled) {
+    return const NoopBleTransport();
+  }
+  if (!bleSupportedOnThisDevice(
+    isAndroid: checkPlatform([TargetPlatform.android]),
+    androidSdkInt: ref.read(deviceInfoProvider).androidSdkInt,
+  )) {
+    _logger.warning(
+      'BLE discovery needs Android 12 (SDK 31) or newer; on older versions the plugin would request undeclared location permissions, so the module stays off',
+    );
     return const NoopBleTransport();
   }
   try {

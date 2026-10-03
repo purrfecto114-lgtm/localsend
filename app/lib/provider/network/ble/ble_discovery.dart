@@ -28,6 +28,17 @@ final _logger = Logger('BleDiscovery');
 /// - Beacons are deduplicated per remote (with a retry cooldown) and the
 ///   dispatched devices per fingerprint (with a refresh interval, so a peer
 ///   stays in the store while it keeps advertising).
+/// - [start] and [stop] are serialized: a stop issued while a start is still
+///   settling waits for it and then tears everything down again, so no
+///   orphaned scan (or advertisement) can outlive a stop.
+/// - Scan flooding is contained by three bounds: hits weaker than
+///   [minHitRssi] are dropped, at most one GATT handshake is in flight (a
+///   hit arriving meanwhile is dropped and simply picked up by the peer's
+///   next advertisement), and the per-remote cooldown bookkeeping is capped
+///   (an attacker cannot grow it without bounds by rotating remote ids).
+/// - The beacon salt is rotated every [beaconSaltRotationInterval] while
+///   advertising, so the salted fingerprint hash is not a stable radio
+///   tracker across a long session.
 class BleDiscoveryService {
   BleDiscoveryService({
     required BleTransport Function() transportFactory,
@@ -36,12 +47,20 @@ class BleDiscoveryService {
     required void Function(Device device) onDeviceDiscovered,
     this.gattRetryCooldown = const Duration(seconds: 30),
     this.fingerprintRefreshInterval = const Duration(seconds: 60),
+    this.minHitRssi = defaultMinHitRssi,
+    this.gattAttemptCacheLimit = 128,
+    this.beaconSaltRotationInterval = const Duration(seconds: 90),
     DateTime Function() now = DateTime.now,
   }) : _transportFactory = transportFactory,
        _isFeatureEnabled = isFeatureEnabled,
        _selfDeviceInfo = selfDeviceInfo,
        _onDeviceDiscovered = onDeviceDiscovered,
        _now = now;
+
+  /// The default RSSI floor for advertisement hits, in dBm. Advertisements
+  /// weaker than this are treated as noise and dropped before any GATT
+  /// work is queued for them.
+  static const int defaultMinHitRssi = -80;
 
   final BleTransport Function() _transportFactory;
   final bool Function() _isFeatureEnabled;
@@ -57,6 +76,22 @@ class BleDiscoveryService {
   /// while the peer keeps advertising).
   final Duration fingerprintRefreshInterval;
 
+  /// Advertisement hits with an RSSI below this value (in dBm) are dropped.
+  /// A radio-range attacker spoofing many beacons cannot make the service
+  /// connect to all of them; the constant trades discovery range for
+  /// flood resilience and can be tuned per deployment.
+  final int minHitRssi;
+
+  /// How many remotes the GATT cooldown bookkeeping remembers at most
+  /// (least recently used are evicted first). Bounds the memory a scan
+  /// flood can consume; the remotes themselves keep working - an evicted
+  /// remote is simply contacted again on its next advertisement.
+  final int gattAttemptCacheLimit;
+
+  /// How often the beacon salt is regenerated (and the advertisement
+  /// restarted with the new salted hash) while advertising.
+  final Duration beaconSaltRotationInterval;
+
   final DateTime Function() _now;
 
   BleTransport? _transport;
@@ -65,11 +100,33 @@ class BleDiscoveryService {
   /// Serializes the GATT handshakes: one connection at a time.
   Future<void> _gattChain = Future.value();
 
+  /// Whether a GATT handshake is queued or running. While it is, further
+  /// hits are dropped (backpressure) instead of piling onto the chain.
+  bool _gattInFlight = false;
+
+  /// Bumped on every shutdown so a handshake that outlives its session
+  /// cannot clear the in-flight token of the next one.
+  int _gattGeneration = 0;
+
   /// The remote ids already handed to GATT, and when.
   final Map<String, DateTime> _lastGattAttempt = {};
 
   /// The fingerprints already dispatched, and when.
   final Map<String, DateTime> _lastDispatch = {};
+
+  /// Serializes [start], [stop] and the salt rotation: none of them may
+  /// interleave with another, otherwise a stop during a starting scan
+  /// would leave an orphaned scan behind.
+  Future<void> _lifecycleChain = Future.value();
+
+  /// Rotates the beacon salt while advertising.
+  Timer? _saltRotationTimer;
+
+  /// The device info and salt currently advertised (null while not
+  /// advertising). Kept so the salt rotation can re-encode the beacon.
+  Device? _advertisedSelf;
+  Uint8List _advertisedGattPayload = Uint8List(0);
+  Uint8List _beaconSalt = Uint8List(0);
 
   bool _running = false;
 
@@ -82,7 +139,24 @@ class BleDiscoveryService {
   /// are contained: an unusable advertisement (e.g. Windows Nearby Sharing
   /// holding the radio) only disables advertising, while a failing scan
   /// stops the whole BLE discovery again.
-  Future<void> start() async {
+  Future<void> start() => _runExclusive(_start);
+
+  /// Stops advertising and scanning and releases the transport.
+  ///
+  /// A no-op when not running. If a start is still settling, the stop
+  /// waits for it and then releases everything that start created.
+  Future<void> stop() => _runExclusive(_stop);
+
+  /// Runs [action] exclusively: lifecycle operations (and the beacon salt
+  /// rotation) must never interleave. Errors of one operation neither
+  /// escape into the caller of the next queued operation.
+  Future<void> _runExclusive(Future<void> Function() action) {
+    final result = _lifecycleChain.then((_) => action());
+    _lifecycleChain = result.then((_) {}, onError: (Object e, StackTrace stackTrace) {});
+    return result;
+  }
+
+  Future<void> _start() async {
     if (_running) {
       return;
     }
@@ -116,15 +190,19 @@ class BleDiscoveryService {
     // via BLE, but it can still find others.
     if (transport.supportsAdvertising && hasUsableAddress) {
       try {
-        final beacon = encodeBleBeacon(
-          port: self.port,
-          fingerprint: self.fingerprint,
-          salt: _randomSalt(),
+        _beaconSalt = _randomSalt();
+        _advertisedSelf = self;
+        _advertisedGattPayload = encodeBleDeviceInfo(BleDeviceInfo.fromDevice(self));
+        await transport.startAdvertising(
+          beacon: _encodeBeacon(self, _beaconSalt),
+          gattPayload: _advertisedGattPayload,
         );
-        final payload = encodeBleDeviceInfo(BleDeviceInfo.fromDevice(self));
-        await transport.startAdvertising(beacon: beacon, gattPayload: payload);
+        _startSaltRotation();
       } catch (e, stackTrace) {
         _logger.warning('BLE advertising failed to start; scanning still works', e, stackTrace);
+        _stopSaltRotation();
+        _advertisedSelf = null;
+        _advertisedGattPayload = Uint8List(0);
       }
     } else {
       _logger.info('Skipping BLE advertising (supported: ${transport.supportsAdvertising}, usable address: $hasUsableAddress); scanning only');
@@ -145,8 +223,7 @@ class BleDiscoveryService {
     }
   }
 
-  /// Stops advertising and scanning and releases the transport.
-  Future<void> stop() async {
+  Future<void> _stop() async {
     if (!_running) {
       return;
     }
@@ -156,17 +233,35 @@ class BleDiscoveryService {
   Future<void> _shutdown() async {
     _running = false;
 
+    _stopSaltRotation();
+    _advertisedSelf = null;
+    _advertisedGattPayload = Uint8List(0);
+
+    // A GATT handshake that is still settling belongs to the old session;
+    // it must not hold the in-flight token of the next one.
+    _gattGeneration++;
+    _gattInFlight = false;
+
     final subscription = _scanSubscription;
     _scanSubscription = null;
-    await subscription?.cancel();
+    try {
+      await subscription?.cancel();
+    } catch (e, stackTrace) {
+      _logger.warning('Cancelling the BLE scan subscription failed', e, stackTrace);
+    }
 
     final transport = _transport;
     _transport = null;
     if (transport == null) {
       return;
     }
-    // Swallow teardown errors: a failing stop must not mask the original
-    // state, and the platform stack is going away anyway.
+    await _releaseTransport(transport);
+  }
+
+  /// Tears a transport down, swallowing every error: a failing stop must
+  /// not mask the original state, and the platform stack is going away
+  /// anyway. Also used for a transport whose start was abandoned midway.
+  Future<void> _releaseTransport(BleTransport transport) async {
     try {
       await transport.stopScan();
     } catch (e, stackTrace) {
@@ -184,10 +279,68 @@ class BleDiscoveryService {
     }
   }
 
+  Uint8List _encodeBeacon(Device self, Uint8List salt) {
+    return encodeBleBeacon(port: self.port, fingerprint: self.fingerprint, salt: salt);
+  }
+
+  void _startSaltRotation() {
+    _stopSaltRotation();
+    if (beaconSaltRotationInterval <= Duration.zero) {
+      return;
+    }
+    _saltRotationTimer = Timer.periodic(beaconSaltRotationInterval, (_) {
+      unawaited(_runExclusive(_rotateBeaconSalt));
+    });
+  }
+
+  void _stopSaltRotation() {
+    _saltRotationTimer?.cancel();
+    _saltRotationTimer = null;
+  }
+
+  /// Regenerates the beacon salt and restarts the advertisement with the
+  /// new salted hash, so the on-air hash changes periodically and cannot
+  /// be used to track one session's fingerprint for long.
+  Future<void> _rotateBeaconSalt() async {
+    final transport = _transport;
+    final self = _advertisedSelf;
+    if (transport == null || self == null || !_running) {
+      return;
+    }
+    final salt = _randomSalt();
+    try {
+      final beacon = _encodeBeacon(self, salt);
+      // Restarting is the only portable way to swap the advertised payload
+      // (the plugin backends have no in-place update).
+      await transport.stopAdvertising();
+      await transport.startAdvertising(beacon: beacon, gattPayload: _advertisedGattPayload);
+      _beaconSalt = salt;
+    } catch (e, stackTrace) {
+      _logger.warning('Rotating the BLE beacon salt failed', e, stackTrace);
+    }
+  }
+
   void _onScanHit(BleAdvertisementHit hit) {
+    if (hit.rssi < minHitRssi) {
+      // Too weak to be worth a connection; also the first line of defense
+      // against a flood of spoofed advertisements.
+      return;
+    }
+    if (_gattInFlight) {
+      // Backpressure: a handshake is queued or running. The dropped peer
+      // advertises again within moments and is picked up then; its
+      // cooldown is not consumed, so the retry is immediate.
+      return;
+    }
+    _gattInFlight = true;
+    final generation = _gattGeneration;
     // Serialize the handshakes: concurrent GATT connections to multiple
     // peers are the fastest way to trip a mobile BLE stack.
-    _gattChain = _gattChain.then((_) => _processHit(hit));
+    _gattChain = _gattChain.then((_) => _processHit(hit)).whenComplete(() {
+      if (generation == _gattGeneration) {
+        _gattInFlight = false;
+      }
+    });
   }
 
   Future<void> _processHit(BleAdvertisementHit hit) async {
@@ -216,6 +369,12 @@ class BleDiscoveryService {
       final lastAttempt = _lastGattAttempt[hit.remoteId];
       if (lastAttempt != null && now.difference(lastAttempt) < gattRetryCooldown) {
         return;
+      }
+      _lastGattAttempt.remove(hit.remoteId);
+      if (_lastGattAttempt.length >= gattAttemptCacheLimit) {
+        // Least recently used first; a scan flood cannot grow this map
+        // without bounds by rotating remote ids.
+        _lastGattAttempt.remove(_lastGattAttempt.keys.first);
       }
       _lastGattAttempt[hit.remoteId] = now;
 

@@ -9,6 +9,7 @@ import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/pages/home_page.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
@@ -102,6 +103,20 @@ class LocalSendApp extends StatelessWidget {
                   } else {
                     rebindDiscovery();
                   }
+                }
+                if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
+                  // The BLE discovery was stopped on pause; restart it if its
+                  // flag is on (start() is a no-op while already running and
+                  // inert while the flag is off).
+                  unawaited(ref.read(bleDiscoveryProvider).start());
+                }
+                break;
+              case AppLifecycleState.paused:
+                // The OS suspends the app anyway; stop the BLE discovery
+                // explicitly so the scan/advertisement radio work stays
+                // strictly foreground (resume restarts it, see above).
+                if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
+                  unawaited(ref.read(bleDiscoveryProvider).stop());
                 }
                 break;
               case AppLifecycleState.detached:
