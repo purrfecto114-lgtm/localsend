@@ -201,9 +201,12 @@ class SendTab extends StatelessWidget {
               ],
             ),
             if (vm.nearbyDevices.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(bottom: 10, left: _horizontalPadding, right: _horizontalPadding),
-                child: DiscoveryEmptyState(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, left: _horizontalPadding, right: _horizontalPadding),
+                child: DiscoveryEmptyState(
+                  onOpenFavorites: vm.onTapFavorite,
+                  onOpenManualAddress: vm.onTapAddress,
+                ),
               ),
             ...vm.nearbyDevices.map((device) {
               final favoriteEntry = vm.favoriteDevices.findDevice(device);

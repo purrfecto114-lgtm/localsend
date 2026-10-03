@@ -762,6 +762,7 @@ class Translations$dialogs$en {
   late final Translations$dialogs$openFile$en openFile = Translations$dialogs$openFile$en.internal(_root);
   late final Translations$dialogs$addressInput$en addressInput = Translations$dialogs$addressInput$en.internal(_root);
   late final Translations$dialogs$cancelSession$en cancelSession = Translations$dialogs$cancelSession$en.internal(_root);
+  late final Translations$dialogs$connectionError$en connectionError = Translations$dialogs$connectionError$en.internal(_root);
   late final Translations$dialogs$cannotOpenFile$en cannotOpenFile = Translations$dialogs$cannotOpenFile$en.internal(_root);
   late final Translations$dialogs$encryptionDisabledNotice$en encryptionDisabledNotice = Translations$dialogs$encryptionDisabledNotice$en.internal(
     _root,
@@ -787,6 +788,7 @@ class Translations$dialogs$en {
       Translations$dialogs$quickSaveFromFavoritesNotice$en.internal(_root);
   late final Translations$dialogs$pin$en pin = Translations$dialogs$pin$en.internal(_root);
   late final Translations$dialogs$sendModeHelp$en sendModeHelp = Translations$dialogs$sendModeHelp$en.internal(_root);
+  late final Translations$dialogs$startupError$en startupError = Translations$dialogs$startupError$en.internal(_root);
   late final Translations$dialogs$zoom$en zoom = Translations$dialogs$zoom$en.internal(_root);
 }
 
@@ -1067,6 +1069,8 @@ class Translations$sendTab$diagnosis$en {
 
   /// en: 'Search again'
   String get rescan => 'Search again';
+
+  late final Translations$sendTab$diagnosis$manualFallback$en manualFallback = Translations$sendTab$diagnosis$manualFallback$en.internal(_root);
 }
 
 // Path: settingsTab.general
@@ -1489,6 +1493,8 @@ class Translations$dialogs$addressInput$en {
 
   /// en: 'Recently used: '
   String get recentlyUsed => 'Recently used: ';
+
+  late final Translations$dialogs$addressInput$validation$en validation = Translations$dialogs$addressInput$validation$en.internal(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1504,6 +1510,29 @@ class Translations$dialogs$cancelSession$en {
 
   /// en: 'Do you really want to cancel the files transfer?'
   String get content => 'Do you really want to cancel the files transfer?';
+}
+
+// Path: dialogs.connectionError
+class Translations$dialogs$connectionError$en {
+  Translations$dialogs$connectionError$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Connection failed'
+  String get title => 'Connection failed';
+
+  late final Translations$dialogs$connectionError$timeout$en timeout = Translations$dialogs$connectionError$timeout$en.internal(_root);
+  late final Translations$dialogs$connectionError$refused$en refused = Translations$dialogs$connectionError$refused$en.internal(_root);
+  late final Translations$dialogs$connectionError$forbidden$en forbidden = Translations$dialogs$connectionError$forbidden$en.internal(_root);
+  late final Translations$dialogs$connectionError$other$en other = Translations$dialogs$connectionError$other$en.internal(_root);
+
+  /// en: 'Retry'
+  String get retry => 'Retry';
+
+  /// en: 'Error details:'
+  String get details => 'Error details:';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1847,6 +1876,35 @@ class Translations$dialogs$sendModeHelp$en {
   String get link => 'Recipients who do not have LocalSend installed can download the selected files by opening the link in their browser.';
 }
 
+// Path: dialogs.startupError
+class Translations$dialogs$startupError$en {
+  Translations$dialogs$startupError$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Could not start the server'
+  String get title => 'Could not start the server';
+
+  /// en: 'Port: {port}'
+  String port({required Object port}) => 'Port: ${port}';
+
+  late final Translations$dialogs$startupError$windowsAccessDenied$en windowsAccessDenied =
+      Translations$dialogs$startupError$windowsAccessDenied$en.internal(_root);
+  late final Translations$dialogs$startupError$addressInUse$en addressInUse = Translations$dialogs$startupError$addressInUse$en.internal(_root);
+  late final Translations$dialogs$startupError$generic$en generic = Translations$dialogs$startupError$generic$en.internal(_root);
+
+  /// en: 'Error details:'
+  String get details => 'Error details:';
+
+  /// en: 'Copy details'
+  String get copyDetails => 'Copy details';
+
+  /// en: 'Open settings'
+  String get openSettings => 'Open settings';
+}
+
 // Path: dialogs.zoom
 class Translations$dialogs$zoom$en {
   Translations$dialogs$zoom$en.internal(this._root);
@@ -1911,6 +1969,25 @@ class Translations$sendTab$diagnosis$scanNoResult$en {
   /// en: 'Sent {announcements} announcements and {scans} network scans without a response.'
   String detail({required Object announcements, required Object scans}) =>
       'Sent ${announcements} announcements and ${scans} network scans without a response.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class Translations$sendTab$diagnosis$manualFallback$en {
+  Translations$sendTab$diagnosis$manualFallback$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.'
+  String get message =>
+      'IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.';
+
+  /// en: 'Open favorites'
+  String get openFavorites => 'Open favorites';
+
+  /// en: 'Enter address manually'
+  String get manualInput => 'Enter address manually';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -2010,4 +2087,133 @@ class Translations$whatsNewPage$changes$v1_18_0$en with WhatsNewStrings {
     'Requests from favorites are now accepted automatically. This is turned on by default and can be disabled in the settings.',
     'On Android, transfers continue while the app is in the background or the screen is off. On iOS, the app must still stay in the foreground.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class Translations$dialogs$addressInput$validation$en {
+  Translations$dialogs$addressInput$validation$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Enter a valid IPv4 address, IPv6 address or host name.'
+  String get invalid => 'Enter a valid IPv4 address, IPv6 address or host name.';
+
+  /// en: 'Enter the address only, without "http://" or "https://".'
+  String get scheme => 'Enter the address only, without "http://" or "https://".';
+
+  /// en: 'Enter the address only. The port is taken from the settings.'
+  String get port => 'Enter the address only. The port is taken from the settings.';
+}
+
+// Path: dialogs.connectionError.timeout
+class Translations$dialogs$connectionError$timeout$en {
+  Translations$dialogs$connectionError$timeout$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device did not respond in time.'
+  String get message => 'The device did not respond in time.';
+
+  /// en: 'It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network.'
+  String get advice =>
+      'It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network.';
+}
+
+// Path: dialogs.connectionError.refused
+class Translations$dialogs$connectionError$refused$en {
+  Translations$dialogs$connectionError$refused$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device refused the connection.'
+  String get message => 'The device refused the connection.';
+
+  /// en: 'LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port.'
+  String get advice =>
+      'LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class Translations$dialogs$connectionError$forbidden$en {
+  Translations$dialogs$connectionError$forbidden$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The device rejected the request.'
+  String get message => 'The device rejected the request.';
+
+  /// en: 'A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device.'
+  String get advice =>
+      'A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device.';
+}
+
+// Path: dialogs.connectionError.other
+class Translations$dialogs$connectionError$other$en {
+  Translations$dialogs$connectionError$other$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The connection could not be established.'
+  String get message => 'The connection could not be established.';
+
+  /// en: 'Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection.'
+  String get advice =>
+      'Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class Translations$dialogs$startupError$windowsAccessDenied$en {
+  Translations$dialogs$startupError$windowsAccessDenied$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Windows denied access to the port (socket error 10013).'
+  String get hint => 'Windows denied access to the port (socket error 10013).';
+
+  /// en: 'This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog: • Change the port in Settings (Network) • Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp • Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)'
+  String get advice =>
+      'This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog:\n• Change the port in Settings (Network)\n• Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class Translations$dialogs$startupError$addressInUse$en {
+  Translations$dialogs$startupError$addressInUse$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The port is already used by another application.'
+  String get hint => 'The port is already used by another application.';
+
+  /// en: 'Another program (or a second LocalSend instance) is listening on this port: • Close the other application, or • Change the port in Settings (Network)'
+  String get advice =>
+      'Another program (or a second LocalSend instance) is listening on this port:\n• Close the other application, or\n• Change the port in Settings (Network)';
+}
+
+// Path: dialogs.startupError.generic
+class Translations$dialogs$startupError$generic$en {
+  Translations$dialogs$startupError$generic$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The server could not be started.'
+  String get hint => 'The server could not be started.';
+
+  /// en: '• Check your firewall and network settings • Try changing the port in Settings (Network)'
+  String get advice => '• Check your firewall and network settings\n• Try changing the port in Settings (Network)';
 }

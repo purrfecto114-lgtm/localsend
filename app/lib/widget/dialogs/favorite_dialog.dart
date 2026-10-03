@@ -6,7 +6,7 @@ import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/http_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
-import 'package:localsend_app/widget/dialogs/error_dialog.dart';
+import 'package:localsend_app/widget/dialogs/connection_error_dialog.dart';
 import 'package:localsend_app/widget/dialogs/favorite_edit_dialog.dart';
 import 'package:localsend_isolates/rust/api/model.dart';
 import 'package:localsend_isolates/util/rust.dart';
@@ -23,10 +23,12 @@ class FavoritesDialog extends StatefulWidget {
 
 class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
   bool _fetching = false;
-  String? _error;
+  Object? _error;
+  FavoriteDevice? _lastTriedFavorite;
 
   /// Checks if the device is reachable and pops the dialog with the result if it is.
   Future<void> _checkConnectionToDevice(FavoriteDevice favorite) async {
+    _lastTriedFavorite = favorite;
     setState(() {
       _fetching = true;
     });
@@ -53,7 +55,7 @@ class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
     } catch (e) {
       setState(() {
         _fetching = false;
-        _error = e.toString();
+        _error = e;
       });
     }
   }
@@ -105,22 +107,29 @@ class _FavoritesDialogState extends State<FavoritesDialog> with Refena {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
-                  if (_error != null) ...[
-                    const SizedBox(width: 5),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (_) => ErrorDialog(error: _error!),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
-                      ),
+                  Expanded(
+                    child: Text(
+                      connectionErrorMessage(_error!),
+                      style: TextStyle(color: Theme.of(context).colorScheme.warning),
                     ),
-                  ],
+                  ),
+                  const SizedBox(width: 5),
+                  InkWell(
+                    onTap: () async {
+                      final favorite = _lastTriedFavorite;
+                      await showDialog(
+                        context: context,
+                        builder: (_) => ConnectionErrorDialog(
+                          error: _error!,
+                          onRetry: favorite == null ? null : () => _checkConnectionToDevice(favorite),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                    ),
+                  ),
                 ],
               ),
             ),

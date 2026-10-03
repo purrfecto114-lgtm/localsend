@@ -99,7 +99,12 @@
         "advice": "Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.",
         "detail": "Sent {announcements} announcements and {scans} network scans without a response."
       },
-      "rescan": "Search again"
+      "rescan": "Search again",
+      "manualFallback": {
+        "message": "IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.",
+        "openFavorites": "Open favorites",
+        "manualInput": "Enter address manually"
+      }
     }
   },
   "settingsTab": {
@@ -439,11 +444,37 @@
       "title": "Enter address",
       "hashtag": "Hashtag",
       "ip": "IP Address",
-      "recentlyUsed": "Recently used: "
+      "recentlyUsed": "Recently used: ",
+      "validation": {
+        "invalid": "Enter a valid IPv4 address, IPv6 address or host name.",
+        "scheme": "Enter the address only, without \"http://\" or \"https://\".",
+        "port": "Enter the address only. The port is taken from the settings."
+      }
     },
     "cancelSession": {
       "title": "Cancel files transfer",
       "content": "Do you really want to cancel the files transfer?"
+    },
+    "connectionError": {
+      "title": "Connection failed",
+      "timeout": {
+        "message": "The device did not respond in time.",
+        "advice": "It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network."
+      },
+      "refused": {
+        "message": "The device refused the connection.",
+        "advice": "LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port."
+      },
+      "forbidden": {
+        "message": "The device rejected the request.",
+        "advice": "A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device."
+      },
+      "other": {
+        "message": "The connection could not be established.",
+        "advice": "Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection."
+      },
+      "retry": "Retry",
+      "details": "Error details:"
     },
     "cannotOpenFile": {
       "title": "Cannot open file",
@@ -539,6 +570,25 @@
       "single": "Sends files to one recipient. Selection will be cleared after finished files transfer.",
       "multiple": "Sends files to multiple recipients. Selection will not be cleared after finished files transfer.",
       "link": "Recipients who do not have LocalSend installed can download the selected files by opening the link in their browser."
+    },
+    "startupError": {
+      "title": "Could not start the server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows denied access to the port (socket error 10013).",
+        "advice": "This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog:\n• Change the port in Settings (Network)\n• Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)"
+      },
+      "addressInUse": {
+        "hint": "The port is already used by another application.",
+        "advice": "Another program (or a second LocalSend instance) is listening on this port:\n• Close the other application, or\n• Change the port in Settings (Network)"
+      },
+      "generic": {
+        "hint": "The server could not be started.",
+        "advice": "• Check your firewall and network settings\n• Try changing the port in Settings (Network)"
+      },
+      "details": "Error details:",
+      "copyDetails": "Copy details",
+      "openSettings": "Open settings"
     },
     "zoom": {
       "title": "URL"

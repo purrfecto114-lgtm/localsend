@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
@@ -10,7 +11,8 @@ import 'package:localsend_app/provider/http_provider.dart';
 import 'package:localsend_app/provider/last_devices.provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
-import 'package:localsend_app/widget/dialogs/error_dialog.dart';
+import 'package:localsend_app/util/address_input_validator.dart';
+import 'package:localsend_app/widget/dialogs/connection_error_dialog.dart';
 import 'package:localsend_isolates/model/device.dart';
 import 'package:localsend_isolates/rust/api/model.dart';
 import 'package:localsend_isolates/util/rust.dart';
@@ -44,17 +46,25 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
   _InputMode _mode = _InputMode.hashtag;
   String _input = '';
   bool _fetching = false;
-  String? _error;
+  Object? _error;
+  String? _lastCandidate;
+  ManualAddressError? _validationError;
 
   Future<void> _submit(List<String> localIps, int port, [String? candidate]) async {
     final List<String> candidates;
     final String input = _input.trim();
+    _lastCandidate = candidate;
     if (candidate != null) {
-      candidates = [candidate];
+      candidates = [_normalizeCandidate(candidate)];
     } else if (_mode == _InputMode.ip) {
-      candidates = [input];
+      final (address, error) = parseManualAddress(input);
+      if (address == null) {
+        setState(() => _validationError = error);
+        return;
+      }
+      candidates = [address.host];
     } else {
-      candidates = localIps.map((ip) => '${ip.ipPrefix}.$input').toList();
+      candidates = buildHashtagCandidates(localIps, input);
     }
 
     setState(() {
@@ -65,7 +75,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
 
     final deviceCompleter = Completer<void>();
     Device? foundDevice;
-    String? error;
+    Object? error;
 
     final payload = ref.read(deviceFullInfoProvider).toRegisterDto();
 
@@ -86,7 +96,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
             foundDevice = response.body.toDevice(ip, port, https);
             deviceCompleter.complete();
           } catch (e) {
-            error = e.toString();
+            error = e;
             rethrow;
           }
         }(),
@@ -117,6 +127,40 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
     }
   }
 
+  /// Normalizes a stored address (e.g. from the recently used list) with the
+  /// same rules as manual input; unparseable values are passed through
+  /// unchanged to keep the previous behavior.
+  String _normalizeCandidate(String candidate) {
+    final (address, _) = parseManualAddress(candidate);
+    return address?.host ?? candidate;
+  }
+
+  bool get _canSubmit {
+    if (_fetching) {
+      return false;
+    }
+    if (_input.trim().isEmpty) {
+      return false;
+    }
+    if (_mode == _InputMode.ip) {
+      return parseManualAddress(_input).$1 != null;
+    }
+    return true;
+  }
+
+  void _onModeChanged(int index) {
+    setState(() {
+      for (int i = 0; i < _selected.length; i++) {
+        _selected[i] = i == index;
+      }
+      _mode = _InputMode.values[index];
+      // The text field is recreated for the new mode, so the stale input of
+      // the previous mode must not survive in the validation state.
+      _input = '';
+      _validationError = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localIps = (ref.watch(localIpProvider.select((info) => info.localIps))).uniqueIpPrefix;
@@ -131,14 +175,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
         children: [
           ToggleButtons(
             isSelected: _selected,
-            onPressed: (int index) {
-              setState(() {
-                for (int i = 0; i < _selected.length; i++) {
-                  _selected[i] = i == index;
-                }
-                _mode = _InputMode.values[index];
-              });
-            },
+            onPressed: _fetching ? null : _onModeChanged,
             borderRadius: BorderRadius.circular(10),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             constraints: const BoxConstraints(minWidth: 0, minHeight: 0),
@@ -157,9 +194,15 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
             keyboardType: _mode == _InputMode.hashtag ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               prefixText: _mode == _InputMode.hashtag ? '# ' : 'IP: ',
+              errorText: _validationErrorText,
             ),
             onChanged: (s) {
-              setState(() => _input = s);
+              setState(() {
+                _input = s;
+                if (_mode == _InputMode.ip) {
+                  _validationError = parseManualAddress(s).$2;
+                }
+              });
             },
             onFieldSubmitted: (s) async => _submit(localIps, settings.port),
           ),
@@ -188,7 +231,7 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
           ] else ...[
             if (lastDevices.isEmpty)
               Text(
-                '${t.general.example}: ${localIps.firstOrNull?.ipPrefix ?? '192.168.2'}.123',
+                '${t.general.example}: ${localIps.firstOrNull?.ipPrefix ?? '192.168.2'}.123, fe80::1, my-pc.local',
                 style: const TextStyle(color: Colors.grey),
               )
             else
@@ -217,22 +260,28 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
-                  if (_error != null) ...[
-                    const SizedBox(width: 5),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (_) => ErrorDialog(error: _error!),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
-                      ),
+                  Expanded(
+                    child: Text(
+                      connectionErrorMessage(_error!),
+                      style: TextStyle(color: Theme.of(context).colorScheme.warning),
                     ),
-                  ],
+                  ),
+                  const SizedBox(width: 5),
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) => ConnectionErrorDialog(
+                          error: _error!,
+                          onRetry: () => _submit(localIps, settings.port, _lastCandidate),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -244,11 +293,23 @@ class _AddressInputDialogState extends State<AddressInputDialog> with Refena {
           child: Text(t.general.cancel),
         ),
         FilledButton(
-          onPressed: _fetching ? null : () async => _submit(localIps, settings.port),
+          onPressed: _canSubmit ? () async => _submit(localIps, settings.port) : null,
           child: Text(t.general.confirm),
         ),
       ],
     );
+  }
+
+  String? get _validationErrorText {
+    final error = _validationError;
+    if (error == null) {
+      return null;
+    }
+    return switch (error) {
+      ManualAddressError.scheme => t.dialogs.addressInput.validation.scheme,
+      ManualAddressError.port => t.dialogs.addressInput.validation.port,
+      ManualAddressError.invalid => t.dialogs.addressInput.validation.invalid,
+    };
   }
 }
 
@@ -259,8 +320,16 @@ extension on String {
 }
 
 extension on List<String> {
+  /// Only IPv4 addresses have a meaningful "prefix" for hashtag input;
+  /// IPv6 addresses are filtered out and prefixes are deduplicated.
   List<String> get uniqueIpPrefix {
     final seen = <String>{};
-    return where((s) => seen.add(s.ipPrefix)).toList();
+    return where((ip) {
+      final address = InternetAddress.tryParse(ip);
+      if (address == null || address.type != InternetAddressType.IPv4) {
+        return false;
+      }
+      return seen.add(address.address.split('.').take(3).join('.'));
+    }).toList();
   }
 }
