@@ -192,7 +192,12 @@ Future<List<String>> _getIp({
           .toList();
 
   final addresses = rankIpAddresses(nativeResult, ip);
-  _logger.info('Network state: $addresses');
+  if (addresses.isEmpty) {
+    // Neither the native enumeration nor the Wi-Fi plugin yielded an address.
+    _logger.warning('Network state: no usable network interface found');
+  } else {
+    _logger.info('Network state: $addresses');
+  }
   return addresses;
 }
 

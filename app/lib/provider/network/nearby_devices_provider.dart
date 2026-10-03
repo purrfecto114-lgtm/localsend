@@ -7,7 +7,10 @@ import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/logging/discovery_logs_provider.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/model/device.dart';
+import 'package:logging/logging.dart';
 import 'package:refena_flutter/refena_flutter.dart';
+
+final _logger = Logger('NearbyDevices');
 
 /// This provider is responsible for:
 /// - Scanning the network for other LocalSend instances
@@ -210,6 +213,7 @@ class StartStagedScan extends AsyncReduxAction<NearbyDevicesService, NearbyDevic
 
   @override
   Future<NearbyDevicesState> reduce() async {
+    final fingerprintsBefore = state.devices.keys.toSet();
     dispatch(_SetRunningFavoriteScanAction(true));
 
     // The found devices arrive on the [StartDiscoveryListener] stream;
@@ -225,6 +229,18 @@ class StartStagedScan extends AsyncReduxAction<NearbyDevicesService, NearbyDevic
           ),
         )
         .drain<void>();
+
+    // Observability: how much this round actually confirmed.
+    final fingerprintsAfter = state.devices.keys.toSet();
+    final confirmed = fingerprintsAfter.difference(fingerprintsBefore).length;
+    final disappeared = fingerprintsBefore.difference(fingerprintsAfter).length;
+    if (confirmed == 0) {
+      _logger.warning('[SCAN] staged scan confirmed no devices (disappeared: $disappeared, total: ${fingerprintsAfter.length})');
+      // The debug page only records success events; log the failure so it is not empty when troubleshooting.
+      notifier._discoveryLogger.addLog('[SCAN] staged scan confirmed no devices (${interfaces.length} interfaces, ${favorites.length} favorites)');
+    } else {
+      _logger.info('[SCAN] staged scan confirmed $confirmed new device(s) (disappeared: $disappeared, total: ${fingerprintsAfter.length})');
+    }
 
     return state.copyWith(
       runningFavoriteScan: false,

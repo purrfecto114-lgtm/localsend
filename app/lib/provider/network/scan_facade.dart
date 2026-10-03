@@ -4,7 +4,10 @@ import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
+import 'package:logging/logging.dart';
 import 'package:refena_flutter/refena_flutter.dart';
+
+final _logger = Logger('ScanFacade');
 
 /// Discovers devices in stages, cheapest first: multicast announcement and
 /// favorite probes right away, http-based discovery on the subnets only when
@@ -25,6 +28,13 @@ class StartSmartScan extends AsyncGlobalAction {
     final favorites = ref.read(favoritesProvider);
     final settings = ref.read(settingsProvider);
     final networkInterfaces = ref.read(localIpProvider).localIps.take(maxInterfaces).toList();
+    final grace = const Duration(seconds: 1);
+    _logger.info(
+      '[SCAN] smart scan start: ${favorites.length} favorites, interfaces=$networkInterfaces, '
+      'port=${settings.port}, https=${settings.https}, grace=${grace.inMilliseconds}ms',
+    );
+    final devicesBefore = ref.read(nearbyDevicesProvider).devices.length;
+    final stopwatch = Stopwatch()..start();
 
     await ref
         .redux(nearbyDevicesProvider)
@@ -34,9 +44,14 @@ class StartSmartScan extends AsyncGlobalAction {
             interfaces: networkInterfaces,
             port: settings.port,
             https: settings.https,
-            grace: const Duration(seconds: 1),
+            grace: grace,
           ),
         );
+
+    final devicesAfter = ref.read(nearbyDevicesProvider).devices.length;
+    _logger.info(
+      '[SCAN] smart scan finished in ${stopwatch.elapsedMilliseconds}ms: ${devicesAfter - devicesBefore} new device(s), total: $devicesAfter',
+    );
   }
 }
 
