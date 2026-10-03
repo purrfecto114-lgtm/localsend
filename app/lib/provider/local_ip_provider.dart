@@ -106,7 +106,12 @@ class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> 
   @override
   Future<NetworkState> reduce() async {
     final fetchId = ++notifier._fetchId;
-    final firstFetchDone = state.initialized;
+    // Not the "first fetch" when an earlier fetch already completed (state
+    // initialized) or merely started: a first fetch that hangs or throws
+    // must not downgrade the next fetch to a no-rebind first fetch, or a
+    // device that was offline at startup keeps its empty discovery binding
+    // forever once the network appears.
+    final firstFetchDone = state.initialized || fetchId > 1;
     final previousIps = state.localIps;
     final newState = NetworkState(
       localIps: await _getIp(
