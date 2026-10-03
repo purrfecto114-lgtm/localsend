@@ -786,6 +786,7 @@ class Translations$dialogs$en {
       Translations$dialogs$quickSaveFromFavoritesNotice$en.internal(_root);
   late final Translations$dialogs$pin$en pin = Translations$dialogs$pin$en.internal(_root);
   late final Translations$dialogs$sendModeHelp$en sendModeHelp = Translations$dialogs$sendModeHelp$en.internal(_root);
+  late final Translations$dialogs$startupError$en startupError = Translations$dialogs$startupError$en.internal(_root);
   late final Translations$dialogs$zoom$en zoom = Translations$dialogs$zoom$en.internal(_root);
 }
 
@@ -1846,6 +1847,35 @@ class Translations$dialogs$sendModeHelp$en {
   String get link => 'Recipients who do not have LocalSend installed can download the selected files by opening the link in their browser.';
 }
 
+// Path: dialogs.startupError
+class Translations$dialogs$startupError$en {
+  Translations$dialogs$startupError$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Could not start the server'
+  String get title => 'Could not start the server';
+
+  /// en: 'Port: {port}'
+  String port({required Object port}) => 'Port: ${port}';
+
+  late final Translations$dialogs$startupError$windowsAccessDenied$en windowsAccessDenied =
+      Translations$dialogs$startupError$windowsAccessDenied$en.internal(_root);
+  late final Translations$dialogs$startupError$addressInUse$en addressInUse = Translations$dialogs$startupError$addressInUse$en.internal(_root);
+  late final Translations$dialogs$startupError$generic$en generic = Translations$dialogs$startupError$generic$en.internal(_root);
+
+  /// en: 'Error details:'
+  String get details => 'Error details:';
+
+  /// en: 'Copy details'
+  String get copyDetails => 'Copy details';
+
+  /// en: 'Open settings'
+  String get openSettings => 'Open settings';
+}
+
 // Path: dialogs.zoom
 class Translations$dialogs$zoom$en {
   Translations$dialogs$zoom$en.internal(this._root);
@@ -2009,4 +2039,51 @@ class Translations$whatsNewPage$changes$v1_18_0$en with WhatsNewStrings {
     'Requests from favorites are now accepted automatically. This is turned on by default and can be disabled in the settings.',
     'On Android, transfers continue while the app is in the background or the screen is off. On iOS, the app must still stay in the foreground.',
   ];
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class Translations$dialogs$startupError$windowsAccessDenied$en {
+  Translations$dialogs$startupError$windowsAccessDenied$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Windows denied access to the port (socket error 10013).'
+  String get hint => 'Windows denied access to the port (socket error 10013).';
+
+  /// en: 'This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog: • Change the port in Settings (Network) • Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp • Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)'
+  String get advice =>
+      'This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog:\n• Change the port in Settings (Network)\n• Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class Translations$dialogs$startupError$addressInUse$en {
+  Translations$dialogs$startupError$addressInUse$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The port is already used by another application.'
+  String get hint => 'The port is already used by another application.';
+
+  /// en: 'Another program (or a second LocalSend instance) is listening on this port: • Close the other application, or • Change the port in Settings (Network)'
+  String get advice =>
+      'Another program (or a second LocalSend instance) is listening on this port:\n• Close the other application, or\n• Change the port in Settings (Network)';
+}
+
+// Path: dialogs.startupError.generic
+class Translations$dialogs$startupError$generic$en {
+  Translations$dialogs$startupError$generic$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'The server could not be started.'
+  String get hint => 'The server could not be started.';
+
+  /// en: '• Check your firewall and network settings • Try changing the port in Settings (Network)'
+  String get advice => '• Check your firewall and network settings\n• Try changing the port in Settings (Network)';
 }

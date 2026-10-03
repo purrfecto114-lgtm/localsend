@@ -540,6 +540,25 @@
       "multiple": "Sends files to multiple recipients. Selection will not be cleared after finished files transfer.",
       "link": "Recipients who do not have LocalSend installed can download the selected files by opening the link in their browser."
     },
+    "startupError": {
+      "title": "Could not start the server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows denied access to the port (socket error 10013).",
+        "advice": "This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog:\n• Change the port in Settings (Network)\n• Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)"
+      },
+      "addressInUse": {
+        "hint": "The port is already used by another application.",
+        "advice": "Another program (or a second LocalSend instance) is listening on this port:\n• Close the other application, or\n• Change the port in Settings (Network)"
+      },
+      "generic": {
+        "hint": "The server could not be started.",
+        "advice": "• Check your firewall and network settings\n• Try changing the port in Settings (Network)"
+      },
+      "details": "Error details:",
+      "copyDetails": "Copy details",
+      "openSettings": "Open settings"
+    },
     "zoom": {
       "title": "URL"
     }

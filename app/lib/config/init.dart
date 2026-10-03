@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:localsend_app/config/refena.dart';
 import 'package:localsend_app/config/theme.dart';
@@ -37,9 +37,10 @@ import 'package:localsend_app/util/native/macos_channel.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
 import 'package:localsend_app/util/native/tray_helper.dart';
 import 'package:localsend_app/util/notification_strings.dart';
+import 'package:localsend_app/util/startup_error_classifier.dart';
 import 'package:localsend_app/util/ui/dynamic_colors.dart';
-import 'package:localsend_app/util/ui/snackbar.dart';
 import 'package:localsend_app/widget/dialogs/local_network_dialog.dart';
+import 'package:localsend_app/widget/dialogs/startup_error_dialog.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/model/dto/file_dto.dart';
 import 'package:localsend_isolates/model/dto/multicast_dto.dart';
@@ -224,7 +225,17 @@ Future<void> postInit(BuildContext context, Ref ref, bool appStart) async {
     await ref.notifier(serverProvider).startServerFromSettings();
   } catch (e) {
     if (context.mounted) {
-      context.showSnackBar(e.toString());
+      // Show an actionable dialog instead of dumping the raw error into a
+      // snackbar: bind failures have well-known causes (e.g. Windows errno
+      // 10013 excluded port ranges) with concrete fixes (#125, #2884).
+      await showDialog(
+        context: context,
+        builder: (_) => StartupErrorDialog(
+          classification: classifyStartupError(e),
+          port: ref.read(settingsProvider).port,
+          onOpenSettings: () => ref.redux(homePageControllerProvider).dispatch(ChangeTabAction(HomeTab.settings)),
+        ),
+      );
     }
   }
 
