@@ -6,7 +6,8 @@ import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/http_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
-import 'package:localsend_app/widget/dialogs/error_dialog.dart';
+import 'package:localsend_app/util/address_input_validator.dart';
+import 'package:localsend_app/widget/dialogs/connection_error_dialog.dart';
 import 'package:localsend_app/widget/dialogs/favorite_delete_dialog.dart';
 import 'package:localsend_isolates/model/device.dart';
 import 'package:localsend_isolates/rust/api/model.dart';
@@ -33,7 +34,13 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
   final _portController = TextEditingController();
   final _aliasController = TextEditingController();
   bool _fetching = false;
-  String? _error;
+  Object? _error;
+  ManualAddressError? _ipValidationError;
+
+  /// The register parameters of the most recent attempt, so the retry
+  /// button of the [ConnectionErrorDialog] can re-run exactly the failed
+  /// request.
+  ({String host, int port})? _lastRegisterAttempt;
 
   @override
   void initState() {
@@ -82,6 +89,14 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
               controller: _ipController,
               autofocus: widget.favorite == null && widget.prefilledDevice == null,
               enabled: !_fetching,
+              decoration: InputDecoration(
+                errorText: _ipValidationErrorText,
+              ),
+              onChanged: (s) {
+                setState(() {
+                  _ipValidationError = parseManualAddress(s).$2;
+                });
+              },
             ),
             const SizedBox(height: 16),
             Text(t.dialogs.favoriteEditDialog.port),
@@ -119,22 +134,29 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                 padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
-                    Text(t.general.error, style: TextStyle(color: Theme.of(context).colorScheme.warning)),
-                    if (_error != null) ...[
-                      const SizedBox(width: 5),
-                      InkWell(
-                        onTap: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (_) => ErrorDialog(error: _error!),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
-                        ),
+                    Expanded(
+                      child: Text(
+                        connectionErrorMessage(_error!),
+                        style: TextStyle(color: Theme.of(context).colorScheme.warning),
                       ),
-                    ],
+                    ),
+                    const SizedBox(width: 5),
+                    InkWell(
+                      onTap: () async {
+                        final attempt = _lastRegisterAttempt;
+                        await showDialog(
+                          context: context,
+                          builder: (_) => ConnectionErrorDialog(
+                            error: _error!,
+                            onRetry: attempt == null ? null : () => _registerFavorite(host: attempt.host, port: attempt.port),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Icon(Icons.info, color: Theme.of(context).colorScheme.warning, size: 20),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -158,6 +180,15 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                     return;
                   }
 
+                  final (address, ipError) = parseManualAddress(_ipController.text);
+                  if (address == null) {
+                    // Reject garbage input instead of firing a register
+                    // request at it (same validator as the manual address
+                    // dialog).
+                    setState(() => _ipValidationError = ipError ?? ManualAddressError.invalid);
+                    return;
+                  }
+
                   if (widget.favorite != null) {
                     // Update existing favorite
                     final existingFavorite = widget.favorite!;
@@ -171,7 +202,7 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                         .dispatchAsync(
                           UpdateFavoriteAction(
                             existingFavorite.copyWith(
-                              ip: _ipController.text,
+                              ip: address.host,
                               port: int.parse(_portController.text),
                               alias: trimmedNewAlias,
                               customAlias: existingFavorite.customAlias || trimmedNewAlias != existingFavorite.alias,
@@ -179,55 +210,74 @@ class _FavoriteEditDialogState extends State<FavoriteEditDialog> with Refena {
                           ),
                         );
                   } else {
-                    // Add new favorite
-                    final ip = _ipController.text;
-                    final port = int.parse(_portController.text);
-                    final https = ref.read(settingsProvider).https;
-                    setState(() {
-                      _fetching = true;
-                    });
-
-                    try {
-                      final payload = ref.read(deviceFullInfoProvider).toRegisterDto();
-                      final response = await ref
-                          .read(httpProvider)
-                          .discovery
-                          .register(
-                            protocol: https ? ProtocolType.https : ProtocolType.http,
-                            ip: ip,
-                            port: port,
-                            payload: payload,
-                          );
-
-                      final name = _aliasController.text.trim();
-
-                      await ref
-                          .redux(favoritesProvider)
-                          .dispatchAsync(
-                            AddFavoriteAction(
-                              FavoriteDevice.fromValues(
-                                fingerprint: response.body.token,
-                                ip: _ipController.text,
-                                port: int.parse(_portController.text),
-                                alias: name.isEmpty ? response.body.alias : name,
-                              ),
-                            ),
-                          );
-
-                      if (context.mounted) {
-                        context.pop();
-                      }
-                    } catch (e) {
-                      setState(() {
-                        _fetching = false;
-                        _error = e.toString();
-                      });
-                    }
+                    // Add new favorite: probe the device with a register
+                    // request before saving it.
+                    await _registerFavorite(host: address.host, port: int.parse(_portController.text));
                   }
                 },
           child: Text(t.general.confirm),
         ),
       ],
     );
+  }
+
+  /// Runs the register request that probes a device before it is added to
+  /// the favorites. Also used as the retry callback of the
+  /// [ConnectionErrorDialog].
+  Future<void> _registerFavorite({required String host, required int port}) async {
+    _lastRegisterAttempt = (host: host, port: port);
+    setState(() {
+      _fetching = true;
+    });
+
+    try {
+      final https = ref.read(settingsProvider).https;
+      final payload = ref.read(deviceFullInfoProvider).toRegisterDto();
+      final response = await ref
+          .read(httpProvider)
+          .discovery
+          .register(
+            protocol: https ? ProtocolType.https : ProtocolType.http,
+            ip: host,
+            port: port,
+            payload: payload,
+          );
+
+      final name = _aliasController.text.trim();
+
+      await ref
+          .redux(favoritesProvider)
+          .dispatchAsync(
+            AddFavoriteAction(
+              FavoriteDevice.fromValues(
+                fingerprint: response.body.token,
+                ip: host,
+                port: port,
+                alias: name.isEmpty ? response.body.alias : name,
+              ),
+            ),
+          );
+
+      if (mounted) {
+        context.pop();
+      }
+    } catch (e) {
+      setState(() {
+        _fetching = false;
+        _error = e;
+      });
+    }
+  }
+
+  String? get _ipValidationErrorText {
+    final error = _ipValidationError;
+    if (error == null) {
+      return null;
+    }
+    return switch (error) {
+      ManualAddressError.scheme => t.dialogs.addressInput.validation.scheme,
+      ManualAddressError.port => t.dialogs.addressInput.validation.port,
+      ManualAddressError.invalid => t.dialogs.addressInput.validation.invalid,
+    };
   }
 }
