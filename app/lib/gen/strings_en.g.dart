@@ -1068,6 +1068,8 @@ class Translations$sendTab$diagnosis$en {
 
   /// en: 'Search again'
   String get rescan => 'Search again';
+
+  late final Translations$sendTab$diagnosis$manualFallback$en manualFallback = Translations$sendTab$diagnosis$manualFallback$en.internal(_root);
 }
 
 // Path: settingsTab.general
@@ -1966,6 +1968,25 @@ class Translations$sendTab$diagnosis$scanNoResult$en {
   /// en: 'Sent {announcements} announcements and {scans} network scans without a response.'
   String detail({required Object announcements, required Object scans}) =>
       'Sent ${announcements} announcements and ${scans} network scans without a response.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class Translations$sendTab$diagnosis$manualFallback$en {
+  Translations$sendTab$diagnosis$manualFallback$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.'
+  String get message =>
+      'IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.';
+
+  /// en: 'Open favorites'
+  String get openFavorites => 'Open favorites';
+
+  /// en: 'Enter address manually'
+  String get manualInput => 'Enter address manually';
 }
 
 // Path: settingsTab.general.brightnessOptions

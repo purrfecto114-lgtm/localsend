@@ -99,7 +99,12 @@
         "advice": "Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.",
         "detail": "Sent {announcements} announcements and {scans} network scans without a response."
       },
-      "rescan": "Search again"
+      "rescan": "Search again",
+      "manualFallback": {
+        "message": "IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.",
+        "openFavorites": "Open favorites",
+        "manualInput": "Enter address manually"
+      }
     }
   },
   "settingsTab": {

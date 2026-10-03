@@ -4,6 +4,7 @@ import 'package:localsend_app/provider/network/discovery_diagnosis_provider.dart
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
 import 'package:localsend_app/provider/network/scan_facade.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
+import 'package:localsend_app/widget/discovery_manual_fallback.dart';
 import 'package:localsend_app/widget/list_tile/device_placeholder_list_tile.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 
@@ -14,7 +15,17 @@ import 'package:refena_flutter/refena_flutter.dart';
 /// (network interfaces / multicast / scan) together with actionable advice,
 /// instead of a purely decorative placeholder.
 class DiscoveryEmptyState extends StatelessWidget {
-  const DiscoveryEmptyState({super.key});
+  /// Opens the favorites dialog; reuses the send tab entry.
+  final Future<void> Function(BuildContext context)? onOpenFavorites;
+
+  /// Opens the manual address dialog; reuses the send tab entry.
+  final Future<void> Function(BuildContext context)? onOpenManualAddress;
+
+  const DiscoveryEmptyState({
+    this.onOpenFavorites,
+    this.onOpenManualAddress,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +71,14 @@ class DiscoveryEmptyState extends StatelessWidget {
               label: Text(t.sendTab.diagnosis.rescan),
             ),
           ),
+        // Common footer for every diagnosis layer: favorites and manual
+        // address input keep working without discovery. Hidden while
+        // scanning and when there is no network at all.
+        DiscoveryManualFallback(
+          visible: showManualFallback(scanning: scanning, failureLayer: diagnosis.failureLayer),
+          onOpenFavorites: onOpenFavorites,
+          onOpenManualAddress: onOpenManualAddress,
+        ),
       ],
     );
   }
