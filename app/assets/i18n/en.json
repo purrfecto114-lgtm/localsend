@@ -439,7 +439,12 @@
       "title": "Enter address",
       "hashtag": "Hashtag",
       "ip": "IP Address",
-      "recentlyUsed": "Recently used: "
+      "recentlyUsed": "Recently used: ",
+      "validation": {
+        "invalid": "Enter a valid IPv4 address, IPv6 address or host name.",
+        "scheme": "Enter the address only, without \"http://\" or \"https://\".",
+        "port": "Enter the address only. The port is taken from the settings."
+      }
     },
     "cancelSession": {
       "title": "Cancel files transfer",

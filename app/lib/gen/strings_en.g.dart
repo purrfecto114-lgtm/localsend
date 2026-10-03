@@ -1489,6 +1489,8 @@ class Translations$dialogs$addressInput$en {
 
   /// en: 'Recently used: '
   String get recentlyUsed => 'Recently used: ';
+
+  late final Translations$dialogs$addressInput$validation$en validation = Translations$dialogs$addressInput$validation$en.internal(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -2039,6 +2041,24 @@ class Translations$whatsNewPage$changes$v1_18_0$en with WhatsNewStrings {
     'Requests from favorites are now accepted automatically. This is turned on by default and can be disabled in the settings.',
     'On Android, transfers continue while the app is in the background or the screen is off. On iOS, the app must still stay in the foreground.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class Translations$dialogs$addressInput$validation$en {
+  Translations$dialogs$addressInput$validation$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Enter a valid IPv4 address, IPv6 address or host name.'
+  String get invalid => 'Enter a valid IPv4 address, IPv6 address or host name.';
+
+  /// en: 'Enter the address only, without "http://" or "https://".'
+  String get scheme => 'Enter the address only, without "http://" or "https://".';
+
+  /// en: 'Enter the address only. The port is taken from the settings.'
+  String get port => 'Enter the address only. The port is taken from the settings.';
 }
 
 // Path: dialogs.startupError.windowsAccessDenied
