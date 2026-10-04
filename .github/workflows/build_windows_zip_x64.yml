@@ -28,6 +28,10 @@ jobs:
     # Upstream runs this job in the "packaging" environment with Azure Trusted Signing
     # secrets. Forks have neither, so signing is conditional and the environment is dropped:
     # without AZURE_CLIENT_ID the login/sign steps are skipped and the zip stays unsigned.
+    # The secret is materialized as job env because the `secrets` context is not
+    # available in step-level `if` inside reusable workflows.
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
     permissions:
       id-token: write # OIDC token for Azure login (only used when secrets are present)
       contents: read
@@ -60,7 +64,7 @@ jobs:
         run: flutter build windows
 
       - name: Azure login
-        if: ${{ secrets.AZURE_CLIENT_ID != '' }}
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -69,7 +73,7 @@ jobs:
 
       # Sign before "Add DLL files" so the Microsoft-signed CRT DLLs keep their original signature
       - name: Sign app binaries (Azure Trusted Signing)
-        if: ${{ secrets.AZURE_CLIENT_ID != '' }}
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/trusted-signing-action@v2
         with:
           endpoint: https://neu.codesigning.azure.net/
