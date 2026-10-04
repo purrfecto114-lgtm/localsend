@@ -3,15 +3,12 @@ import 'package:localsend_isolates/model/file_status.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 import 'package:test/test.dart';
 
-/// Tests for the notify throttling of [FileTransferNotifier].
+/// Tests for [FileTransferNotifier].
 ///
-/// Routine per-file updates (progress, queue/sending status, per-file
-/// finished/failed while other files are still in flight) are merged into a
-/// 50ms window: with 15k files, every single event would otherwise rebuild
-/// ProgressPage, which folds over all files of the session twice. Events that
-/// complete a session (the last file reaching a terminal status, or marking a
-/// whole session failed) and session removals must notify immediately, and
-/// the trailing flush must always publish the final state.
+/// Upstream semantics (restored in fork.4 after the fork.1 50ms merge window
+/// was reported as visibly coarsening the progress animation): every update
+/// notifies listeners immediately, so the progress page reflects each event
+/// the moment it arrives.
 void main() {
   late _ChangeCounter observer;
   late RefenaContainer container;
@@ -27,61 +24,27 @@ void main() {
     container.disposeContainer();
   });
 
-  test('a burst of progress updates merges into one immediate and one trailing notify', () async {
+  test('every progress update notifies immediately', () {
     for (var i = 1; i <= 100; i++) {
       notifier.setProgress(sessionId: 's', fileId: 'f', progress: i / 100);
     }
 
-    // The first update after a quiet period notifies immediately;
-    // the other 99 are merged into the pending trailing notify.
+    // No merging: each of the 100 events rebuilt the listeners.
+    expect(observer.count, 100);
+    expect(notifier.getProgress(sessionId: 's', fileId: 'f'), 1.0);
+  });
+
+  test('every status update notifies immediately', () {
+    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.queue);
     expect(observer.count, 1);
-    // The state is already updated even before the notification fires.
-    expect(notifier.getProgress(sessionId: 's', fileId: 'f'), 1.0);
-
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-
-    expect(observer.count, 2);
-    expect(notifier.getProgress(sessionId: 's', fileId: 'f'), 1.0);
-  });
-
-  test('a burst after the window elapsed notifies immediately again', () async {
-    for (var i = 1; i <= 50; i++) {
-      notifier.setProgress(sessionId: 's', fileId: 'f', progress: i / 100);
-    }
-    expect(observer.count, 1); // immediate, the rest merged
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    expect(observer.count, 2); // the trailing flush published the final state
-
-    // More than 50ms since the last notify: no merging window anymore.
-    notifier.setProgress(sessionId: 's', fileId: 'f', progress: 0.2);
-    expect(observer.count, 3);
-    expect(notifier.getProgress(sessionId: 's', fileId: 'f'), 0.2);
-  });
-
-  test('per-file finished updates merge while other files are still unfinished', () async {
-    notifier.setStatuses(
-      sessionId: 's',
-      statuses: {
-        'a': FileStatus.queue,
-        'b': FileStatus.queue,
-      },
-    );
-    expect(observer.count, 1); // quiet period -> immediate
-
     notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.sending);
-    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.finished);
-    notifier.setStatus(sessionId: 's', fileId: 'b', status: FileStatus.sending);
-
-    // One file is still unfinished, so all of the above merged.
-    expect(observer.count, 1);
-    // The state is already updated even before the notification fires.
-    expect(notifier.getStatus(sessionId: 's', fileId: 'a'), FileStatus.finished);
-
-    await Future<void>.delayed(const Duration(milliseconds: 120));
     expect(observer.count, 2);
+    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.finished);
+    expect(observer.count, 3);
+    expect(notifier.getStatus(sessionId: 's', fileId: 'a'), FileStatus.finished);
   });
 
-  test('the update completing a session notifies immediately', () async {
+  test('setStatuses notifies only once for the whole batch', () {
     notifier.setStatuses(
       sessionId: 's',
       statuses: {
@@ -89,83 +52,42 @@ void main() {
         'b': FileStatus.queue,
       },
     );
-    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.finished);
-    expect(observer.count, 1); // merged so far
-
-    notifier.setStatus(sessionId: 's', fileId: 'b', status: FileStatus.finished);
-
-    // b was the last unfinished file: this is the "transfer finished" event.
-    expect(observer.count, 2);
-    expect(notifier.getStatus(sessionId: 's', fileId: 'b'), FileStatus.finished);
-
-    // The pending merged notify was consumed by the immediate one.
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    expect(observer.count, 2);
-  });
-
-  test('a single-file session notifies immediately when the file finishes', () async {
-    notifier.setStatus(sessionId: 's', fileId: 'only', status: FileStatus.sending);
     expect(observer.count, 1);
-
-    notifier.setProgress(sessionId: 's', fileId: 'only', progress: 0.5);
-    expect(observer.count, 1); // merged
-
-    notifier.setStatus(sessionId: 's', fileId: 'only', status: FileStatus.failed);
-    expect(observer.count, 2); // completes the session -> immediate
-    expect(notifier.getStatus(sessionId: 's', fileId: 'only'), FileStatus.failed);
-    expect(notifier.getProgress(sessionId: 's', fileId: 'only'), 0.5);
+    expect(notifier.getStatuses('s').length, 2);
   });
 
-  test('marking a whole session failed (cancel/failure) notifies immediately', () async {
-    notifier.setStatuses(
-      sessionId: 's',
-      statuses: {
-        'a': FileStatus.queue,
-        'b': FileStatus.sending,
-      },
-    );
-    expect(observer.count, 1);
-
-    notifier.setStatuses(
-      sessionId: 's',
-      statuses: {
-        'a': FileStatus.failed,
-        'b': FileStatus.failed,
-      },
-    );
-
-    expect(observer.count, 2);
-    expect(notifier.getStatuses('s').every((status) => status == FileStatus.failed), isTrue);
-  });
-
-  test('removeSession notifies immediately and cancels pending notifies', () async {
+  test('removeSession notifies immediately', () {
     notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.queue);
     expect(observer.count, 1);
 
-    notifier.setProgress(sessionId: 's', fileId: 'a', progress: 0.3); // merged, scheduled
     notifier.removeSession('s');
-
     expect(observer.count, 2);
     expect(notifier.getStatuses('s'), isEmpty);
-
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    expect(observer.count, 2); // no trailing notify afterwards
   });
 
-  test('sessions are tracked independently', () async {
+  test('removeAllSessions notifies immediately', () {
+    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.queue);
+    notifier.removeAllSessions();
+    expect(observer.count, 2);
+    expect(notifier.getStatuses('s'), isEmpty);
+  });
+
+  test('sessions are tracked independently', () {
     notifier.setStatus(sessionId: 's1', fileId: 'a', status: FileStatus.queue);
     notifier.setStatus(sessionId: 's2', fileId: 'a', status: FileStatus.queue);
-    expect(observer.count, 1); // first update immediate, the second merged
-
-    // Completing s2 must not be affected by s1 still being unfinished.
-    notifier.setStatus(sessionId: 's2', fileId: 'a', status: FileStatus.finished);
     expect(observer.count, 2);
+
+    notifier.setStatus(sessionId: 's2', fileId: 'a', status: FileStatus.finished);
+    expect(observer.count, 3);
     expect(notifier.getStatus(sessionId: 's1', fileId: 'a'), FileStatus.queue);
     expect(notifier.getStatus(sessionId: 's2', fileId: 'a'), FileStatus.finished);
+  });
 
-    // Completing s1 notifies immediately as well.
-    notifier.setStatus(sessionId: 's1', fileId: 'a', status: FileStatus.finished);
-    expect(observer.count, 3);
+  test('progress updates keep the existing status of a file', () {
+    notifier.setStatus(sessionId: 's', fileId: 'a', status: FileStatus.sending);
+    notifier.setProgress(sessionId: 's', fileId: 'a', progress: 0.5);
+    expect(notifier.getStatus(sessionId: 's', fileId: 'a'), FileStatus.sending);
+    expect(notifier.getProgress(sessionId: 's', fileId: 'a'), 0.5);
   });
 }
 
