@@ -182,10 +182,10 @@
       "bleDiscovery": "BLE discovery (experimental)",
       "bleDiscoveryHint": "Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.",
       "bleStatusActive": "Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.",
-      "bleStatusScanOnly": "Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).",
+      "bleStatusScanOnly": "Active: scanning only. This device cannot be discovered over Bluetooth right now (no BLE advertising support on this platform, or no usable network address yet).",
       "bleStatusPaused": "Paused. Resumes when the app returns to the foreground.",
       "bleStatusPermissionDenied": "Bluetooth permissions denied. Grant the \"Nearby devices\" permission in the system settings, then toggle this option off and on again.",
-      "bleStatusAdapterOff": "Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.",
+      "bleStatusAdapterOff": "Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.",
       "bleStatusUnsupported": "Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.",
       "bleStatusError": "BLE discovery could not start. See Troubleshoot > Logs for details.",
       "bleOpenSystemSettings": "Open system settings"

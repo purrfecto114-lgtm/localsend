@@ -179,6 +179,11 @@ class BleDiscoveryService {
   /// wraps the same manager singleton.
   StreamSubscription<BleAdapterState>? _adapterSubscription;
 
+  /// Whether the app is currently lifecycle-paused (mobile): the adapter-on
+  /// auto-restart must not revive the radio work in the background, see
+  /// [_onAdapterStateChanged].
+  bool _lifecyclePaused = false;
+
   /// The current user-facing status (see [BleDiscoveryStatus]).
   BleDiscoveryStatus _status = BleDiscoveryStatus.disabled;
 
@@ -196,7 +201,12 @@ class BleDiscoveryService {
     }
     _status = status;
     _logger.info('BLE discovery status: ${status.name}');
-    _statusController.add(status);
+    // A queued lifecycle operation can slip in between the dispose-time
+    // chain drain and the controller close; dropping the event then is
+    // better than throwing on a closed controller.
+    if (!_statusController.isClosed) {
+      _statusController.add(status);
+    }
   }
 
   /// The device info and salt currently advertised (null while not
@@ -216,7 +226,10 @@ class BleDiscoveryService {
   /// are contained and reported through [statusStream]: a denied permission
   /// or an unusable adapter stops the whole discovery again with the
   /// matching status instead of pretending to run.
-  Future<void> start() => _runExclusive(_start);
+  Future<void> start() => _runExclusive(() {
+    _lifecyclePaused = false;
+    return _start();
+  });
 
   /// Stops advertising and scanning and releases the transport.
   ///
@@ -333,7 +346,10 @@ class BleDiscoveryService {
     } on BleAdapterUnavailableException catch (e, stackTrace) {
       _logger.warning('The Bluetooth adapter is unavailable; the BLE discovery is off', e, stackTrace);
       await _shutdown();
-      _setStatus(BleDiscoveryStatus.adapterOff);
+      // An unauthorized adapter (the app's Bluetooth permission was
+      // denied, e.g. on iOS) is a permission problem, not a radio
+      // problem: report it as such so the settings shortcut is offered.
+      _setStatus(e.state == BleAdapterState.unauthorized ? BleDiscoveryStatus.permissionDenied : BleDiscoveryStatus.adapterOff);
     } catch (e, stackTrace) {
       _logger.warning('Starting the BLE scan failed; stopping the BLE discovery', e, stackTrace);
       await _shutdown();
@@ -344,7 +360,8 @@ class BleDiscoveryService {
   Future<void> _stop(bool paused) async {
     // A stop never invents a running-looking status: paused only makes
     // sense while the flag is on; everything else lands on disabled.
-    final resulting = paused && _isFeatureEnabled() ? BleDiscoveryStatus.paused : BleDiscoveryStatus.disabled;
+    _lifecyclePaused = paused && _isFeatureEnabled();
+    final resulting = _lifecyclePaused ? BleDiscoveryStatus.paused : BleDiscoveryStatus.disabled;
     if (!_running) {
       _setStatus(resulting);
       return;
@@ -459,17 +476,22 @@ class BleDiscoveryService {
       return;
     }
     if (state == BleAdapterState.poweredOn) {
-      if (!_running && _isFeatureEnabled() && (_isPlatformSupported?.call() ?? true)) {
+      // Never revive the radio work in the background: while the app is
+      // lifecycle-paused the discovery stays down until the resume
+      // transition restarts it (main.dart), keeping the BLE work strictly
+      // foreground.
+      if (!_running && !_lifecyclePaused && _isFeatureEnabled() && (_isPlatformSupported?.call() ?? true)) {
         unawaited(start());
       }
       return;
     }
     if (_running) {
       _logger.info('The Bluetooth adapter became unavailable (${state.name}); stopping the BLE discovery');
+      final resulting = state == BleAdapterState.unauthorized ? BleDiscoveryStatus.permissionDenied : BleDiscoveryStatus.adapterOff;
       unawaited(
         _runExclusive(() async {
           await _shutdown();
-          _setStatus(BleDiscoveryStatus.adapterOff);
+          _setStatus(resulting);
         }),
       );
     }

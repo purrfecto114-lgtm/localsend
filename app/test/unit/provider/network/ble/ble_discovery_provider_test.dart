@@ -199,12 +199,17 @@ void main() {
     addTearDown(subscription.cancel);
 
     final harness = _Harness(enabled: true, androidSdkInt: 31, overrideTransport: false);
-    final transport = harness.container.read(bleTransportProvider);
 
     // The test VM has no platform channel backend, so the plugin constructor
-    // fails and the provider falls back to the noop transport - but the SDK
-    // gate itself must have passed (no gate log, but the plugin attempt).
-    expect(transport, isA<NoopBleTransport>());
+    // fails. Since the fork.3 honesty fix the provider no longer swallows
+    // that into a silently inert noop transport (which would fake a running
+    // status): it logs and rethrows, and the discovery service's factory
+    // guard maps it to the error status.
+    expect(
+      () => harness.container.read(bleTransportProvider),
+      throwsA(anything),
+      reason: 'a transport that cannot be constructed must fail loudly, not noop',
+    );
     expect(records.where((record) => record.message.contains('Android 12')), isEmpty);
     expect(
       records.where((record) => record.message.contains('not available on this platform')),

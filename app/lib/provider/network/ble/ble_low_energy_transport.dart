@@ -129,6 +129,18 @@ class LowEnergyBleTransport implements BleTransport {
     return _peripheralManager;
   }
 
+  /// Whether the GATT service has already been registered on the peripheral
+  /// manager. The beacon salt rotation restarts the advertisement with the
+  /// same transport; re-adding a service with an identical UUID makes the
+  /// Android stack refuse the call, so the registration must happen once
+  /// per transport lifetime (until [dispose] removes the services).
+  bool _gattServiceAdded = false;
+
+  /// Whether the last [PeripheralManager.authorize] call ran on Android and
+  /// succeeded; see [_ensureAdapterUsable] for why a stale unauthorized
+  /// cache must not override it.
+  bool _lastAuthorizeSucceeded = false;
+
   @override
   Future<void> startAdvertising({
     required Uint8List beacon,
@@ -140,23 +152,26 @@ class LowEnergyBleTransport implements BleTransport {
     }
 
     await _authorize(peripheral);
-    await _ensureAdapterUsable(peripheral);
+    await _ensureAdapterUsable(peripheral, authorizedJustNow: _lastAuthorizeSucceeded);
 
     _gattPayload = gattPayload;
 
-    final characteristic = GATTCharacteristic.mutable(
-      uuid: _characteristicUuid,
-      properties: [GATTCharacteristicProperty.read],
-      permissions: [GATTCharacteristicPermission.read],
-      descriptors: const [],
-    );
-    final service = GATTService(
-      uuid: _serviceUuid,
-      isPrimary: true,
-      includedServices: const [],
-      characteristics: [characteristic],
-    );
-    await peripheral.addService(service);
+    if (!_gattServiceAdded) {
+      final characteristic = GATTCharacteristic.mutable(
+        uuid: _characteristicUuid,
+        properties: [GATTCharacteristicProperty.read],
+        permissions: [GATTCharacteristicPermission.read],
+        descriptors: const [],
+      );
+      final service = GATTService(
+        uuid: _serviceUuid,
+        isPrimary: true,
+        includedServices: const [],
+        characteristics: [characteristic],
+      );
+      await peripheral.addService(service);
+      _gattServiceAdded = true;
+    }
 
     _readRequests ??= peripheral.characteristicReadRequested.listen(_onReadRequested);
 
@@ -179,14 +194,20 @@ class LowEnergyBleTransport implements BleTransport {
 
   /// Requests the runtime Bluetooth permissions (Android only; the other
   /// platforms need no runtime request) and translates a denial into
-  /// [BlePermissionDeniedException] so the caller can report it.
+  /// [BlePermissionDeniedException] so the caller can report it. Records
+  /// whether the request ran and succeeded in [_lastAuthorizeSucceeded]
+  /// (false on the non-Android platforms, where the authorize API is
+  /// unavailable).
   Future<void> _authorize(BluetoothLowEnergyManager manager) async {
     try {
-      if (!await manager.authorize()) {
+      final granted = await manager.authorize();
+      _lastAuthorizeSucceeded = granted;
+      if (!granted) {
         throw const BlePermissionDeniedException();
       }
     } on UnsupportedError {
       // Android-only API; the other platforms need no runtime request.
+      _lastAuthorizeSucceeded = false;
     }
   }
 
@@ -198,7 +219,14 @@ class LowEnergyBleTransport implements BleTransport {
   /// definitive [BluetoothLowEnergyManager.stateChanged] event instead of
   /// misreading the startup gap; if nothing arrives the platform call
   /// itself surfaces the real error.
-  Future<void> _ensureAdapterUsable(BluetoothLowEnergyManager manager) async {
+  /// [authorizedJustNow] covers a second staleness window: on Android the
+  /// cache still reads unauthorized right after the user granted the
+  /// runtime permission in the dialog (the cache is refreshed on init,
+  /// lifecycle resume and adapter broadcasts - never on the grant), so a
+  /// fresh successful authorize() outranks the stale cache there. On the
+  /// apple platforms there is no runtime request API and the unauthorized
+  /// state is real, so it still refuses.
+  Future<void> _ensureAdapterUsable(BluetoothLowEnergyManager manager, {required bool authorizedJustNow}) async {
     var state = manager.state;
     if (state == BluetoothLowEnergyState.unknown) {
       try {
@@ -214,8 +242,12 @@ class LowEnergyBleTransport implements BleTransport {
       case BluetoothLowEnergyState.poweredOn:
       case BluetoothLowEnergyState.unknown:
         return;
-      case BluetoothLowEnergyState.poweredOff:
       case BluetoothLowEnergyState.unauthorized:
+        if (authorizedJustNow) {
+          return; // Stale cache around the just-granted permission (Android).
+        }
+        throw const BleAdapterUnavailableException(BleAdapterState.unauthorized);
+      case BluetoothLowEnergyState.poweredOff:
       case BluetoothLowEnergyState.unsupported:
         throw BleAdapterUnavailableException(_mapAdapterState(state));
     }
@@ -309,7 +341,7 @@ class LowEnergyBleTransport implements BleTransport {
   @override
   Future<void> startScan() async {
     await _authorize(_central);
-    await _ensureAdapterUsable(_central);
+    await _ensureAdapterUsable(_central, authorizedJustNow: _lastAuthorizeSucceeded);
 
     // Unfiltered on purpose: the Android/Windows beacons carry no service
     // UUID (advertisement budget), so a UUID filter would hide them. The
@@ -373,6 +405,7 @@ class LowEnergyBleTransport implements BleTransport {
     }
     try {
       await peripheral.removeAllServices();
+      _gattServiceAdded = false;
     } catch (e, stackTrace) {
       _logger.warning('Removing the BLE GATT services failed', e, stackTrace);
     }

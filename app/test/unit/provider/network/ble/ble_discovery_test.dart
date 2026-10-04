@@ -230,6 +230,7 @@ void main() {
 
     expect(service.isRunning, isFalse, reason: 'the service must not pretend to run after a denial');
     expect(service.status, BleDiscoveryStatus.permissionDenied);
+    expect(transport.actions, contains('scan'), reason: 'the scan start must have been attempted: it decides the final status');
     expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
   });
 
@@ -241,7 +242,21 @@ void main() {
 
     expect(service.isRunning, isFalse);
     expect(service.status, BleDiscoveryStatus.adapterOff);
+    expect(transport.actions, contains('scan'), reason: 'the scan start must have been attempted: it decides the final status');
     expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
+  });
+
+  test('an unauthorized adapter is reported as a permission problem, not a radio problem', () async {
+    transport.scanError = const BleAdapterUnavailableException(BleAdapterState.unauthorized);
+
+    await service.start();
+
+    expect(service.isRunning, isFalse);
+    expect(
+      service.status,
+      BleDiscoveryStatus.permissionDenied,
+      reason: 'an unauthorized adapter must offer the settings shortcut, not the turn-bluetooth-on advice',
+    );
   });
 
   test('a generic scan failure reports error', () async {
@@ -305,6 +320,29 @@ void main() {
     expect(service.isRunning, isTrue);
     expect(service.status, BleDiscoveryStatus.active);
     expect(transport.actions.where((a) => a == 'scan').length, 2, reason: 'the discovery must restart with the adapter');
+  });
+
+  test('an adapter-on event while lifecycle-paused does not restart the discovery', () async {
+    await service.start();
+    await service.stop(paused: true);
+    expect(service.status, BleDiscoveryStatus.paused);
+    expect(transport.actions.where((a) => a == 'scan'), hasLength(1));
+
+    // The user toggles Bluetooth while the app is in the background: the
+    // radio work must stay down (strictly foreground), even though the
+    // adapter is now powered on and the flag is still enabled.
+    transport.adapterStates.add(BleAdapterState.poweredOn);
+    await _pump();
+
+    expect(service.isRunning, isFalse, reason: 'the background restart must be suppressed while lifecycle-paused');
+    expect(service.status, BleDiscoveryStatus.paused);
+    expect(transport.actions.where((a) => a == 'scan'), hasLength(1), reason: 'no second scan start may have happened');
+
+    // The resume transition restarts the discovery.
+    await service.start();
+    expect(service.isRunning, isTrue);
+    expect(service.status, BleDiscoveryStatus.active);
+    expect(transport.actions.where((a) => a == 'scan'), hasLength(2));
   });
 
   test('start() advertises the beacon and scans', () async {

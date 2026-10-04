@@ -56,8 +56,12 @@ final bleTransportProvider = Provider<BleTransport>((ref) {
   try {
     return LowEnergyBleTransport();
   } catch (e, stackTrace) {
+    // Rethrow instead of falling back to the noop transport: a silently
+    // inert transport would make the service report a running status while
+    // nothing scans (the fork.2 bug class). The service's factory guard
+    // catches this and reports the error status.
     _logger.warning('The BLE transport is not available on this platform; the BLE discovery stays off', e, stackTrace);
-    return const NoopBleTransport();
+    rethrow;
   }
 });
 

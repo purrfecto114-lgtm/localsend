@@ -1275,9 +1275,9 @@ class Translations$settingsTab$network$en {
   /// en: 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.'
   String get bleStatusActive => 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.';
 
-  /// en: 'Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).'
+  /// en: 'Active: scanning only. This device cannot be discovered over Bluetooth right now (no BLE advertising support on this platform, or no usable network address yet).'
   String get bleStatusScanOnly =>
-      'Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).';
+      'Active: scanning only. This device cannot be discovered over Bluetooth right now (no BLE advertising support on this platform, or no usable network address yet).';
 
   /// en: 'Paused. Resumes when the app returns to the foreground.'
   String get bleStatusPaused => 'Paused. Resumes when the app returns to the foreground.';
@@ -1286,8 +1286,8 @@ class Translations$settingsTab$network$en {
   String get bleStatusPermissionDenied =>
       'Bluetooth permissions denied. Grant the "Nearby devices" permission in the system settings, then toggle this option off and on again.';
 
-  /// en: 'Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.'
-  String get bleStatusAdapterOff => 'Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.';
+  /// en: 'Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.'
+  String get bleStatusAdapterOff => 'Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.';
 
   /// en: 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.'
   String get bleStatusUnsupported => 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.';
