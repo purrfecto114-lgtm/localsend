@@ -251,6 +251,7 @@ _FakePersistence _persistence() => _FakePersistence({
   #getVerifyChecksums: true,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: 5,
+  #getIncludeVpnInterfaces: false,
   #getBleDiscoveryEnabled: false,
   #getAdvancedSettingsEnabled: false,
 });

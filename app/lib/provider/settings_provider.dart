@@ -108,6 +108,7 @@ class SettingsService extends PureNotifier<SettingsState> {
     verifyChecksums: _persistence.getVerifyChecksums(),
     discoveryTimeout: _persistence.getDiscoveryTimeout(),
     maxInterfaces: _persistence.getMaxInterfaces(),
+    includeVpnInterfaces: _persistence.getIncludeVpnInterfaces(),
     bleDiscoveryEnabled: _persistence.getBleDiscoveryEnabled(),
     advancedSettings: _persistence.getAdvancedSettingsEnabled(),
   );
@@ -194,6 +195,27 @@ class SettingsService extends PureNotifier<SettingsState> {
     await _persistence.setMaxInterfaces(value);
     state = state.copyWith(
       maxInterfaces: value,
+    );
+  }
+
+  /// Lets the smart scan also cover VPN/tunnel interfaces (tun, ppp, utun,
+  /// tailscale, ...).
+  ///
+  /// Tunnel interfaces usually do not carry multicast, so peers behind a VPN
+  /// can only be found by the HTTP subnet fallback scan. When this is
+  /// enabled, the addresses of VPN interfaces are ranked to the front of the
+  /// smart scan candidates so that they are not dropped by the interface
+  /// limit. VPN interfaces are never excluded while this is off - it only
+  /// decides whether they win the [SettingsState.maxInterfaces] cut.
+  ///
+  /// This setting is purely app-side: it is consumed by the smart scan on
+  /// the main isolate when it selects the interfaces to scan, so it needs no
+  /// SyncState propagation and no discovery restart - the next scan simply
+  /// reads the new value (like [setMaxInterfaces]).
+  Future<void> setIncludeVpnInterfaces(bool value) async {
+    await _persistence.setIncludeVpnInterfaces(value);
+    state = state.copyWith(
+      includeVpnInterfaces: value,
     );
   }
 
