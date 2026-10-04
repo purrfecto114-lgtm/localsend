@@ -67,6 +67,21 @@ jobs:
           grep -c 'CODE_SIGN_IDENTITY = "-";' app/macos/Runner.xcodeproj/project.pbxproj
           grep -c 'CODE_SIGN_STYLE = Manual;' app/macos/Runner.xcodeproj/project.pbxproj
 
+      # The app-group entitlement is what makes Xcode demand a development team
+      # (it is provisioning-bound). CI has no team, so the key is dropped from
+      # all three entitlements; the cost is that the share-extension handoff via
+      # shared defaults degrades on macOS (in-app flows are unaffected) — this
+      # is documented in the release notes.
+      - name: Drop app-group entitlement (provisioning-bound, no team on CI)
+        run: |
+          for f in \
+            app/macos/Runner/DebugProfile.entitlements \
+            app/macos/Runner/Release.entitlements \
+            app/macos/ShareExtension/ShareExtension.entitlements; do
+            /usr/libexec/PlistBuddy -c "Delete :com.apple.security.application-groups" "$f"
+          done
+          ! grep -rq 'application-groups' app/macos/Runner/ app/macos/ShareExtension/
+
       - name: Dependencies
         working-directory: app
         run: flutter pub get
