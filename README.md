@@ -27,6 +27,7 @@ LocalSend is a free, open-source app that allows you to securely share files and
 This is a delivery-focused fork (default branch: [`radical`](../../tree/radical)). It adds an evidence-based layer of discovery/transfer robustness and UX fixes on top of upstream `9529e915` (post-v1.18.2 main), **without touching the official v2 network protocol**.
 
 - **Branches**: `radical` (Track B — everything, default) · `conservative` (Track A — upstream-PR-shaped subset) · two candidate PR branches kept for reference
+- **Releases**: [`v1.18.2-fork.2`](../../releases) ships CI-built binaries for Android (3 ABIs), Windows x64 (installer + portable), Linux x64/arm64 (DEB / TAR.GZ / AppImage) and macOS (universal). Fork signing posture: the APKs are signed with the committed self-signed community key ([`support/fork-signing/fork-release.jks`](support/fork-signing/fork-release.jks) — not interchangeable with the official app), Windows binaries are **unsigned**, and the macOS build is ad-hoc signed with the app-group entitlement dropped on CI (share-extension handoff degrades; share from inside the app instead)
 - **What's in**: discovery-restart fixes, Android multicast lock, configurable smart-scan cap, batch-transfer performance work (#489), layered no-devices diagnosis, actionable startup/connect error dialogs, IPv6 literal input, checksum verification status on the transfer-complete view, an optional VPN-interface smart-scan toggle, optional delete-after-send, and an **experimental BLE-assisted discovery** scaffold (feature-flagged, default off — see `app/lib/provider/network/ble/README.md`)
 - **Backlog**: [`ROADMAP.md`](ROADMAP.md) (feasibility-ranked, with research archives under `review/research/`)
 - **Changelog**: see `v1.18.2-fork.2` in [`CHANGELOG.md`](CHANGELOG.md)
@@ -87,6 +88,9 @@ It is recommended to download the app either from an app store or from a package
 Read more about [distribution channels][].
 
 Windows binaries are signed. Read more about the [Code signing policy][].
+
+> [!NOTE]
+> The sentence above describes the **official upstream** distribution. Binaries from this fork's releases are built by CI without the upstream signing infrastructure — see [About this fork](#about-this-fork).
 
 > [!CAUTION]
 > **Unofficial MSIX preview:** you can try builds from the latest commits at [localsend.ob-buff.dev](https://localsend.ob-buff.dev/). Stability is not guaranteed and all custom code tweaks are listed on that site.

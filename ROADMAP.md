@@ -74,6 +74,13 @@ Second wave, all Dart-side, verified by the standard gates (327 tests, 0 analyze
 - Flutter SDK 3.41.9 → 3.47.6 unlock chain (freezed 4 / test 1.32 / mockito 5.8 / build_runner 2.16 / intl 0.20.3 / connectivity_plus 7.3.2 / flex_color_picker 4 / uri_content 4 / tray_manager 0.7): upstream CI pins 3.41.9, so staying aligned is deliberate; revisit when upstream bumps.
 - `bluetooth_low_energy` 7.x line (pre-release): track breaking changes before adopting.
 
+### fork.2 release-engineering follow-ups (Low, optional)
+
+- macOS CI builds drop the app-group entitlement (provisioning-bound, no Apple team on CI): the share-extension handoff via shared defaults degrades — in-app flows are unaffected. Revisit if a notarized build path ever becomes available.
+- `bluetooth_low_energy_windows` still compiles with legacy `/await` coroutines; VS 18 hard-errors (STL1011) and the CI works around it with `_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS` via the `CL` env var. Track the plugin's migration to C++20 `<coroutine>` and drop the workaround.
+- `winget.yml` was removed for the fork (it submitted to the official winget-pkgs repo on release); re-add only if the fork ever owns a winget package id.
+- The committed Android signing key asserts "built by this fork" only; upgrades between fork releases work, migrating to/from the official app requires uninstall/reinstall (different signatures).
+
 ### fork.2 review follow-ups (Low, optional)
 
 - Delete-after-send TOCTOU: the deletable-paths snapshot is taken before the deletion loop; a session started in that narrow window may fail to re-upload a shared path (visible per-file error, no silent loss). Fix: re-check pending paths per file inside the loop.
