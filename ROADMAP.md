@@ -41,6 +41,18 @@ Two originally planned items were dropped after evidence-based pushback (details
 - `wakelock_plus` 1.7.0 — blocked: it requires `win32 >=6.0.0`, which `win32_registry 2.1.0` transitively pins to `^5.11.0`. Needs the `win32_registry` 3.x bundle (API adaptation in `autostart_helper.dart`); moved to the Next-up list.
 - cherry-pick `102f9894` (hi/ur translation fix) — per-hunk comparison proved all 5 fixes already exist in our baseline (upstream got the same content via a later Weblate sync; only diff shape differs). No-op, skipped.
 
+## Delivered in v1.18.2-fork.3 (2026-10-04)
+
+Third wave: BLE observability and honest failures. Trigger: user report "enabling Bluetooth shows only a permission window, the feature seems unimplemented" — fork.2 hid every BLE state in the logs and silently lied about running. All Dart-side, verified by the standard gates (339 tests, 0 analyzer issues, five-way parallel review 54-a..54-e).
+
+| Item | Evidence | Feasibility | Status |
+|---|---|---|---|
+| BLE discovery status machine (disabled/active/activeScanOnly/paused/permissionDenied/adapterOff/unsupportedPlatform/error) surfaced live under the settings toggle + on the empty state; "Open system settings" shortcut on denial | user report (fork.2 UX gap); review 54-d | High (logic) / radio behavior needs devices | merged |
+| Honest start failures: typed transport exceptions (permission denied / adapter off·unauthorized·unsupported), no more silently dead scans logging "discovery started" | review 54-a M2, 54-b | High | merged |
+| Android stale-unauthorized cache window after the first permission grant fixed (fresh authorize outranks the cache); unauthorized mapped to permissionDenied with the settings shortcut (iOS included) | review 54-b M3 | High | merged |
+| Adapter-following lifecycle: radio off stops the scan, on restarts it — never in the background (strictly foreground preserved); resume restarts | review 54-a/c/e M1 | High | merged |
+| Salt rotation no longer re-registers the GATT service (Android duplicate-UUID refusal) | review 54-a/54-b info | Medium (needs device confirm) | merged |
+
 ## Delivered in v1.18.2-fork.2 (2026-10-04)
 
 Second wave, all Dart-side, verified by the standard gates (327 tests, 0 analyzer issues). Items are the former Next-up #1/#2/#4/#6 plus a review follow-up.
@@ -73,6 +85,14 @@ Second wave, all Dart-side, verified by the standard gates (327 tests, 0 analyze
 - Weblate commit `fca8ead0` — 15-locale batch translation, zero file conflicts, needs `dart run slang` regen (Medium). Verify per-hunk content overlap with baseline first: the `102f9894` case showed patch-id comparison can miss already-merged content (diff shape differs even when content is identical).
 - Flutter SDK 3.41.9 → 3.47.6 unlock chain (freezed 4 / test 1.32 / mockito 5.8 / build_runner 2.16 / intl 0.20.3 / connectivity_plus 7.3.2 / flex_color_picker 4 / uri_content 4 / tray_manager 0.7): upstream CI pins 3.41.9, so staying aligned is deliberate; revisit when upstream bumps.
 - `bluetooth_low_energy` 7.x line (pre-release): track breaking changes before adopting.
+
+### fork.3 review follow-ups (Low, optional)
+
+- A failed salt rotation leaves the status at `active` while advertising is down (self-heals on the next 90 s tick; 54-a L4).
+- Rapid adapter off→on across a busy lifecycle chain can strand the service stopped with a stale `adapterOff` until the next event/resume/toggle (54-a L5).
+- `stop(paused: true)` overwrites terminal failure statuses with `paused` while backgrounded (invisible; self-corrects on resume; 54-a L6).
+- Status-provider coverage: only `active`/`disabled`/`unsupportedPlatform` are asserted through `bleDiscoveryStatusProvider`; `permissionDenied`/`paused`/`adapterOff` are service-level only (54-e L).
+- Windows airplane-mode maps to `unsupported` by the plugin and is reported under the shared adapterOff wording (54-b L).
 
 ### fork.2 release-engineering follow-ups (Low, optional)
 

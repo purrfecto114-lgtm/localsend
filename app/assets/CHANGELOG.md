@@ -6,6 +6,28 @@
 - fix: show the real error when a file cannot be read while sending, instead of transferring it as an empty file (@leopalmieri-spec)
 - fix: show the actual save location path for receiving files (@ShlomoCode)
 
+## v1.18.2-fork.3 (2026-10-04)
+
+Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Third wave: making the BLE-assisted discovery observable and honest — in fork.2, enabling it showed only the Android permission dialog and then silence.
+
+### Fix
+
+- fix(ble): a denied Bluetooth permission, a switched-off adapter or an unsupported platform no longer leaves a silently dead scan that logs "discovery started" anyway — the service stops honestly and reports the cause
+- fix(ble): on Android the adapter state cache still read "unauthorized" right after the user granted the permission, misreporting the first-enable flow as "Bluetooth is switched off"
+- fix(ble): the beacon salt rotation re-registered its GATT service on every rotation, which the Android stack refuses (duplicate UUID); the service is now registered once per transport lifetime
+- fix(ble): an adapter-on event no longer revives the scan while the app is in the background (the BLE work stays strictly foreground; the resume transition restarts it)
+
+### Feat
+
+- feat(ble): live discovery status under the settings toggle — active (scanning + advertising / scanning only), paused, permission denied (with an "Open system settings" shortcut), adapter off, unsupported platform, or start failure
+- feat(ble): the discovery empty state spells out that BLE finds only devices running this fork with the option enabled
+
+### Tip
+
+- tip: BLE discovery is a discovery bridge for networks that block multicast (AP isolation) — both devices need this fork with the option enabled, and the file transfer itself still goes over the network
+- tip: turn Bluetooth off and back on (or background and resume the app) — the discovery follows the adapter and restarts itself; only a denied permission needs the settings shortcut
+- tip: 12 new tests this wave (339 in total); radio behavior still needs a real-device matrix (see `ROADMAP.md`, Verification honesty)
+
 ## v1.18.2-fork.2 (2026-10-04)
 
 Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Second community-driven wave; evidence per item in `ROADMAP.md`.

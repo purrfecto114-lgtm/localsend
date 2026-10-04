@@ -118,9 +118,17 @@ The module is observable in the UI, not only in the logs:
   service maps both to their statuses instead of pretending to run.
 - The adapter state is followed while the module is enabled: switched off
   mid-session stops the scan (`adapterOff`), switched back on restarts the
-  discovery. The gate waits for the first definitive `stateChanged` event
-  while the cached state is still `unknown` (the backends fill it
-  asynchronously at manager construction).
+  discovery — but never while the app is lifecycle-paused (the radio work
+  stays strictly foreground; the resume transition restarts it). The gate
+  waits for the first definitive `stateChanged` event while the cached state
+  is still `unknown` (the backends fill it asynchronously at manager
+  construction), and a fresh successful Android `authorize()` outranks a
+  stale `unauthorized` cache right after the permission grant.
+- An `unauthorized` adapter (the app's Bluetooth permission was denied,
+  e.g. on iOS) is reported as `permissionDenied` with the settings
+  shortcut, not as a radio problem.
+- A transport that cannot even be constructed fails loudly into the
+  `error` status instead of silently running on an inert noop transport.
 - `stop(paused: true)` (app lifecycle) reports `paused` and the resume
   transition restarts the discovery.
 
@@ -169,9 +177,10 @@ for breaking changes before upgrading.
 - **Android 12+ only (SDK >= 31).** On Android 7–11 the plugin's
   `authorize()` would request `ACCESS_FINE_LOCATION`/`ACCESS_COARSE_LOCATION`
   — permissions this app deliberately does not declare (the BLE scan must
-  stay location-free) — which the system auto-denies. The transport
-  provider detects SDK < 31 and disables the module with a log line
-  instead of letting it die silently.
+  stay location-free) — which the system auto-denies. The discovery service
+  detects SDK < 31 and reports `unsupportedPlatform` (the transport
+  provider double-gates with a log line) instead of letting it die
+  silently.
 - **Android/Windows advertise the beacon only** (manufacturer data, no
   service UUID): both together exceed the 31-byte legacy advertisement
   budget. Scanners therefore run unfiltered and match on the company id;
