@@ -6,6 +6,26 @@
 - fix: show the real error when a file cannot be read while sending, instead of transferring it as an empty file (@leopalmieri-spec)
 - fix: show the actual save location path for receiving files (@ShlomoCode)
 
+## v1.18.2-fork.4 (2026-10-04)
+
+Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Fourth wave, driven by user feedback on fork.3: BLE platform reach, the transfer progress animation, and translation coverage.
+
+### Fix
+
+- fix(transfer): the fork.1 progress-notification merge window (50 ms) is reverted — the transfer progress page again notifies on every event, exactly like upstream, so the progress animation is never coarsened (the Rust 20 ms per-file throttling and the 200 ms bar tween are untouched upstream behavior)
+- fix(macos): the app now ships `NSBluetoothAlwaysUsageDescription` in `Runner/Info.plist` — without it CoreBluetooth refuses to connect on macOS 10.15+, so enabling BLE discovery on a Mac failed at the first radio touch
+
+### Feat
+
+- feat(ble): the BLE discovery floor drops from Android 12 to **Android 7** (SDK 24, the plugin's own backend floor; the app itself always installed on 7.0 because the Flutter engine's `minSdkVersion` is 24). On Android 7–11 the enabling flow requests the `ACCESS_COARSE_LOCATION`/`ACCESS_FINE_LOCATION` permissions the app now declares for exactly those API levels (`maxSdkVersion="30"`); Android 12+ keeps the location-free `BLUETOOTH_SCAN` `neverForLocation` path. A hint under the status line tells 7–11 users that finding devices also needs the system location services on (advertising works regardless)
+- feat(ble): desktop support is stated in the UI — the settings hint now says the discovery works on Android, iOS, macOS and Windows, and that a Linux device can find others but cannot be found itself (the plugin has no Linux peripheral role; this was already the runtime behavior, `activeScanOnly`)
+- feat(i18n): all 62 fork-added strings are translated into **all 58 non-English locales** (3,596 strings; placeholder parity validated programmatically) — previously every non-English user saw English fallback for the fork features
+
+### Tip
+
+- tip: on Android 7–11, grant the location permission when enabling BLE discovery and keep the system location services on while scanning; the permission is scoped to API ≤ 30 and never used for anything but the BLE scan
+- tip: the transfer progress animation updates per event again; if it ever looks choppy, that is the network's actual throughput, not a UI timer
+
 ## v1.18.2-fork.3 (2026-10-04)
 
 Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Third wave: making the BLE-assisted discovery observable and honest — in fork.2, enabling it showed only the Android permission dialog and then silence.
