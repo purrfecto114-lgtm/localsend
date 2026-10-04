@@ -25,6 +25,12 @@ jobs:
   build_windows_exe_x86_64:
     needs: build
     runs-on: windows-latest
+    env:
+      # The bluetooth_low_energy_windows plugin still uses the legacy /await
+      # coroutines (<experimental/coroutine>). VS 18 on windows-latest turns
+      # STL1011 into a hard error; defining the silence macro keeps it building
+      # until the plugin migrates to C++20 <coroutine>.
+      CL: /D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS
 
     steps:
       - name: Fix long file paths

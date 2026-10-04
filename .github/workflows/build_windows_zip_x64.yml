@@ -32,6 +32,11 @@ jobs:
     # available in step-level `if` inside reusable workflows.
     env:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      # The bluetooth_low_energy_windows plugin still uses the legacy /await
+      # coroutines (<experimental/coroutine>). VS 18 on windows-latest turns
+      # STL1011 into a hard error; defining the silence macro keeps it building
+      # until the plugin migrates to C++20 <coroutine>.
+      CL: /D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS
     permissions:
       id-token: write # OIDC token for Azure login (only used when secrets are present)
       contents: read

@@ -45,18 +45,27 @@ jobs:
         run: rustup show
 
       # Upstream builds macOS releases locally with an Apple Developer team
-      # (DEVELOPMENT_TEAM = 3W7H4PYMCV, "Apple Development" identity). CI has no
-      # access to those certificates, so the project is patched to ad-hoc signing
-      # ("-") before building. The resulting .app runs locally; Gatekeeper will
-      # show an "unidentified developer" prompt on first launch (expected for
-      # an unsigned community build).
+      # (DEVELOPMENT_TEAM = 3W7H4PYMCV, "Apple Development" identity, automatic
+      # signing). CI has no access to those certificates, so the project is
+      # patched to ad-hoc signing ("-", manual style, empty team) before
+      # building. Note the sdk-qualified CODE_SIGN_IDENTITY variants and the
+      # target-level CODE_SIGN_STYLE: a conditional setting overrides the plain
+      # one, so all of them must be rewritten. The resulting .app runs locally;
+      # Gatekeeper will show an "unidentified developer" prompt on first launch
+      # (expected for an unsigned community build).
       - name: Switch to ad-hoc code signing
         run: |
           sed -i '' \
             -e 's/CODE_SIGN_IDENTITY = "Apple Development";/CODE_SIGN_IDENTITY = "-";/g' \
+            -e 's/"CODE_SIGN_IDENTITY\\[sdk=macosx\\*\\]" = "Apple Development";/"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";/g' \
             -e 's/DEVELOPMENT_TEAM = 3W7H4PYMCV;/DEVELOPMENT_TEAM = "";/g' \
+            -e 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' \
             app/macos/Runner.xcodeproj/project.pbxproj
+          # Guard: no development-team signing may survive the rewrite.
+          ! grep -q 'Apple Development' app/macos/Runner.xcodeproj/project.pbxproj
+          ! grep -qE 'DEVELOPMENT_TEAM = "?[0-9A-Z]' app/macos/Runner.xcodeproj/project.pbxproj
           grep -c 'CODE_SIGN_IDENTITY = "-";' app/macos/Runner.xcodeproj/project.pbxproj
+          grep -c 'CODE_SIGN_STYLE = Manual;' app/macos/Runner.xcodeproj/project.pbxproj
 
       - name: Dependencies
         working-directory: app
@@ -69,7 +78,9 @@ jobs:
       - name: Zip .app bundle
         run: |
           cd app/build/macos/Build/Products/Release
-          ditto -c -k --keepParent localsend_app.app "LocalSend-${{ needs.build.outputs.version }}-macos-universal.zip"
+          # The product name comes from app/macos/Runner/Configs/AppInfo.xcconfig
+          # (PRODUCT_NAME = LocalSend), not from the Dart package name.
+          ditto -c -k --keepParent LocalSend.app "LocalSend-${{ needs.build.outputs.version }}-macos-universal.zip"
 
       - name: Upload zip
         uses: actions/upload-artifact@v6
