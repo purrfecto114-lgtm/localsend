@@ -1268,9 +1268,9 @@ class Translations$settingsTab$network$en {
   /// en: 'BLE discovery (experimental)'
   String get bleDiscovery => 'BLE discovery (experimental)';
 
-  /// en: 'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.'
+  /// en: 'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Works on Android, iOS, macOS and Windows; on Linux this device can find others but cannot be found itself. Both devices need this fork with the option enabled; the file transfer itself still uses the network.'
   String get bleDiscoveryHint =>
-      'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.';
+      'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Works on Android, iOS, macOS and Windows; on Linux this device can find others but cannot be found itself. Both devices need this fork with the option enabled; the file transfer itself still uses the network.';
 
   /// en: 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.'
   String get bleStatusActive => 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.';
@@ -1282,15 +1282,19 @@ class Translations$settingsTab$network$en {
   /// en: 'Paused. Resumes when the app returns to the foreground.'
   String get bleStatusPaused => 'Paused. Resumes when the app returns to the foreground.';
 
-  /// en: 'Bluetooth permissions denied. Grant the "Nearby devices" permission in the system settings, then toggle this option off and on again.'
+  /// en: 'Bluetooth permissions denied. Grant the "Nearby devices" (or "Location" on Android 11 and below) permission in the system settings, then toggle this option off and on again.'
   String get bleStatusPermissionDenied =>
-      'Bluetooth permissions denied. Grant the "Nearby devices" permission in the system settings, then toggle this option off and on again.';
+      'Bluetooth permissions denied. Grant the "Nearby devices" (or "Location" on Android 11 and below) permission in the system settings, then toggle this option off and on again.';
 
   /// en: 'Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.'
   String get bleStatusAdapterOff => 'Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.';
 
-  /// en: 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.'
-  String get bleStatusUnsupported => 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.';
+  /// en: 'Not supported on this device: BLE discovery needs Android 7 or newer and a Bluetooth LE radio.'
+  String get bleStatusUnsupported => 'Not supported on this device: BLE discovery needs Android 7 or newer and a Bluetooth LE radio.';
+
+  /// en: 'On this Android version, finding other devices also needs the system location services to be turned on (the permission is requested automatically; this device can already be found by others).'
+  String get bleStatusLegacyLocation =>
+      'On this Android version, finding other devices also needs the system location services to be turned on (the permission is requested automatically; this device can already be found by others).';
 
   /// en: 'BLE discovery could not start. See Troubleshoot > Logs for details.'
   String get bleStatusError => 'BLE discovery could not start. See Troubleshoot > Logs for details.';

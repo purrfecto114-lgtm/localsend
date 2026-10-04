@@ -10,6 +10,7 @@ import 'package:localsend_app/pages/changelog_page.dart';
 import 'package:localsend_app/pages/donation/donation_page.dart';
 import 'package:localsend_app/pages/settings/network_interfaces_page.dart';
 import 'package:localsend_app/pages/tabs/settings_tab_controller.dart';
+import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_low_energy_transport.dart';
@@ -50,6 +51,11 @@ class SettingsTab extends StatelessWidget {
       builder: (context, vm) {
         final ref = context.ref;
         final bleStatus = ref.watch(bleDiscoveryStatusProvider);
+        // Android 7-11 (API < 31) couples BLE scanning to location: the hint
+        // under the status tells the user that the system location services
+        // must be on, otherwise the scan silently returns nothing.
+        final androidSdkInt = ref.watch(deviceInfoProvider).androidSdkInt;
+        final bleLegacyAndroid = checkPlatform([TargetPlatform.android]) && androidSdkInt != null && androidSdkInt < 31;
         return ResponsiveListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
           children: [
@@ -579,7 +585,7 @@ class SettingsTab extends StatelessWidget {
                     firstChild: Container(),
                     secondChild: Padding(
                       padding: const EdgeInsets.only(bottom: 15),
-                      child: _BleDiscoveryStatusView(status: bleStatus),
+                      child: _BleDiscoveryStatusView(status: bleStatus, legacyAndroidLocation: bleLegacyAndroid),
                     ),
                   ),
                 AnimatedCrossFade(
@@ -863,7 +869,14 @@ class _SettingsSection extends StatelessWidget {
 class _BleDiscoveryStatusView extends StatelessWidget {
   final BleDiscoveryStatus status;
 
-  const _BleDiscoveryStatusView({required this.status});
+  /// Whether this is an Android 7-11 device (API < 31), where the system
+  /// couples BLE scanning to location: the location permission is requested
+  /// automatically when enabling the feature, but scan results are only
+  /// delivered while the system location services are turned on - a manual
+  /// step the user needs to know about.
+  final bool legacyAndroidLocation;
+
+  const _BleDiscoveryStatusView({required this.status, this.legacyAndroidLocation = false});
 
   @override
   Widget build(BuildContext context) {
@@ -877,6 +890,7 @@ class _BleDiscoveryStatusView extends StatelessWidget {
       BleDiscoveryStatus.error => (t.settingsTab.network.bleStatusError, false),
       BleDiscoveryStatus.disabled => ('', false), // Hidden by the cross-fade.
     };
+    final showLegacyHint = legacyAndroidLocation && (status == BleDiscoveryStatus.active || status == BleDiscoveryStatus.activeScanOnly);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -884,6 +898,13 @@ class _BleDiscoveryStatusView extends StatelessWidget {
           text,
           style: const TextStyle(color: Colors.grey),
         ),
+        if (showLegacyHint) ...[
+          const SizedBox(height: 5),
+          Text(
+            t.settingsTab.network.bleStatusLegacyLocation,
+            style: const TextStyle(color: Colors.grey),
+          ),
+        ],
         if (offerSettingsShortcut)
           Padding(
             padding: const EdgeInsets.only(top: 5),

@@ -155,7 +155,9 @@ enabling the flag does):
   runs while the app is in the foreground, which matches the "receiving
   requires an open app" model anyway.
 - **macOS** (Debug and Release entitlements):
-  `com.apple.security.device.bluetooth` (the app is sandboxed).
+  `com.apple.security.device.bluetooth` (the app is sandboxed), plus
+  `NSBluetoothAlwaysUsageDescription` in `Runner/Info.plist` (mandatory on
+  macOS 10.15+; without it CoreBluetooth refuses the connection).
 - **Windows**: no manifest change; the OS may require location to be
   enabled for BLE. Watch out for `ResourceInUse` when the system's Nearby
   Sharing occupies the advertising radio — the failure is caught and
@@ -174,13 +176,20 @@ for breaking changes before upgrading.
 
 ## Known limits (honesty section)
 
-- **Android 12+ only (SDK >= 31).** On Android 7–11 the plugin's
-  `authorize()` would request `ACCESS_FINE_LOCATION`/`ACCESS_COARSE_LOCATION`
-  — permissions this app deliberately does not declare (the BLE scan must
-  stay location-free) — which the system auto-denies. The discovery service
-  detects SDK < 31 and reports `unsupportedPlatform` (the transport
-  provider double-gates with a log line) instead of letting it die
-  silently.
+- **Android 7+ (SDK >= 24).** The app itself installs from Android 7.0
+  (the Flutter engine's `flutter.minSdkVersion` is 24), and since fork.4
+  the BLE module follows: on Android 7–11 (API 24–30) the plugin's
+  `authorize()` requests `ACCESS_COARSE_LOCATION`/`ACCESS_FINE_LOCATION`,
+  which the app declares for exactly those API levels
+  (`maxSdkVersion="30"` in the manifest; Android 12+ uses the
+  `BLUETOOTH_SCAN` `neverForLocation` path instead). Two caveats are
+  surfaced to the user: the location permission dialog appears when
+  enabling the feature on those versions, and scan results are only
+  delivered while the system location services are turned on — the
+  settings toggle shows a dedicated hint. Below SDK 24 the plugin has no
+  backend at all; the discovery service detects it and reports
+  `unsupportedPlatform` (the transport provider double-gates with a log
+  line) instead of letting it die silently.
 - **Android/Windows advertise the beacon only** (manufacturer data, no
   service UUID): both together exceed the 31-byte legacy advertisement
   budget. Scanners therefore run unfiltered and match on the company id;

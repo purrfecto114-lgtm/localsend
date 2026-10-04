@@ -135,7 +135,7 @@ void main() {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
-    final harness = _Harness(enabled: true, androidSdkInt: 30);
+    final harness = _Harness(enabled: true, androidSdkInt: 23);
     final fake = harness.transport;
 
     final service = harness.container.read(bleDiscoveryProvider);
@@ -154,19 +154,20 @@ void main() {
       expect(bleSupportedOnThisDevice(isAndroid: false, androidSdkInt: 30), isTrue);
     });
 
-    test('accepts Android SDK 31 and newer', () {
+    test('accepts Android SDK 24 and newer (Android 7+)', () {
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 24), isTrue);
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 30), isTrue);
       expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 31), isTrue);
       expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 34), isTrue);
     });
 
-    test('rejects Android below SDK 31, failing closed on an unknown SDK int', () {
-      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 30), isFalse);
-      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 24), isFalse);
+    test('rejects Android below SDK 24 (the plugin has no backend), failing closed on an unknown SDK int', () {
+      expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: 23), isFalse);
       expect(bleSupportedOnThisDevice(isAndroid: true, androidSdkInt: null), isFalse);
     });
   });
 
-  test('the transport provider short-circuits on Android below SDK 31', () {
+  test('the transport provider short-circuits on Android below SDK 24', () {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
@@ -174,12 +175,12 @@ void main() {
     final subscription = Logger.root.onRecord.listen(records.add);
     addTearDown(subscription.cancel);
 
-    final harness = _Harness(enabled: true, androidSdkInt: 30, overrideTransport: false);
+    final harness = _Harness(enabled: true, androidSdkInt: 23, overrideTransport: false);
     final transport = harness.container.read(bleTransportProvider);
 
     expect(transport, isA<NoopBleTransport>());
     expect(
-      records.where((record) => record.message.contains('Android 12')),
+      records.where((record) => record.message.contains('Android 7')),
       isNotEmpty,
       reason: 'the SDK gate must fire',
     );
@@ -190,7 +191,7 @@ void main() {
     );
   });
 
-  test('the transport provider passes the SDK gate on Android 12+ and tries the plugin', () {
+  test('the transport provider passes the SDK gate on Android 7+ and tries the plugin', () {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
@@ -198,7 +199,8 @@ void main() {
     final subscription = Logger.root.onRecord.listen(records.add);
     addTearDown(subscription.cancel);
 
-    final harness = _Harness(enabled: true, androidSdkInt: 31, overrideTransport: false);
+    // The new floor (SDK 24, Android 7.0): the gate must let it through.
+    final harness = _Harness(enabled: true, androidSdkInt: 24, overrideTransport: false);
 
     // The test VM has no platform channel backend, so the plugin constructor
     // fails. Since the fork.3 honesty fix the provider no longer swallows
@@ -210,11 +212,11 @@ void main() {
       throwsA(anything),
       reason: 'a transport that cannot be constructed must fail loudly, not noop',
     );
-    expect(records.where((record) => record.message.contains('Android 12')), isEmpty);
+    expect(records.where((record) => record.message.contains('Android 7')), isEmpty);
     expect(
       records.where((record) => record.message.contains('not available on this platform')),
       isNotEmpty,
-      reason: 'the gate must let SDK 31 through to the real transport constructor',
+      reason: 'the gate must let SDK 24 through to the real transport constructor',
     );
   });
 
@@ -319,7 +321,7 @@ class _Harness {
     bool discoveryRunning = true,
     // The test VM reports Android as the default target platform, so a null
     // SDK int would trip the service-level platform gate (fail closed).
-    // Supported-device tests get a modern SDK; the gate tests pass 30/31.
+    // Supported-device tests get a modern SDK; the gate tests pass 23/24.
     int? androidSdkInt = 34,
     bool overrideTransport = true,
   }) {

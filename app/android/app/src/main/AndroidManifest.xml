@@ -38,6 +38,17 @@
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
 
+    <!-- localsend: on Android 11 and below the BLE stack couples discovery to
+         location: the plugin's authorize() requests ACCESS_COARSE_LOCATION and
+         ACCESS_FINE_LOCATION (both must be declared, otherwise the request is
+         auto-denied and the whole module reports a denied permission), and scan
+         results are only delivered while the system location services are on.
+         The permissions are scoped to API <= 30 with maxSdkVersion: Android 12+
+         uses the BLUETOOTH_SCAN neverForLocation path above instead, and the
+         location grant is never used for anything but the BLE scan. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />
+
     <!-- The bluetooth permissions imply BLE hardware; without this, the Play
          Store would filter out devices without a bluetooth radio. -->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />

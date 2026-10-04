@@ -38,8 +38,8 @@ enum BleDiscoveryStatus {
   /// the discovery restarts itself when the adapter comes back.
   adapterOff,
 
-  /// The platform is not supported (e.g. Android below 12, where the scan
-  /// would need undeclared location permissions).
+  /// The platform is not supported (e.g. Android below 7, where the plugin
+  /// has no backend at all).
   unsupportedPlatform,
 
   /// The discovery could not start for another reason (transport missing,
@@ -107,7 +107,7 @@ class BleDiscoveryService {
   final Device Function() _selfDeviceInfo;
   final void Function(Device device) _onDeviceDiscovered;
 
-  /// Whether the platform can run the BLE stack at all (Android below 12
+  /// Whether the platform can run the BLE stack at all (Android below 7
   /// cannot, see [bleSupportedOnThisDevice]). When it returns false the
   /// discovery reports [BleDiscoveryStatus.unsupportedPlatform] and never
   /// builds a transport.
@@ -259,7 +259,7 @@ class BleDiscoveryService {
       return;
     }
     if (!(_isPlatformSupported?.call() ?? true)) {
-      _logger.warning('The platform cannot run the BLE discovery (e.g. Android below 12); the module stays off');
+      _logger.warning('The platform cannot run the BLE discovery (e.g. Android below 7); the module stays off');
       _setStatus(BleDiscoveryStatus.unsupportedPlatform);
       return;
     }
