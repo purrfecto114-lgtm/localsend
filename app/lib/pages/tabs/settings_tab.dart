@@ -10,6 +10,9 @@ import 'package:localsend_app/pages/changelog_page.dart';
 import 'package:localsend_app/pages/donation/donation_page.dart';
 import 'package:localsend_app/pages/settings/network_interfaces_page.dart';
 import 'package:localsend_app/pages/tabs/settings_tab_controller.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
+import 'package:localsend_app/provider/network/ble/ble_low_energy_transport.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/provider/version_provider.dart';
@@ -46,6 +49,7 @@ class SettingsTab extends StatelessWidget {
       provider: (ref) => settingsTabControllerProvider,
       builder: (context, vm) {
         final ref = context.ref;
+        final bleStatus = ref.watch(bleDiscoveryStatusProvider);
         return ResponsiveListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
           children: [
@@ -565,6 +569,19 @@ class SettingsTab extends StatelessWidget {
                       await ref.notifier(settingsProvider).setBleDiscoveryEnabled(b);
                     },
                   ),
+                if (vm.advanced)
+                  AnimatedCrossFade(
+                    crossFadeState: vm.settings.bleDiscoveryEnabled && bleStatus != BleDiscoveryStatus.disabled
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 200),
+                    alignment: Alignment.topLeft,
+                    firstChild: Container(),
+                    secondChild: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: _BleDiscoveryStatusView(status: bleStatus),
+                    ),
+                  ),
                 AnimatedCrossFade(
                   crossFadeState: vm.settings.port != defaultPort ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                   duration: const Duration(milliseconds: 200),
@@ -834,6 +851,51 @@ class _SettingsSection extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The live status of the BLE discovery, shown under its toggle while the
+/// feature is enabled: running (scanning/advertising), permission denied
+/// (with a shortcut to the system settings), adapter off, or a start
+/// failure. Without it, enabling the feature shows only the permission
+/// dialog and then silence.
+class _BleDiscoveryStatusView extends StatelessWidget {
+  final BleDiscoveryStatus status;
+
+  const _BleDiscoveryStatusView({required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    final (text, offerSettingsShortcut) = switch (status) {
+      BleDiscoveryStatus.active => (t.settingsTab.network.bleStatusActive, false),
+      BleDiscoveryStatus.activeScanOnly => (t.settingsTab.network.bleStatusScanOnly, false),
+      BleDiscoveryStatus.paused => (t.settingsTab.network.bleStatusPaused, false),
+      BleDiscoveryStatus.permissionDenied => (t.settingsTab.network.bleStatusPermissionDenied, true),
+      BleDiscoveryStatus.adapterOff => (t.settingsTab.network.bleStatusAdapterOff, false),
+      BleDiscoveryStatus.unsupportedPlatform => (t.settingsTab.network.bleStatusUnsupported, false),
+      BleDiscoveryStatus.error => (t.settingsTab.network.bleStatusError, false),
+      BleDiscoveryStatus.disabled => ('', false), // Hidden by the cross-fade.
+    };
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          text,
+          style: const TextStyle(color: Colors.grey),
+        ),
+        if (offerSettingsShortcut)
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: TextButton.icon(
+              onPressed: () async {
+                await openBluetoothAppSettings();
+              },
+              icon: const Icon(Icons.settings),
+              label: Text(t.settingsTab.network.bleOpenSystemSettings),
+            ),
+          ),
+      ],
     );
   }
 }

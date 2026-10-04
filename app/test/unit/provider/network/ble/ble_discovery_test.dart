@@ -49,10 +49,13 @@ Future<void> _pump([int times = 8]) async {
 }
 
 class _FakeTransport implements BleTransport {
+  _FakeTransport({this.supportsAdvertising = true});
+
   @override
-  final bool supportsAdvertising = true;
+  final bool supportsAdvertising;
 
   final hits = StreamController<BleAdvertisementHit>.broadcast();
+  final adapterStates = StreamController<BleAdapterState>.broadcast();
   final actions = <String>[];
   final gattReads = <String>[];
 
@@ -60,6 +63,8 @@ class _FakeTransport implements BleTransport {
   Uint8List? advertisedPayload;
   bool advertiseShouldThrow = false;
   bool scanShouldThrow = false;
+  Object? advertiseError;
+  Object? scanError;
   Object? readError;
 
   /// While set, [startScan] does not complete until the completer fires
@@ -79,6 +84,9 @@ class _FakeTransport implements BleTransport {
   @override
   Future<void> startAdvertising({required Uint8List beacon, required Uint8List gattPayload}) async {
     actions.add('advertise');
+    if (advertiseError != null) {
+      throw advertiseError!;
+    }
     if (advertiseShouldThrow) {
       throw StateError('advertising refused');
     }
@@ -95,8 +103,14 @@ class _FakeTransport implements BleTransport {
   Stream<BleAdvertisementHit> get scanStream => hits.stream;
 
   @override
+  Stream<BleAdapterState> get adapterStateChanges => adapterStates.stream;
+
+  @override
   Future<void> startScan() async {
     actions.add('scan');
+    if (scanError != null) {
+      throw scanError!;
+    }
     if (scanShouldThrow) {
       throw StateError('scan refused');
     }
@@ -174,6 +188,123 @@ void main() {
     expect(transport.actions, isEmpty);
     expect(dispatched, isEmpty);
     expect(disabled.isRunning, isFalse);
+    expect(disabled.status, BleDiscoveryStatus.disabled);
+  });
+
+  test('a successful start reports the active status on the status stream', () async {
+    final statuses = <BleDiscoveryStatus>[];
+    final subscription = service.statusStream.listen(statuses.add);
+    addTearDown(subscription.cancel);
+
+    await service.start();
+    await _pump();
+
+    expect(service.status, BleDiscoveryStatus.active);
+    expect(statuses, [BleDiscoveryStatus.active]);
+
+    await service.stop();
+    await _pump();
+    expect(service.status, BleDiscoveryStatus.disabled);
+    expect(statuses, [BleDiscoveryStatus.active, BleDiscoveryStatus.disabled]);
+  });
+
+  test('a start without advertising reports activeScanOnly', () async {
+    final scanOnly = BleDiscoveryService(
+      transportFactory: () => _FakeTransport(supportsAdvertising: false),
+      isFeatureEnabled: () => true,
+      selfDeviceInfo: _selfDevice,
+      onDeviceDiscovered: dispatched.add,
+    );
+
+    await scanOnly.start();
+
+    expect(scanOnly.status, BleDiscoveryStatus.activeScanOnly);
+    expect(scanOnly.isRunning, isTrue);
+  });
+
+  test('a denied permission stops the discovery and reports permissionDenied', () async {
+    transport.scanError = const BlePermissionDeniedException();
+    transport.advertiseError = const BlePermissionDeniedException();
+
+    await service.start();
+
+    expect(service.isRunning, isFalse, reason: 'the service must not pretend to run after a denial');
+    expect(service.status, BleDiscoveryStatus.permissionDenied);
+    expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
+  });
+
+  test('an unavailable adapter stops the discovery and reports adapterOff', () async {
+    transport.scanError = const BleAdapterUnavailableException(BleAdapterState.poweredOff);
+    transport.advertiseError = const BleAdapterUnavailableException(BleAdapterState.poweredOff);
+
+    await service.start();
+
+    expect(service.isRunning, isFalse);
+    expect(service.status, BleDiscoveryStatus.adapterOff);
+    expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
+  });
+
+  test('a generic scan failure reports error', () async {
+    transport.scanShouldThrow = true;
+
+    await service.start();
+
+    expect(service.isRunning, isFalse);
+    expect(service.status, BleDiscoveryStatus.error);
+    expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
+  });
+
+  test('stop(paused) reports paused while the flag is on, stop() reports disabled', () async {
+    await service.start();
+
+    await service.stop(paused: true);
+    expect(service.status, BleDiscoveryStatus.paused);
+    expect(service.isRunning, isFalse);
+
+    await service.start();
+    expect(service.status, BleDiscoveryStatus.active);
+
+    await service.stop();
+    expect(service.status, BleDiscoveryStatus.disabled);
+  });
+
+  test('an unsupported platform reports unsupportedPlatform without building a transport', () async {
+    var factoryCalls = 0;
+    final unsupported = BleDiscoveryService(
+      transportFactory: () {
+        factoryCalls++;
+        return transport;
+      },
+      isFeatureEnabled: () => true,
+      isPlatformSupported: () => false,
+      selfDeviceInfo: _selfDevice,
+      onDeviceDiscovered: dispatched.add,
+    );
+
+    await unsupported.start();
+
+    expect(factoryCalls, 0, reason: 'no transport may be built on an unsupported platform');
+    expect(unsupported.status, BleDiscoveryStatus.unsupportedPlatform);
+    expect(unsupported.isRunning, isFalse);
+  });
+
+  test('an adapter-off event mid-run stops the scan; powered-on restarts it', () async {
+    await service.start();
+    expect(service.status, BleDiscoveryStatus.active);
+
+    transport.adapterStates.add(BleAdapterState.poweredOff);
+    await _pump();
+
+    expect(service.isRunning, isFalse);
+    expect(service.status, BleDiscoveryStatus.adapterOff);
+    expect(transport.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
+
+    transport.adapterStates.add(BleAdapterState.poweredOn);
+    await _pump();
+
+    expect(service.isRunning, isTrue);
+    expect(service.status, BleDiscoveryStatus.active);
+    expect(transport.actions.where((a) => a == 'scan').length, 2, reason: 'the discovery must restart with the adapter');
   });
 
   test('start() advertises the beacon and scans', () async {

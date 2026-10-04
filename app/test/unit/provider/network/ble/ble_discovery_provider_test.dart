@@ -9,6 +9,7 @@ import 'package:localsend_app/model/persistence/quick_save_mode.dart';
 import 'package:localsend_app/model/send_mode.dart';
 import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_codec.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_transport.dart';
 import 'package:localsend_app/provider/persistence_provider.dart';
@@ -111,6 +112,40 @@ void main() {
     expect(service.isRunning, isFalse);
     expect(fake.actions, containsAll(['stopScan', 'stopAdvertise', 'dispose']));
     expect(harness.connector.sent, isEmpty);
+  });
+
+  test('the status provider surfaces the service status to the UI', () async {
+    final harness = _Harness(enabled: false);
+
+    final service = harness.container.read(bleDiscoveryProvider);
+    expect(harness.container.read(bleDiscoveryStatusProvider), BleDiscoveryStatus.disabled);
+
+    final settings = harness.container.notifier(settingsProvider);
+    await settings.setBleDiscoveryEnabled(true);
+    await _pump();
+    expect(service.isRunning, isTrue);
+    expect(harness.container.read(bleDiscoveryStatusProvider), BleDiscoveryStatus.active);
+
+    await settings.setBleDiscoveryEnabled(false);
+    await _pump();
+    expect(harness.container.read(bleDiscoveryStatusProvider), BleDiscoveryStatus.disabled);
+  });
+
+  test('flag on but platform unsupported: the status is unsupportedPlatform and no transport call is made', () async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+    final harness = _Harness(enabled: true, androidSdkInt: 30);
+    final fake = harness.transport;
+
+    final service = harness.container.read(bleDiscoveryProvider);
+    await service.start();
+    await _pump();
+
+    expect(service.isRunning, isFalse);
+    expect(service.status, BleDiscoveryStatus.unsupportedPlatform);
+    expect(fake.actions, isEmpty, reason: 'the service must not touch a transport on an unsupported platform');
+    expect(harness.container.read(bleDiscoveryStatusProvider), BleDiscoveryStatus.unsupportedPlatform);
   });
 
   group('bleSupportedOnThisDevice', () {
@@ -221,10 +256,13 @@ class _RecordingConnector implements IsolateConnector<IsolateTaskStreamResult<Di
 }
 
 class _FakeTransport implements BleTransport {
+  _FakeTransport();
+
   @override
   final bool supportsAdvertising = true;
 
   final hits = StreamController<BleAdvertisementHit>.broadcast();
+  final adapterStates = StreamController<BleAdapterState>.broadcast();
   final actions = <String>[];
 
   Uint8List? advertisedBeacon;
@@ -249,6 +287,9 @@ class _FakeTransport implements BleTransport {
   Stream<BleAdvertisementHit> get scanStream => hits.stream;
 
   @override
+  Stream<BleAdapterState> get adapterStateChanges => adapterStates.stream;
+
+  @override
   Future<void> startScan() async {
     actions.add('scan');
   }
@@ -271,7 +312,10 @@ class _Harness {
   _Harness({
     required bool enabled,
     bool discoveryRunning = true,
-    int? androidSdkInt,
+    // The test VM reports Android as the default target platform, so a null
+    // SDK int would trip the service-level platform gate (fail closed).
+    // Supported-device tests get a modern SDK; the gate tests pass 30/31.
+    int? androidSdkInt = 34,
     bool overrideTransport = true,
   }) {
     transport = _FakeTransport();

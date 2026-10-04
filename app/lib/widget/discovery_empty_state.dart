@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localsend_app/gen/strings.g.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery.dart';
+import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
 import 'package:localsend_app/provider/network/discovery_diagnosis_provider.dart';
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
 import 'package:localsend_app/provider/network/scan_facade.dart';
@@ -34,6 +36,9 @@ class DiscoveryEmptyState extends StatelessWidget {
     );
     final diagnosis = context.ref.watch(discoveryDiagnosisProvider);
     final port = context.ref.watch(settingsProvider.select((s) => s.port));
+    final bleActive = context.ref.watch(
+      bleDiscoveryStatusProvider.select((s) => s == BleDiscoveryStatus.active || s == BleDiscoveryStatus.activeScanOnly),
+    );
     final scanning = runningFavoriteScan || runningIps.isNotEmpty;
 
     final Widget? status;
@@ -69,6 +74,19 @@ class DiscoveryEmptyState extends StatelessWidget {
               },
               icon: const Icon(Icons.sync),
               label: Text(t.sendTab.diagnosis.rescan),
+            ),
+          ),
+        // The BLE discovery keeps running independently of the smart scan;
+        // its presence (and its fork-to-fork requirement) is spelled out
+        // here because this is the screen users stare at while nothing
+        // shows up.
+        if (bleActive)
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              t.sendTab.diagnosis.bleHint,
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
+              textAlign: TextAlign.center,
             ),
           ),
         // Common footer for every diagnosis layer: favorites and manual

@@ -116,7 +116,7 @@ class LocalSendApp extends StatelessWidget {
                 // explicitly so the scan/advertisement radio work stays
                 // strictly foreground (resume restarts it, see above).
                 if (checkPlatform([TargetPlatform.iOS, TargetPlatform.android])) {
-                  unawaited(ref.read(bleDiscoveryProvider).stop());
+                  unawaited(ref.read(bleDiscoveryProvider).stop(paused: true));
                 }
                 break;
               case AppLifecycleState.detached:

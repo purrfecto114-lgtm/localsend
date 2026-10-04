@@ -1073,6 +1073,10 @@ class Translations$sendTab$diagnosis$en {
   /// en: 'Search again'
   String get rescan => 'Search again';
 
+  /// en: 'BLE discovery is active: devices are found over Bluetooth only if they also run this fork with the option enabled; the transfer itself still goes over the network.'
+  String get bleHint =>
+      'BLE discovery is active: devices are found over Bluetooth only if they also run this fork with the option enabled; the transfer itself still goes over the network.';
+
   late final Translations$sendTab$diagnosis$manualFallback$en manualFallback = Translations$sendTab$diagnosis$manualFallback$en.internal(_root);
 }
 
@@ -1264,9 +1268,35 @@ class Translations$settingsTab$network$en {
   /// en: 'BLE discovery (experimental)'
   String get bleDiscovery => 'BLE discovery (experimental)';
 
-  /// en: 'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network.'
+  /// en: 'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.'
   String get bleDiscoveryHint =>
-      'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network.';
+      'Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.';
+
+  /// en: 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.'
+  String get bleStatusActive => 'Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.';
+
+  /// en: 'Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).'
+  String get bleStatusScanOnly =>
+      'Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).';
+
+  /// en: 'Paused. Resumes when the app returns to the foreground.'
+  String get bleStatusPaused => 'Paused. Resumes when the app returns to the foreground.';
+
+  /// en: 'Bluetooth permissions denied. Grant the "Nearby devices" permission in the system settings, then toggle this option off and on again.'
+  String get bleStatusPermissionDenied =>
+      'Bluetooth permissions denied. Grant the "Nearby devices" permission in the system settings, then toggle this option off and on again.';
+
+  /// en: 'Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.'
+  String get bleStatusAdapterOff => 'Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.';
+
+  /// en: 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.'
+  String get bleStatusUnsupported => 'Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.';
+
+  /// en: 'BLE discovery could not start. See Troubleshoot > Logs for details.'
+  String get bleStatusError => 'BLE discovery could not start. See Troubleshoot > Logs for details.';
+
+  /// en: 'Open system settings'
+  String get bleOpenSystemSettings => 'Open system settings';
 }
 
 // Path: settingsTab.other

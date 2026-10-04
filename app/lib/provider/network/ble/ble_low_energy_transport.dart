@@ -15,6 +15,34 @@ final UUID _characteristicUuid = UUID.fromString(bleCharacteristicUuidString);
 const _connectTimeout = Duration(seconds: 10);
 const _gattTimeout = Duration(seconds: 5);
 
+/// How long to wait for the first definitive adapter state when the cached
+/// state is still [BluetoothLowEnergyState.unknown] (the backends fill it
+/// asynchronously via a platform-channel roundtrip at manager construction;
+/// reading it synchronously right after construction would misreport every
+/// Android device as unavailable).
+const _adapterStateTimeout = Duration(seconds: 3);
+
+BleAdapterState _mapAdapterState(BluetoothLowEnergyState state) => switch (state) {
+  BluetoothLowEnergyState.unknown => BleAdapterState.unknown,
+  BluetoothLowEnergyState.unsupported => BleAdapterState.unsupported,
+  BluetoothLowEnergyState.unauthorized => BleAdapterState.unauthorized,
+  BluetoothLowEnergyState.poweredOff => BleAdapterState.poweredOff,
+  BluetoothLowEnergyState.poweredOn => BleAdapterState.poweredOn,
+};
+
+/// Opens the system's app-settings page (Android/iOS) so the user can grant
+/// the denied Bluetooth permissions. Returns false on platforms without
+/// such a page or when it cannot be opened.
+Future<bool> openBluetoothAppSettings() async {
+  try {
+    await PeripheralManager().showAppSettings();
+    return true;
+  } catch (e, stackTrace) {
+    _logger.warning('Opening the app settings failed', e, stackTrace);
+    return false;
+  }
+}
+
 /// Which sections of a BLE advertisement this platform's beacon uses.
 enum BleAdvertisementPayload {
   /// The advertisement carries the LocalSend service UUID only.
@@ -111,17 +139,8 @@ class LowEnergyBleTransport implements BleTransport {
       return;
     }
 
-    try {
-      if (!await peripheral.authorize()) {
-        _logger.warning('The Bluetooth permissions were not granted; BLE advertising is disabled');
-        return;
-      }
-    } on UnsupportedError {
-      // Android-only API; the other platforms need no runtime request.
-    } catch (e, stackTrace) {
-      _logger.warning('Requesting the Bluetooth permissions failed; BLE advertising is disabled', e, stackTrace);
-      return;
-    }
+    await _authorize(peripheral);
+    await _ensureAdapterUsable(peripheral);
 
     _gattPayload = gattPayload;
 
@@ -156,6 +175,50 @@ class LowEnergyBleTransport implements BleTransport {
     };
     await peripheral.startAdvertising(advertisement);
     _logger.info('BLE advertising started (${payloadShape.name})');
+  }
+
+  /// Requests the runtime Bluetooth permissions (Android only; the other
+  /// platforms need no runtime request) and translates a denial into
+  /// [BlePermissionDeniedException] so the caller can report it.
+  Future<void> _authorize(BluetoothLowEnergyManager manager) async {
+    try {
+      if (!await manager.authorize()) {
+        throw const BlePermissionDeniedException();
+      }
+    } on UnsupportedError {
+      // Android-only API; the other platforms need no runtime request.
+    }
+  }
+
+  /// Refuses to touch the radio while the adapter is not powered on.
+  ///
+  /// The manager's cached [BluetoothLowEnergyManager.state] starts as
+  /// [BluetoothLowEnergyState.unknown] and is filled asynchronously at
+  /// construction, so a still-unknown state waits briefly for the first
+  /// definitive [BluetoothLowEnergyManager.stateChanged] event instead of
+  /// misreading the startup gap; if nothing arrives the platform call
+  /// itself surfaces the real error.
+  Future<void> _ensureAdapterUsable(BluetoothLowEnergyManager manager) async {
+    var state = manager.state;
+    if (state == BluetoothLowEnergyState.unknown) {
+      try {
+        state = await manager.stateChanged
+            .map((event) => event.state)
+            .firstWhere((state) => state != BluetoothLowEnergyState.unknown)
+            .timeout(_adapterStateTimeout);
+      } on TimeoutException {
+        return; // Still unknown: let the platform call surface the real error.
+      }
+    }
+    switch (state) {
+      case BluetoothLowEnergyState.poweredOn:
+      case BluetoothLowEnergyState.unknown:
+        return;
+      case BluetoothLowEnergyState.poweredOff:
+      case BluetoothLowEnergyState.unauthorized:
+      case BluetoothLowEnergyState.unsupported:
+        throw BleAdapterUnavailableException(_mapAdapterState(state));
+    }
   }
 
   void _onReadRequested(GATTCharacteristicReadRequestedEventArgs args) {
@@ -245,17 +308,8 @@ class LowEnergyBleTransport implements BleTransport {
 
   @override
   Future<void> startScan() async {
-    try {
-      if (!await _central.authorize()) {
-        _logger.warning('The Bluetooth permissions were not granted; BLE scanning is disabled');
-        return;
-      }
-    } on UnsupportedError {
-      // Android-only API; the other platforms need no runtime request.
-    } catch (e, stackTrace) {
-      _logger.warning('Requesting the Bluetooth permissions failed; BLE scanning is disabled', e, stackTrace);
-      return;
-    }
+    await _authorize(_central);
+    await _ensureAdapterUsable(_central);
 
     // Unfiltered on purpose: the Android/Windows beacons carry no service
     // UUID (advertisement budget), so a UUID filter would hide them. The
@@ -263,6 +317,9 @@ class LowEnergyBleTransport implements BleTransport {
     await _central.startDiscovery(serviceUUIDs: const []);
     _logger.info('BLE scan started');
   }
+
+  @override
+  Stream<BleAdapterState> get adapterStateChanges => _central.stateChanged.map((event) => _mapAdapterState(event.state));
 
   @override
   Future<void> stopScan() async {

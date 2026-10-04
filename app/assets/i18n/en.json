@@ -100,6 +100,7 @@
         "detail": "Sent {announcements} announcements and {scans} network scans without a response."
       },
       "rescan": "Search again",
+      "bleHint": "BLE discovery is active: devices are found over Bluetooth only if they also run this fork with the option enabled; the transfer itself still goes over the network.",
       "manualFallback": {
         "message": "IP addresses often change. You can still reach a device that is not listed: add it to your favorites or enter its address manually.",
         "openFavorites": "Open favorites",
@@ -179,7 +180,15 @@
       "multicastGroup": "Multicast address",
       "multicastGroupWarning": "You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})",
       "bleDiscovery": "BLE discovery (experimental)",
-      "bleDiscoveryHint": "Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). The file transfer itself still uses the network."
+      "bleDiscoveryHint": "Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Both devices need this fork with the option enabled; the file transfer itself still uses the network.",
+      "bleStatusActive": "Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.",
+      "bleStatusScanOnly": "Active: scanning only. This device cannot be discovered over Bluetooth (no BLE advertising support on this platform).",
+      "bleStatusPaused": "Paused. Resumes when the app returns to the foreground.",
+      "bleStatusPermissionDenied": "Bluetooth permissions denied. Grant the \"Nearby devices\" permission in the system settings, then toggle this option off and on again.",
+      "bleStatusAdapterOff": "Bluetooth is switched off or unavailable. Turn it on, then toggle this option off and on again.",
+      "bleStatusUnsupported": "Not supported on this device: BLE discovery needs Android 12+ and a Bluetooth LE radio.",
+      "bleStatusError": "BLE discovery could not start. See Troubleshoot > Logs for details.",
+      "bleOpenSystemSettings": "Open system settings"
     },
     "other": {
       "title": "Other",

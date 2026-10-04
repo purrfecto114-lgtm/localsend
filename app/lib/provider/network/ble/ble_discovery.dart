@@ -9,6 +9,44 @@ import 'package:logging/logging.dart';
 
 final _logger = Logger('BleDiscovery');
 
+/// The user-facing state of the BLE-assisted discovery.
+///
+/// Every transition is surfaced through [BleDiscoveryService.statusStream]
+/// and shown under the settings toggle, so the feature is observable:
+/// a user enabling it can tell whether it actually runs (fork.2 hid all
+/// of this in the logs, which read as "not implemented").
+enum BleDiscoveryStatus {
+  /// The feature flag is off (the default).
+  disabled,
+
+  /// Running: scanning and advertising.
+  active,
+
+  /// Running: scanning only (the platform cannot advertise, or the local
+  /// address is not usable yet).
+  activeScanOnly,
+
+  /// Stopped because the app went to the background (mobile); resumes on
+  /// the next foreground transition while the flag stays on.
+  paused,
+
+  /// The runtime Bluetooth permissions were denied; the discovery is off
+  /// until they are granted and the flag is toggled again.
+  permissionDenied,
+
+  /// The Bluetooth adapter is powered off, unauthorized or unsupported;
+  /// the discovery restarts itself when the adapter comes back.
+  adapterOff,
+
+  /// The platform is not supported (e.g. Android below 12, where the scan
+  /// would need undeclared location permissions).
+  unsupportedPlatform,
+
+  /// The discovery could not start for another reason (transport missing,
+  /// radio error). Details are in the app log.
+  error,
+}
+
 /// Orchestrates the BLE-assisted discovery (phase 1).
 ///
 /// While the feature flag is on, this service advertises a 24 byte beacon
@@ -45,6 +83,7 @@ class BleDiscoveryService {
     required bool Function() isFeatureEnabled,
     required Device Function() selfDeviceInfo,
     required void Function(Device device) onDeviceDiscovered,
+    bool Function()? isPlatformSupported,
     this.gattRetryCooldown = const Duration(seconds: 30),
     this.fingerprintRefreshInterval = const Duration(seconds: 60),
     this.minHitRssi = defaultMinHitRssi,
@@ -55,6 +94,7 @@ class BleDiscoveryService {
        _isFeatureEnabled = isFeatureEnabled,
        _selfDeviceInfo = selfDeviceInfo,
        _onDeviceDiscovered = onDeviceDiscovered,
+       _isPlatformSupported = isPlatformSupported,
        _now = now;
 
   /// The default RSSI floor for advertisement hits, in dBm. Advertisements
@@ -66,6 +106,12 @@ class BleDiscoveryService {
   final bool Function() _isFeatureEnabled;
   final Device Function() _selfDeviceInfo;
   final void Function(Device device) _onDeviceDiscovered;
+
+  /// Whether the platform can run the BLE stack at all (Android below 12
+  /// cannot, see [bleSupportedOnThisDevice]). When it returns false the
+  /// discovery reports [BleDiscoveryStatus.unsupportedPlatform] and never
+  /// builds a transport.
+  final bool Function()? _isPlatformSupported;
 
   /// How long a remote that was already contacted (successfully or not)
   /// waits before its next GATT handshake.
@@ -122,6 +168,37 @@ class BleDiscoveryService {
   /// Rotates the beacon salt while advertising.
   Timer? _saltRotationTimer;
 
+  /// Follows the adapter state while the discovery runs, so a radio
+  /// switched off mid-session stops the scan (and one switched back on
+  /// restarts it) instead of dying silently.
+  ///
+  /// Deliberately kept alive across stop/start sessions (only [dispose]
+  /// cancels it): the adapter-on restart needs it while the service is
+  /// stopped. The underlying platform stream (the plugin manager's
+  /// broadcast stream) survives transport disposal, and a later transport
+  /// wraps the same manager singleton.
+  StreamSubscription<BleAdapterState>? _adapterSubscription;
+
+  /// The current user-facing status (see [BleDiscoveryStatus]).
+  BleDiscoveryStatus _status = BleDiscoveryStatus.disabled;
+
+  /// The status change events, for the UI. Broadcast: any number of
+  /// listeners, before and after transitions.
+  Stream<BleDiscoveryStatus> get statusStream => _statusController.stream;
+  final StreamController<BleDiscoveryStatus> _statusController = StreamController<BleDiscoveryStatus>.broadcast();
+
+  /// The current user-facing status.
+  BleDiscoveryStatus get status => _status;
+
+  void _setStatus(BleDiscoveryStatus status) {
+    if (_status == status) {
+      return;
+    }
+    _status = status;
+    _logger.info('BLE discovery status: ${status.name}');
+    _statusController.add(status);
+  }
+
   /// The device info and salt currently advertised (null while not
   /// advertising). Kept so the salt rotation can re-encode the beacon.
   Device? _advertisedSelf;
@@ -136,16 +213,19 @@ class BleDiscoveryService {
   /// Starts advertising and scanning.
   ///
   /// A no-op while the feature flag is off or when called twice. Failures
-  /// are contained: an unusable advertisement (e.g. Windows Nearby Sharing
-  /// holding the radio) only disables advertising, while a failing scan
-  /// stops the whole BLE discovery again.
+  /// are contained and reported through [statusStream]: a denied permission
+  /// or an unusable adapter stops the whole discovery again with the
+  /// matching status instead of pretending to run.
   Future<void> start() => _runExclusive(_start);
 
   /// Stops advertising and scanning and releases the transport.
   ///
   /// A no-op when not running. If a start is still settling, the stop
   /// waits for it and then releases everything that start created.
-  Future<void> stop() => _runExclusive(_stop);
+  /// [paused] marks the stop as temporary (app lifecycle): the status
+  /// becomes [BleDiscoveryStatus.paused] instead of `disabled`, and the
+  /// next [start] (the resume transition) runs the discovery again.
+  Future<void> stop({bool paused = false}) => _runExclusive(() => _stop(paused));
 
   /// Runs [action] exclusively: lifecycle operations (and the beacon salt
   /// rotation) must never interleave. Errors of one operation neither
@@ -162,6 +242,12 @@ class BleDiscoveryService {
     }
     if (!_isFeatureEnabled()) {
       // Feature flag off: not even the transport is built.
+      _setStatus(BleDiscoveryStatus.disabled);
+      return;
+    }
+    if (!(_isPlatformSupported?.call() ?? true)) {
+      _logger.warning('The platform cannot run the BLE discovery (e.g. Android below 12); the module stays off');
+      _setStatus(BleDiscoveryStatus.unsupportedPlatform);
       return;
     }
 
@@ -170,6 +256,7 @@ class BleDiscoveryService {
       transport = _transportFactory();
     } catch (e, stackTrace) {
       _logger.warning('The BLE transport is not available; the BLE discovery stays off', e, stackTrace);
+      _setStatus(BleDiscoveryStatus.error);
       return;
     }
     _running = true;
@@ -181,13 +268,17 @@ class BleDiscoveryService {
     } catch (e, stackTrace) {
       _logger.warning('Reading the local device info failed; stopping the BLE discovery', e, stackTrace);
       await _shutdown();
+      _setStatus(BleDiscoveryStatus.error);
       return;
     }
     final ip = self.ip;
     final hasUsableAddress = ip != null && ip.isNotEmpty && ip != '-' && self.port > 0 && self.port <= 0xFFFF;
 
     // Advertising is best effort: without it this device cannot be *found*
-    // via BLE, but it can still find others.
+    // via BLE, but it can still find others. A denied permission or an
+    // unavailable adapter is logged here; the scan start below throws the
+    // same typed exception and decides the final status.
+    var advertising = false;
     if (transport.supportsAdvertising && hasUsableAddress) {
       try {
         _beaconSalt = _randomSalt();
@@ -197,7 +288,18 @@ class BleDiscoveryService {
           beacon: _encodeBeacon(self, _beaconSalt),
           gattPayload: _advertisedGattPayload,
         );
+        advertising = true;
         _startSaltRotation();
+      } on BlePermissionDeniedException catch (e, stackTrace) {
+        _logger.warning('The Bluetooth permissions were denied; BLE advertising is off (the scan start decides the final status)', e, stackTrace);
+        _stopSaltRotation();
+        _advertisedSelf = null;
+        _advertisedGattPayload = Uint8List(0);
+      } on BleAdapterUnavailableException catch (e, stackTrace) {
+        _logger.warning('The Bluetooth adapter is unavailable; BLE advertising is off (the scan start decides the final status)', e, stackTrace);
+        _stopSaltRotation();
+        _advertisedSelf = null;
+        _advertisedGattPayload = Uint8List(0);
       } catch (e, stackTrace) {
         _logger.warning('BLE advertising failed to start; scanning still works', e, stackTrace);
         _stopSaltRotation();
@@ -215,19 +317,40 @@ class BleDiscoveryService {
           _logger.warning('The BLE scan stream failed', e, stackTrace);
         },
       );
+      _adapterSubscription ??= transport.adapterStateChanges.listen(
+        _onAdapterStateChanged,
+        onError: (Object e, StackTrace stackTrace) {
+          _logger.warning('The BLE adapter state stream failed', e, stackTrace);
+        },
+      );
       await transport.startScan();
-      _logger.info('BLE discovery started');
+      _setStatus(advertising ? BleDiscoveryStatus.active : BleDiscoveryStatus.activeScanOnly);
+      _logger.info('BLE discovery started (${_status.name})');
+    } on BlePermissionDeniedException catch (e, stackTrace) {
+      _logger.warning('The Bluetooth permissions were denied; the BLE discovery is off', e, stackTrace);
+      await _shutdown();
+      _setStatus(BleDiscoveryStatus.permissionDenied);
+    } on BleAdapterUnavailableException catch (e, stackTrace) {
+      _logger.warning('The Bluetooth adapter is unavailable; the BLE discovery is off', e, stackTrace);
+      await _shutdown();
+      _setStatus(BleDiscoveryStatus.adapterOff);
     } catch (e, stackTrace) {
       _logger.warning('Starting the BLE scan failed; stopping the BLE discovery', e, stackTrace);
       await _shutdown();
+      _setStatus(BleDiscoveryStatus.error);
     }
   }
 
-  Future<void> _stop() async {
+  Future<void> _stop(bool paused) async {
+    // A stop never invents a running-looking status: paused only makes
+    // sense while the flag is on; everything else lands on disabled.
+    final resulting = paused && _isFeatureEnabled() ? BleDiscoveryStatus.paused : BleDiscoveryStatus.disabled;
     if (!_running) {
+      _setStatus(resulting);
       return;
     }
     await _shutdown();
+    _setStatus(resulting);
   }
 
   Future<void> _shutdown() async {
@@ -249,6 +372,9 @@ class BleDiscoveryService {
     } catch (e, stackTrace) {
       _logger.warning('Cancelling the BLE scan subscription failed', e, stackTrace);
     }
+
+    // The adapter subscription intentionally survives the shutdown: it is
+    // the trigger for the adapter-on restart while the service is stopped.
 
     final transport = _transport;
     _transport = null;
@@ -318,6 +444,53 @@ class BleDiscoveryService {
     } catch (e, stackTrace) {
       _logger.warning('Rotating the BLE beacon salt failed', e, stackTrace);
     }
+  }
+
+  /// Reacts to the Bluetooth adapter being switched off or back on while
+  /// the discovery runs: off stops the scan and reports [BleDiscoveryStatus.adapterOff]
+  /// (the platform scan would die silently otherwise); back on restarts the
+  /// discovery while the flag is still enabled.
+  ///
+  /// Runs outside the lifecycle chain's serialization on purpose: the
+  /// actual work is queued onto it, so it can never interleave with a
+  /// settling start or stop.
+  void _onAdapterStateChanged(BleAdapterState state) {
+    if (state == BleAdapterState.unknown) {
+      return;
+    }
+    if (state == BleAdapterState.poweredOn) {
+      if (!_running && _isFeatureEnabled() && (_isPlatformSupported?.call() ?? true)) {
+        unawaited(start());
+      }
+      return;
+    }
+    if (_running) {
+      _logger.info('The Bluetooth adapter became unavailable (${state.name}); stopping the BLE discovery');
+      unawaited(
+        _runExclusive(() async {
+          await _shutdown();
+          _setStatus(BleDiscoveryStatus.adapterOff);
+        }),
+      );
+    }
+  }
+
+  /// Stops the discovery (if running) and closes the status stream. The
+  /// service must not be used afterwards.
+  ///
+  /// Goes through [stop] so a still-settling start is drained first; the
+  /// status stream is closed only after the chain is idle, so no listener
+  /// notification can hit a closed controller.
+  Future<void> dispose() async {
+    await stop();
+    final adapterSubscription = _adapterSubscription;
+    _adapterSubscription = null;
+    try {
+      await adapterSubscription?.cancel();
+    } catch (e, stackTrace) {
+      _logger.warning('Cancelling the BLE adapter subscription failed', e, stackTrace);
+    }
+    await _statusController.close();
   }
 
   void _onScanHit(BleAdvertisementHit hit) {

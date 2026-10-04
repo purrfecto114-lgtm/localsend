@@ -1,5 +1,35 @@
 import 'dart:typed_data';
 
+/// The state of the Bluetooth adapter as far as the transport can tell.
+///
+/// Mirrors the plugin's adapter state without leaking the plugin type into
+/// the transport interface (which stays pure Dart and unit-testable).
+enum BleAdapterState { unknown, unsupported, unauthorized, poweredOff, poweredOn }
+
+/// The runtime Bluetooth permissions were denied (Android: the "Nearby
+/// devices" permission group). Thrown by [BleTransport.startScan] and
+/// [BleTransport.startAdvertising] so the caller can report an actionable
+/// status instead of silently doing nothing.
+class BlePermissionDeniedException implements Exception {
+  const BlePermissionDeniedException();
+
+  @override
+  String toString() => 'The Bluetooth permissions were denied';
+}
+
+/// The Bluetooth adapter is not in a usable state (powered off, unauthorized
+/// or unsupported). Thrown by [BleTransport.startScan] and
+/// [BleTransport.startAdvertising] before any radio work is attempted.
+class BleAdapterUnavailableException implements Exception {
+  const BleAdapterUnavailableException(this.state);
+
+  /// The adapter state that made the transport refuse to start.
+  final BleAdapterState state;
+
+  @override
+  String toString() => 'The Bluetooth adapter is unavailable (${state.name})';
+}
+
 /// One advertisement of a LocalSend peer recognized by the BLE scanner.
 class BleAdvertisementHit {
   const BleAdvertisementHit({
@@ -52,10 +82,21 @@ abstract interface class BleTransport {
   Stream<BleAdvertisementHit> get scanStream;
 
   /// Starts scanning for LocalSend peers; the hits arrive on [scanStream].
+  ///
+  /// Throws [BlePermissionDeniedException] when the runtime Bluetooth
+  /// permissions were denied and [BleAdapterUnavailableException] when the
+  /// adapter is off/unauthorized/unsupported, so the caller can surface an
+  /// honest status instead of a silently dead scan.
   Future<void> startScan();
 
   /// Stops scanning.
   Future<void> stopScan();
+
+  /// The adapter state changes while the transport is alive (powered
+  /// on/off, authorization changes). The inert [NoopBleTransport] emits
+  /// nothing. Lets the discovery react to the radio being switched off or
+  /// back on mid-session.
+  Stream<BleAdapterState> get adapterStateChanges;
 
   /// Connects to the peer identified by [remoteId] and reads its device
   /// info characteristic. Returns null when the payload could not be read
@@ -97,6 +138,9 @@ class NoopBleTransport implements BleTransport {
 
   @override
   Future<void> stopScan() async {}
+
+  @override
+  Stream<BleAdapterState> get adapterStateChanges => const Stream.empty();
 
   @override
   Future<Uint8List?> readRemotePayload(String remoteId) async => null;

@@ -80,6 +80,10 @@ class BleDiscoveryController extends Notifier<BleDiscoveryService> {
       // Re-read on every start so the transport always matches the flag.
       transportFactory: () => ref.read(bleTransportProvider),
       isFeatureEnabled: () => ref.read(settingsProvider).bleDiscoveryEnabled,
+      isPlatformSupported: () => bleSupportedOnThisDevice(
+        isAndroid: checkPlatform([TargetPlatform.android]),
+        androidSdkInt: ref.read(deviceInfoProvider).androidSdkInt,
+      ),
       selfDeviceInfo: () => ref.read(deviceFullInfoProvider),
       onDeviceDiscovered: _dispatchDevice,
     );
@@ -106,7 +110,7 @@ class BleDiscoveryController extends Notifier<BleDiscoveryService> {
   @override
   void dispose() {
     unawaited(_settingsSubscription?.cancel());
-    unawaited(state.stop());
+    unawaited(state.dispose());
     super.dispose();
   }
 
@@ -116,5 +120,38 @@ class BleDiscoveryController extends Notifier<BleDiscoveryService> {
       return;
     }
     ref.redux(parentIsolateProvider).dispatch(IsolateDiscoveryAddDeviceAction(device: device));
+  }
+}
+
+/// The user-facing status of the BLE discovery, for the settings toggle
+/// and the discovery empty state.
+///
+/// Watching this is what makes the feature observable: the toggle alone
+/// shows nothing (the permission dialog followed by silence read as "not
+/// implemented" in fork.2), while this surfaces running/permission/
+/// adapter states as they change.
+final bleDiscoveryStatusProvider = NotifierProvider<BleDiscoveryStatusController, BleDiscoveryStatus>((ref) => BleDiscoveryStatusController());
+
+class BleDiscoveryStatusController extends Notifier<BleDiscoveryStatus> {
+  StreamSubscription<BleDiscoveryStatus>? _statusSubscription;
+
+  @override
+  BleDiscoveryStatus init() {
+    // The service instance lives for the whole app session (created once
+    // by the first read of bleDiscoveryProvider, never replaced), so read
+    // is enough here; the status updates flow through statusStream.
+    final service = ref.read(bleDiscoveryProvider);
+    _statusSubscription = service.statusStream.listen(_onStatusChanged);
+    return service.status;
+  }
+
+  void _onStatusChanged(BleDiscoveryStatus status) {
+    state = status;
+  }
+
+  @override
+  void dispose() {
+    unawaited(_statusSubscription?.cancel());
+    super.dispose();
   }
 }
