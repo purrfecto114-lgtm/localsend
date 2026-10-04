@@ -284,6 +284,13 @@
     "titleSending": "Sending files",
     "titleReceiving": "Receiving files",
     "savedToGallery": "Saved in Photos",
+    "checksum": {
+      "verified": "Checksums verified",
+      "partiallyVerified": "Checksums verified for {curr} / {n} files",
+      "notVerifiable": "No checksums provided by the sender",
+      "disabled": "Checksum verification is disabled",
+      "attached": "Checksums attached ({curr} / {n} files)"
+    },
     "total": {
       "title": {
         "sending": "Total progress ({time})",
