@@ -249,6 +249,7 @@ _FakePersistence _persistence() => _FakePersistence({
   #getReceiveViaLinkAutoAccept: false,
   #getCreateChecksums: true,
   #getVerifyChecksums: true,
+  #getDeleteSourceAfterSend: false,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: 5,
   #getBleDiscoveryEnabled: false,

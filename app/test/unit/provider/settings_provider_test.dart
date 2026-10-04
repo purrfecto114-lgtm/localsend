@@ -208,6 +208,53 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 600));
     expect(connector.sent, isEmpty);
   });
+
+  test('deleteSourceAfterSend defaults to false and loads from persistence on init', () async {
+    // The fresh container above uses the default stub: false.
+    expect(settings.state.deleteSourceAfterSend, isFalse);
+
+    final container2 = RefenaContainer(
+      observers: [_NoopObserver()],
+      overrides: [
+        persistenceProvider.overrideWithValue(_persistence(deleteSourceAfterSend: true)),
+        parentIsolateProvider.overrideWithNotifier(
+          (ref) => IsolateController(
+            initialState: ParentIsolateState(
+              syncState: _syncState(),
+              discovery: null,
+              httpUpload: null,
+              httpServer: null,
+            ),
+          ),
+        ),
+      ],
+    );
+    final settings2 = container2.notifier(settingsProvider);
+    expect(settings2.state.deleteSourceAfterSend, isTrue);
+  });
+
+  test('setDeleteSourceAfterSend persists the value', () async {
+    await settings.setDeleteSourceAfterSend(true);
+    expect(settings.state.deleteSourceAfterSend, isTrue);
+    expect(persistence.calls[#setDeleteSourceAfterSend], [
+      [true],
+    ]);
+
+    await settings.setDeleteSourceAfterSend(false);
+    expect(settings.state.deleteSourceAfterSend, isFalse);
+    expect(persistence.calls[#setDeleteSourceAfterSend], [
+      [true],
+      [false],
+    ]);
+  });
+
+  test('deleteSourceAfterSend change never touches the discovery', () async {
+    // The flag is read once when a send session completes; it needs no
+    // SyncState propagation and no discovery restart.
+    await settings.setDeleteSourceAfterSend(true);
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(connector.sent, isEmpty);
+  });
 }
 
 class _RecordingConnector implements IsolateConnector<IsolateTaskStreamResult<DiscoveryResult>, SendToIsolateData<IsolateTask<DiscoveryTask>>> {
@@ -248,7 +295,7 @@ class _FakePersistence implements PersistenceService {
   }
 }
 
-_FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled = false}) => _FakePersistence({
+_FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled = false, bool deleteSourceAfterSend = false}) => _FakePersistence({
   #getShowToken: 'token',
   #getAlias: 'alias',
   #getTheme: ThemeMode.system,
@@ -277,6 +324,7 @@ _FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled =
   #getReceiveViaLinkAutoAccept: false,
   #getCreateChecksums: true,
   #getVerifyChecksums: true,
+  #getDeleteSourceAfterSend: deleteSourceAfterSend,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: maxInterfaces,
   #getBleDiscoveryEnabled: bleDiscoveryEnabled,

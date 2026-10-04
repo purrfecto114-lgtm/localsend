@@ -361,6 +361,7 @@ _FakePersistence _persistence(bool bleEnabled) => _FakePersistence({
   #getReceiveViaLinkAutoAccept: false,
   #getCreateChecksums: true,
   #getVerifyChecksums: true,
+  #getDeleteSourceAfterSend: false,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: 5,
   #getBleDiscoveryEnabled: bleEnabled,

@@ -20,6 +20,7 @@ import 'package:localsend_app/util/native/macos_channel.dart';
 import 'package:localsend_app/util/native/pick_directory_path.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
 import 'package:localsend_app/widget/custom_dropdown_button.dart';
+import 'package:localsend_app/widget/dialogs/delete_source_after_send_dialog.dart';
 import 'package:localsend_app/widget/dialogs/encryption_disabled_notice.dart';
 import 'package:localsend_app/widget/dialogs/pin_dialog.dart';
 import 'package:localsend_app/widget/dialogs/quick_save_from_favorites_notice.dart';
@@ -302,6 +303,15 @@ class SettingsTab extends StatelessWidget {
                     onChanged: (b) async {
                       await ref.notifier(settingsProvider).setCreateChecksums(b);
                     },
+                  ),
+                  _BooleanEntry(
+                    label: t.settingsTab.send.deleteSourceAfterSend,
+                    value: vm.settings.deleteSourceAfterSend,
+                    onChanged: (b) => DeleteSourceAfterSendDialog.handleToggle(
+                      context,
+                      ref.notifier(settingsProvider),
+                      b,
+                    ),
                   ),
                 ],
               ),

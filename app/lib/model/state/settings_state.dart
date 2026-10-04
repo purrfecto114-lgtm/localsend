@@ -38,6 +38,7 @@ class SettingsState with SettingsStateMappable {
   final bool receiveViaLinkAutoAccept;
   final bool createChecksums; // create checksums when sending files
   final bool verifyChecksums; // verify checksums when receiving files
+  final bool deleteSourceAfterSend; // delete the source files on this device after a send session finished without errors
   final int discoveryTimeout;
   final int maxInterfaces; // maximum number of interfaces covered by the smart scan
   final bool bleDiscoveryEnabled; // BLE-assisted discovery (beacon + GATT handshake guiding into the HTTP discovery)
@@ -73,6 +74,7 @@ class SettingsState with SettingsStateMappable {
     required this.receiveViaLinkAutoAccept,
     required this.createChecksums,
     required this.verifyChecksums,
+    required this.deleteSourceAfterSend,
     required this.discoveryTimeout,
     required this.maxInterfaces,
     required this.bleDiscoveryEnabled,
