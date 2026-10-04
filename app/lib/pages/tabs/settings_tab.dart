@@ -19,6 +19,7 @@ import 'package:localsend_app/util/i18n.dart';
 import 'package:localsend_app/util/native/macos_channel.dart';
 import 'package:localsend_app/util/native/pick_directory_path.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
+import 'package:localsend_app/util/ui/snackbar.dart';
 import 'package:localsend_app/widget/custom_dropdown_button.dart';
 import 'package:localsend_app/widget/dialogs/encryption_disabled_notice.dart';
 import 'package:localsend_app/widget/dialogs/pin_dialog.dart';
@@ -212,7 +213,18 @@ class SettingsTab extends StatelessWidget {
 
                     // The pin is enforced by the Rust server, so it needs a restart.
                     if (ref.read(serverProvider) != null) {
-                      await ref.notifier(serverProvider).restartServerFromSettings();
+                      try {
+                        await ref.notifier(serverProvider).restartServerFromSettings();
+                      } catch (e) {
+                        // A switch discards the future returned by onChanged,
+                        // so without this handler a failed restart would
+                        // vanish into an unhandled async error while the
+                        // server silently goes offline. Show the same
+                        // classified message as the restart button instead.
+                        if (context.mounted) {
+                          context.showSnackBar(startupErrorSnackBarMessage(e));
+                        }
+                      }
                     }
                   },
                 ),
@@ -279,7 +291,18 @@ class SettingsTab extends StatelessWidget {
 
                       // The checksums are verified by the Rust server, so it needs a restart.
                       if (ref.read(serverProvider) != null) {
-                        await ref.notifier(serverProvider).restartServerFromSettings();
+                        try {
+                          await ref.notifier(serverProvider).restartServerFromSettings();
+                        } catch (e) {
+                          // A switch discards the future returned by onChanged,
+                          // so without this handler a failed restart would
+                          // vanish into an unhandled async error while the
+                          // server silently goes offline. Show the same
+                          // classified message as the restart button instead.
+                          if (context.mounted) {
+                            context.showSnackBar(startupErrorSnackBarMessage(e));
+                          }
+                        }
                       }
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localsend_app/config/theme.dart';
+import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/pages/language_page.dart';
 import 'package:localsend_app/pages/tabs/settings_tab_vm.dart';
@@ -9,6 +10,7 @@ import 'package:localsend_app/provider/network/server/server_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/util/native/autostart_helper.dart';
 import 'package:localsend_app/util/native/context_menu_helper.dart';
+import 'package:localsend_app/util/startup_error_classifier.dart';
 import 'package:localsend_app/util/ui/dynamic_colors.dart';
 import 'package:localsend_app/util/ui/snackbar.dart';
 import 'package:localsend_app/widget/dialogs/custom_color_dialog.dart';
@@ -17,6 +19,31 @@ import 'package:localsend_isolates/model/device_info_result.dart';
 import 'package:localsend_isolates/util/sleep.dart';
 import 'package:refena_flutter/refena_flutter.dart';
 import 'package:routerino/routerino.dart';
+
+/// Maps a server start/restart failure to the friendly, actionable message
+/// shown in a snackbar.
+///
+/// This is the snackbar counterpart of the startup error dialog shown by the
+/// app startup path for the same failures: the raw error (a [SocketException]
+/// or a stringified Rust error crossing the isolate boundary) is classified
+/// with [classifyStartupError] and mapped to the same hint and advice texts.
+String startupErrorSnackBarMessage(Object error) {
+  final (hint, advice) = switch (classifyStartupError(error).kind) {
+    StartupErrorKind.windowsAccessDenied => (
+      t.dialogs.startupError.windowsAccessDenied.hint,
+      t.dialogs.startupError.windowsAccessDenied.advice,
+    ),
+    StartupErrorKind.addressInUse => (
+      t.dialogs.startupError.addressInUse.hint,
+      t.dialogs.startupError.addressInUse.advice,
+    ),
+    StartupErrorKind.generic => (
+      t.dialogs.startupError.generic.hint,
+      t.dialogs.startupError.generic.advice,
+    ),
+  };
+  return '$hint\n$advice';
+}
 
 final settingsTabControllerProvider = ReduxProvider<SettingsTabController, SettingsTabVm>((ref) {
   final settings = ref.notifier(settingsProvider);
@@ -151,16 +178,20 @@ class SettingsTabController extends ReduxNotifier<SettingsTabVm> {
             external(_localIpService).dispatchAsync(FetchLocalIpAction()); // ignore: unawaited_futures
           }
         } catch (e) {
+          // Show the same classified, actionable message as the startup error
+          // dialog instead of dumping the raw error into the snackbar.
           // ignore: use_build_context_synchronously
-          context.showSnackBar(e.toString());
+          context.showSnackBar(startupErrorSnackBarMessage(e));
         }
       },
       onTapStartServer: (context) async {
         try {
           await _serverService.startServerFromSettings();
         } catch (e) {
+          // Show the same classified, actionable message as the startup error
+          // dialog instead of dumping the raw error into the snackbar.
           // ignore: use_build_context_synchronously
-          context.showSnackBar(e.toString());
+          context.showSnackBar(startupErrorSnackBarMessage(e));
         }
       },
       onTapStopServer: () async => await _serverService.stopServer(),
