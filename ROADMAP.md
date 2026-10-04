@@ -41,6 +41,18 @@ Two originally planned items were dropped after evidence-based pushback (details
 - `wakelock_plus` 1.7.0 — blocked: it requires `win32 >=6.0.0`, which `win32_registry 2.1.0` transitively pins to `^5.11.0`. Needs the `win32_registry` 3.x bundle (API adaptation in `autostart_helper.dart`); moved to the Next-up list.
 - cherry-pick `102f9894` (hi/ur translation fix) — per-hunk comparison proved all 5 fixes already exist in our baseline (upstream got the same content via a later Weblate sync; only diff shape differs). No-op, skipped.
 
+## Delivered in v1.18.2-fork.4 (2026-10-04)
+
+Fourth wave, driven by user feedback on fork.3 ("can BLE support the PC, can the floor drop to Android 7+, complete the translations, and the progress animation seems to update once per second — revert it; fix problems at the root, not just make it compile"). All verified by the standard gates (338 tests, 0 analyzer issues).
+
+| Item | Evidence | Feasibility | Status |
+|---|---|---|---|
+| Progress-notification merge window reverted to upstream per-event notification (fork.1's 50 ms window was the only fork delta in the whole progress chain — Rust 20 ms per-file throttle and the 200 ms bar tween are upstream) | user report on fork.3 | High | merged |
+| BLE floor: Android 12 → **Android 7** (SDK 24). Location permissions declared for API ≤ 30 only, requested via the plugin's authorize() on 7–11; 12+ keeps neverForLocation. Legacy-location hint under the status line (scan needs system location services on; advertise works regardless) | user request; plugin minSdk is 24 | High (logic) / 7–11 radio path needs devices | merged |
+| macOS `NSBluetoothAlwaysUsageDescription` added (CoreBluetooth refuses without it on 10.15+) — desktop BLE was already wired (Windows/macOS full, Linux scan-only) and is now stated in the settings hint | fork.3 macOS gap found by static review | High | merged |
+| All 62 fork i18n keys translated into all 58 non-English locales (3,596 strings, placeholder parity validated; six parallel translation agents + full-matrix audit) | user request "complete the translations" | High | merged |
+
+
 ## Delivered in v1.18.2-fork.3 (2026-10-04)
 
 Third wave: BLE observability and honest failures. Trigger: user report "enabling Bluetooth shows only a permission window, the feature seems unimplemented" — fork.2 hid every BLE state in the logs and silently lied about running. All Dart-side, verified by the standard gates (339 tests, 0 analyzer issues, five-way parallel review 54-a..54-e).
