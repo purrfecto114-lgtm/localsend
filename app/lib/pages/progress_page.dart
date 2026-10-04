@@ -5,12 +5,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localsend_app/config/theme.dart';
 import 'package:localsend_app/gen/strings.g.dart';
+import 'package:localsend_app/model/state/send/send_session_state.dart';
 import 'package:localsend_app/model/state/server/receive_session_state.dart';
 import 'package:localsend_app/pages/web_share_page.dart';
 import 'package:localsend_app/provider/file_transfer_provider.dart';
 import 'package:localsend_app/provider/network/send_provider.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
+import 'package:localsend_app/util/checksum_status.dart';
 import 'package:localsend_app/util/native/open_file.dart';
 import 'package:localsend_app/util/native/open_folder.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
@@ -136,6 +138,77 @@ class _ProgressPageState extends State<ProgressPage> with Refena {
     });
   }
 
+  /// Builds the session-level checksum line shown under the status label of
+  /// a finished transfer (mitigation for localsend/localsend#3441 and #3425:
+  /// a transfer could be reported as successful even though a file was
+  /// corrupted in transit, without any hint whether integrity was checked).
+  ///
+  /// Receiving sessions report the verification state derived from the
+  /// `verifyChecksums` setting and the checksums the sender attached. Whether
+  /// a received file carried one is visible in Dart ([FileDto.hash], populated
+  /// from the protocol's `sha256` field by the server isolate), but the
+  /// verification itself happens inside the Rust server and its *outcome* is
+  /// not exposed per file - only failures, which surface as file errors. A
+  /// cleanly finished session therefore means "every file that carried a
+  /// checksum was verified" (see [checksumVerificationStatus]).
+  ///
+  /// Sending sessions report how many of the sent files carry a checksum.
+  ///
+  /// Sessions that did not finish cleanly keep their existing error display
+  /// and get no line.
+  ({String text, Color color})? _checksumLine({
+    required ReceiveSessionState? receiveSession,
+    required SendSessionState? sendSession,
+    required SessionStatus status,
+    required bool verifyChecksums,
+  }) {
+    if (receiveSession != null) {
+      final receivedFiles = receiveSession.files.values.where((f) => _selectedFiles.contains(f.file.id)).toList();
+      final withChecksum = receivedFiles.where((f) => f.file.hash != null).length;
+      final verification = checksumVerificationStatus(
+        sessionStatus: status,
+        verifyChecksums: verifyChecksums,
+        receivedFileCount: receivedFiles.length,
+        filesWithChecksumCount: withChecksum,
+      );
+      if (verification == null) {
+        return null;
+      }
+      return (
+        text: switch (verification) {
+          ChecksumVerificationStatus.verified => t.progressPage.checksum.verified,
+          ChecksumVerificationStatus.partiallyVerified => t.progressPage.checksum.partiallyVerified(curr: withChecksum, n: receivedFiles.length),
+          ChecksumVerificationStatus.notVerifiable => t.progressPage.checksum.notVerifiable,
+          ChecksumVerificationStatus.disabled => t.progressPage.checksum.disabled,
+        },
+        color: switch (verification) {
+          ChecksumVerificationStatus.verified => Theme.of(context).colorScheme.primary,
+          ChecksumVerificationStatus.partiallyVerified || ChecksumVerificationStatus.notVerifiable => Theme.of(context).colorScheme.warning,
+          ChecksumVerificationStatus.disabled => Colors.grey,
+        },
+      );
+    }
+
+    if (sendSession != null) {
+      final sentFiles = sendSession.files.values.where((f) => _selectedFiles.contains(f.file.id)).toList();
+      final withChecksum = sentFiles.where((f) => f.file.hash != null).length;
+      final attached = attachedChecksumCounts(
+        sessionStatus: status,
+        sentFileCount: sentFiles.length,
+        filesWithChecksumCount: withChecksum,
+      );
+      if (attached == null) {
+        return null;
+      }
+      return (
+        text: t.progressPage.checksum.attached(curr: attached.withChecksum, n: attached.total),
+        color: Colors.grey,
+      );
+    }
+
+    return null;
+  }
+
   void _exit({required bool closeSession}) async {
     final receiveSession = ref.read(serverProvider.select((s) => s?.session));
     final sendSession = ref.read(sendProvider)[widget.sessionId];
@@ -252,6 +325,13 @@ class _ProgressPageState extends State<ProgressPage> with Refena {
     }
 
     final finishedCount = transferNotifier.getStatuses(widget.sessionId).where((s) => s == FileStatus.finished).length;
+
+    final checksumLine = _checksumLine(
+      receiveSession: receiveSession,
+      sendSession: sendSession,
+      status: status,
+      verifyChecksums: ref.watch(settingsProvider).verifyChecksums,
+    );
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
@@ -477,6 +557,13 @@ class _ProgressPageState extends State<ProgressPage> with Refena {
                             ),
                             style: const TextStyle(fontSize: 20),
                           ),
+                          if (checksumLine != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              checksumLine.text,
+                              style: TextStyle(fontSize: 13, color: checksumLine.color),
+                            ),
+                          ],
                           const SizedBox(height: 5),
                           TweenAnimationBuilder(
                             tween: Tween<double>(begin: 0, end: _totalBytes == 0 ? 0 : currBytes / _totalBytes),

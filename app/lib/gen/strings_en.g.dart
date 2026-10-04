@@ -522,6 +522,7 @@ class Translations$progressPage$en {
   /// en: 'Saved in Photos'
   String get savedToGallery => 'Saved in Photos';
 
+  late final Translations$progressPage$checksum$en checksum = Translations$progressPage$checksum$en.internal(_root);
   late final Translations$progressPage$total$en total = Translations$progressPage$total$en.internal(_root);
   late final Translations$progressPage$remainingTime$en remainingTime = Translations$progressPage$remainingTime$en.internal(_root);
 }
@@ -1399,6 +1400,30 @@ class Translations$deviceDetailsPage$logs$en {
 
   /// en: 'Updated via {protocol} ({host})'
   String updated({required Object protocol, required Object host}) => 'Updated via ${protocol} (${host})';
+}
+
+// Path: progressPage.checksum
+class Translations$progressPage$checksum$en {
+  Translations$progressPage$checksum$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Checksums verified'
+  String get verified => 'Checksums verified';
+
+  /// en: 'Checksums verified for {curr} / {n} files'
+  String partiallyVerified({required Object curr, required Object n}) => 'Checksums verified for ${curr} / ${n} files';
+
+  /// en: 'No checksums provided by the sender'
+  String get notVerifiable => 'No checksums provided by the sender';
+
+  /// en: 'Checksum verification is disabled'
+  String get disabled => 'Checksum verification is disabled';
+
+  /// en: 'Checksums attached ({curr} / {n} files)'
+  String attached({required Object curr, required Object n}) => 'Checksums attached (${curr} / ${n} files)';
 }
 
 // Path: progressPage.total
