@@ -361,6 +361,7 @@ _FakePersistence _persistence({required bool deleteSourceAfterSend}) => _FakePer
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: 5,
   #getBleDiscoveryEnabled: false,
+  #getIncludeVpnInterfaces: false,
   #getAdvancedSettingsEnabled: false,
 });
 

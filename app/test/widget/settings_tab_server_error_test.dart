@@ -384,6 +384,8 @@ _FakePersistence _persistence({
     #getDiscoveryTimeout: 3,
     #getMaxInterfaces: 5,
     #getBleDiscoveryEnabled: false,
+    #getIncludeVpnInterfaces: false,
+    #getDeleteSourceAfterSend: false,
     #getAdvancedSettingsEnabled: advanced,
   });
 }
