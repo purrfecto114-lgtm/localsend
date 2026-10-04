@@ -6,6 +6,27 @@
 - fix: show the real error when a file cannot be read while sending, instead of transferring it as an empty file (@leopalmieri-spec)
 - fix: show the actual save location path for receiving files (@ShlomoCode)
 
+## v1.18.2-fork.2 (2026-10-04)
+
+Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Second community-driven wave; evidence per item in `ROADMAP.md`.
+
+### Fix
+
+- fix: a new share intent clears stale terminal send sessions, so an old "Finished" screen no longer blocks a new selection (localsend/localsend#3197)
+- fix: server start/restart failures in the settings tab (including the pin and checksum toggles) show classified, actionable messages instead of raw errors
+
+### Feat
+
+- feat: checksum verification status on the transfer-complete view — verified / partially verified / not verifiable / disabled (mitigation for localsend/localsend#3441, #3425)
+- feat: optional "Include VPN interfaces" smart-scan toggle (Tailscale, WireGuard, ...; default off; localsend/localsend#1598, #1123)
+- feat: optional "Delete source files after a successful send" — default off, confirmation dialog, only local paths of files the receiver confirmed (localsend/localsend#1918)
+
+### Tip
+
+- tip: delete-after-send only removes real local paths — `content://` sources are skipped, and photos shared from the iOS library are only removed from the cache copy, never from the library itself
+- tip: the VPN toggle lives in Settings → Advanced next to the smart-scan interface cap; VPN subnets are probed by the HTTP fallback scan because VPNs usually do not carry multicast
+- tip: 68 new tests this wave (327 in total); known low-risk follow-ups are tracked in `ROADMAP.md` (Watch-list)
+
 ## v1.18.2-fork.1 (2026-10-03)
 
 Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged.

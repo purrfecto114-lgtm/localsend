@@ -1,7 +1,7 @@
 # Fork Roadmap
 
 Evidence-based, feasibility-ranked backlog for this LocalSend fork.
-Research date: 2026-10-03. Baseline: upstream `9529e915` (app 1.18.2+64). At research time, `origin/main == 9529e915` (zero upstream drift) and the latest upstream release is v1.18.2 (2026-08-21).
+Research date: 2026-10-03, updated 2026-10-04 (fork.2 delivered). Baseline: upstream `9529e915` (app 1.18.2+64). At research time, `origin/main == 9529e915` (zero upstream drift) and the latest upstream release is v1.18.2 (2026-08-21).
 
 Branch model:
 
@@ -41,21 +41,29 @@ Two originally planned items were dropped after evidence-based pushback (details
 - `wakelock_plus` 1.7.0 — blocked: it requires `win32 >=6.0.0`, which `win32_registry 2.1.0` transitively pins to `^5.11.0`. Needs the `win32_registry` 3.x bundle (API adaptation in `autostart_helper.dart`); moved to the Next-up list.
 - cherry-pick `102f9894` (hi/ur translation fix) — per-hunk comparison proved all 5 fixes already exist in our baseline (upstream got the same content via a later Weblate sync; only diff shape differs). No-op, skipped.
 
+## Delivered in v1.18.2-fork.2 (2026-10-04)
+
+Second wave, all Dart-side, verified by the standard gates (327 tests, 0 analyzer issues). Items are the former Next-up #1/#2/#4/#6 plus a review follow-up.
+
+| Item | Evidence | Feasibility | Status |
+|---|---|---|---|
+| Checksum verification status on the transfer-complete view (verified / partially verified / not verifiable / disabled, receive-side session-level; send-side "checksums attached N/M") | #3441, #3425 (mitigation; verification itself runs in the Rust server since v1.18.0) | High | merged |
+| "Include VPN interfaces" smart-scan toggle (VPN tunnel addresses ranked ahead within the interface cap; default off) | #1598 (7👍/23c), #1123 (Tailscale) | Medium (gates) / name matrix needs devices | merged |
+| New share intent clears stale terminal send sessions (finished/canceled/declined screens no longer block a new selection) | #3197 (3👍) | Medium (state machine tested) / entry point needs a device | merged |
+| Optional "delete source files after a successful send" (default off, confirmation dialog, whitelist = files the receiver confirmed, multi-session shared paths kept, `content://` skipped) | #1918 (9c) | Medium | merged |
+| Settings-tab server start/restart failures classified into actionable snackbars (errno 10013 family reuse; closes the fork.1 review follow-up F3) | fork review 39-c; #125 family | High | merged |
+
 ## Next up (ranked)
 
 | # | Item | Evidence | Feasibility | Notes |
 |---|---|---|---|---|
-| 1 | Transfer-complete view: show checksum verification status | #3441, #3425 | High | Pure UI; low-cost mitigation for integrity disputes (checksums are computed since v1.18.0) |
-| 2 | "Include VPN/tun interfaces" scan toggle | #1598 (7👍/23c), #1123 (Tailscale) | Medium | Copy the maxInterfaces settings pattern; cannot verify without a VPN environment |
-| 3 | IPv4-priority local-IP ranking for hotspot scenarios | #3509 (2026-10-03) | Medium | Upstream 2023 draft `feature/improve-local-ip-ranking` is a useful reference; needs real hotspot validation |
-| 4 | iOS Share Sheet stuck on stale "Finished" screen | #3197 | Medium | State reset is testable; entry-point behavior needs a device |
-| 5 | Subnet > /24 scan range (legacy IP scan fallback) | #525 (7c, rolls up #175/#199/#201/#221) | Medium | Needs rate-limited/concurrent enumeration design |
-| 6 | "Delete source files after send" option | #1918 | Medium | Send-controller success callback + setting + confirm UI |
-| 7 | Manual "clear cache" entry in settings | #2926 | High (build) / Low (root cause) | Swelling source is likely iOS extension/engine cache; needs a device to locate it |
-| 8 | Linux autostart robustness | #1927 (17👍), #3064, #3421 | Medium | Desktop-file/platform config; no GUI here to verify |
-| 9 | `--hidden` launch still receives files (Linux) | #3055 (10c) | Medium | Dart lifecycle logic; needs desktop verification |
-| 10 | Xiaomi HyperOS picker NoPermissionDialog → system photo picker | #3065, #3459 | Medium | Dependency swap; needs device regression |
-| 11 | `wakelock_plus` 1.7.0 + `win32_registry` 3.0.3 bundle | staleness report §3.2/§3.3 | Medium | Transitive `win32 <6` lock; requires `autostart_helper.dart` API adaptation, Windows behavior unverifiable here |
+| 1 | IPv4-priority local-IP ranking for hotspot scenarios | #3509 (2026-10-03) | Medium | Upstream 2023 draft `feature/improve-local-ip-ranking` is a useful reference; needs real hotspot validation |
+| 2 | Subnet > /24 scan range (legacy IP scan fallback) | #525 (7c, rolls up #175/#199/#201/#221) | Medium | Needs rate-limited/concurrent enumeration design |
+| 3 | Manual "clear cache" entry in settings | #2926 | High (build) / Low (root cause) | Swelling source is likely iOS extension/engine cache; needs a device to locate it |
+| 4 | Linux autostart robustness | #1927 (17👍), #3064, #3421 | Medium | Desktop-file/platform config; no GUI here to verify |
+| 5 | `--hidden` launch still receives files (Linux) | #3055 (10c) | Medium | Dart lifecycle logic; needs desktop verification |
+| 6 | Xiaomi HyperOS picker NoPermissionDialog → system photo picker | #3065, #3459 | Medium | Dependency swap; needs device regression |
+| 7 | `wakelock_plus` 1.7.0 + `win32_registry` 3.0.3 bundle | staleness report §3.2/§3.3 | Medium | Transitive `win32 <6` lock; requires `autostart_helper.dart` API adaptation, Windows behavior unverifiable here |
 
 ## Watch-list (do not duplicate; cherry-pick when upstream lands)
 
@@ -65,6 +73,14 @@ Two originally planned items were dropped after evidence-based pushback (details
 - Weblate commit `fca8ead0` — 15-locale batch translation, zero file conflicts, needs `dart run slang` regen (Medium). Verify per-hunk content overlap with baseline first: the `102f9894` case showed patch-id comparison can miss already-merged content (diff shape differs even when content is identical).
 - Flutter SDK 3.41.9 → 3.47.6 unlock chain (freezed 4 / test 1.32 / mockito 5.8 / build_runner 2.16 / intl 0.20.3 / connectivity_plus 7.3.2 / flex_color_picker 4 / uri_content 4 / tray_manager 0.7): upstream CI pins 3.41.9, so staying aligned is deliberate; revisit when upstream bumps.
 - `bluetooth_low_energy` 7.x line (pre-release): track breaking changes before adopting.
+
+### fork.2 review follow-ups (Low, optional)
+
+- Delete-after-send TOCTOU: the deletable-paths snapshot is taken before the deletion loop; a session started in that narrow window may fail to re-upload a shared path (visible per-file error, no silent loss). Fix: re-check pending paths per file inside the loop.
+- `partiallyVerified` is the only checksum-status branch without a widget test (derivation is unit-tested).
+- `web_share_page.dart` revert-server-state path is still an unguarded restart call point (same family as the fixed settings-tab ones).
+- VPN interface-name matrix (vendor/driver friendly names on Windows) and delete-behavior on `content://` / iOS share-sheet copies need a real-device matrix.
+- `send_provider.dart` `_finish` computes `deletablePaths` in the error branch without using it (dead read).
 
 ## Excluded (with reasons)
 

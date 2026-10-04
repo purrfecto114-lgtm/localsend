@@ -27,9 +27,9 @@ LocalSend is a free, open-source app that allows you to securely share files and
 This is a delivery-focused fork (default branch: [`radical`](../../tree/radical)). It adds an evidence-based layer of discovery/transfer robustness and UX fixes on top of upstream `9529e915` (post-v1.18.2 main), **without touching the official v2 network protocol**.
 
 - **Branches**: `radical` (Track B — everything, default) · `conservative` (Track A — upstream-PR-shaped subset) · two candidate PR branches kept for reference
-- **What's in**: discovery-restart fixes, Android multicast lock, configurable smart-scan cap, batch-transfer performance work (#489), layered no-devices diagnosis, actionable startup/connect error dialogs, IPv6 literal input, and an **experimental BLE-assisted discovery** scaffold (feature-flagged, default off — see `app/lib/provider/network/ble/README.md`)
+- **What's in**: discovery-restart fixes, Android multicast lock, configurable smart-scan cap, batch-transfer performance work (#489), layered no-devices diagnosis, actionable startup/connect error dialogs, IPv6 literal input, checksum verification status on the transfer-complete view, an optional VPN-interface smart-scan toggle, optional delete-after-send, and an **experimental BLE-assisted discovery** scaffold (feature-flagged, default off — see `app/lib/provider/network/ble/README.md`)
 - **Backlog**: [`ROADMAP.md`](ROADMAP.md) (feasibility-ranked, with research archives under `review/research/`)
-- **Changelog**: see `v1.18.2-fork.1` in [`CHANGELOG.md`](CHANGELOG.md)
+- **Changelog**: see `v1.18.2-fork.2` in [`CHANGELOG.md`](CHANGELOG.md)
 - **Development gates**: `flutter pub get && flutter analyze && flutter test && dart format --set-exit-if-changed .` (app and `packages/localsend_isolates`)
 - Platform-sensitive behavior (BLE, error dialogs on real OSes) is exercised by unit tests (logic only); a real-device matrix is still recommended before relying on it.
 
