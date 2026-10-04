@@ -94,6 +94,36 @@ The feature flag `ls_ble_discovery_enabled` (advanced settings, default
 constructed: zero platform API calls, zero permissions requested, zero
 behavior difference. Toggling it starts/stops the discovery at runtime.
 
+**Both devices must run this fork with the flag on** — upstream LocalSend
+does not advertise a BLE beacon, so a fork device cannot discover a stock
+one over Bluetooth. The file transfer itself always goes over the network;
+BLE only bridges the discovery when the network blocks multicast.
+
+### Status surfacing (fork.3)
+
+The module is observable in the UI, not only in the logs:
+
+- `BleDiscoveryService` runs a `BleDiscoveryStatus` state machine
+  (`disabled` / `active` / `activeScanOnly` / `paused` /
+  `permissionDenied` / `adapterOff` / `unsupportedPlatform` / `error`)
+  and publishes every transition on `statusStream`.
+- The settings tab shows the live status under the toggle. A permission
+  denial additionally offers "Open system settings" (the plugin's
+  `showAppSettings()`, Android/iOS).
+- The discovery empty state spells out the fork-to-fork requirement while
+  BLE is active, so "no devices found" is not misread as "not implemented".
+- The transport refuses to touch the radio while the adapter is off,
+  unauthorized or unsupported (`BleAdapterUnavailableException`), and a
+  denied runtime permission throws `BlePermissionDeniedException`; the
+  service maps both to their statuses instead of pretending to run.
+- The adapter state is followed while the module is enabled: switched off
+  mid-session stops the scan (`adapterOff`), switched back on restarts the
+  discovery. The gate waits for the first definitive `stateChanged` event
+  while the cached state is still `unknown` (the backends fill it
+  asynchronously at manager construction).
+- `stop(paused: true)` (app lifecycle) reports `paused` and the resume
+  transition restarts the discovery.
+
 While it is on, the discovery follows the app lifecycle on mobile: it is
 stopped when the app is paused and restarted when it resumes, keeping the
 radio work strictly foreground (see `main.dart`).
