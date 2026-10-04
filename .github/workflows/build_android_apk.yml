@@ -39,17 +39,30 @@ jobs:
           mkdir -p $APK_BUILD_DIR
           cp -r . $APK_BUILD_DIR
 
-      - name: Decode key.properties file
+      # Upstream signs with repository secrets (ANDROID_KEY_PROPERTIES / ANDROID_KEY_STORE).
+      # This fork has no access to those secrets, so when they are absent the build falls
+      # back to the self-signed keystore committed at support/fork-signing/fork-release.jks
+      # (PKCS12, alias "localsend-fork"). The keystore is intentionally public: it only
+      # asserts "built by this fork", Android treats it as a regular sideload key anyway,
+      # and committing it keeps the release signature stable across fork releases.
+      - name: Set up signing (repository secrets if present, fork keystore otherwise)
         working-directory: ${{ env.APK_BUILD_DIR }}
         env:
-          ENCODED_STRING: ${{ secrets.ANDROID_KEY_PROPERTIES }}
-        run: echo $ENCODED_STRING | base64 -di > app/android/key.properties
-
-      - name: Decode android-keystore.jks file
-        working-directory: ${{ env.APK_BUILD_DIR }}
-        env:
-          ENCODED_STRING: ${{ secrets.ANDROID_KEY_STORE }}
-        run: mkdir secrets && echo $ENCODED_STRING | base64 -di > secrets/android-keystore.jks
+          ENCODED_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
+          ENCODED_KEYSTORE: ${{ secrets.ANDROID_KEY_STORE }}
+        run: |
+          if [ -n "$ENCODED_PROPERTIES" ] && [ -n "$ENCODED_KEYSTORE" ]; then
+            echo "Using repository signing secrets"
+            echo $ENCODED_PROPERTIES | base64 -di > app/android/key.properties
+            mkdir secrets && echo $ENCODED_KEYSTORE | base64 -di > secrets/android-keystore.jks
+          else
+            echo "Using committed fork self-signed keystore"
+            KS_PATH=$(realpath support/fork-signing/fork-release.jks)
+            printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+              "$KS_PATH" "localsend-fork" "localsend-fork" "localsend-fork" \
+              > app/android/key.properties
+            cat app/android/key.properties
+          fi
 
       - name: Set up JDK 17
         uses: actions/setup-java@v5

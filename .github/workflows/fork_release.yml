@@ -1,0 +1,111 @@
+name: Fork Release
+
+# Fork release orchestrator: builds every supported platform via the reusable
+# per-platform workflows and attaches the binaries to a draft GitHub Release.
+# Upstream signs Android (repo secrets) and Windows (Azure Trusted Signing);
+# this fork builds self-signed / unsigned where those secrets are unavailable.
+# The draft is finalized (notes + publish) by the maintainer afterwards.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (must exist or will be created at the dispatched ref)'
+        required: true
+        type: string
+        default: 'v1.18.2-fork.2'
+
+permissions: {}
+
+jobs:
+  build_apk:
+    uses: ./.github/workflows/build_android_apk.yml
+    secrets: inherit
+
+  build_tar_x86_64:
+    uses: ./.github/workflows/build_linux_tar_x64.yml
+
+  build_tar_arm_64:
+    uses: ./.github/workflows/build_linux_tar_arm64.yml
+
+  build_deb_x86_64:
+    uses: ./.github/workflows/build_linux_deb_x64.yml
+
+  build_deb_arm_64:
+    uses: ./.github/workflows/build_linux_deb_arm64.yml
+
+  build_appimage_x86_64:
+    uses: ./.github/workflows/build_linux_appimage_x64.yml
+
+  build_windows_zip_x86_64:
+    uses: ./.github/workflows/build_windows_zip_x64.yml
+    secrets: inherit
+    permissions:
+      id-token: write # OIDC token for Azure login (skipped when secrets absent)
+      contents: read
+
+  build_windows_exe_x86_64:
+    uses: ./.github/workflows/build_windows_exe_unsigned.yml
+
+  build_macos_zip:
+    uses: ./.github/workflows/build_macos_zip.yml
+
+  release:
+    needs:
+      - build_apk
+      - build_tar_x86_64
+      - build_tar_arm_64
+      - build_deb_x86_64
+      - build_deb_arm_64
+      - build_appimage_x86_64
+      - build_windows_zip_x86_64
+      - build_windows_exe_x86_64
+      - build_macos_zip
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Get version from pubspec.yaml
+        id: get_version
+        run: |
+          VERSION=$(sed -n 's/^version: \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' app/pubspec.yaml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v7
+        with:
+          path: dist
+
+      - name: Assemble release files (upstream naming)
+        env:
+          VERSION: ${{ steps.get_version.outputs.version }}
+        run: |
+          set -eu
+          mkdir -p release-files
+          cp "dist/apk-result/app-armeabi-v7a-release.apk" "release-files/LocalSend-$VERSION-android-arm32v7.apk"
+          cp "dist/apk-result/app-arm64-v8a-release.apk" "release-files/LocalSend-$VERSION-android-arm64v8.apk"
+          cp "dist/apk-result/app-x86_64-release.apk" "release-files/LocalSend-$VERSION-android-x64.apk"
+          cp dist/tar-gz-x86-64-result/result.tar.gz "release-files/LocalSend-$VERSION-linux-x86-64.tar.gz"
+          cp dist/tar-gz-arm-64-result/result.tar.gz "release-files/LocalSend-$VERSION-linux-arm-64.tar.gz"
+          cp dist/deb-x86-64-result/*.deb "release-files/LocalSend-$VERSION-linux-x86-64.deb"
+          cp dist/deb-arm-64-result/*.deb "release-files/LocalSend-$VERSION-linux-arm-64.deb"
+          cp dist/appimage-x86-64-result/*.AppImage "release-files/LocalSend-$VERSION-linux-x86-64.AppImage"
+          cp "dist/windows-zip-x86-64-result/LocalSend-$VERSION-windows-x86-64.zip" "release-files/LocalSend-$VERSION-windows-x86-64.zip"
+          cp "dist/windows-exe-x86-64-unsigned/LocalSend-$VERSION-windows-x86-64.exe" "release-files/LocalSend-$VERSION-windows-x86-64.exe"
+          cp "dist/macos-zip-universal-result/LocalSend-$VERSION-macos-universal.zip" "release-files/LocalSend-$VERSION-macos-universal.zip"
+          ls -l release-files/
+
+      - name: Create draft release with assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --draft \
+            --title "$TAG" \
+            --notes "CI-built draft for $TAG. Binaries for Android (self-signed), Linux (x86-64/arm-64), Windows (x86-64, unsigned) and macOS (universal, ad-hoc signed). Notes will be finalized before publishing." \
+            release-files/*

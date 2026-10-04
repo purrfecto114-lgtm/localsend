@@ -25,9 +25,11 @@ jobs:
   build_windows_zip:
     needs: build
     runs-on: windows-latest
-    environment: packaging
+    # Upstream runs this job in the "packaging" environment with Azure Trusted Signing
+    # secrets. Forks have neither, so signing is conditional and the environment is dropped:
+    # without AZURE_CLIENT_ID the login/sign steps are skipped and the zip stays unsigned.
     permissions:
-      id-token: write # OIDC token for Azure login
+      id-token: write # OIDC token for Azure login (only used when secrets are present)
       contents: read
 
     steps:
@@ -58,6 +60,7 @@ jobs:
         run: flutter build windows
 
       - name: Azure login
+        if: ${{ secrets.AZURE_CLIENT_ID != '' }}
         uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -66,6 +69,7 @@ jobs:
 
       # Sign before "Add DLL files" so the Microsoft-signed CRT DLLs keep their original signature
       - name: Sign app binaries (Azure Trusted Signing)
+        if: ${{ secrets.AZURE_CLIENT_ID != '' }}
         uses: azure/trusted-signing-action@v2
         with:
           endpoint: https://neu.codesigning.azure.net/
@@ -106,7 +110,7 @@ jobs:
         working-directory: app
         run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "LocalSend-${{ needs.build.outputs.version }}-windows-x86-64.zip"
 
-      - name: Upload signed zip
+      - name: Upload zip (signed when Azure secrets are available)
         uses: actions/upload-artifact@v6
         with:
           name: windows-zip-x86-64-result
