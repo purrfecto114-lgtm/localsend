@@ -17,6 +17,7 @@ import 'package:localsend_app/provider/device_info_provider.dart';
 import 'package:localsend_app/provider/network/ble/ble_discovery_provider.dart';
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
 import 'package:localsend_app/provider/network/server/server_provider.dart';
+import 'package:localsend_app/provider/network/share_intent_action.dart';
 import 'package:localsend_app/provider/network/webrtc/signaling_provider.dart';
 import 'package:localsend_app/provider/persistence_provider.dart';
 // [FOSS_REMOVE_START]
@@ -32,7 +33,6 @@ import 'package:localsend_app/util/native/autostart_helper.dart';
 import 'package:localsend_app/util/native/cache_helper.dart';
 import 'package:localsend_app/util/native/channel/android_channel.dart';
 import 'package:localsend_app/util/native/context_menu_helper.dart';
-import 'package:localsend_app/util/native/cross_file_converters.dart';
 import 'package:localsend_app/util/native/device_info_helper.dart';
 import 'package:localsend_app/util/native/macos_channel.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
@@ -308,7 +308,7 @@ Future<void> postInit(BuildContext context, Ref ref, bool appStart) async {
         hasInitialShare = true;
         // ignore: unawaited_futures
         ref.global.dispatchAsync(
-          _HandleShareIntentAction(
+          HandleShareIntentAction(
             payload: initialSharedPayload,
           ),
         );
@@ -318,7 +318,7 @@ Future<void> postInit(BuildContext context, Ref ref, bool appStart) async {
     _sharedMediaSubscription?.cancel(); // ignore: unawaited_futures
     _sharedMediaSubscription = shareHandler.sharedMediaStream.listen((SharedMedia payload) async {
       await ref.global.dispatchAsync(
-        _HandleShareIntentAction(
+        HandleShareIntentAction(
           payload: payload,
         ),
       );
@@ -355,32 +355,6 @@ Future<void> postInit(BuildContext context, Ref ref, bool appStart) async {
     ref.redux(purchaseProvider).dispatchAsync(InitPurchaseStream());
   }
   // [FOSS_REMOVE_END]
-}
-
-class _HandleShareIntentAction extends AsyncGlobalAction {
-  final SharedMedia payload;
-
-  _HandleShareIntentAction({
-    required this.payload,
-  });
-
-  @override
-  Future<void> reduce() async {
-    final message = payload.content;
-    if (message != null && message.trim().isNotEmpty) {
-      ref.redux(selectedSendingFilesProvider).dispatch(AddMessageAction(message: message));
-    }
-    await ref
-        .redux(selectedSendingFilesProvider)
-        .dispatchAsync(
-          AddFilesAction(
-            files: payload.attachments?.where((a) => a != null).cast<SharedAttachment>() ?? <SharedAttachment>[],
-            converter: CrossFileConverters.convertSharedAttachment,
-          ),
-        );
-
-    ref.redux(homePageControllerProvider).dispatch(ChangeTabAction(HomeTab.send));
-  }
 }
 
 class _HandleAppStartArgumentsAction extends AsyncGlobalAction {
