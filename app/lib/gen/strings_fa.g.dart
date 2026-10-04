@@ -233,6 +233,8 @@ class _Translations$sendTab$fa extends Translations$sendTab$en {
   String get help => 'لطفاً مطمئن شوید که دستگاه مورد نظر به شبکه وای‌فای یکسانی متصل باشد.';
   @override
   String get placeItems => 'موارد را برای اشتراک‌گذاری در اینجا قرار دهید.';
+  @override
+  late final _Translations$sendTab$diagnosis$fa diagnosis = _Translations$sendTab$diagnosis$fa._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$fa extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'در گالری ذخیره شد';
   @override
+  late final _Translations$progressPage$checksum$fa checksum = _Translations$progressPage$checksum$fa._(_root);
+  @override
   late final _Translations$progressPage$total$fa total = _Translations$progressPage$total$fa._(_root);
   @override
   late final _Translations$progressPage$remainingTime$fa remainingTime = _Translations$progressPage$remainingTime$fa._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$fa extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$fa cancelSession = _Translations$dialogs$cancelSession$fa._(_root);
   @override
+  late final _Translations$dialogs$connectionError$fa connectionError = _Translations$dialogs$connectionError$fa._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$fa deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$fa._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$fa cannotOpenFile = _Translations$dialogs$cannotOpenFile$fa._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$fa encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$fa._(_root);
@@ -719,6 +728,8 @@ class _Translations$dialogs$fa extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$fa pin = _Translations$dialogs$pin$fa._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$fa sendModeHelp = _Translations$dialogs$sendModeHelp$fa._(_root);
+  @override
+  late final _Translations$dialogs$startupError$fa startupError = _Translations$dialogs$startupError$fa._(_root);
   @override
   late final _Translations$dialogs$zoom$fa zoom = _Translations$dialogs$zoom$fa._(_root);
 }
@@ -923,6 +934,32 @@ class _Translations$sendTab$sendModes$fa extends Translations$sendTab$sendModes$
   String get link => 'اشتراک‌گذاری از طریق لینک';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$fa extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'در حال جستجوی دستگاه‌های اطراف…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$fa noInterface = _Translations$sendTab$diagnosis$noInterface$fa._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$fa multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$fa._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$fa scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$fa._(_root);
+  @override
+  String get rescan => 'جستجوی مجدد';
+  @override
+  String get bleHint =>
+      'کشف BLE فعال است: دستگاه‌ها فقط زمانی از طریق بلوتوث پیدا می‌شوند که آن‌ها هم این نسخه (fork) از LocalSend را با فعال بودن این گزینه اجرا کنند؛ خود انتقال همچنان از طریق شبکه انجام می‌شود.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$fa manualFallback = _Translations$sendTab$diagnosis$manualFallback$fa._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$fa extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$fa._(TranslationsFa root) : this._root = root, super.internal(root);
@@ -1004,6 +1041,8 @@ class _Translations$settingsTab$send$fa extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'تأیید خودکار درخواست‌ها در حالت «اشتراک‌گذاری از طریق لینک»';
   @override
   String get createChecksums => 'تولید کد ساختار و سلامت فایل هنگام ارسال';
+  @override
+  String get deleteSourceAfterSend => 'حذف فایل‌های مبدأ پس از ارسال موفق';
 }
 
 // Path: settingsTab.network
@@ -1034,6 +1073,13 @@ class _Translations$settingsTab$network$fa extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'مدت‌زمان جستجو';
   @override
+  String get maxInterfaces => 'حداکثر تعداد رابط‌ها (اسکن هوشمند)';
+  @override
+  String get vpnInterfaces => 'شامل رابط‌های VPN (اسکن هوشمند)';
+  @override
+  String get vpnInterfacesHint =>
+      'زیرشبکه‌های رابط‌های تونل VPN (مانند Tailscale و WireGuard) هم اسکن می‌شوند. شبکه‌های VPN معمولاً از چندپخشی پشتیبانی نمی‌کنند، بنابراین زیرشبکه‌های آن‌ها در عوض با اسکن جایگزین HTTP بررسی می‌شوند.';
+  @override
   String get useSystemName => 'استفاده از نام سیستم';
   @override
   String get generateRandomAlias => 'ایجاد نام مستعار تصادفی';
@@ -1047,6 +1093,34 @@ class _Translations$settingsTab$network$fa extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'ممکن است به دلیل استفاده از آدرس چندپخشی سفارشی، دستگاه‌های دیگر شما را شناسایی نکنند (پیش‌فرض: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'کشف BLE (آزمایشی)';
+  @override
+  String get bleDiscoveryHint =>
+      'دستگاه‌های اطراف را از طریق بلوتوث پیدا می‌کند، حتی وقتی شبکه چندپخشی را مسدود کرده باشد (ایزوله‌سازی AP). در اندروید، iOS، macOS و ویندوز کار می‌کند؛ در لینوکس این دستگاه می‌تواند دیگران را پیدا کند اما خودش پیدا نمی‌شود. هر دو دستگاه به این نسخه (fork) با فعال بودن این گزینه نیاز دارند؛ انتقال فایل همچنان از طریق شبکه انجام می‌شود.';
+  @override
+  String get bleStatusActive =>
+      'فعال: در حال اسکن و اعلان. دستگاه‌های اطراف فقط زمانی ظاهر می‌شوند که آن‌ها هم این نسخه (fork) را با فعال بودن این گزینه اجرا کنند.';
+  @override
+  String get bleStatusScanOnly =>
+      'فعال: فقط اسکن. در حال حاضر نمی‌توان این دستگاه را از طریق بلوتوث پیدا کرد (عدم پشتیبانی از اعلان BLE در این پلتفرم، یا هنوز آدرس شبکه قابل استفاده‌ای وجود ندارد).';
+  @override
+  String get bleStatusPaused => 'متوقف موقت. با بازگشت برنامه به پیش‌زمینه از سر گرفته می‌شود.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'مجوزهای بلوتوث رد شده‌اند. مجوز «دستگاه‌های مجاور» (یا «موقعیت مکانی» در اندروید ۱۱ و پایین‌تر) را در تنظیمات سیستم بدهید، سپس این گزینه را یک‌بار خاموش و دوباره روشن کنید.';
+  @override
+  String get bleStatusAdapterOff =>
+      'بلوتوث خاموش است یا در دسترس نیست. جستجو با در دسترس قرار گرفتن دوباره بلوتوث، خودبه‌خود راه‌اندازی مجدد می‌شود.';
+  @override
+  String get bleStatusUnsupported => 'روی این دستگاه پشتیبانی نمی‌شود: کشف BLE به اندروید ۷ یا جدیدتر و رادیوی Bluetooth LE نیاز دارد.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'در این نسخه اندروید، پیدا کردن دستگاه‌های دیگر به روشن بودن خدمات مکانی سیستم هم نیاز دارد (مجوز به‌صورت خودکار درخواست می‌شود؛ این دستگاه هم‌اکنون توسط دیگران قابل پیدا شدن است).';
+  @override
+  String get bleStatusError => 'کشف BLE راه‌اندازی نشد. برای جزئیات به عیب‌یابی > گزارش‌ها مراجعه کنید.';
+  @override
+  String get bleOpenSystemSettings => 'باز کردن تنظیمات سیستم';
 }
 
 // Path: settingsTab.other
@@ -1163,6 +1237,25 @@ class _Translations$deviceDetailsPage$logs$fa extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'به‌روزرسانی شده از طریق ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$fa extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'کد سلامت فایل‌ها تأیید شد';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'کد سلامت ${curr} / ${n} فایل تأیید شد';
+  @override
+  String get notVerifiable => 'فرستنده کد سلامت ارسال نکرده است';
+  @override
+  String get disabled => 'تأیید کد سلامت غیرفعال است';
+  @override
+  String attached({required Object curr, required Object n}) => 'کد سلامت فایل‌ها پیوست شد (${curr} / ${n} فایل)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$fa extends Translations$progressPage$total$en {
   _Translations$progressPage$total$fa._(TranslationsFa root) : this._root = root, super.internal(root);
@@ -1256,6 +1349,11 @@ class _Translations$dialogs$addressInput$fa extends Translations$dialogs$address
   String get ip => 'آدرس آی‌پی';
   @override
   String get recentlyUsed => 'اخیرا استفاده شده: ';
+  @override
+  String get noHashtagCandidates =>
+      'شبکه فعلی آدرس IPv4 ندارد، بنابراین هشتگ را نمی‌توان به آدرس کاندید تبدیل کرد. لطفاً در عوض آدرس کامل را وارد کنید (مثلاً 192.168.1.5 یا fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$fa validation = _Translations$dialogs$addressInput$validation$fa._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1269,6 +1367,42 @@ class _Translations$dialogs$cancelSession$fa extends Translations$dialogs$cancel
   String get title => 'لغو انتقال فایل‌ها';
   @override
   String get content => 'واقعاً می‌خواهید انتقال فایل‌ها را لغو کنید؟';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$fa extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'اتصال ناموفق بود';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$fa timeout = _Translations$dialogs$connectionError$timeout$fa._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$fa refused = _Translations$dialogs$connectionError$refused$fa._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$fa forbidden = _Translations$dialogs$connectionError$forbidden$fa._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$fa other = _Translations$dialogs$connectionError$other$fa._(_root);
+  @override
+  String get retry => 'تلاش مجدد';
+  @override
+  String get details => 'جزئیات خطا:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$fa extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'حذف فایل‌های مبدأ';
+  @override
+  String get content => 'پس از ارسال موفق فایل‌ها، آن‌ها از این دستگاه حذف خواهند شد. این کار قابل بازگشت نیست.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1561,6 +1695,32 @@ class _Translations$dialogs$sendModeHelp$fa extends Translations$dialogs$sendMod
   String get link => 'گیرندگانی که لوکال‌سند را نصب نکرده‌اند، می‌توانند فایل‌ها را با باز کردن لینک در مرورگر خود دانلود کنند.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$fa extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'راه‌اندازی سرور ممکن نشد';
+  @override
+  String port({required Object port}) => 'پورت: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$fa windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$fa._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$fa addressInUse = _Translations$dialogs$startupError$addressInUse$fa._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$fa generic = _Translations$dialogs$startupError$generic$fa._(_root);
+  @override
+  String get details => 'جزئیات خطا:';
+  @override
+  String get copyDetails => 'کپی جزئیات';
+  @override
+  String get openSettings => 'باز کردن تنظیمات';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$fa extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$fa._(TranslationsFa root) : this._root = root, super.internal(root);
@@ -1570,6 +1730,67 @@ class _Translations$dialogs$zoom$fa extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'آدرس اینترنتی';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$fa extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'عدم اتصال به شبکه';
+  @override
+  String get advice => 'این دستگاه به هیچ شبکه‌ای متصل نیست. اتصال وای‌فای یا کابل این دستگاه را بررسی کنید.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$fa extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'چندپخشی در دسترس نیست';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend نمی‌تواند از کشف چندپخشی روی این شبکه استفاده کند. مطمئن شوید هر دو دستگاه در یک شبکه هستند و اینکه پورت UDP ${port} توسط ایزوله‌سازی نقطه دسترسی (AP Isolation) یا فایروال مسدود نشده باشد.';
+  @override
+  String reason({required Object reason}) => 'دلیل: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$fa extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'دستگاهی پیدا نشد';
+  @override
+  String get advice =>
+      'جستجو کار می‌کند، اما هیچ دستگاهی به اعلان‌ها یا اسکن شبکه پاسخ نداد. ممکن است دستگاه دیگر خاموش باشد، در حالت خواب باشد یا توسط فایروال مسدود شده باشد. مطمئن شوید LocalSend روی دستگاه دیگر در حال اجراست.';
+  @override
+  String detail({required Object announcements, required Object scans}) => '${announcements} اعلان و ${scans} اسکن شبکه بدون دریافت پاسخ ارسال شد.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$fa extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'آدرس‌های IP مرتباً تغییر می‌کنند. همچنان می‌توانید به دستگاهی که در فهرست نیست دسترسی داشته باشید: آن را به علاقه‌مندی‌ها اضافه کنید یا آدرسش را به‌صورت دستی وارد کنید.';
+  @override
+  String get openFavorites => 'باز کردن علاقه‌مندی‌ها';
+  @override
+  String get manualInput => 'ورود دستی آدرس';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1656,4 +1877,115 @@ class _Translations$whatsNewPage$changes$v1_18_0$fa extends Translations$whatsNe
     'درخواست‌های دریافت شده از لیست علاقه‌مندی‌ها اکنون به صورت خودکار پذیرفته می‌شوند. این گزینه به صورت پیش‌فرض روشن است و می‌توانید آن را در تنظیمات غیرفعال کنید.',
     'در اندروید، انتقال فایل‌ها زمانی که برنامه در پس‌زمینه است یا صفحه نمایش خاموش است ادامه می‌یابد. در iOS، برنامه همچنان باید در پیش‌زمینه باقی بماند.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$fa extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'یک آدرس IPv4، آدرس IPv6 یا نام میزبان معتبر وارد کنید.';
+  @override
+  String get scheme => 'فقط آدرس را وارد کنید، بدون "http://" یا "https://".';
+  @override
+  String get port => 'فقط آدرس را وارد کنید. پورت از تنظیمات گرفته می‌شود.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$fa extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'دستگاه در زمان مشخص پاسخ نداد.';
+  @override
+  String get advice =>
+      'احتمالاً خاموش است، در حالت خواب است یا فایروال اتصال را مسدود کرده است. مطمئن شوید LocalSend روی دستگاه دیگر در حال اجراست و هر دو دستگاه در یک شبکه هستند.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$fa extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'دستگاه اتصال را رد کرد.';
+  @override
+  String get advice =>
+      'به نظر نمی‌رسد LocalSend روی دستگاه مقصد در حال اجرا باشد، یا روی پورت متفاوتی در حال گوش دادن است. LocalSend را روی دستگاه دیگر اجرا کنید یا پورت را بررسی کنید.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$fa extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'دستگاه درخواست را رد کرد.';
+  @override
+  String get advice =>
+      'ممکن است به رمز (PIN) نیاز باشد یا جفت‌شدن با دستگاه تغییر کرده باشد. رمز و تنظیمات ذخیره سریع را روی دستگاه مقصد بررسی کنید.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$fa extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'اتصال برقرار نشد.';
+  @override
+  String get advice => 'آدرس و پورت را بررسی کنید، مطمئن شوید LocalSend روی دستگاه مقصد در حال اجراست و هیچ فایروال یا VPN اتصال را مسدود نکرده است.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$fa extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ویندوز اجازه دسترسی به پورت را نداد (خطای سوکت 10013).';
+  @override
+  String get advice =>
+      'این مشکل معمولاً به دلیل محدوده پورت رزروشده توسط Hyper-V، WSL یا Docker، یا خرابی کاتالوگ Winsock رخ می‌دهد:\n• پورت را در تنظیمات (شبکه) تغییر دهید\n• محدوده‌های رزروشده را با این دستور بررسی کنید: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsock را به‌عنوان مدیر با این دستور تعمیر کنید: netsh winsock reset (پس از آن سیستم را ری‌استارت کنید)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$fa extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'پورت قبلاً توسط برنامه دیگری در حال استفاده است.';
+  @override
+  String get advice =>
+      'برنامه دیگری (یا نمونه دوم LocalSend) روی این پورت در حال گوش دادن است:\n• برنامه دیگر را ببندید، یا\n• پورت را در تنظیمات (شبکه) تغییر دهید';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$fa extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$fa._(TranslationsFa root) : this._root = root, super.internal(root);
+
+  final TranslationsFa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'سرور راه‌اندازی نشد.';
+  @override
+  String get advice => '• فایروال و تنظیمات شبکه را بررسی کنید\n• پورت را در تنظیمات (شبکه) تغییر دهید';
 }

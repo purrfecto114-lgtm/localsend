@@ -231,6 +231,8 @@ class _Translations$sendTab$ko extends Translations$sendTab$en {
   String get help => '파일을 전송받을 기기도 동일한 Wi-Fi 네트워크에 연결되어 있어야 합니다.';
   @override
   String get placeItems => '드롭하여 공유하기';
+  @override
+  late final _Translations$sendTab$diagnosis$ko diagnosis = _Translations$sendTab$diagnosis$ko._(_root);
 }
 
 // Path: settingsTab
@@ -454,6 +456,8 @@ class _Translations$progressPage$ko extends Translations$progressPage$en {
   @override
   String get savedToGallery => '갤러리에 저장했습니다.';
   @override
+  late final _Translations$progressPage$checksum$ko checksum = _Translations$progressPage$checksum$ko._(_root);
+  @override
   late final _Translations$progressPage$total$ko total = _Translations$progressPage$total$ko._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ko remainingTime = _Translations$progressPage$remainingTime$ko._(_root);
@@ -592,6 +596,11 @@ class _Translations$dialogs$ko extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ko cancelSession = _Translations$dialogs$cancelSession$ko._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ko connectionError = _Translations$dialogs$connectionError$ko._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ko deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ko._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ko cannotOpenFile = _Translations$dialogs$cannotOpenFile$ko._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ko encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ko._(_root);
@@ -632,6 +641,8 @@ class _Translations$dialogs$ko extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ko pin = _Translations$dialogs$pin$ko._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ko sendModeHelp = _Translations$dialogs$sendModeHelp$ko._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ko startupError = _Translations$dialogs$startupError$ko._(_root);
   @override
   late final _Translations$dialogs$zoom$ko zoom = _Translations$dialogs$zoom$ko._(_root);
 }
@@ -835,6 +846,31 @@ class _Translations$sendTab$sendModes$ko extends Translations$sendTab$sendModes$
   String get link => '링크로 공유하기';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ko extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => '근처 기기를 검색하는 중...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ko noInterface = _Translations$sendTab$diagnosis$noInterface$ko._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ko multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ko._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ko scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ko._(_root);
+  @override
+  String get rescan => '다시 검색';
+  @override
+  String get bleHint => 'BLE 탐색이 활성화되어 있습니다: 상대 기기도 이 포크 버전을 실행하고 이 옵션을 켠 경우에만 블루투스로 기기를 찾을 수 있습니다. 파일 전송 자체는 여전히 네트워크를 통해 이루어집니다.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ko manualFallback = _Translations$sendTab$diagnosis$manualFallback$ko._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ko extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ko._(TranslationsKo root) : this._root = root, super.internal(root);
@@ -916,6 +952,8 @@ class _Translations$settingsTab$send$ko extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"링크로 공유하기" 요청 자동 수락';
   @override
   String get createChecksums => '파일을 보낼 때 체크섬 생성';
+  @override
+  String get deleteSourceAfterSend => '보내기 성공 후 원본 파일 삭제';
 }
 
 // Path: settingsTab.network
@@ -946,6 +984,12 @@ class _Translations$settingsTab$network$ko extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => '탐색 제한시간';
   @override
+  String get maxInterfaces => '최대 인터페이스 수 (스마트 스캔)';
+  @override
+  String get vpnInterfaces => 'VPN 인터페이스 포함 (스마트 스캔)';
+  @override
+  String get vpnInterfacesHint => 'VPN 터널 인터페이스의 서브넷도 스캔합니다 (Tailscale, WireGuard 등). VPN은 보통 멀티캐스트를 전달하지 못하므로, 해당 서브넷은 HTTP 폴백 스캔으로 탐색합니다.';
+  @override
   String get useSystemName => '시스템 이름 사용';
   @override
   String get generateRandomAlias => '무작위 별명 생성';
@@ -957,6 +1001,29 @@ class _Translations$settingsTab$network$ko extends Translations$settingsTab$netw
   String get multicastGroup => '멀티캐스트';
   @override
   String multicastGroupWarning({required Object defaultMulticast}) => '사용자 지정 멀티캐스트 주소를 사용하면 다른 장치에서 기기가 감지되지 않을 수 있습니다. (기본값: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE 탐색 (실험적)';
+  @override
+  String get bleDiscoveryHint =>
+      '네트워크가 멀티캐스트를 차단하는 경우(AP 격리)에도 블루투스로 근처 기기를 탐색합니다. Android, iOS, macOS, Windows에서 작동하며, Linux에서는 이 기기가 다른 기기를 찾을 수 있지만 이 기기가 다른 기기에 발견되지는 않습니다. 두 기기 모두 이 포크 버전에서 이 옵션을 켜야 합니다. 파일 전송 자체는 여전히 네트워크를 사용합니다.';
+  @override
+  String get bleStatusActive => '활성화됨: 스캔 및 광고 중. 근처 기기는 상대 기기도 이 포크 버전을 실행하고 이 옵션을 켠 경우에만 표시됩니다.';
+  @override
+  String get bleStatusScanOnly => '활성화됨: 스캔 전용. 이 기기는 현재 블루투스로 탐색될 수 없습니다(이 플랫폼이 BLE 광고를 지원하지 않거나, 아직 사용 가능한 네트워크 주소가 없음).';
+  @override
+  String get bleStatusPaused => '일시중지됨. 앱이 포그라운드로 돌아오면 다시 시작됩니다.';
+  @override
+  String get bleStatusPermissionDenied => '블루투스 권한이 거부되었습니다. 시스템 설정에서 "주변 기기" 권한(Android 11 이하에서는 "위치")을 허용한 다음, 이 옵션을 끄고 다시 켜세요.';
+  @override
+  String get bleStatusAdapterOff => '블루투스가 꺼져 있거나 사용할 수 없습니다. 블루투스를 다시 사용할 수 있게 되면 탐색이 자동으로 재시작됩니다.';
+  @override
+  String get bleStatusUnsupported => '이 기기에서는 지원되지 않습니다: BLE 탐색에는 Android 7 이상과 Bluetooth LE 무선 모듈이 필요합니다.';
+  @override
+  String get bleStatusLegacyLocation => '이 Android 버전에서는 다른 기기를 찾기 위해 시스템 위치 서비스도 켜야 합니다(권한은 자동으로 요청되며, 이 기기는 이미 다른 기기에서 찾을 수 있습니다).';
+  @override
+  String get bleStatusError => 'BLE 탐색을 시작할 수 없습니다. 자세한 내용은 문제 해결 > 로그를 참고하세요.';
+  @override
+  String get bleOpenSystemSettings => '시스템 설정 열기';
 }
 
 // Path: settingsTab.other
@@ -1072,6 +1139,25 @@ class _Translations$deviceDetailsPage$logs$ko extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol}을(를) 통해 업데이트됨 (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ko extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => '체크섬 검증됨';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n}개 파일의 체크섬이 검증되었습니다';
+  @override
+  String get notVerifiable => '보내는 쪽에서 체크섬을 제공하지 않았습니다';
+  @override
+  String get disabled => '체크섬 검증이 비활성화되어 있습니다';
+  @override
+  String attached({required Object curr, required Object n}) => '체크섬이 첨부되었습니다 (${curr} / ${n}개 파일)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ko extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ko._(TranslationsKo root) : this._root = root, super.internal(root);
@@ -1165,6 +1251,10 @@ class _Translations$dialogs$addressInput$ko extends Translations$dialogs$address
   String get ip => 'IP 주소';
   @override
   String get recentlyUsed => '최근 사용된 주소: ';
+  @override
+  String get noHashtagCandidates => '현재 네트워크에 IPv4 주소가 없어 해시태그를 후보 주소로 확장할 수 없습니다. 전체 주소를 직접 입력해 주세요 (예: 192.168.1.5 또는 fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ko validation = _Translations$dialogs$addressInput$validation$ko._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1178,6 +1268,42 @@ class _Translations$dialogs$cancelSession$ko extends Translations$dialogs$cancel
   String get title => '파일 전송 취소';
   @override
   String get content => '정말로 파일 전송을 취소할까요?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ko extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '연결 실패';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ko timeout = _Translations$dialogs$connectionError$timeout$ko._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ko refused = _Translations$dialogs$connectionError$refused$ko._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ko forbidden = _Translations$dialogs$connectionError$forbidden$ko._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ko other = _Translations$dialogs$connectionError$other$ko._(_root);
+  @override
+  String get retry => '다시 시도';
+  @override
+  String get details => '오류 세부 정보:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ko extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '원본 파일 삭제';
+  @override
+  String get content => '파일을 성공적으로 보낸 후 해당 파일이 이 기기에서 삭제됩니다. 이 작업은 되돌릴 수 없습니다.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1468,6 +1594,32 @@ class _Translations$dialogs$sendModeHelp$ko extends Translations$dialogs$sendMod
   String get link => 'LocalSend가 설치되지 않은 기기에서도 브라우저를 통해 링크에 접속하여 파일을 다운로드 받을 수 있습니다.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ko extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '서버를 시작할 수 없습니다';
+  @override
+  String port({required Object port}) => '포트: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ko windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ko._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ko addressInUse = _Translations$dialogs$startupError$addressInUse$ko._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ko generic = _Translations$dialogs$startupError$generic$ko._(_root);
+  @override
+  String get details => '오류 세부 정보:';
+  @override
+  String get copyDetails => '세부 정보 복사';
+  @override
+  String get openSettings => '설정 열기';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ko extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ko._(TranslationsKo root) : this._root = root, super.internal(root);
@@ -1477,6 +1629,66 @@ class _Translations$dialogs$zoom$ko extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ko extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '네트워크에 연결되어 있지 않음';
+  @override
+  String get advice => '이 기기가 어떤 네트워크에도 연결되어 있지 않습니다. 이 기기의 Wi-Fi 또는 케이블 연결을 확인하세요.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ko extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '멀티캐스트를 사용할 수 없음';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend가 이 네트워크에서 멀티캐스트 탐색을 사용할 수 없습니다. 두 기기가 같은 네트워크에 있는지, 그리고 AP 격리나 방화벽이 UDP 포트 ${port}를 차단하고 있지 않은지 확인하세요.';
+  @override
+  String reason({required Object reason}) => '원인: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ko extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '기기를 찾을 수 없음';
+  @override
+  String get advice =>
+      '탐색은 정상 작동하고 있지만 공지 메시지나 네트워크 스캔에 응답한 기기가 없습니다. 상대 기기가 오프라인이거나 절전 모드이거나 방화벽에 의해 차단되었을 수 있습니다. 상대 기기에서 LocalSend가 실행 중인지 확인하세요.';
+  @override
+  String detail({required Object announcements, required Object scans}) => '공지 메시지 ${announcements}회와 네트워크 스캔 ${scans}회를 보냈지만 응답이 없습니다.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ko extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'IP 주소는 자주 바뀝니다. 목록에 없는 기기에도 연결할 수 있습니다: 즐겨찾기에 추가하거나 주소를 직접 입력하세요.';
+  @override
+  String get openFavorites => '즐겨찾기 열기';
+  @override
+  String get manualInput => '주소 직접 입력';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1563,4 +1775,111 @@ class _Translations$whatsNewPage$changes$v1_18_0$ko extends Translations$whatsNe
     '이제 즐겨찾기한 기기의 요청을 자동으로 수락합니다. 기본적으로 켜져 있으며 설정에서 끌 수 있습니다.',
     'Android에서는 앱이 백그라운드로 전환되거나 화면이 꺼져도 전송을 계속합니다. iOS에서는 여전히 앱을 연 채로 유지해야 합니다.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ko extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => '유효한 IPv4 주소, IPv6 주소 또는 호스트 이름을 입력하세요.';
+  @override
+  String get scheme => '주소만 입력하세요. "http://" 또는 "https://"는 포함하지 마세요.';
+  @override
+  String get port => '주소만 입력하세요. 포트는 설정에서 가져옵니다.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ko extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '기기가 시간 내에 응답하지 않았습니다.';
+  @override
+  String get advice => '상대 기기가 오프라인이거나 절전 모드이거나 방화벽이 연결을 차단하고 있을 수 있습니다. 상대 기기에서 LocalSend가 실행 중이고 두 기기가 같은 네트워크에 있는지 확인하세요.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ko extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '기기가 연결을 거부했습니다.';
+  @override
+  String get advice => '대상 기기에서 LocalSend가 실행되고 있지 않거나 다른 포트에서 대기 중인 것 같습니다. 상대 기기에서 LocalSend를 시작하거나 포트를 확인하세요.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ko extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '기기가 요청을 거부했습니다.';
+  @override
+  String get advice => 'PIN 번호가 필요하거나 기기와의 페어링이 변경되었을 수 있습니다. 대상 기기의 PIN 번호 및 빠른 저장 설정을 확인하세요.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ko extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '연결할 수 없습니다.';
+  @override
+  String get advice => '주소와 포트를 확인하고, 대상 기기에서 LocalSend가 실행 중인지, 방화벽이나 VPN이 연결을 차단하지 않는지 확인하세요.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ko extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows가 포트 액세스를 거부했습니다 (소켓 오류 10013).';
+  @override
+  String get advice =>
+      '이는 보통 Hyper-V, WSL 또는 Docker가 예약한 포트 범위 또는 손상된 Winsock 카탈로그가 원인입니다:\n• 설정(네트워크)에서 포트를 변경하세요\n• 예약된 범위는 다음 명령으로 확인하세요: netsh interface ipv4 show excludedportrange protocol=tcp\n• 관리자 권한으로 Winsock을 복구하세요: netsh winsock reset (이후 재부팅)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ko extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '이 포트는 이미 다른 애플리케이션이 사용하고 있습니다.';
+  @override
+  String get advice => '다른 프로그램(또는 두 번째 LocalSend 인스턴스)이 이 포트에서 대기 중입니다:\n• 해당 애플리케이션을 닫거나\n• 설정(네트워크)에서 포트를 변경하세요';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ko extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+
+  final TranslationsKo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '서버를 시작할 수 없습니다.';
+  @override
+  String get advice => '• 방화벽과 네트워크 설정을 확인하세요\n• 설정(네트워크)에서 포트를 변경해 보세요';
 }

@@ -231,6 +231,8 @@ class _Translations$sendTab$ml extends Translations$sendTab$en {
   String get help => 'ലഭിക്കേണ്ടയാളും ഒരേ WIFI യിൽ കണക്റ്റഡ് ആണെന്ന് ഉറപ്പു വരുത്തുക.';
   @override
   String get placeItems => 'ഷെയർ ചെയ്യേണ്ട ഐറ്റംസ് ഇടുക.';
+  @override
+  late final _Translations$sendTab$diagnosis$ml diagnosis = _Translations$sendTab$diagnosis$ml._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$ml extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'ഫോട്ടോസിൽ സേവ് ചെയ്തു';
   @override
+  late final _Translations$progressPage$checksum$ml checksum = _Translations$progressPage$checksum$ml._(_root);
+  @override
   late final _Translations$progressPage$total$ml total = _Translations$progressPage$total$ml._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ml remainingTime = _Translations$progressPage$remainingTime$ml._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$ml extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ml cancelSession = _Translations$dialogs$cancelSession$ml._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ml connectionError = _Translations$dialogs$connectionError$ml._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ml deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ml._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ml cannotOpenFile = _Translations$dialogs$cannotOpenFile$ml._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ml encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ml._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$ml extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ml pin = _Translations$dialogs$pin$ml._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ml sendModeHelp = _Translations$dialogs$sendModeHelp$ml._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ml startupError = _Translations$dialogs$startupError$ml._(_root);
   @override
   late final _Translations$dialogs$zoom$ml zoom = _Translations$dialogs$zoom$ml._(_root);
 }
@@ -837,6 +848,32 @@ class _Translations$sendTab$sendModes$ml extends Translations$sendTab$sendModes$
   String get link => 'ലിങ്ക് ഉപയോഗിച് ഷെയർ ചെയ്യുക';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ml extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'അടുത്തുള്ള ഡിവൈസുകൾ തിരയുന്നു…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ml noInterface = _Translations$sendTab$diagnosis$noInterface$ml._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ml multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ml._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ml scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ml._(_root);
+  @override
+  String get rescan => 'വീണ്ടും തിരയുക';
+  @override
+  String get bleHint =>
+      'BLE ഡിസ്കവറി സജീവമാണ്: ഈ ഫോർക്ക് (fork) ഓപ്ഷൻ ഓണാക്കി പ്രവർത്തിക്കുന്ന ഡിവൈസുകൾ മാത്രമേ ബ്ലൂടൂത്തിലൂടെ കണ്ടെത്തൂ; കൈമാറ്റം ഇപ്പോഴും നെറ്റ്‌വർക്ക് വഴിയാണ് നടക്കുന്നത്.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ml manualFallback = _Translations$sendTab$diagnosis$manualFallback$ml._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ml extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ml._(TranslationsMl root) : this._root = root, super.internal(root);
@@ -918,6 +955,8 @@ class _Translations$settingsTab$send$ml extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"ലിങ്ക് വഴി ഷെയർ" ചെയ്യുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി സ്വീകരിക്കുക';
   @override
   String get createChecksums => 'ഫയലുകൾ അയയ്ക്കുമ്പോൾ ചെക്ക്സം സൃഷ്ടിക്കുക';
+  @override
+  String get deleteSourceAfterSend => 'അയച്ചത് വിജയിച്ചതിന് ശേഷം സോഴ്സ് ഫയലുകൾ നീക്കം ചെയ്യുക';
 }
 
 // Path: settingsTab.network
@@ -948,6 +987,13 @@ class _Translations$settingsTab$network$ml extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'ഡിസ്കവർ ചെയ്യാനുള്ള സമയം കഴിഞ്ഞു';
   @override
+  String get maxInterfaces => 'പരമാവധി ഇന്റർഫേസുകൾ (സ്മാർട്ട് സ്കാൻ)';
+  @override
+  String get vpnInterfaces => 'VPN ഇന്റർഫേസുകൾ ഉൾപ്പെടുത്തുക (സ്മാർട്ട് സ്കാൻ)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN ടണൽ ഇന്റർഫേസുകളുടെ (Tailscale, WireGuard, ...) സബ്നെറ്റുകളും സ്കാൻ ചെയ്യുന്നു. VPN-കൾ സാധാരണയായി മൾട്ടികാസ്റ്റ് വഹിക്കാറില്ല, അതിനാൽ അവയുടെ സബ്നെറ്റുകൾ HTTP ഫോൾബാക്ക് സ്കാൻ വഴി പരിശോധിക്കുന്നു.';
+  @override
   String get useSystemName => 'ഈ സിസ്റ്റത്തിന്റെ പേര് ഉപയോഗിക്കുക';
   @override
   String get generateRandomAlias => 'ഒരു ആകസ്മികമായ മറുപേർ ഉണ്ടാക്കുക';
@@ -961,6 +1007,33 @@ class _Translations$settingsTab$network$ml extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'നിങ്ങൾ ഒരു ഇഷ്ടാനുസൃത മൾട്ടികാസ്റ്റ് വിലാസം ഉപയോഗിക്കുന്നതിനാൽ മറ്റ് ഡിവൈസുകൾ നിങ്ങളെ കണ്ടെത്തിയേക്കില്ല. (default : ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE ഡിസ്കവറി (പരീക്ഷണാത്മകം)';
+  @override
+  String get bleDiscoveryHint =>
+      'നെറ്റ്‌വർക്ക് മൾട്ടികാസ്റ്റ് തടഞ്ഞാലും (AP ഐസൊലേഷൻ) ബ്ലൂടൂത്ത് വഴി അടുത്തുള്ള ഡിവൈസുകളെ കണ്ടെത്തുന്നു. Android, iOS, macOS, Windows എന്നിവയിൽ പ്രവർത്തിക്കുന്നു; Linux-ൽ ഈ ഡിവൈസിന് മറ്റുള്ളവരെ കണ്ടെത്താമെങ്കിലും ഇതിനെ കണ്ടെത്താൻ കഴിയില്ല. രണ്ട് ഡിവൈസിനും ഈ ഫോർക്ക് (fork) ഓപ്ഷൻ ഓണാക്കിയിരിക്കണം; ഫയൽ കൈമാറ്റം ഇപ്പോഴും നെറ്റ്‌വർക്ക് ഉപയോഗിക്കുന്നു.';
+  @override
+  String get bleStatusActive =>
+      'സജീവം: സ്കാനും അഡ്വർട്ടൈസിംഗും നടക്കുന്നു. ഈ ഫോർക്ക് (fork) ഓപ്ഷൻ ഓണാക്കി പ്രവർത്തിക്കുന്ന ഡിവൈസുകൾ മാത്രമേ അടുത്തുള്ളവയിൽ കാണൂ.';
+  @override
+  String get bleStatusScanOnly =>
+      'സജീവം: സ്കാൻ മാത്രം. ഇപ്പോൾ ഈ ഡിവൈസിനെ ബ്ലൂടൂത്ത് വഴി കണ്ടെത്താൻ കഴിയില്ല (ഈ പ്ലാറ്റ്ഫോമിൽ BLE advertising പിന്തുണയില്ല, അല്ലെങ്കിൽ ഉപയോഗിക്കാവുന്ന നെറ്റ്‌വർക്ക് വിലാസം ഇതുവരെ ഇല്ല).';
+  @override
+  String get bleStatusPaused => 'തൽക്കാലം നിർത്തി. ആപ്പ് ഫോർഗ്രൗണ്ടിലേക്ക് മടങ്ങുമ്പോൾ പുനരാരംഭിക്കും.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'ബ്ലൂടൂത്ത് അനുമതികൾ നിഷേധിക്കപ്പെട്ടു. സിസ്റ്റം സജ്ജീകരണങ്ങളിൽ "Nearby devices" (Android 11-ഉം താഴെയുള്ളവയിൽ "Location") അനുമതി നൽകി, എന്നിട്ട് ഈ ഓപ്ഷൻ ഓഫ് ചെയ്ത് വീണ്ടും ഓണാക്കുക.';
+  @override
+  String get bleStatusAdapterOff => 'ബ്ലൂടൂത്ത് ഓഫാണ് അല്ലെങ്കിൽ ലഭ്യമല്ല. ബ്ലൂടൂത്ത് വീണ്ടും ലഭ്യമാകുമ്പോൾ ഡിസ്കവറി സ്വയം പുനരാരംഭിക്കും.';
+  @override
+  String get bleStatusUnsupported => 'ഈ ഡിവൈസിൽ പിന്തുണയില്ല: BLE ഡിസ്കവറിക്ക് Android 7 അല്ലെങ്കിൽ പുതിയതും Bluetooth LE റേഡിയോയും ആവശ്യമാണ്.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Android-ന്റെ ഈ പതിപ്പിൽ, മറ്റ് ഡിവൈസുകളെ കണ്ടെത്താൻ സിസ്റ്റം ലൊക്കേഷൻ സർവീസുകളും ഓണായിരിക്കണം (അനുമതി സ്വയം ചോദിക്കപ്പെടും; ഈ ഡിവൈസിനെ മറ്റുള്ളവർക്ക് ഇപ്പോൾ തന്നെ കണ്ടെത്താം).';
+  @override
+  String get bleStatusError => 'BLE ഡിസ്കവറി ആരംഭിക്കാൻ കഴിഞ്ഞില്ല. വിശദാംശങ്ങൾക്ക് ട്രബിൾഷൂട്ട് > ലോഗുകൾ കാണുക.';
+  @override
+  String get bleOpenSystemSettings => 'സിസ്റ്റം സജ്ജീകരണങ്ങൾ തുറക്കുക';
 }
 
 // Path: settingsTab.other
@@ -1077,6 +1150,25 @@ class _Translations$deviceDetailsPage$logs$ml extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} വഴി അപ്ഡേറ്റ് ചെയ്തു (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ml extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'ചെക്ക്സം പരിശോധിച്ചു';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} ഫയലുകളുടെ ചെക്ക്സം പരിശോധിച്ചു';
+  @override
+  String get notVerifiable => 'അയച്ചയാൾ ചെക്ക്സം നൽകിയിട്ടില്ല';
+  @override
+  String get disabled => 'ചെക്ക്സം പരിശോധന ഓഫാണ്';
+  @override
+  String attached({required Object curr, required Object n}) => 'ചെക്ക്സം ചേർത്തു (${curr} / ${n} ഫയലുകൾ)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ml extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ml._(TranslationsMl root) : this._root = root, super.internal(root);
@@ -1170,6 +1262,11 @@ class _Translations$dialogs$addressInput$ml extends Translations$dialogs$address
   String get ip => 'ഐ പി അഡ്രസ്';
   @override
   String get recentlyUsed => 'ഈയ്യിടെ ഉപയോഗിച്ചത്: ';
+  @override
+  String get noHashtagCandidates =>
+      'നിലവിലെ നെറ്റ്‌വർക്കിന് IPv4 വിലാസം ഇല്ലാത്തതിനാൽ ഹാഷ്ടാഗിനെ സാധ്യമായ വിലാസമാക്കി മാറ്റാൻ കഴിയില്ല. പകരം പൂർണ്ണ വിലാസം നൽകുക (ഉദാ: 192.168.1.5 അല്ലെങ്കിൽ fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ml validation = _Translations$dialogs$addressInput$validation$ml._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1183,6 +1280,42 @@ class _Translations$dialogs$cancelSession$ml extends Translations$dialogs$cancel
   String get title => 'ഫയൽ കൈമാറ്റം റദ്ദാക്കുക';
   @override
   String get content => 'നിങ്ങൾക്കു തീർച്ചയായും ഫയലുകളുടെ കൈമാറ്റം റദ്ദാക്കണമോ?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ml extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'കണക്ഷൻ പരാജയപ്പെട്ടു';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ml timeout = _Translations$dialogs$connectionError$timeout$ml._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ml refused = _Translations$dialogs$connectionError$refused$ml._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ml forbidden = _Translations$dialogs$connectionError$forbidden$ml._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ml other = _Translations$dialogs$connectionError$other$ml._(_root);
+  @override
+  String get retry => 'വീണ്ടും ശ്രമിക്കുക';
+  @override
+  String get details => 'പിശകിന്റെ വിശദാംശങ്ങൾ:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ml extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'സോഴ്സ് ഫയലുകൾ നീക്കം ചെയ്യുക';
+  @override
+  String get content => 'ഫയലുകൾ വിജയകരമായി അയച്ച ശേഷം അവ ഈ ഡിവൈസിൽ നിന്ന് നീക്കം ചെയ്യപ്പെടും. ഇത് പിന്നീട് പിൻവലിക്കാൻ കഴിയില്ല.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1477,6 +1610,32 @@ class _Translations$dialogs$sendModeHelp$ml extends Translations$dialogs$sendMod
   String get link => 'ലോക്കൽസെൻഡ്‌ ഇൻസ്റ്റാൾ ചെയ്തവർക് ഈ ലിങ്ക് ബ്രൗസറിൽ ഓപ്പൺ ചെയ്ത ഫയൽ ഡൌൺലോഡ് ചെയ്യാം.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ml extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'സെർവർ ആരംഭിക്കാൻ കഴിഞ്ഞില്ല';
+  @override
+  String port({required Object port}) => 'പോർട്ട്: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ml windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ml._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ml addressInUse = _Translations$dialogs$startupError$addressInUse$ml._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ml generic = _Translations$dialogs$startupError$generic$ml._(_root);
+  @override
+  String get details => 'പിശകിന്റെ വിശദാംശങ്ങൾ:';
+  @override
+  String get copyDetails => 'വിശദാംശങ്ങൾ പകർത്തുക';
+  @override
+  String get openSettings => 'സജ്ജീകരണങ്ങൾ തുറക്കുക';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ml extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ml._(TranslationsMl root) : this._root = root, super.internal(root);
@@ -1486,6 +1645,68 @@ class _Translations$dialogs$zoom$ml extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ml extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'നെറ്റ്‌വർക്ക് കണക്ഷൻ ഇല്ല';
+  @override
+  String get advice => 'ഈ ഡിവൈസ് ഒരു നെറ്റ്‌വർക്കിലും കണക്റ്റ് ചെയ്യപ്പെട്ടിട്ടില്ല. ഈ ഡിവൈസിന്റെ വൈഫൈ അല്ലെങ്കിൽ കേബിൾ കണക്ഷൻ പരിശോധിക്കുക.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ml extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'മൾട്ടികാസ്റ്റ് ലഭ്യമല്ല';
+  @override
+  String advice({required Object port}) =>
+      'ഈ നെറ്റ്‌വർക്കിൽ LocalSend-ന് മൾട്ടികാസ്റ്റ് ഡിസ്കവറി ഉപയോഗിക്കാൻ കഴിയുന്നില്ല. രണ്ട് ഡിവൈസുകളും ഒരേ നെറ്റ്‌വർക്കിലാണെന്നും AP ഐസൊലേഷനോ ഫയർവാലോ UDP പോർട്ട് ${port} തടയുന്നില്ലെന്നും ഉറപ്പാക്കുക.';
+  @override
+  String reason({required Object reason}) => 'കാരണം: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ml extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ഡിവൈസുകൾ കണ്ടെത്തിയില്ല';
+  @override
+  String get advice =>
+      'ഡിസ്കവറി പ്രവർത്തിക്കുന്നുണ്ട്, പക്ഷേ അനൗൺസ്മെന്റുകളോ നെറ്റ്‌വർക്ക് സ്കാനോ ഒരു ഡിവൈസും ഉത്തരം നൽകിയില്ല. മറ്റേ ഡിവൈസ് ഓഫായിരിക്കാം, സ്ലീപ്പിലാകാം അല്ലെങ്കിൽ ഫയർവാൾ തടഞ്ഞിരിക്കാം. LocalSend മറ്റേ ഡിവൈസിൽ പ്രവർത്തിക്കുന്നുണ്ടെന്ന് ഉറപ്പാക്കുക.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'ഉത്തരം ലഭിക്കാതെ ${announcements} അനൗൺസ്മെന്റുകളും ${scans} നെറ്റ്‌വർക്ക് സ്കാനുകളും അയച്ചു.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ml extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'ഐപി അഡ്രസുകൾ പലപ്പോഴും മാറാറുണ്ട്. പട്ടികയിൽ ഇല്ലാത്ത ഒരു ഡിവൈസിലേക്കും നിങ്ങൾക്ക് എത്തിച്ചേരാം: അതിനെ പ്രിയപ്പെട്ടവയിൽ ചേർക്കുക അല്ലെങ്കിൽ അതിന്റെ വിലാസം സ്വയം നൽകുക.';
+  @override
+  String get openFavorites => 'പ്രിയപ്പെട്ടവ തുറക്കുക';
+  @override
+  String get manualInput => 'വിലാസം സ്വയം നൽകുക';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1572,4 +1793,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$ml extends Translations$whatsNe
     'പ്രിയപ്പെട്ടവയിൽ നിന്നുള്ള അഭ്യർത്ഥനകൾ ഇപ്പോൾ സ്വയമേവ സ്വീകരിക്കുന്നു. ഇത് സ്ഥിരസ്ഥിതിയിൽ പ്രവർത്തനക്ഷമമാണ്, ക്രമീകരണങ്ങളിൽ പ്രവർത്തനരഹിതമാക്കാം.',
     'Android-ൽ, ആപ്പ് പശ്ചാത്തലത്തിലായിരിക്കുമ്പോഴോ സ്ക്രീൻ ഓഫായിരിക്കുമ്പോഴോ കൈമാറ്റങ്ങൾ തുടരുന്നു. iOS-ൽ, ആപ്പ് ഇപ്പോഴും ഫോർഗ്രൗണ്ടിൽ തുടരണം.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ml extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'സാധുവായ ഒരു IPv4 വിലാസം, IPv6 വിലാസം അല്ലെങ്കിൽ ഹോസ്റ്റ് പേര് നൽകുക.';
+  @override
+  String get scheme => 'വിലാസം മാത്രം നൽകുക, "http://" അല്ലെങ്കിൽ "https://" ഇല്ലാതെ.';
+  @override
+  String get port => 'വിലാസം മാത്രം നൽകുക. പോർട്ട് സജ്ജീകരണങ്ങളിൽ നിന്ന് എടുക്കുന്നു.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ml extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ഡിവൈസ് സമയത്തിനുള്ളിൽ ഉത്തരം നൽകിയില്ല.';
+  @override
+  String get advice =>
+      'മിക്കവാറും അത് ഓഫായിരിക്കും, സ്ലീപ്പിലാകും, അല്ലെങ്കിൽ ഫയർവാൾ കണക്ഷൻ തടയുന്നുണ്ടാകും. LocalSend മറ്റേ ഡിവൈസിൽ പ്രവർത്തിക്കുന്നുണ്ടെന്നും രണ്ട് ഡിവൈസുകളും ഒരേ നെറ്റ്‌വർക്കിലാണെന്നും ഉറപ്പാക്കുക.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ml extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ഡിവൈസ് കണക്ഷൻ നിരസിച്ചു.';
+  @override
+  String get advice =>
+      'LocalSend ലക്ഷ്യ ഡിവൈസിൽ പ്രവർത്തിക്കുന്നില്ലെന്ന് തോന്നുന്നു, അല്ലെങ്കിൽ മറ്റൊരു പോർട്ടിലാണ് കേൾക്കുന്നത്. LocalSend മറ്റേ ഡിവൈസിൽ ആരംഭിക്കുക അല്ലെങ്കിൽ പോർട്ട് പരിശോധിക്കുക.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ml extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ഡിവൈസ് അപേക്ഷ നിരസിച്ചു.';
+  @override
+  String get advice =>
+      'പിൻ ആവശ്യമായേക്കാം, അല്ലെങ്കിൽ ഡിവൈസുമായുള്ള പെയറിംഗ് മാറിയിരിക്കാം. ലക്ഷ്യ ഡിവൈസിലെ പിന്നും ക്വിക്ക് സേവ് സജ്ജീകരണങ്ങളും പരിശോധിക്കുക.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ml extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'കണക്ഷൻ സ്ഥാപിക്കാൻ കഴിഞ്ഞില്ല.';
+  @override
+  String get advice =>
+      'വിലാസവും പോർട്ടും പരിശോധിക്കുക, LocalSend ലക്ഷ്യ ഡിവൈസിൽ പ്രവർത്തിക്കുന്നുണ്ടെന്ന് ഉറപ്പാക്കുക, കൂടാതെ ഫയർവാലോ VPN-നോ കണക്ഷൻ തടയുന്നില്ലെന്നും ഉറപ്പാക്കുക.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ml extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows പോർട്ടിലേക്കുള്ള ആക്സസ് നിഷേധിച്ചു (സോക്കറ്റ് പിശക് 10013).';
+  @override
+  String get advice =>
+      'ഇത് സാധാരണയായി Hyper-V, WSL അല്ലെങ്കിൽ Docker റിസർവ് ചെയ്ത പോർട്ട് റേഞ്ച് മൂലമോ, തകരാറുള്ള Winsock കാറ്റലോഗ് മൂലമോ ആണ് സംഭവിക്കുന്നത്:\n• സജ്ജീകരണങ്ങളിൽ (നെറ്റ്‌വർക്ക്) പോർട്ട് മാറ്റുക\n• റിസർവ് ചെയ്ത റേഞ്ചുകൾ ഈ കമാൻഡ് ഉപയോഗിച്ച് പരിശോധിക്കുക: netsh interface ipv4 show excludedportrange protocol=tcp\n• അഡ്മിൻ ആയി Winsock ഈ കമാൻഡ് ഉപയോഗിച്ച് നന്നാക്കുക: netsh winsock reset (പിന്നീട് റീസ്റ്റാർട്ട് ചെയ്യുക)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ml extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ഈ പോർട്ട് ഇതിനകം മറ്റൊരു ആപ്പ് ഉപയോഗിക്കുന്നു.';
+  @override
+  String get advice =>
+      'മറ്റൊരു പ്രോഗ്രാം (അല്ലെങ്കിൽ LocalSend-ന്റെ രണ്ടാമത്തെ ഇൻസ്റ്റൻസ്) ഈ പോർട്ടിൽ കേൾക്കുന്നു:\n• ആ ആപ്പ് അടയ്ക്കുക, അല്ലെങ്കിൽ\n• സജ്ജീകരണങ്ങളിൽ (നെറ്റ്‌വർക്ക്) പോർട്ട് മാറ്റുക';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ml extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ml._(TranslationsMl root) : this._root = root, super.internal(root);
+
+  final TranslationsMl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'സെർവർ ആരംഭിക്കാൻ കഴിഞ്ഞില്ല.';
+  @override
+  String get advice => '• ഫയർവാലും നെറ്റ്‌വർക്ക് സജ്ജീകരണങ്ങളും പരിശോധിക്കുക\n• സജ്ജീകരണങ്ങളിൽ (നെറ്റ്‌വർക്ക്) പോർട്ട് മാറ്റി നോക്കുക';
 }

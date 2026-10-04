@@ -231,6 +231,8 @@ class _Translations$sendTab$vi extends Translations$sendTab$en {
   String get help => 'Vui lòng đảm bảo thiết bị gửi và nhận dùng chung mạng wifi.';
   @override
   String get placeItems => 'Đặt các mục để chia sẻ.';
+  @override
+  late final _Translations$sendTab$diagnosis$vi diagnosis = _Translations$sendTab$diagnosis$vi._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$vi extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Đã lưu vào Ảnh';
   @override
+  late final _Translations$progressPage$checksum$vi checksum = _Translations$progressPage$checksum$vi._(_root);
+  @override
   late final _Translations$progressPage$total$vi total = _Translations$progressPage$total$vi._(_root);
   @override
   late final _Translations$progressPage$remainingTime$vi remainingTime = _Translations$progressPage$remainingTime$vi._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$vi extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$vi cancelSession = _Translations$dialogs$cancelSession$vi._(_root);
   @override
+  late final _Translations$dialogs$connectionError$vi connectionError = _Translations$dialogs$connectionError$vi._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$vi deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$vi._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$vi cannotOpenFile = _Translations$dialogs$cannotOpenFile$vi._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$vi encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$vi._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$vi extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$vi pin = _Translations$dialogs$pin$vi._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$vi sendModeHelp = _Translations$dialogs$sendModeHelp$vi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$vi startupError = _Translations$dialogs$startupError$vi._(_root);
   @override
   late final _Translations$dialogs$zoom$vi zoom = _Translations$dialogs$zoom$vi._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$vi extends Translations$sendTab$sendModes$
   String get link => 'Chia sẻ liên kết';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$vi extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Đang tìm kiếm thiết bị lân cận…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$vi noInterface = _Translations$sendTab$diagnosis$noInterface$vi._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$vi multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$vi._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$vi scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$vi._(_root);
+  @override
+  String get rescan => 'Tìm kiếm lại';
+  @override
+  String get bleHint =>
+      'Tính năng phát hiện BLE đang bật: thiết bị chỉ được tìm thấy qua Bluetooth nếu chúng cũng chạy bản fork này với tùy chọn được bật; bản thân quá trình truyền vẫn đi qua mạng.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$vi manualFallback = _Translations$sendTab$diagnosis$manualFallback$vi._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$vi extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$vi._(TranslationsVi root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$vi extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Chia sẻ qua liên kết: Tự động chấp nhận';
   @override
   String get createChecksums => 'Tạo checksum khi gửi tệp';
+  @override
+  String get deleteSourceAfterSend => 'Xoá tập tin nguồn sau khi gửi thành công';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$vi extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Hết thời gian tìm kiếm';
   @override
+  String get maxInterfaces => 'Số giao diện tối đa (quét thông minh)';
+  @override
+  String get vpnInterfaces => 'Bao gồm cả giao diện VPN (quét thông minh)';
+  @override
+  String get vpnInterfacesHint =>
+      'Đồng thời quét các subnet của giao diện đường hầm VPN (Tailscale, WireGuard, …). VPN thường không hỗ trợ multicast nên subnet của chúng sẽ được thăm dò bằng lần quét HTTP dự phòng.';
+  @override
   String get useSystemName => 'Dùng tên hệ thống';
   @override
   String get generateRandomAlias => 'Dùng bí danh ngẫu nhiên';
@@ -962,6 +1008,33 @@ class _Translations$settingsTab$network$vi extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Các thiết bị khác có thể không nhận diện được thiết bị của bạn, vì bạn đang dùng địa chỉ multicast tuỳ chỉnh. (mặc định: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Phát hiện BLE (thử nghiệm)';
+  @override
+  String get bleDiscoveryHint =>
+      'Phát hiện các thiết bị lân cận qua Bluetooth kể cả khi mạng chặn multicast (cô lập AP). Hoạt động trên Android, iOS, macOS và Windows; trên Linux, thiết bị này tìm được thiết bị khác nhưng không thể được tìm thấy. Cả hai thiết bị đều cần bản fork này với tùy chọn được bật; bản thân việc truyền tập tin vẫn dùng mạng.';
+  @override
+  String get bleStatusActive =>
+      'Đang hoạt động: quét và quảng bá. Thiết bị lân cận chỉ xuất hiện nếu chúng cũng chạy bản fork này với tùy chọn được bật.';
+  @override
+  String get bleStatusScanOnly =>
+      'Đang hoạt động: chỉ quét. Thiết bị này hiện không thể được phát hiện qua Bluetooth (nền tảng này không hỗ trợ quảng bá BLE, hoặc chưa có địa chỉ mạng dùng được).';
+  @override
+  String get bleStatusPaused => 'Tạm dừng. Sẽ tiếp tục khi ứng dụng quay lại nền trước.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Quyền Bluetooth bị từ chối. Hãy cấp quyền "Thiết bị gần đó" (hoặc "Vị trí" trên Android 11 trở xuống) trong cài đặt hệ thống, sau đó tắt rồi bật lại tùy chọn này.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth đang tắt hoặc không khả dụng. Tính năng phát hiện sẽ tự khởi động lại khi Bluetooth khả dụng trở lại.';
+  @override
+  String get bleStatusUnsupported => 'Không được hỗ trợ trên thiết bị này: phát hiện BLE cần Android 7 trở lên và radio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Trên phiên bản Android này, việc tìm thiết bị khác còn yêu cầu dịch vụ vị trí của hệ thống phải bật (quyền được yêu cầu tự động; thiết bị này đã có thể được thiết bị khác tìm thấy).';
+  @override
+  String get bleStatusError => 'Không thể khởi động tính năng phát hiện BLE. Xem chi tiết trong Gỡ lỗi > Nhật ký.';
+  @override
+  String get bleOpenSystemSettings => 'Mở cài đặt hệ thống';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1151,25 @@ class _Translations$deviceDetailsPage$logs$vi extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Được cập nhật qua ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$vi extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Checksum đã được xác minh';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Checksum đã được xác minh cho ${curr} / ${n} tập tin';
+  @override
+  String get notVerifiable => 'Người gửi không cung cấp checksum';
+  @override
+  String get disabled => 'Xác minh checksum đã tắt';
+  @override
+  String attached({required Object curr, required Object n}) => 'Đã đính kèm checksum (${curr} / ${n} tập tin)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$vi extends Translations$progressPage$total$en {
   _Translations$progressPage$total$vi._(TranslationsVi root) : this._root = root, super.internal(root);
@@ -1171,6 +1263,11 @@ class _Translations$dialogs$addressInput$vi extends Translations$dialogs$address
   String get ip => 'Địa chỉ IP';
   @override
   String get recentlyUsed => 'Sử dụng gần đây: ';
+  @override
+  String get noHashtagCandidates =>
+      'Mạng hiện tại không có địa chỉ IPv4 nên không thể mở rộng hashtag thành địa chỉ ứng viên. Vui lòng nhập địa chỉ đầy đủ (vd. 192.168.1.5 hoặc fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$vi validation = _Translations$dialogs$addressInput$validation$vi._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1281,42 @@ class _Translations$dialogs$cancelSession$vi extends Translations$dialogs$cancel
   String get title => 'Dừng gửi tập tin';
   @override
   String get content => 'Bạn có thực sự muống dừng quá trình gửi tập tin?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$vi extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Kết nối thất bại';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$vi timeout = _Translations$dialogs$connectionError$timeout$vi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$vi refused = _Translations$dialogs$connectionError$refused$vi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$vi forbidden = _Translations$dialogs$connectionError$forbidden$vi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$vi other = _Translations$dialogs$connectionError$other$vi._(_root);
+  @override
+  String get retry => 'Thử lại';
+  @override
+  String get details => 'Chi tiết lỗi:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$vi extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Xoá tập tin nguồn';
+  @override
+  String get content => 'Sau khi các tập tin được gửi thành công, chúng sẽ bị xoá khỏi thiết bị này. Hành động này không thể hoàn tác.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1476,6 +1609,32 @@ class _Translations$dialogs$sendModeHelp$vi extends Translations$dialogs$sendMod
   String get link => 'Người nhận chưa cài đặt LocalSend có thể nhận tập tin bằng cách mở liên kết trong trình duyệt.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$vi extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Không thể khởi động server';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$vi windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$vi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$vi addressInUse = _Translations$dialogs$startupError$addressInUse$vi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$vi generic = _Translations$dialogs$startupError$generic$vi._(_root);
+  @override
+  String get details => 'Chi tiết lỗi:';
+  @override
+  String get copyDetails => 'Sao chép chi tiết';
+  @override
+  String get openSettings => 'Mở cài đặt';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$vi extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$vi._(TranslationsVi root) : this._root = root, super.internal(root);
@@ -1485,6 +1644,68 @@ class _Translations$dialogs$zoom$vi extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'Đường dẫn';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$vi extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Không có kết nối mạng';
+  @override
+  String get advice => 'Thiết bị này chưa kết nối với mạng nào. Hãy kiểm tra kết nối Wi-Fi hoặc dây mạng của thiết bị này.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$vi extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast không khả dụng';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend không thể dùng tính năng phát hiện qua multicast trên mạng này. Hãy đảm bảo cả hai thiết bị cùng nằm trên một mạng và rằng chế độ cô lập AP (AP isolation) hay tường lửa không đang chặn port UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Nguyên nhân: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$vi extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Không tìm thấy thiết bị nào';
+  @override
+  String get advice =>
+      'Quá trình tìm kiếm vẫn hoạt động, nhưng không có thiết bị nào phản hồi thông báo quảng bá lẫn lần quét mạng. Thiết bị kia có thể đang ngoại tuyến, ở chế độ ngủ hoặc bị tường lửa chặn. Hãy đảm bảo LocalSend đang chạy trên thiết bị kia.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Đã gửi ${announcements} thông báo quảng bá và ${scans} lần quét mạng nhưng không nhận được phản hồi.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$vi extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Địa chỉ IP thường xuyên thay đổi. Bạn vẫn có thể kết nối tới một thiết bị không có trong danh sách: thêm nó vào yêu thích hoặc nhập địa chỉ của nó thủ công.';
+  @override
+  String get openFavorites => 'Mở mục yêu thích';
+  @override
+  String get manualInput => 'Nhập địa chỉ thủ công';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1571,4 +1792,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$vi extends Translations$whatsNe
     'Yêu cầu từ các thiết bị yêu thích giờ được chấp nhận tự động. Tính năng này được bật mặc định và có thể tắt trong cài đặt.',
     'Trên Android, quá trình truyền tệp tiếp tục khi ứng dụng ở chế độ nền hoặc màn hình tắt. Trên iOS, ứng dụng vẫn phải ở trên nền trước.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$vi extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Hãy nhập địa chỉ IPv4, địa chỉ IPv6 hoặc tên máy chủ hợp lệ.';
+  @override
+  String get scheme => 'Chỉ nhập địa chỉ, không kèm "http://" hay "https://".';
+  @override
+  String get port => 'Chỉ nhập địa chỉ. Port được lấy từ cài đặt.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$vi extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Thiết bị không phản hồi kịp thời.';
+  @override
+  String get advice =>
+      'Có thể nó đang ngoại tuyến, ở chế độ ngủ, hoặc tường lửa đang chặn kết nối. Hãy đảm bảo LocalSend đang chạy trên thiết bị kia và cả hai thiết bị cùng nằm trên một mạng.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$vi extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Thiết bị đã từ chối kết nối.';
+  @override
+  String get advice =>
+      'Có vẻ LocalSend không đang chạy trên thiết bị đích, hoặc nó lắng nghe trên port khác. Hãy khởi động LocalSend trên thiết bị kia hoặc kiểm tra port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$vi extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Thiết bị đã từ chối yêu cầu.';
+  @override
+  String get advice => 'Có thể cần mã PIN, hoặc việc ghép nối với thiết bị đã thay đổi. Hãy kiểm tra mã PIN và cài đặt lưu nhanh trên thiết bị đích.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$vi extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Không thể thiết lập kết nối.';
+  @override
+  String get advice => 'Hãy kiểm tra địa chỉ và port, đảm bảo LocalSend đang chạy trên thiết bị đích và không có tường lửa hay VPN nào chặn kết nối.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$vi extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows đã từ chối truy cập port (lỗi socket 10013).';
+  @override
+  String get advice =>
+      'Việc này thường do một dải port đã được Hyper-V, WSL hoặc Docker dành riêng, hoặc do catalog Winsock bị hỏng:\n• Đổi port trong Cài đặt (Mạng)\n• Kiểm tra các dải đã dành riêng bằng: netsh interface ipv4 show excludedportrange protocol=tcp\n• Sửa Winsock với quyền quản trị bằng: netsh winsock reset (khởi động lại sau đó)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$vi extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port đã được ứng dụng khác sử dụng.';
+  @override
+  String get advice =>
+      'Một chương trình khác (hoặc một phiên bản LocalSend thứ hai) đang lắng nghe trên port này:\n• Đóng ứng dụng kia, hoặc\n• Đổi port trong Cài đặt (Mạng)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$vi extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$vi._(TranslationsVi root) : this._root = root, super.internal(root);
+
+  final TranslationsVi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Không thể khởi động server.';
+  @override
+  String get advice => '• Kiểm tra tường lửa và cài đặt mạng\n• Thử đổi port trong Cài đặt (Mạng)';
 }

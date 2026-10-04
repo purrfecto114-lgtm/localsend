@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Erklärung",
     "help": "Bitte stelle sicher, dass sich das gewünschte Ziel auch im selben WLAN-Netzwerk befindet.",
-    "placeItems": "Dateien ablegen, um zu teilen."
+    "placeItems": "Dateien ablegen, um zu teilen.",
+    "diagnosis": {
+      "scanning": "Suche nach Geräten in der Nähe…",
+      "noInterface": {
+        "title": "Keine Netzwerkverbindung",
+        "advice": "Dieses Gerät ist mit keinem Netzwerk verbunden. Prüfe die WLAN- oder Kabelverbindung dieses Geräts."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast nicht verfügbar",
+        "advice": "LocalSend kann die Multicast-Erkennung in diesem Netzwerk nicht verwenden. Stelle sicher, dass beide Geräte im selben Netzwerk sind und dass AP-Isolation oder eine Firewall den UDP-Port {port} nicht blockiert.",
+        "reason": "Grund: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Keine Geräte gefunden",
+        "advice": "Die Erkennung funktioniert, aber kein Gerät hat auf die Ankündigungen oder den Netzwerk-Scan geantwortet. Das andere Gerät ist möglicherweise offline, im Ruhezustand oder wird von einer Firewall blockiert. Stelle sicher, dass LocalSend auf dem anderen Gerät läuft.",
+        "detail": "{announcements} Ankündigungen und {scans} Netzwerk-Scans wurden ohne Antwort gesendet."
+      },
+      "rescan": "Erneut suchen",
+      "bleHint": "Die BLE-Erkennung ist aktiv: Geräte werden nur über Bluetooth gefunden, wenn sie ebenfalls diesen Fork mit aktivierter Option verwenden; die Übertragung selbst läuft weiterhin über das Netzwerk.",
+      "manualFallback": {
+        "message": "IP-Adressen ändern sich häufig. Du kannst ein Gerät, das nicht aufgelistet ist, trotzdem erreichen: Füge es zu deinen Favoriten hinzu oder gib seine Adresse manuell ein.",
+        "openFavorites": "Favoriten öffnen",
+        "manualInput": "Adresse manuell eingeben"
+      }
+    }
   },
   "settingsTab": {
     "title": "Einstellungen",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Senden",
       "shareViaLinkAutoAccept": "Link teilen: Autom. akzeptieren",
-      "createChecksums": "Prüfsummen beim Senden erstellen"
+      "createChecksums": "Prüfsummen beim Senden erstellen",
+      "deleteSourceAfterSend": "Quelldateien nach erfolgreichem Senden löschen"
     },
     "network": {
       "title": "Netzwerk",
@@ -143,12 +168,26 @@
         "filtered": "Gefiltert"
       },
       "discoveryTimeout": "Erkennungs-Timeout",
+      "maxInterfaces": "Max. Schnittstellen (Smart-Scan)",
+      "vpnInterfaces": "VPN-Schnittstellen einbeziehen (Smart-Scan)",
+      "vpnInterfacesHint": "Untersucht auch die Subnetze von VPN-Tunnel-Schnittstellen (Tailscale, WireGuard, ...). VPNs unterstützen normalerweise kein Multicast, daher werden ihre Subnetze stattdessen per HTTP-Fallback-Scan geprüft.",
       "useSystemName": "Systemnamen verwenden",
       "generateRandomAlias": "Zufälligen Alias generieren",
       "portWarning": "Möglicherweise wirst du von anderen Geräten nicht erkannt, weil du einen benutzerdefinierten Port verwendest. (Standard: {defaultPort})",
       "encryption": "Verschlüsselung",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Möglicherweise wirst du von anderen Geräten nicht erkannt, weil du eine benutzerdefinierte Multicast-Adresse verwendest. (Standard: {defaultMulticast})"
+      "multicastGroupWarning": "Möglicherweise wirst du von anderen Geräten nicht erkannt, weil du eine benutzerdefinierte Multicast-Adresse verwendest. (Standard: {defaultMulticast})",
+      "bleDiscovery": "BLE-Erkennung (experimentell)",
+      "bleDiscoveryHint": "Erkennt Geräte in der Nähe über Bluetooth, selbst wenn das Netzwerk Multicast blockiert (AP-Isolation). Funktioniert auf Android, iOS, macOS und Windows; unter Linux kann dieses Gerät andere finden, aber selbst nicht gefunden werden. Beide Geräte benötigen diesen Fork mit aktivierter Option; die Dateiübertragung selbst läuft weiterhin über das Netzwerk.",
+      "bleStatusActive": "Aktiv: Scannen und Advertising. Geräte in der Nähe erscheinen nur, wenn sie ebenfalls diesen Fork mit aktivierter Option verwenden.",
+      "bleStatusScanOnly": "Aktiv: nur Scannen. Dieses Gerät kann derzeit nicht über Bluetooth entdeckt werden (keine BLE-Advertising-Unterstützung auf dieser Plattform oder noch keine verwendbare Netzwerkadresse).",
+      "bleStatusPaused": "Pausiert. Wird fortgesetzt, wenn die App in den Vordergrund zurückkehrt.",
+      "bleStatusPermissionDenied": "Bluetooth-Berechtigungen verweigert. Erteile die Berechtigung \"Geräte in der Nähe\" (oder \"Standort\" unter Android 11 und älter) in den Systemeinstellungen und schalte diese Option danach aus und wieder ein.",
+      "bleStatusAdapterOff": "Bluetooth ist ausgeschaltet oder nicht verfügbar. Die Erkennung startet automatisch neu, sobald Bluetooth wieder verfügbar ist.",
+      "bleStatusUnsupported": "Auf diesem Gerät nicht unterstützt: Die BLE-Erkennung erfordert Android 7 oder neuer sowie ein Bluetooth-LE-Funkmodul.",
+      "bleStatusLegacyLocation": "Auf dieser Android-Version muss für die Suche nach anderen Geräten zusätzlich der System-Standortdienst aktiviert sein (die Berechtigung wird automatisch angefragt; dieses Gerät kann bereits von anderen gefunden werden).",
+      "bleStatusError": "Die BLE-Erkennung konnte nicht gestartet werden. Details findest du unter Fehlerbehebung > Logs.",
+      "bleOpenSystemSettings": "Systemeinstellungen öffnen"
     },
     "other": {
       "title": "Weitere",
@@ -256,6 +295,13 @@
     "titleSending": "Sende Dateien",
     "titleReceiving": "Empfange Dateien",
     "savedToGallery": "in Fotos gespeichert",
+    "checksum": {
+      "verified": "Prüfsummen überprüft",
+      "partiallyVerified": "Prüfsummen für {curr} / {n} Dateien überprüft",
+      "notVerifiable": "Vom Absender wurden keine Prüfsummen mitgesendet",
+      "disabled": "Prüfsummen-Überprüfung ist deaktiviert",
+      "attached": "Prüfsummen angehängt ({curr} / {n} Dateien)"
+    },
     "total": {
       "title": {
         "sending": "Gesamtfortschritt ({time})",
@@ -348,11 +394,42 @@
       "title": "Adresse eingeben",
       "hashtag": "Hashtag",
       "ip": "IP-Adresse",
-      "recentlyUsed": "Zuletzt verwendet: "
+      "recentlyUsed": "Zuletzt verwendet: ",
+      "noHashtagCandidates": "Das aktuelle Netzwerk hat keine IPv4-Adresse, daher kann der Hashtag nicht zu einer Kandidatenadresse erweitert werden. Bitte gib stattdessen die vollständige Adresse ein (z. B. 192.168.1.5 oder fe80::1).",
+      "validation": {
+        "invalid": "Gib eine gültige IPv4-Adresse, IPv6-Adresse oder einen gültigen Hostnamen ein.",
+        "scheme": "Gib nur die Adresse ein, ohne \"http://\" oder \"https://\".",
+        "port": "Gib nur die Adresse ein. Der Port wird aus den Einstellungen übernommen."
+      }
     },
     "cancelSession": {
       "title": "Dateiübertragung abbrechen",
       "content": "Möchtest du wirklich die Dateiübertragung abbrechen?"
+    },
+    "connectionError": {
+      "title": "Verbindung fehlgeschlagen",
+      "timeout": {
+        "message": "Das Gerät hat nicht rechtzeitig geantwortet.",
+        "advice": "Es ist wahrscheinlich offline, im Ruhezustand oder eine Firewall blockiert die Verbindung. Stelle sicher, dass LocalSend auf dem anderen Gerät läuft und beide Geräte im selben Netzwerk sind."
+      },
+      "refused": {
+        "message": "Das Gerät hat die Verbindung abgelehnt.",
+        "advice": "LocalSend scheint auf dem Zielgerät nicht zu laufen oder lauscht auf einem anderen Port. Starte LocalSend auf dem anderen Gerät oder überprüfe den Port."
+      },
+      "forbidden": {
+        "message": "Das Gerät hat die Anfrage abgelehnt.",
+        "advice": "Möglicherweise ist eine PIN erforderlich oder die Kopplung mit dem Gerät hat sich geändert. Überprüfe die PIN und die Quick-Save-Einstellungen auf dem Zielgerät."
+      },
+      "other": {
+        "message": "Die Verbindung konnte nicht hergestellt werden.",
+        "advice": "Überprüfe Adresse und Port, stelle sicher, dass LocalSend auf dem Zielgerät läuft und dass keine Firewall oder kein VPN die Verbindung blockiert."
+      },
+      "retry": "Erneut versuchen",
+      "details": "Fehlerdetails:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Quelldateien löschen",
+      "content": "Nachdem die Dateien erfolgreich gesendet wurden, werden sie von diesem Gerät gelöscht. Dies kann nicht rückgängig gemacht werden."
     },
     "cannotOpenFile": {
       "title": "Öffnen fehlgeschlagen",
@@ -448,6 +525,25 @@
       "single": "Sende Dateien an einen Empfänger. Die Auswahl wird nach Abschluss der Dateiübertragung gelöscht.",
       "multiple": "Sende Dateien an mehrere Empfänger. Die Auswahl bleibt erhalten.",
       "link": "Empfänger, die LocalSend nicht installiert haben, können die ausgewählten Dateien herunterladen, in dem sie den Link im Browser öffnen."
+    },
+    "startupError": {
+      "title": "Server konnte nicht gestartet werden",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows hat den Zugriff auf den Port verweigert (Socket-Fehler 10013).",
+        "advice": "Dies wird normalerweise durch einen von Hyper-V, WSL oder Docker reservierten Portbereich oder einen beschädigten Winsock-Katalog verursacht:\n• Ändere den Port in den Einstellungen (Netzwerk)\n• Prüfe die reservierten Bereiche mit: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repariere Winsock als Administrator mit: netsh winsock reset (anschließend neu starten)"
+      },
+      "addressInUse": {
+        "hint": "Der Port wird bereits von einer anderen Anwendung verwendet.",
+        "advice": "Ein anderes Programm (oder eine zweite LocalSend-Instanz) lauscht auf diesem Port:\n• Schließe die andere Anwendung oder\n• Ändere den Port in den Einstellungen (Netzwerk)"
+      },
+      "generic": {
+        "hint": "Der Server konnte nicht gestartet werden.",
+        "advice": "• Überprüfe deine Firewall- und Netzwerkeinstellungen\n• Versuche, den Port in den Einstellungen (Netzwerk) zu ändern"
+      },
+      "details": "Fehlerdetails:",
+      "copyDetails": "Details kopieren",
+      "openSettings": "Einstellungen öffnen"
     },
     "zoom": {
       "title": "URL"

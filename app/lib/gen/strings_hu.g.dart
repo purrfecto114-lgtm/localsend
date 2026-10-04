@@ -231,6 +231,8 @@ class _Translations$sendTab$hu extends Translations$sendTab$en {
   String get help => 'Győződjön meg arról, hogy a kívánt eszköz is ugyanazon a wifi hálózaton van.';
   @override
   String get placeItems => 'Helyezze el a megosztandó elemeket.';
+  @override
+  late final _Translations$sendTab$diagnosis$hu diagnosis = _Translations$sendTab$diagnosis$hu._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$hu extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Mentve a Galériába';
   @override
+  late final _Translations$progressPage$checksum$hu checksum = _Translations$progressPage$checksum$hu._(_root);
+  @override
   late final _Translations$progressPage$total$hu total = _Translations$progressPage$total$hu._(_root);
   @override
   late final _Translations$progressPage$remainingTime$hu remainingTime = _Translations$progressPage$remainingTime$hu._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$hu extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$hu cancelSession = _Translations$dialogs$cancelSession$hu._(_root);
   @override
+  late final _Translations$dialogs$connectionError$hu connectionError = _Translations$dialogs$connectionError$hu._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$hu deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$hu._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$hu cannotOpenFile = _Translations$dialogs$cannotOpenFile$hu._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$hu encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$hu._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$hu extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$hu pin = _Translations$dialogs$pin$hu._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$hu sendModeHelp = _Translations$dialogs$sendModeHelp$hu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$hu startupError = _Translations$dialogs$startupError$hu._(_root);
   @override
   late final _Translations$dialogs$zoom$hu zoom = _Translations$dialogs$zoom$hu._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$hu extends Translations$sendTab$sendModes$
   String get link => 'Megosztás linkben';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$hu extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Közeli eszközök keresése…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$hu noInterface = _Translations$sendTab$diagnosis$noInterface$hu._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$hu multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$hu._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$hu scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$hu._(_root);
+  @override
+  String get rescan => 'Keressen újra';
+  @override
+  String get bleHint =>
+      'A BLE-felfedezés aktív: az eszközök csak akkor találhatók meg Bluetooth-n keresztül, ha ők is ezt a forkot futtatják az engedélyezett beállítással; maga az átvitel továbbra is a hálózaton keresztül történik.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$hu manualFallback = _Translations$sendTab$diagnosis$manualFallback$hu._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$hu extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$hu._(TranslationsHu root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$hu extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Megosztás linken keresztül: Auto. elfogadás';
   @override
   String get createChecksums => 'Ellenőrzőösszegek létrehozása fájlok küldésekor';
+  @override
+  String get deleteSourceAfterSend => 'Forrásfájlok törlése sikeres küldés után';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$hu extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Felfedezési időtúllépés';
   @override
+  String get maxInterfaces => 'Interfészek max. száma (okos pásztázás)';
+  @override
+  String get vpnInterfaces => 'VPN-interfészek belefoglalása (okos pásztázás)';
+  @override
+  String get vpnInterfacesHint =>
+      'A VPN-alagút interfészek alhálózatai (Tailscale, WireGuard, ...) is pásztázásra kerülnek. A VPN-ek általában nem továbbítanak multicast forgalmat, ezért alhálózataikat a HTTP tartalék pásztázás vizsgálja.';
+  @override
   String get useSystemName => 'Rendszernév használata';
   @override
   String get generateRandomAlias => 'Véletlenszerű álnév generálás';
@@ -962,6 +1008,35 @@ class _Translations$settingsTab$network$hu extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Előfordulhat, hogy más eszközök nem észlelik eszközét, mert egyéni multicast címet használ. (alapérték: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE-felfedezés (kísérleti)';
+  @override
+  String get bleDiscoveryHint =>
+      'A közeli eszközöket Bluetooth-n keresztül is felfedezi, még ha a hálózat blokkolja is a multicastot (AP-izoláció). Androidon, iOS-en, macOS-en és Windowson működik; Linuxon ez az eszköz megtalálja a többieket, de maga nem található meg. Mindkét eszköznek ezt a forkot kell futtatnia az engedélyezett beállítással; maga a fájlátvitel továbbra is a hálózatot használja.';
+  @override
+  String get bleStatusActive =>
+      'Aktív: pásztázás és hirdetés. A közeli eszközök csak akkor jelennek meg, ha ők is ezt a forkot futtatják az engedélyezett beállítással.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktív: csak pásztázás. Ez az eszköz jelenleg nem fedezhető fel Bluetooth-n keresztül (ezen a platformon a BLE-hirdetés nem támogatott, vagy még nincs használható hálózati cím).';
+  @override
+  String get bleStatusPaused => 'Szüneteltetve. Akkor folytatódik, amikor az alkalmazás visszatér az előtérbe.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'A Bluetooth-engedélyek megtagadva. Adja meg a "Közeli eszközök" (Android 11 és korábbi verzióknál a "Tartózkodási hely") engedélyt a rendszerbeállításokban, majd kapcsolja ki és vissza ezt a beállítást.';
+  @override
+  String get bleStatusAdapterOff =>
+      'A Bluetooth ki van kapcsolva vagy nem érhető el. A felfedezés magától újraindul, amikor a Bluetooth újra elérhetővé válik.';
+  @override
+  String get bleStatusUnsupported =>
+      'Ezen az eszközön nem támogatott: a BLE-felfedezéshez Android 7 vagy újabb, valamint Bluetooth LE rádió szükséges.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Ezen az Android-verzión a többi eszköz megtalálásához a rendszer helymeghatározási szolgáltatásainak is bekapcsolva kell lenniük (az engedélyt a rendszer automatikusan kéri; ezt az eszközt a többiek már megtalálhatják).';
+  @override
+  String get bleStatusError => 'A BLE-felfedezés nem tudott elindulni. Részletek a Hibaelhárítás > Naplókban.';
+  @override
+  String get bleOpenSystemSettings => 'Rendszerbeállítások megnyitása';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1153,25 @@ class _Translations$deviceDetailsPage$logs$hu extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Frissítve ${protocol} útján (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$hu extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Ellenőrzőösszegek ellenőrizve';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Ellenőrzőösszegek ellenőrizve (${curr} / ${n} fájl)';
+  @override
+  String get notVerifiable => 'A küldő nem adott meg ellenőrzőösszegeket';
+  @override
+  String get disabled => 'Az ellenőrzőösszeg-ellenőrzés le van tiltva';
+  @override
+  String attached({required Object curr, required Object n}) => 'Ellenőrzőösszegek csatolva (${curr} / ${n} fájl)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$hu extends Translations$progressPage$total$en {
   _Translations$progressPage$total$hu._(TranslationsHu root) : this._root = root, super.internal(root);
@@ -1171,6 +1265,11 @@ class _Translations$dialogs$addressInput$hu extends Translations$dialogs$address
   String get ip => 'IP cím';
   @override
   String get recentlyUsed => 'Nemrég használt: ';
+  @override
+  String get noHashtagCandidates =>
+      'A jelenlegi hálózatnak nincs IPv4-címe, így a hashtag nem bővíthető jelöltcímmé. Kérjük, adja meg a teljes címet (pl. 192.168.1.5 vagy fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$hu validation = _Translations$dialogs$addressInput$validation$hu._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1283,42 @@ class _Translations$dialogs$cancelSession$hu extends Translations$dialogs$cancel
   String get title => 'Fájlátvitel megszakítása';
   @override
   String get content => 'Valóban meg akarja szakítani a fájlátvitelt?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$hu extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'A kapcsolódás sikertelen';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$hu timeout = _Translations$dialogs$connectionError$timeout$hu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$hu refused = _Translations$dialogs$connectionError$refused$hu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$hu forbidden = _Translations$dialogs$connectionError$forbidden$hu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$hu other = _Translations$dialogs$connectionError$other$hu._(_root);
+  @override
+  String get retry => 'Újrapróbálkozás';
+  @override
+  String get details => 'Hiba részletei:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$hu extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Forrásfájlok törlése';
+  @override
+  String get content => 'A fájlok sikeres elküldése után törlődnek erről az eszközről. Ez nem vonható vissza.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1477,6 +1612,32 @@ class _Translations$dialogs$sendModeHelp$hu extends Translations$dialogs$sendMod
       'Azok a címzettek, akiknél nincs telepítve a LocalSend, letölthetik a kiválasztott fájlokat a hivatkozás megnyitásával a böngészőjükben.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$hu extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'A szerver nem indult el';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$hu windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$hu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$hu addressInUse = _Translations$dialogs$startupError$addressInUse$hu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$hu generic = _Translations$dialogs$startupError$generic$hu._(_root);
+  @override
+  String get details => 'Hiba részletei:';
+  @override
+  String get copyDetails => 'Részletek másolása';
+  @override
+  String get openSettings => 'Beállítások megnyitása';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$hu extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$hu._(TranslationsHu root) : this._root = root, super.internal(root);
@@ -1486,6 +1647,68 @@ class _Translations$dialogs$zoom$hu extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$hu extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nincs hálózati kapcsolat';
+  @override
+  String get advice => 'Ez az eszköz nincs csatlakoztatva egyetlen hálózathoz sem. Ellenőrizze az eszköz Wi-Fi- vagy kábeles kapcsolatát.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$hu extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'A multicast nem érhető el';
+  @override
+  String advice({required Object port}) =>
+      'A LocalSend nem tud multicast felfedezést használni ezen a hálózaton. Győződjön meg róla, hogy mindkét eszköz ugyanazon a hálózaton van, és hogy AP-izoláció vagy tűzfal nem blokkolja a(z) ${port} UDP-portot.';
+  @override
+  String reason({required Object reason}) => 'Ok: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$hu extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nem találhatók eszközök';
+  @override
+  String get advice =>
+      'A felfedezés működik, de egyetlen eszköz sem válaszolt a bejelentésekre vagy a hálózati pásztázásra. A másik eszköz offline lehet, alvó állapotban lehet, vagy tűzfal blokkolja. Győződjön meg róla, hogy a LocalSend fut a másik eszközön.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} bejelentés és ${scans} hálózati pásztázás történt válasz nélkül.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$hu extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Az IP-címek gyakran változnak. Egy nem listázott eszköz is elérhető: adja hozzá a kedvencekhez, vagy írja be a címét manuálisan.';
+  @override
+  String get openFavorites => 'Kedvencek megnyitása';
+  @override
+  String get manualInput => 'Manuális címmegadás';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1572,4 +1795,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$hu extends Translations$whatsNe
     'A kedvencekből érkező kéréseket már automatikusan elfogadjuk. Alapból be van kapcsolva, és a beállításokban kikapcsolható.',
     'Android rendszeren az adatátvitel akkor is folytatódik, ha az alkalmazás a háttérben fut, vagy a képernyő ki van kapcsolva. iOS rendszeren viszont az alkalmazásnak továbbra is az előtérben kell maradnia.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$hu extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Adjon meg érvényes IPv4-címet, IPv6-címet vagy gazdanevet.';
+  @override
+  String get scheme => 'Csak a címet adja meg, "http://" vagy "https://" nélkül.';
+  @override
+  String get port => 'Csak a címet adja meg. A port a beállításokból származik.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$hu extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Az eszköz nem válaszolt időben.';
+  @override
+  String get advice =>
+      'Valószínűleg offline, alvó állapotban van, vagy egy tűzfal blokkolja a kapcsolatot. Győződjön meg róla, hogy a LocalSend fut a másik eszközön, és hogy mindkét eszköz ugyanazon a hálózaton van.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$hu extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Az eszköz elutasította a kapcsolatot.';
+  @override
+  String get advice =>
+      'Úgy tűnik, a LocalSend nem fut a céleszközön, vagy más porton figyel. Indítsa el a LocalSendet a másik eszközön, vagy ellenőrizze a portot.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$hu extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Az eszköz elutasította a kérést.';
+  @override
+  String get advice =>
+      'Lehet, hogy PIN kód szükséges, vagy megváltozott az eszközzel való párosítás. Ellenőrizze a PIN kódot és a gyors mentés beállításait a céleszközön.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$hu extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'A kapcsolat nem jött létre.';
+  @override
+  String get advice =>
+      'Ellenőrizze a címet és a portot, győződjön meg róla, hogy a LocalSend fut a céleszközön, és hogy semmilyen tűzfal vagy VPN nem blokkolja a kapcsolatot.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$hu extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'A Windows megtagadta a hozzáférést a porthoz (socket-hiba 10013).';
+  @override
+  String get advice =>
+      'Ezt általában a Hyper-V, a WSL vagy a Docker által lefoglalt porttartomány okozza, vagy egy sérült Winsock-katalógus:\n• Módosítsa a portot a Beállításokban (Hálózat)\n• Ellenőrizze a lefoglalt tartományokat ezzel: netsh interface ipv4 show excludedportrange protocol=tcp\n• Javítsa meg a Winsock katalógust rendszergazdaként ezzel: netsh winsock reset (utána indítsa újra a számítógépet)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$hu extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'A portot már használja egy másik alkalmazás.';
+  @override
+  String get advice =>
+      'Egy másik program (vagy egy második LocalSend-példány) figyel ezen a porton:\n• Zárja be a másik alkalmazást, vagy\n• Módosítsa a portot a Beállításokban (Hálózat)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$hu extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+  final TranslationsHu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'A szervert nem sikerült elindítani.';
+  @override
+  String get advice => '• Ellenőrizze a tűzfalat és a hálózati beállításokat\n• Próbálja meg megváltoztatni a portot a Beállításokban (Hálózat)';
 }

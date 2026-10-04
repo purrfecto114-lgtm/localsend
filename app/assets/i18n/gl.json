@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicación",
     "help": "Asegúrate de que o obxectivo desexado tamén estea na mesma rede wifi.",
-    "placeItems": "Coloca elementos para compartir."
+    "placeItems": "Coloca elementos para compartir.",
+    "diagnosis": {
+      "scanning": "Buscando dispositivos próximos…",
+      "noInterface": {
+        "title": "Sen conexión de rede",
+        "advice": "Este dispositivo non está conectado a ningunha rede. Comproba a conexión Wi-Fi ou por cable deste dispositivo."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast non dispoñíbel",
+        "advice": "LocalSend non pode usar o multicast para descubrir dispositivos nesta rede. Asegúrate de que ambos os dispositivos están na mesma rede e de que o illamento do punto de acceso (AP) ou un firewall non está bloqueando o porto UDP {port}.",
+        "reason": "Motivo: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Non se atoparon dispositivos",
+        "advice": "O descubrimento funciona, pero ningún dispositivo respondeu aos anuncios nin á busca de rede. O outro dispositivo pode estar desconectado, en repouso ou bloqueado por un firewall. Asegúrate de que LocalSend está en execución no outro dispositivo.",
+        "detail": "Enviáronse {announcements} anuncios e {scans} buscas de rede sen resposta."
+      },
+      "rescan": "Buscar de novo",
+      "bleHint": "O descubrimento por BLE está activo: os dispositivos atópanse por Bluetooth só se tamén executan este fork coa opción activada; a transferencia en si segue a facerse pola rede.",
+      "manualFallback": {
+        "message": "Os enderezos IP cambian a miúdo. Aínda podes acceder a un dispositivo que non estea na lista: engádeo aos favoritos ou introduce o seu enderezo manualmente.",
+        "openFavorites": "Abrir favoritos",
+        "manualInput": "Introducir o enderezo manualmente"
+      }
+    }
   },
   "settingsTab": {
     "title": "Configuración",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Enviar",
       "shareViaLinkAutoAccept": "Aceptar automáticamente peticións no modo \"Compartir mediante ligazón\"",
-      "createChecksums": "Crear sumas de comprobación ao enviar ficheiros"
+      "createChecksums": "Crear sumas de comprobación ao enviar ficheiros",
+      "deleteSourceAfterSend": "Eliminar os ficheiros de orixe despois dun envío correcto"
     },
     "network": {
       "title": "Rede",
@@ -143,12 +168,26 @@
         "filtered": "Filtrado"
       },
       "discoveryTimeout": "Tempo límite de Descubrimento",
+      "maxInterfaces": "Máx. de interfaces (Busca intelixente)",
+      "vpnInterfaces": "Incluír interfaces VPN (Busca intelixente)",
+      "vpnInterfacesHint": "Tamén se buscan as subredes das interfaces de túnel VPN (Tailscale, WireGuard, ...). As VPN normalmente non admiten multicast, polo que as súas subredes se comproban coa busca alternativa por HTTP.",
       "useSystemName": "Usar o nome do sistema",
       "generateRandomAlias": "Xerar alias aleatorio",
       "portWarning": "Pode que non sexas detectado por outros dispositivos porque estás a empregar un porto personalizado. (Porto por defecto: {defaultPort})",
       "encryption": "Cifrado",
       "multicastGroup": "Enderezo multicast",
-      "multicastGroupWarning": "Pode que non sexas detectado por outros dispositivos porque estás a empregar un enderezo multicast personalizada. (Por defecto: {defaultMulticast})"
+      "multicastGroupWarning": "Pode que non sexas detectado por outros dispositivos porque estás a empregar un enderezo multicast personalizada. (Por defecto: {defaultMulticast})",
+      "bleDiscovery": "Descubrimento por BLE (experimental)",
+      "bleDiscoveryHint": "Descubre dispositivos próximos por Bluetooth mesmo cando a rede bloquea o multicast (illamento do punto de acceso, AP). Funciona en Android, iOS, macOS e Windows; en Linux este dispositivo pode atopar outros, pero el non pode ser atopado. Ambos os dispositivos necesitan este fork coa opción activada; a transferencia de ficheiros en si segue a usar a rede.",
+      "bleStatusActive": "Activo: buscando e anunciándose. Os dispositivos próximos aparecen só se tamén executan este fork coa opción activada.",
+      "bleStatusScanOnly": "Activo: só busca. Este dispositivo non pode ser descuberto por Bluetooth neste momento (esta plataforma non admite publicidade BLE ou aínda non hai un enderezo de rede utilizábel).",
+      "bleStatusPaused": "En pausa. Continuarase cando a aplicación volva ao primeiro plano.",
+      "bleStatusPermissionDenied": "Permisos de Bluetooth denegados. Concede o permiso \"Dispositivos próximos\" (ou \"Localización\" en Android 11 e anteriores) na configuración do sistema e, despois, desactiva e volve activar esta opción.",
+      "bleStatusAdapterOff": "O Bluetooth está apagado ou non está dispoñíbel. O descubrimento reiníciase só cando o Bluetooth volva estar dispoñíbel.",
+      "bleStatusUnsupported": "Non é compatíbel con este dispositivo: o descubrimento por BLE necesita Android 7 ou superior e unha radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Nesta versión de Android, para atopar outros dispositivos tamén cómpre ter activados os servizos de localización do sistema (o permiso pídense automaticamente; este dispositivo xa pode ser atopado por outros).",
+      "bleStatusError": "Non se puido iniciar o descubrimento por BLE. Consulta Solucionar problemas > Rexistros para máis detalles.",
+      "bleOpenSystemSettings": "Abrir a configuración do sistema"
     },
     "other": {
       "title": "Outros",
@@ -256,6 +295,13 @@
     "titleSending": "Enviando ficheiros",
     "titleReceiving": "Recibindo ficheiros",
     "savedToGallery": "Gardado en Fotos",
+    "checksum": {
+      "verified": "Sumas de comprobación verificadas",
+      "partiallyVerified": "Sumas de comprobación verificadas para {curr} / {n} ficheiros",
+      "notVerifiable": "O remitente non forneceu sumas de comprobación",
+      "disabled": "A verificación de sumas de comprobación está desactivada",
+      "attached": "Sumas de comprobación anexadas ({curr} / {n} ficheiros)"
+    },
     "total": {
       "title": {
         "sending": "Progreso total ({time})",
@@ -348,11 +394,42 @@
       "title": "Introduce enderezo",
       "hashtag": "Etiqueta",
       "ip": "Enderezo IP",
-      "recentlyUsed": "Empregados recentemente: "
+      "recentlyUsed": "Empregados recentemente: ",
+      "noHashtagCandidates": "A rede actual non ten enderezo IPv4, polo que a etiqueta non se pode expandir a un enderezo candidato. Introduce o enderezo completo no seu lugar (p. ex., 192.168.1.5 ou fe80::1).",
+      "validation": {
+        "invalid": "Introduce un enderezo IPv4, IPv6 ou nome de host válido.",
+        "scheme": "Introduce só o enderezo, sen \"http://\" ou \"https://\".",
+        "port": "Introduce só o enderezo. O porto tómase da configuración."
+      }
     },
     "cancelSession": {
       "title": "Cancelar a transferencia de ficheiros",
       "content": "Realmente queres cancelar a transferencia de ficheiros?"
+    },
+    "connectionError": {
+      "title": "A conexión fallou",
+      "timeout": {
+        "message": "O dispositivo non respondeu a tempo.",
+        "advice": "Probabelmente estea desconectado, en repouso ou un firewall estea bloqueando a conexión. Asegúrate de que LocalSend está en execución no outro dispositivo e de que ambos están na mesma rede."
+      },
+      "refused": {
+        "message": "O dispositivo rexeitou a conexión.",
+        "advice": "Semella que LocalSend non está en execución no dispositivo de destino, ou que está escoitando noutro porto. Inicia LocalSend no outro dispositivo ou comproba o porto."
+      },
+      "forbidden": {
+        "message": "O dispositivo rexeitou a solicitude.",
+        "advice": "Pode que se precise un PIN ou que o emparellamento co dispositivo cambiase. Comproba o PIN e a configuración de gardado rápido no dispositivo de destino."
+      },
+      "other": {
+        "message": "Non se puido establecer a conexión.",
+        "advice": "Comproba o enderezo e o porto, asegúrate de que LocalSend está en execución no dispositivo de destino e de que ningún firewall nin VPN está bloqueando a conexión."
+      },
+      "retry": "Tentar de novo",
+      "details": "Detalles do erro:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Eliminar os ficheiros de orixe",
+      "content": "Despois de que os ficheiros se envíen correctamente, eliminaranse deste dispositivo. Isto non se pode desfacer."
     },
     "cannotOpenFile": {
       "title": "Non se pode abrir o ficheiro",
@@ -448,6 +525,25 @@
       "single": "Envia ficheiros a un receptor. A selección borrarase unha vez rematada a transferencia de ficheiros.",
       "multiple": "Envia ficheiros a múltiples receptores. A selección non se borrará unha vez rematada a transferencia de ficheiros.",
       "link": "Os destinatarios que non teñan instalado LocalSend poden descargar os ficheiros seleccionados abrindo a ligazón no seu navegador."
+    },
+    "startupError": {
+      "title": "Non se puido iniciar o servidor",
+      "port": "Porto: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows denegou o acceso ao porto (erro de socket 10013).",
+        "advice": "Isto adoita estar causado por un intervalo de portos reservado por Hyper-V, WSL ou Docker, ou por un catálogo Winsock danado:\n• Cambia o porto na configuración (Rede)\n• Comproba os intervalos reservados con: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repara Winsock como administrador con: netsh winsock reset (reinicia despois)"
+      },
+      "addressInUse": {
+        "hint": "O porto xa está sendo usado por outra aplicación.",
+        "advice": "Outro programa (ou unha segunda instancia de LocalSend) está escoitando neste porto:\n• Pecha a outra aplicación, ou\n• Cambia o porto na configuración (Rede)"
+      },
+      "generic": {
+        "hint": "Non se puido iniciar o servidor.",
+        "advice": "• Comproba a configuración do firewall e da rede\n• Tenta cambiar o porto na configuración (Rede)"
+      },
+      "details": "Detalles do erro:",
+      "copyDetails": "Copiar os detalles",
+      "openSettings": "Abrir a configuración"
     },
     "zoom": {
       "title": "URL"

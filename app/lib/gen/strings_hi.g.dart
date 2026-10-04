@@ -233,6 +233,8 @@ class _Translations$sendTab$hi extends Translations$sendTab$en {
   String get help => 'कृपया सुनिश्चित करें कि वांछित लक्ष्य भी उसी वाई-फाई नेटवर्क पर हो।';
   @override
   String get placeItems => 'साझा करने के लिए आइटम रखें।';
+  @override
+  late final _Translations$sendTab$diagnosis$hi diagnosis = _Translations$sendTab$diagnosis$hi._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$hi extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'गैलरी में सहेजा गया';
   @override
+  late final _Translations$progressPage$checksum$hi checksum = _Translations$progressPage$checksum$hi._(_root);
+  @override
   late final _Translations$progressPage$total$hi total = _Translations$progressPage$total$hi._(_root);
   @override
   late final _Translations$progressPage$remainingTime$hi remainingTime = _Translations$progressPage$remainingTime$hi._(_root);
@@ -678,6 +682,11 @@ class _Translations$dialogs$hi extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$hi cancelSession = _Translations$dialogs$cancelSession$hi._(_root);
   @override
+  late final _Translations$dialogs$connectionError$hi connectionError = _Translations$dialogs$connectionError$hi._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$hi deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$hi._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$hi cannotOpenFile = _Translations$dialogs$cannotOpenFile$hi._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$hi encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$hi._(_root);
@@ -718,6 +727,8 @@ class _Translations$dialogs$hi extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$hi pin = _Translations$dialogs$pin$hi._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$hi sendModeHelp = _Translations$dialogs$sendModeHelp$hi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$hi startupError = _Translations$dialogs$startupError$hi._(_root);
   @override
   late final _Translations$dialogs$zoom$hi zoom = _Translations$dialogs$zoom$hi._(_root);
 }
@@ -922,6 +933,32 @@ class _Translations$sendTab$sendModes$hi extends Translations$sendTab$sendModes$
   String get link => 'लिंक के माध्यम से साझा करें';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$hi extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'निकटवर्ती डिवाइस खोजे जा रहे हैं…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$hi noInterface = _Translations$sendTab$diagnosis$noInterface$hi._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$hi multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$hi._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$hi scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$hi._(_root);
+  @override
+  String get rescan => 'फिर से खोजें';
+  @override
+  String get bleHint =>
+      'BLE डिस्कवरी सक्रिय है: डिवाइस केवल तब ब्लूटूथ के ज़रिए मिलते हैं जब वे भी यही फोर्क (fork) इस विकल्प के चालू होने के साथ चला रहे हों; ट्रांसफ़र खुद अभी भी नेटवर्क के ज़रिए होता है।';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$hi manualFallback = _Translations$sendTab$diagnosis$manualFallback$hi._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$hi extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$hi._(TranslationsHi root) : this._root = root, super.internal(root);
@@ -1003,6 +1040,8 @@ class _Translations$settingsTab$send$hi extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'लिंक के माध्यम से साझा करें: स्वतः स्वीकार';
   @override
   String get createChecksums => 'फ़ाइलें भेजते समय चेकसम बनाएं';
+  @override
+  String get deleteSourceAfterSend => 'भेजना सफल होने के बाद सोर्स फ़ाइलें हटाएं';
 }
 
 // Path: settingsTab.network
@@ -1033,6 +1072,13 @@ class _Translations$settingsTab$network$hi extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'खोज का समय समाप्त';
   @override
+  String get maxInterfaces => 'अधिकतम इंटरफेस (स्मार्ट स्कैन)';
+  @override
+  String get vpnInterfaces => 'VPN इंटरफेस शामिल करें (स्मार्ट स्कैन)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN टनल इंटरफेस (Tailscale, WireGuard, आदि) के सबनेट भी स्कैन किए जाते हैं। VPN आमतौर पर मल्टीकास्ट का समर्थन नहीं करते, इसलिए उनके सबनेट HTTP फॉलबैक स्कैन से जांचे जाते हैं।';
+  @override
   String get useSystemName => 'सिस्टम नाम का उपयोग करें';
   @override
   String get generateRandomAlias => 'रैंडम उपनाम जनरेट करें';
@@ -1046,6 +1092,33 @@ class _Translations$settingsTab$network$hi extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'आप कस्टम मल्टीकास्ट पते का उपयोग कर रहे हैं इसलिए अन्य डिवाइस आपको पहचान नहीं सकते हैं। (डिफ़ॉल्ट: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE डिस्कवरी (प्रयोगात्मक)';
+  @override
+  String get bleDiscoveryHint =>
+      'नेटवर्क मल्टीकास्ट को ब्लॉक करने पर भी (AP आइसोलेशन) ब्लूटूथ के ज़रिए निकटवर्ती डिवाइस खोजता है। Android, iOS, macOS और Windows पर काम करता है; Linux पर यह डिवाइस दूसरों को खोज सकता है लेकिन खुद नहीं मिल सकता। दोनों डिवाइसों को इस विकल्प के चालू होने के साथ यही फोर्क (fork) चाहिए; फ़ाइल ट्रांसफ़र खुद अभी भी नेटवर्क से ही होता है।';
+  @override
+  String get bleStatusActive =>
+      'सक्रिय: स्कैन और विज्ञापन (advertising) जारी है। निकटवर्ती डिवाइस केवल तब दिखते हैं जब वे भी इस विकल्प के चालू होने के साथ यही फोर्क (fork) चला रहे हों।';
+  @override
+  String get bleStatusScanOnly =>
+      'सक्रिय: केवल स्कैन। इस समय इस डिवाइस को ब्लूटूथ से नहीं खोजा जा सकता (इस प्लेटफ़ॉर्म पर BLE advertising का समर्थन नहीं है, या अभी कोई उपयोगी नेटवर्क पता नहीं है)।';
+  @override
+  String get bleStatusPaused => 'रुका हुआ है। ऐप के फ़ोरग्राउंड में लौटने पर फिर से शुरू हो जाता है।';
+  @override
+  String get bleStatusPermissionDenied =>
+      'ब्लूटूथ की अनुमतियाँ अस्वीकार कर दी गई हैं। सिस्टम सेटिंग्स में "आस-पास के डिवाइस" (या Android 11 और उससे पुराने वर्शन पर "लोकेशन") की अनुमति दें, फिर यह विकल्प बंद करके दोबारा चालू करें।';
+  @override
+  String get bleStatusAdapterOff => 'ब्लूटूथ बंद है या उपलब्ध नहीं है। ब्लूटूथ के दोबारा उपलब्ध होते ही डिस्कवरी अपने आप फिर से शुरू हो जाती है।';
+  @override
+  String get bleStatusUnsupported => 'इस डिवाइस पर समर्थित नहीं: BLE डिस्कवरी के लिए Android 7 या नया वर्शन और Bluetooth LE रेडियो चाहिए।';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Android के इस वर्शन पर दूसरे डिवाइस खोजने के लिए सिस्टम की लोकेशन सेवाओं का चालू होना भी ज़रूरी है (अनुमति अपने आप मांगी जाती है; इस डिवाइस को दूसरे पहले से खोज सकते हैं)।';
+  @override
+  String get bleStatusError => 'BLE डिस्कवरी शुरू नहीं हो सकी। विवरण के लिए समस्या निवारण > लॉग देखें।';
+  @override
+  String get bleOpenSystemSettings => 'सिस्टम सेटिंग्स खोलें';
 }
 
 // Path: settingsTab.other
@@ -1162,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$hi extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} के ज़रिए अपडेट किया गया (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$hi extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'चेकसम सत्यापित';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} फ़ाइलों के चेकसम सत्यापित';
+  @override
+  String get notVerifiable => 'प्रेषक ने कोई चेकसम नहीं दिए';
+  @override
+  String get disabled => 'चेकसम सत्यापन अक्षम है';
+  @override
+  String attached({required Object curr, required Object n}) => 'चेकसम जोड़े गए (${curr} / ${n} फ़ाइलें)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$hi extends Translations$progressPage$total$en {
   _Translations$progressPage$total$hi._(TranslationsHi root) : this._root = root, super.internal(root);
@@ -1255,6 +1347,11 @@ class _Translations$dialogs$addressInput$hi extends Translations$dialogs$address
   String get ip => 'IP पता';
   @override
   String get recentlyUsed => 'हाल ही में उपयोग किया गया: ';
+  @override
+  String get noHashtagCandidates =>
+      'मौजूदा नेटवर्क का कोई IPv4 पता नहीं है, इसलिए हैशटैग को संभावित पते में नहीं बदला जा सकता। कृपया पूरा पता दर्ज करें (जैसे 192.168.1.5 या fe80::1)।';
+  @override
+  late final _Translations$dialogs$addressInput$validation$hi validation = _Translations$dialogs$addressInput$validation$hi._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1268,6 +1365,42 @@ class _Translations$dialogs$cancelSession$hi extends Translations$dialogs$cancel
   String get title => 'फ़ाइल स्थानांतरण रद्द करें';
   @override
   String get content => 'क्या आप वास्तव में फ़ाइल स्थानांतरण रद्द करना चाहते हैं?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$hi extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'कनेक्शन विफल';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$hi timeout = _Translations$dialogs$connectionError$timeout$hi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$hi refused = _Translations$dialogs$connectionError$refused$hi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$hi forbidden = _Translations$dialogs$connectionError$forbidden$hi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$hi other = _Translations$dialogs$connectionError$other$hi._(_root);
+  @override
+  String get retry => 'पुनः प्रयास करें';
+  @override
+  String get details => 'त्रुटि विवरण:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$hi extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'सोर्स फ़ाइलें हटाएं';
+  @override
+  String get content => 'फ़ाइलें सफलतापूर्वक भेजे जाने के बाद वे इस डिवाइस से हटा दी जाएंगी। इसे वापस नहीं किया जा सकता।';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1560,6 +1693,32 @@ class _Translations$dialogs$sendModeHelp$hi extends Translations$dialogs$sendMod
   String get link => 'जिन प्राप्तकर्ताओं के पास LocalSend इंस्टॉल नहीं है, वे अपने ब्राउज़र में लिंक खोलकर चयनित फ़ाइलें डाउनलोड कर सकते हैं।';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$hi extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'सर्वर प्रारंभ नहीं हो सका';
+  @override
+  String port({required Object port}) => 'पोर्ट: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$hi windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$hi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$hi addressInUse = _Translations$dialogs$startupError$addressInUse$hi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$hi generic = _Translations$dialogs$startupError$generic$hi._(_root);
+  @override
+  String get details => 'त्रुटि विवरण:';
+  @override
+  String get copyDetails => 'विवरण कॉपी करें';
+  @override
+  String get openSettings => 'सेटिंग्स खोलें';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$hi extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$hi._(TranslationsHi root) : this._root = root, super.internal(root);
@@ -1569,6 +1728,68 @@ class _Translations$dialogs$zoom$hi extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$hi extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'कोई नेटवर्क कनेक्शन नहीं';
+  @override
+  String get advice => 'यह डिवाइस किसी नेटवर्क से जुड़ा नहीं है। इस डिवाइस का वाई-फ़ाई या केबल कनेक्शन जांचें।';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$hi extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'मल्टीकास्ट उपलब्ध नहीं है';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend इस नेटवर्क पर मल्टीकास्ट डिस्कवरी का उपयोग नहीं कर सकता। सुनिश्चित करें कि दोनों डिवाइस एक ही नेटवर्क पर हों, और AP आइसोलेशन या फ़ायरवॉल UDP पोर्ट ${port} को ब्लॉक न कर रहा हो।';
+  @override
+  String reason({required Object reason}) => 'कारण: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$hi extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'कोई डिवाइस नहीं मिला';
+  @override
+  String get advice =>
+      'डिस्कवरी काम कर रही है, लेकिन किसी डिवाइस ने घोषणाओं या नेटवर्क स्कैन का जवाब नहीं दिया। हो सकता है कि दूसरा डिवाइस ऑफ़लाइन हो, स्लीप मोड में हो या फ़ायरवॉल से ब्लॉक हो गया हो। सुनिश्चित करें कि LocalSend दूसरे डिवाइस पर चल रहा है।';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'जवाब मिले बिना ${announcements} घोषणाएं और ${scans} नेटवर्क स्कैन भेजे गए।';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$hi extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP पते अक्सर बदलते रहते हैं। सूची में न दिखने वाले डिवाइस तक आप फिर भी पहुंच सकते हैं: उसे पसंदीदा में जोड़ें या उसका पता स्वयं दर्ज करें।';
+  @override
+  String get openFavorites => 'पसंदीदा खोलें';
+  @override
+  String get manualInput => 'पता स्वयं दर्ज करें';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1655,4 +1876,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$hi extends Translations$whatsNe
     'पसंदीदा से आने वाले अनुरोध अब स्वचालित रूप से स्वीकार कर लिए जाते हैं। यह सुविधा डिफ़ॉल्ट रूप से चालू है और इसे सेटिंग्स में बंद किया जा सकता है।',
     'एंड्रोइड पर, ऐप के बैकग्राउंड में होने या स्क्रीन बंद होने पर भी ट्रांसफ़र जारी रहते हैं। आईओएस पर, ऐप का फ़ोरग्राउंड में ही रहना ज़रूरी है।',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$hi extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'एक मान्य IPv4 पता, IPv6 पता या होस्ट नाम दर्ज करें।';
+  @override
+  String get scheme => 'केवल पता दर्ज करें, "http://" या "https://" के बिना।';
+  @override
+  String get port => 'केवल पता दर्ज करें। पोर्ट सेटिंग्स से लिया जाता है।';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$hi extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'डिवाइस ने समय पर जवाब नहीं दिया।';
+  @override
+  String get advice =>
+      'संभवतः वह ऑफ़लाइन है, स्लीप मोड में है, या फ़ायरवॉल कनेक्शन रोक रहा है। सुनिश्चित करें कि LocalSend दूसरे डिवाइस पर चल रहा है और दोनों डिवाइस एक ही नेटवर्क पर हैं।';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$hi extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'डिवाइस ने कनेक्शन स्वीकार करने से इनकार किया।';
+  @override
+  String get advice =>
+      'लगता है LocalSend लक्ष्य डिवाइस पर नहीं चल रहा, या वह किसी दूसरे पोर्ट पर सुन रहा है। LocalSend को दूसरे डिवाइस पर चालू करें या पोर्ट जांचें।';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$hi extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'डिवाइस ने अनुरोध अस्वीकार कर दिया।';
+  @override
+  String get advice => 'हो सकता है पिन (PIN) ज़रूरी हो, या डिवाइस के साथ पेयरिंग बदल गई हो। लक्ष्य डिवाइस पर पिन और त्वरित सहेजें सेटिंग्स जांचें।';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$hi extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'कनेक्शन स्थापित नहीं हो सका।';
+  @override
+  String get advice => 'पता और पोर्ट जांचें, सुनिश्चित करें कि LocalSend लक्ष्य डिवाइस पर चल रहा है, और कोई फ़ायरवॉल या VPN कनेक्शन न रोक रहा हो।';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$hi extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows ने पोर्ट तक पहुंच से इनकार कर दिया (सॉकेट त्रुटि 10013)।';
+  @override
+  String get advice =>
+      'यह आमतौर पर Hyper-V, WSL या Docker द्वारा आरक्षित पोर्ट रेंज, या खराब Winsock कैटलॉग के कारण होता है:\n• सेटिंग्स (नेटवर्क) में पोर्ट बदलें\n• आरक्षित रेंज इस कमांड से जांचें: netsh interface ipv4 show excludedportrange protocol=tcp\n• व्यवस्थापक के रूप में Winsock इस कमांड से मरम्मत करें: netsh winsock reset (बाद में रीबूट करें)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$hi extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'यह पोर्ट पहले से ही किसी अन्य एप्लिकेशन द्वारा उपयोग में है।';
+  @override
+  String get advice =>
+      'कोई अन्य प्रोग्राम (या LocalSend की दूसरी प्रति) इस पोर्ट पर सुन रहा है:\n• दूसरा एप्लिकेशन बंद करें, या\n• सेटिंग्स (नेटवर्क) में पोर्ट बदलें';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$hi extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$hi._(TranslationsHi root) : this._root = root, super.internal(root);
+
+  final TranslationsHi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'सर्वर प्रारंभ नहीं हो सका।';
+  @override
+  String get advice => '• अपनी फ़ायरवॉल और नेटवर्क सेटिंग्स जांचें\n• सेटिंग्स (नेटवर्क) में पोर्ट बदलने का प्रयास करें';
 }

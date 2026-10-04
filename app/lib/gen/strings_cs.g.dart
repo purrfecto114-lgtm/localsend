@@ -231,6 +231,8 @@ class _Translations$sendTab$cs extends Translations$sendTab$en {
   String get help => 'Ujistěte se, že se požadovaný cíl nachází ve stejné síti Wi-Fi.';
   @override
   String get placeItems => 'Vložte položky, které chcete sdílet.';
+  @override
+  late final _Translations$sendTab$diagnosis$cs diagnosis = _Translations$sendTab$diagnosis$cs._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$cs extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Uloženo ve Fotkách';
   @override
+  late final _Translations$progressPage$checksum$cs checksum = _Translations$progressPage$checksum$cs._(_root);
+  @override
   late final _Translations$progressPage$total$cs total = _Translations$progressPage$total$cs._(_root);
   @override
   late final _Translations$progressPage$remainingTime$cs remainingTime = _Translations$progressPage$remainingTime$cs._(_root);
@@ -593,6 +597,11 @@ class _Translations$dialogs$cs extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$cs cancelSession = _Translations$dialogs$cancelSession$cs._(_root);
   @override
+  late final _Translations$dialogs$connectionError$cs connectionError = _Translations$dialogs$connectionError$cs._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$cs deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$cs._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$cs cannotOpenFile = _Translations$dialogs$cannotOpenFile$cs._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$cs encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$cs._(_root);
@@ -633,6 +642,8 @@ class _Translations$dialogs$cs extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$cs pin = _Translations$dialogs$pin$cs._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$cs sendModeHelp = _Translations$dialogs$sendModeHelp$cs._(_root);
+  @override
+  late final _Translations$dialogs$startupError$cs startupError = _Translations$dialogs$startupError$cs._(_root);
   @override
   late final _Translations$dialogs$zoom$cs zoom = _Translations$dialogs$zoom$cs._(_root);
 }
@@ -837,6 +848,32 @@ class _Translations$sendTab$sendModes$cs extends Translations$sendTab$sendModes$
   String get link => 'Sdílet pomocí odkazu';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$cs extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Vyhledávání zařízení v okolí...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$cs noInterface = _Translations$sendTab$diagnosis$noInterface$cs._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$cs multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$cs._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$cs scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$cs._(_root);
+  @override
+  String get rescan => 'Hledat znovu';
+  @override
+  String get bleHint =>
+      'Zjišťování BLE je aktivní: zařízení jsou pomocí Bluetooth nalezena, jen pokud také používají tento fork se zapnutou možností; samotný přenos souborů stále probíhá přes síť.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$cs manualFallback = _Translations$sendTab$diagnosis$manualFallback$cs._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$cs extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$cs._(TranslationsCs root) : this._root = root, super.internal(root);
@@ -918,6 +955,8 @@ class _Translations$settingsTab$send$cs extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Automaticky přijímat požadavky v režimu "Sdílet přes odkaz".';
   @override
   String get createChecksums => 'Vytvářet kontrolní součty při odesílání souborů';
+  @override
+  String get deleteSourceAfterSend => 'Po úspěšném odeslání smazat zdrojové soubory';
 }
 
 // Path: settingsTab.network
@@ -948,6 +987,13 @@ class _Translations$settingsTab$network$cs extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Časový limit zjišťování';
   @override
+  String get maxInterfaces => 'Maximální počet rozhraní (chytré skenování)';
+  @override
+  String get vpnInterfaces => 'Zahrnout rozhraní VPN (chytré skenování)';
+  @override
+  String get vpnInterfacesHint =>
+      'Skenovat také podsítě rozhraní VPN tunelů (Tailscale, WireGuard, ...). VPN obvykle nepřenáší vícesměrové vysílání, proto se jejich podsítě prozkoumávají náhradním HTTP skenováním.';
+  @override
   String get useSystemName => 'Použít název systému';
   @override
   String get generateRandomAlias => 'Generovat náhodný alias';
@@ -961,6 +1007,33 @@ class _Translations$settingsTab$network$cs extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Je možné, že vás ostatní zařízení nezjistí, protože používáte vlastní adresu vícesměrového vysílání. (výchozí: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Zjišťování BLE (experimentální)';
+  @override
+  String get bleDiscoveryHint =>
+      'Najde okolní zařízení pomocí Bluetooth, i když síť blokuje vícesměrové vysílání (izolace AP). Funguje na Androidu, iOS, macOS a Windows; na Linuxu může toto zařízení najít ostatní, ale samo nalezeno být nemůže. Obě zařízení musí používat tento fork se zapnutou možností; samotný přenos souborů stále probíhá přes síť.';
+  @override
+  String get bleStatusActive =>
+      'Aktivní: skenování i oznamování. Zařízení v okolí se zobrazí, jen pokud také používají tento fork se zapnutou možností.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktivní: pouze skenování. Toto zařízení teď nemůže být přes Bluetooth zjištěno (tato platforma nepodporuje BLE oznamování, nebo ještě není k dispozici použitelná síťová adresa).';
+  @override
+  String get bleStatusPaused => 'Pozastaveno. Obnoví se, když se aplikace vrátí do popředí.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Oprávnění k Bluetooth byla zamítnuta. Udělte oprávnění "Zařízení v okolí" (nebo "Poloha" na Androidu 11 a starším) v nastavení systému, pak tuto možnost vypněte a znovu zapněte.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth je vypnuté nebo nedostupné. Zjišťování se samo restartuje, až bude Bluetooth znovu k dispozici.';
+  @override
+  String get bleStatusUnsupported => 'Na tomto zařízení nepodporováno: zjišťování BLE vyžaduje Android 7 a novější a rádio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'V této verzi Androidu vyžaduje hledání jiných zařízení také zapnuté systémové služby určování polohy (oprávnění se vyžaduje automaticky; toto zařízení už může být ostatními nalezeno).';
+  @override
+  String get bleStatusError => 'Zjišťování BLE se nepodařilo spustit. Podrobnosti najdete v části Odstraňování problémů > Záznamy.';
+  @override
+  String get bleOpenSystemSettings => 'Otevřít nastavení systému';
 }
 
 // Path: settingsTab.other
@@ -1077,6 +1150,25 @@ class _Translations$deviceDetailsPage$logs$cs extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Aktualizováno přes ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$cs extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Kontrolní součty ověřeny';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Kontrolní součty ověřeny pro ${curr} / ${n} souborů';
+  @override
+  String get notVerifiable => 'Odesílatel neposkytl kontrolní součty';
+  @override
+  String get disabled => 'Ověřování kontrolních součtů je vypnuto';
+  @override
+  String attached({required Object curr, required Object n}) => 'Kontrolní součty připojeny (${curr} / ${n} souborů)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$cs extends Translations$progressPage$total$en {
   _Translations$progressPage$total$cs._(TranslationsCs root) : this._root = root, super.internal(root);
@@ -1170,6 +1262,11 @@ class _Translations$dialogs$addressInput$cs extends Translations$dialogs$address
   String get ip => 'IP Adresa';
   @override
   String get recentlyUsed => 'Nedávno použité: ';
+  @override
+  String get noHashtagCandidates =>
+      'Aktuální síť nemá IPv4 adresu, takže hashtag nelze rozšířit na kandidátskou adresu. Zadejte prosím celou adresu (např. 192.168.1.5 nebo fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$cs validation = _Translations$dialogs$addressInput$validation$cs._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1183,6 +1280,42 @@ class _Translations$dialogs$cancelSession$cs extends Translations$dialogs$cancel
   String get title => 'Zrušit přenos souborů';
   @override
   String get content => 'Opravdu chcete zrušit přenos souborů?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$cs extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Připojení se nezdařilo';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$cs timeout = _Translations$dialogs$connectionError$timeout$cs._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$cs refused = _Translations$dialogs$connectionError$refused$cs._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$cs forbidden = _Translations$dialogs$connectionError$forbidden$cs._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$cs other = _Translations$dialogs$connectionError$other$cs._(_root);
+  @override
+  String get retry => 'Zkusit znovu';
+  @override
+  String get details => 'Podrobnosti chyby:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$cs extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Smazat zdrojové soubory';
+  @override
+  String get content => 'Po úspěšném odeslání budou soubory z tohoto zařízení smazány. Tuto akci nelze vrátit zpět.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1474,6 +1607,32 @@ class _Translations$dialogs$sendModeHelp$cs extends Translations$dialogs$sendMod
   String get link => 'Příjemci, kteří nemají nainstalovaný LocalSend, si mohou vybrané soubory stáhnout otevřením odkazu ve svém prohlížeči.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$cs extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Server se nepodařilo spustit';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$cs windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$cs._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$cs addressInUse = _Translations$dialogs$startupError$addressInUse$cs._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$cs generic = _Translations$dialogs$startupError$generic$cs._(_root);
+  @override
+  String get details => 'Podrobnosti chyby:';
+  @override
+  String get copyDetails => 'Zkopírovat podrobnosti';
+  @override
+  String get openSettings => 'Otevřít nastavení';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$cs extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$cs._(TranslationsCs root) : this._root = root, super.internal(root);
@@ -1483,6 +1642,68 @@ class _Translations$dialogs$zoom$cs extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$cs extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Žádné připojení k síti';
+  @override
+  String get advice => 'Toto zařízení není připojeno k žádné síti. Zkontrolujte připojení tohoto zařízení k síti Wi-Fi nebo kabelu.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$cs extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Vícesměrové vysílání není dostupné';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend nemůže v této síti použít zjišťování pomocí vícesměrového vysílání. Ujistěte se, že jsou obě zařízení ve stejné síti a že izolace AP ani firewall neblokují UDP port ${port}.';
+  @override
+  String reason({required Object reason}) => 'Příčina: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$cs extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nenalezena žádná zařízení';
+  @override
+  String get advice =>
+      'Vyhledávání funguje, ale žádné zařízení neodpovědělo na oznámení ani na skenování sítě. Druhé zařízení může být offline, v režimu spánku nebo blokováno firewallem. Ujistěte se, že na druhém zařízení běží LocalSend.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Odesláno ${announcements} oznámení a provedeno ${scans} skenování sítě bez odpovědi.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$cs extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP adresy se často mění. K zařízení, které není v seznamu, se stále můžete dostat: přidejte si ho do oblíbených nebo zadejte jeho adresu ručně.';
+  @override
+  String get openFavorites => 'Otevřít oblíbené';
+  @override
+  String get manualInput => 'Zadat adresu ručně';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1569,4 +1790,115 @@ class _Translations$whatsNewPage$changes$v1_18_0$cs extends Translations$whatsNe
     'Požadavky od oblíbených zařízení jsou nyní přijímány automaticky. Tato funkce je ve výchozím nastavení zapnutá a lze ji v nastavení vypnout.',
     'Na Androidu přenosy pokračují, i když je aplikace na pozadí nebo je obrazovka vypnutá. Na iOS musí aplikace stále zůstat v popředí.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$cs extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Zadejte platnou IPv4 adresu, IPv6 adresu nebo název hostitele.';
+  @override
+  String get scheme => 'Zadejte pouze adresu, bez "http://" nebo "https://".';
+  @override
+  String get port => 'Zadejte pouze adresu. Port se bere z nastavení.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$cs extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zařízení včas neodpovědělo.';
+  @override
+  String get advice =>
+      'Pravděpodobně je offline, v režimu spánku nebo připojení blokuje firewall. Ujistěte se, že na druhém zařízení běží LocalSend a že jsou obě zařízení ve stejné síti.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$cs extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zařízení odmítlo připojení.';
+  @override
+  String get advice =>
+      'Zdá se, že na cílovém zařízení LocalSend neběží, nebo naslouchá na jiném portu. Spusťte LocalSend na druhém zařízení nebo zkontrolujte port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$cs extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zařízení požadavek odmítlo.';
+  @override
+  String get advice =>
+      'Možná je vyžadován PIN nebo se změnilo spárování se zařízením. Zkontrolujte PIN a nastavení rychlého uložení na cílovém zařízení.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$cs extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Připojení se nepodařilo navázat.';
+  @override
+  String get advice => 'Zkontrolujte adresu a port, ujistěte se, že na cílovém zařízení běží LocalSend a že připojení neblokuje firewall ani VPN.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$cs extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows zamítly přístup k portu (chyba soketu 10013).';
+  @override
+  String get advice =>
+      'Obvykle je to způsobeno rozsahem portů rezervovaným pro Hyper-V, WSL nebo Docker, nebo poškozeným katalogem Winsock:\n• Změňte port v nastavení (Síť)\n• Zkontrolujte rezervované rozsahy příkazem: netsh interface ipv4 show excludedportrange protocol=tcp\n• Opravte Winsock jako správce příkazem: netsh winsock reset (následně restartujte počítač)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$cs extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port již používá jiná aplikace.';
+  @override
+  String get advice =>
+      'Na tomto portu naslouchá jiný program (nebo druhá instance LocalSend):\n• Zavřete druhou aplikaci, nebo\n• Změňte port v nastavení (Síť)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$cs extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$cs._(TranslationsCs root) : this._root = root, super.internal(root);
+
+  final TranslationsCs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Server se nepodařilo spustit.';
+  @override
+  String get advice => '• Zkontrolujte firewall a nastavení sítě\n• Zkuste změnit port v nastavení (Síť)';
 }

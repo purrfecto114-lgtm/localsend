@@ -234,6 +234,8 @@ class _Translations$sendTab$el extends Translations$sendTab$en {
   String get help => 'Βεβαιωθείτε ότι ο επιθυμητός παραλήπτης βρίσκεται επίσης στο ίδιο δίκτυο Wi-Fi.';
   @override
   String get placeItems => 'Τοποθετήστε στοιχεία για διαμοιρασμό.';
+  @override
+  late final _Translations$sendTab$diagnosis$el diagnosis = _Translations$sendTab$diagnosis$el._(_root);
 }
 
 // Path: settingsTab
@@ -458,6 +460,8 @@ class _Translations$progressPage$el extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Αποθηκεύτηκε στις Φωτογραφίες';
   @override
+  late final _Translations$progressPage$checksum$el checksum = _Translations$progressPage$checksum$el._(_root);
+  @override
   late final _Translations$progressPage$total$el total = _Translations$progressPage$total$el._(_root);
   @override
   late final _Translations$progressPage$remainingTime$el remainingTime = _Translations$progressPage$remainingTime$el._(_root);
@@ -680,6 +684,11 @@ class _Translations$dialogs$el extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$el cancelSession = _Translations$dialogs$cancelSession$el._(_root);
   @override
+  late final _Translations$dialogs$connectionError$el connectionError = _Translations$dialogs$connectionError$el._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$el deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$el._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$el cannotOpenFile = _Translations$dialogs$cannotOpenFile$el._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$el encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$el._(_root);
@@ -720,6 +729,8 @@ class _Translations$dialogs$el extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$el pin = _Translations$dialogs$pin$el._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$el sendModeHelp = _Translations$dialogs$sendModeHelp$el._(_root);
+  @override
+  late final _Translations$dialogs$startupError$el startupError = _Translations$dialogs$startupError$el._(_root);
   @override
   late final _Translations$dialogs$zoom$el zoom = _Translations$dialogs$zoom$el._(_root);
 }
@@ -924,6 +935,32 @@ class _Translations$sendTab$sendModes$el extends Translations$sendTab$sendModes$
   String get link => 'Διαμοιρασμός μέσω συνδέσμου';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$el extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Αναζήτηση για κοντινές συσκευές…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$el noInterface = _Translations$sendTab$diagnosis$noInterface$el._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$el multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$el._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$el scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$el._(_root);
+  @override
+  String get rescan => 'Αναζήτηση ξανά';
+  @override
+  String get bleHint =>
+      'Η ανακάλυψη BLE είναι ενεργή: οι συσκευές εντοπίζονται μέσω Bluetooth μόνο αν εκτελούν και αυτές αυτό το fork με την επιλογή ενεργοποιημένη. Η ίδια η μεταφορά εξακολουθεί να γίνεται μέσω δικτύου.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$el manualFallback = _Translations$sendTab$diagnosis$manualFallback$el._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$el extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$el._(TranslationsEl root) : this._root = root, super.internal(root);
@@ -1005,6 +1042,8 @@ class _Translations$settingsTab$send$el extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Κοινοποίηση μέσω συνδέσμου: Αυτόματη αποδοχή';
   @override
   String get createChecksums => 'Δημιουργία αθροισμάτων ελέγχου κατά την αποστολή αρχείων';
+  @override
+  String get deleteSourceAfterSend => 'Διαγραφή των αρχείων προέλευσης μετά από επιτυχημένη αποστολή';
 }
 
 // Path: settingsTab.network
@@ -1035,6 +1074,13 @@ class _Translations$settingsTab$network$el extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Λήξη χρόνου ανακάλυψης';
   @override
+  String get maxInterfaces => 'Μέγιστος αριθμός διεπαφών (έξυπνη σάρωση)';
+  @override
+  String get vpnInterfaces => 'Συμπερίληψη διεπαφών VPN (έξυπνη σάρωση)';
+  @override
+  String get vpnInterfacesHint =>
+      'Σαρώνει επίσης τα υποδίκτυα των διεπαφών σήραγγας VPN (Tailscale, WireGuard, …). Τα VPN συνήθως δεν μεταφέρουν αναμετάδοση, οπότε τα υποδίκτυά τους ελέγχονται από τη σάρωση HTTP εναλλακτικά.';
+  @override
   String get useSystemName => 'Χρήση του ονόματος του συστήματος';
   @override
   String get generateRandomAlias => 'Δημιουργία τυχαίου ψευδώνυμου';
@@ -1048,6 +1094,35 @@ class _Translations$settingsTab$network$el extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Ενδέχεται να μην εντοπιστείτε από άλλες συσκευές επειδή χρησιμοποιείτε μια προσαρμοσμένη διεύθυνση αναμετάδοσης. (προεπιλογή: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Ανακάλυψη BLE (πειραματική)';
+  @override
+  String get bleDiscoveryHint =>
+      'Ανακαλύπτει κοντινές συσκευές μέσω Bluetooth ακόμα και όταν το δίκτυο αποκλείει την αναμετάδοση (απομόνωση AP). Λειτουργεί σε Android, iOS, macOS και Windows· στο Linux αυτή η συσκευή μπορεί να βρει άλλες αλλά δεν μπορεί να βρεθεί η ίδια. Και οι δύο συσκευές χρειάζονται αυτό το fork με την επιλογή ενεργοποιημένη· η ίδια η μεταφορά αρχείων εξακολουθεί να χρησιμοποιεί το δίκτυο.';
+  @override
+  String get bleStatusActive =>
+      'Ενεργή: σάρωση και εκπομπή. Οι κοντινές συσκευές εμφανίζονται μόνο αν εκτελούν και αυτές αυτό το fork με την επιλογή ενεργοποιημένη.';
+  @override
+  String get bleStatusScanOnly =>
+      'Ενεργή: μόνο σάρωση. Αυτή η συσκευή δεν μπορεί προς το παρόν να βρεθεί μέσω Bluetooth (χωρίς υποστήριξη εκπομπής BLE σε αυτήν την πλατφόρμα, ή χωρίς ακόμα χρησιμοποιήσιμη διεύθυνση δικτύου).';
+  @override
+  String get bleStatusPaused => 'Σε παύση. Θα συνεχίσει όταν η εφαρμογή επιστρέψει στο προσκήνιο.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Οι άδειες Bluetooth απορρίφθηκαν. Παραχωρήστε την άδεια "Κοντινές συσκευές" (ή "Τοποθεσία" σε Android 11 και παλαιότερα) στις ρυθμίσεις συστήματος και μετά απενεργοποιήστε και ενεργοποιήστε ξανά αυτήν την επιλογή.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Το Bluetooth είναι απενεργοποιημένο ή μη διαθέσιμο. Η ανακάλυψη επανεκκινείται αυτόματα όταν το Bluetooth γίνει ξανά διαθέσιμο.';
+  @override
+  String get bleStatusUnsupported => 'Δεν υποστηρίζεται σε αυτή τη συσκευή: η ανακάλυψη BLE απαιτεί Android 7 ή νεότερο και υποστήριξη Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Σε αυτήν την έκδοση Android, η εύρεση άλλων συσκευών απαιτεί επιπλέον να είναι ενεργοποιημένες οι υπηρεσίες τοποθεσίας του συστήματος (η άδεια ζητείται αυτόματα· αυτή η συσκευή μπορεί ήδη να βρεθεί από άλλους).';
+  @override
+  String get bleStatusError =>
+      'Η ανακάλυψη BLE δεν μπόρεσε να ξεκινήσει. Δείτε την ενότητα Αντιμετώπιση προβλημάτων > Αρχεία καταγραφής για λεπτομέρειες.';
+  @override
+  String get bleOpenSystemSettings => 'Άνοιγμα ρυθμίσεων συστήματος';
 }
 
 // Path: settingsTab.other
@@ -1165,6 +1240,25 @@ class _Translations$deviceDetailsPage$logs$el extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Ενημερώθηκε μέσω ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$el extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Τα αθροίσματα ελέγχου επαληθεύτηκαν';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Τα αθροίσματα ελέγχου επαληθεύτηκαν για ${curr} / ${n} αρχεία';
+  @override
+  String get notVerifiable => 'Δεν δόθηκαν αθροίσματα ελέγχου από τον αποστολέα';
+  @override
+  String get disabled => 'Η επαλήθευση αθροισμάτων ελέγχου είναι απενεργοποιημένη';
+  @override
+  String attached({required Object curr, required Object n}) => 'Επισυνάπηκαν αθροίσματα ελέγχου (${curr} / ${n} αρχεία)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$el extends Translations$progressPage$total$en {
   _Translations$progressPage$total$el._(TranslationsEl root) : this._root = root, super.internal(root);
@@ -1258,6 +1352,11 @@ class _Translations$dialogs$addressInput$el extends Translations$dialogs$address
   String get ip => 'Διεύθυνση IP';
   @override
   String get recentlyUsed => 'Χρησιμοποιήθηκε πρόσφατα: ';
+  @override
+  String get noHashtagCandidates =>
+      'Το τρέχον δίκτυο δεν έχει διεύθυνση IPv4, επομένως το χάσταγκ δεν μπορεί να επεκταθεί σε διεύθυνση υποψηφίου. Παρακαλώ εισάγετε την πλήρη διεύθυνση (π.χ. 192.168.1.5 ή fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$el validation = _Translations$dialogs$addressInput$validation$el._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1271,6 +1370,42 @@ class _Translations$dialogs$cancelSession$el extends Translations$dialogs$cancel
   String get title => 'Ακύρωση της μεταφοράς του αρχείου';
   @override
   String get content => 'Θέλετε σίγουρα να ακυρωθεί η μεταφορά του αρχείου?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$el extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Η σύνδεση απέτυχε';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$el timeout = _Translations$dialogs$connectionError$timeout$el._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$el refused = _Translations$dialogs$connectionError$refused$el._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$el forbidden = _Translations$dialogs$connectionError$forbidden$el._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$el other = _Translations$dialogs$connectionError$other$el._(_root);
+  @override
+  String get retry => 'Επανάληψη';
+  @override
+  String get details => 'Λεπτομέρειες σφάλματος:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$el extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Διαγραφή αρχείων προέλευσης';
+  @override
+  String get content => 'Αφού τα αρχεία σταλούν επιτυχώς, θα διαγραφούν από αυτή τη συσκευή. Αυτό δεν μπορεί να αναιρεθεί.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1564,6 +1699,32 @@ class _Translations$dialogs$sendModeHelp$el extends Translations$dialogs$sendMod
       'Οι παραλήπτες που δεν έχουν εγκαταστήσει το LocalSend μπορούν να πραγματοποιήσουν λήψη των επιλεγμένων αρχείων ανοίγοντας τον σύνδεσμο στον φυλλομετρητή τους.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$el extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Δεν ήταν δυνατή η εκκίνηση του διακομιστή';
+  @override
+  String port({required Object port}) => 'Θύρα: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$el windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$el._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$el addressInUse = _Translations$dialogs$startupError$addressInUse$el._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$el generic = _Translations$dialogs$startupError$generic$el._(_root);
+  @override
+  String get details => 'Λεπτομέρειες σφάλματος:';
+  @override
+  String get copyDetails => 'Αντιγραφή λεπτομερειών';
+  @override
+  String get openSettings => 'Άνοιγμα ρυθμίσεων';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$el extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$el._(TranslationsEl root) : this._root = root, super.internal(root);
@@ -1573,6 +1734,68 @@ class _Translations$dialogs$zoom$el extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$el extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Δεν υπάρχει σύνδεση δικτύου';
+  @override
+  String get advice => 'Αυτή η συσκευή δεν είναι συνδεδεμένη σε κάποιο δίκτυο. Ελέγξτε τη σύνδεση Wi-Fi ή καλωδίου αυτής της συσκευής.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$el extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Η αναμετάδοση δεν είναι διαθέσιμη';
+  @override
+  String advice({required Object port}) =>
+      'Το LocalSend δεν μπορεί να χρησιμοποιήσει την ανακάλυψη μέσω αναμετάδοσης σε αυτό το δίκτυο. Βεβαιωθείτε ότι και οι δύο συσκευές βρίσκονται στο ίδιο δίκτυο και ότι η απομόνωση AP ή ένα τείχος προστασίας δεν αποκλείει τη θύρα UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Αιτία: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$el extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Δεν βρέθηκαν συσκευές';
+  @override
+  String get advice =>
+      'Η ανακάλυψη λειτουργεί, αλλά καμία συσκευή δεν απάντησε στις ανακοινώσεις ούτε στη σάρωση δικτύου. Η άλλη συσκευή ίσως είναι εκτός σύνδεσης, σε ύπνο ή αποκλείεται από τείχος προστασίας. Βεβαιωθείτε ότι το LocalSend εκτελείται στην άλλη συσκευή.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Στάλθηκαν ${announcements} ανακοινώσεις και ${scans} σαρώσεις δικτύου χωρίς απάντηση.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$el extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Οι διευθύνσεις IP αλλάζουν συχνά. Μπορείτε ακόμα να προσεγγίσετε μια συσκευή που δεν εμφανίζεται στη λίστα: προσθέστε την στα αγαπημένα ή εισάγετε τη διεύθυνσή της χειροκίνητα.';
+  @override
+  String get openFavorites => 'Άνοιγμα αγαπημένων';
+  @override
+  String get manualInput => 'Χειροκίνητη εισαγωγή διεύθυνσης';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1659,4 +1882,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$el extends Translations$whatsNe
     'Τα αιτήματα από αγαπημένα γίνονται πλέον αποδεκτά αυτόματα. Αυτό είναι ενεργοποιημένο από προεπιλογή και μπορεί να απενεργοποιηθεί στις ρυθμίσεις.',
     'Στο Android, οι μεταφορές συνεχίζονται ενώ η εφαρμογή βρίσκεται στο παρασκήνιο ή η οθόνη είναι σβηστή. Στο iOS, η εφαρμογή πρέπει ακόμα να παραμένει στο προσκήνιο.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$el extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Εισάγετε μια έγκυρη διεύθυνση IPv4, διεύθυνση IPv6 ή όνομα κεντρικού υπολογιστή.';
+  @override
+  String get scheme => 'Εισάγετε μόνο τη διεύθυνση, χωρίς "http://" ή "https://".';
+  @override
+  String get port => 'Εισάγετε μόνο τη διεύθυνση. Η θύρα λαμβάνεται από τις ρυθμίσεις.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$el extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Η συσκευή δεν απάντησε εγκαίρως.';
+  @override
+  String get advice =>
+      'Πιθανότατα είναι εκτός σύνδεσης, σε ύπνο ή ένα τείχος προστασίας αποκλείει τη σύνδεση. Βεβαιωθείτε ότι το LocalSend εκτελείται στην άλλη συσκευή και ότι και οι δύο συσκευές βρίσκονται στο ίδιο δίκτυο.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$el extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Η συσκευή απέρριψε τη σύνδεση.';
+  @override
+  String get advice =>
+      'Φαίνεται πως το LocalSend δεν εκτελείται στη συσκευή προορισμού ή ακούει σε διαφορετική θύρα. Εκκινήστε το LocalSend στην άλλη συσκευή ή ελέγξτε τη θύρα.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$el extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Η συσκευή απέρριψε το αίτημα.';
+  @override
+  String get advice =>
+      'Μπορεί να απαιτείται PIN ή να έχει αλλάξει η αντιστοίχιση με τη συσκευή. Ελέγξτε το PIN και τις ρυθμίσεις γρήγορης αποθήκευσης στη συσκευή προορισμού.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$el extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Δεν ήταν δυνατή η δημιουργία της σύνδεσης.';
+  @override
+  String get advice =>
+      'Ελέγξτε τη διεύθυνση και τη θύρα, βεβαιωθείτε ότι το LocalSend εκτελείται στη συσκευή προορισμού και ότι κανένα τείχος προστασίας ή VPN δεν αποκλείει τη σύνδεση.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$el extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Τα Windows αρνήθηκαν την πρόσβαση στη θύρα (σφάλμα socket 10013).';
+  @override
+  String get advice =>
+      'Αυτό προκαλείται συνήθως από ένα εύρος θυρών που έχει δεσμευτεί από Hyper-V, WSL ή Docker, ή από κατεστραμμένο κατάλογο Winsock:\n• Αλλάξτε τη θύρα στις Ρυθμίσεις (Δίκτυο)\n• Ελέγξτε τα δεσμευμένα εύρη με: netsh interface ipv4 show excludedportrange protocol=tcp\n• Επισκευάστε το Winsock ως διαχειριστής με: netsh winsock reset (κάντε επανεκκίνηση μετά)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$el extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Η θύρα χρησιμοποιείται ήδη από άλλη εφαρμογή.';
+  @override
+  String get advice =>
+      'Άλλο πρόγραμμα (ή δεύτερο αντίγραφο του LocalSend) ακούει σε αυτή τη θύρα:\n• Κλείστε την άλλη εφαρμογή, ή\n• Αλλάξτε τη θύρα στις Ρυθμίσεις (Δίκτυο)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$el extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$el._(TranslationsEl root) : this._root = root, super.internal(root);
+
+  final TranslationsEl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Ο διακομιστής δεν μπόρεσε να εκκινήσει.';
+  @override
+  String get advice => '• Ελέγξτε το τείχος προστασίας και τις ρυθμίσεις δικτύου\n• Δοκιμάστε να αλλάξετε τη θύρα στις Ρυθμίσεις (Δίκτυο)';
 }

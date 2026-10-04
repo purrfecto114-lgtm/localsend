@@ -233,6 +233,8 @@ class _Translations$sendTab$gu extends Translations$sendTab$en {
   String get help => 'મહેરબાની કરીને ખાતરી કરો કે ઇચ્છિત લક્ષ્ય પણ તે જ Wi-Fi નેટવર્ક પર છે.';
   @override
   String get placeItems => 'શેર કરવા માટે વસ્તુઓ મૂકો.';
+  @override
+  late final _Translations$sendTab$diagnosis$gu diagnosis = _Translations$sendTab$diagnosis$gu._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$gu extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'ફોટોઝ માં સાચવ્યું';
   @override
+  late final _Translations$progressPage$checksum$gu checksum = _Translations$progressPage$checksum$gu._(_root);
+  @override
   late final _Translations$progressPage$total$gu total = _Translations$progressPage$total$gu._(_root);
   @override
   late final _Translations$progressPage$remainingTime$gu remainingTime = _Translations$progressPage$remainingTime$gu._(_root);
@@ -678,6 +682,11 @@ class _Translations$dialogs$gu extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$gu cancelSession = _Translations$dialogs$cancelSession$gu._(_root);
   @override
+  late final _Translations$dialogs$connectionError$gu connectionError = _Translations$dialogs$connectionError$gu._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$gu deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$gu._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$gu cannotOpenFile = _Translations$dialogs$cannotOpenFile$gu._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$gu encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$gu._(_root);
@@ -718,6 +727,8 @@ class _Translations$dialogs$gu extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$gu pin = _Translations$dialogs$pin$gu._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$gu sendModeHelp = _Translations$dialogs$sendModeHelp$gu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$gu startupError = _Translations$dialogs$startupError$gu._(_root);
   @override
   late final _Translations$dialogs$zoom$gu zoom = _Translations$dialogs$zoom$gu._(_root);
 }
@@ -921,6 +932,32 @@ class _Translations$sendTab$sendModes$gu extends Translations$sendTab$sendModes$
   String get link => 'લિંક દ્વારા શેર કરો';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$gu extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'નજીકના ઉપકરણો શોધી રહ્યા છીએ…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$gu noInterface = _Translations$sendTab$diagnosis$noInterface$gu._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$gu multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$gu._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$gu scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$gu._(_root);
+  @override
+  String get rescan => 'ફરી શોધો';
+  @override
+  String get bleHint =>
+      'BLE ડિસ્કવરી ચાલુ છે: ડિવાઇસ ફક્ત ત્યારે જ બ્લૂટૂથ દ્વારા મળશે જ્યારે તેઓ પણ આ ફોર્ક (fork) ઓપ્શન ચાલુ રાખીને ચલાવતા હોય; ટ્રાન્સફર પોતે હજી પણ નેટવર્ક દ્વારા જ થાય છે.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$gu manualFallback = _Translations$sendTab$diagnosis$manualFallback$gu._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$gu extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$gu._(TranslationsGu root) : this._root = root, super.internal(root);
@@ -1002,6 +1039,8 @@ class _Translations$settingsTab$send$gu extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'લિંક દ્વારા શેર કરો: સ્વયંચાલિત સ્વીકારો';
   @override
   String get createChecksums => 'ફાઇલો મોકલતી વખતે ચેકસમ બનાવો';
+  @override
+  String get deleteSourceAfterSend => 'સફળ મોકલ પછી સોર્સ ફાઇલો કાઢી નાખો';
 }
 
 // Path: settingsTab.network
@@ -1032,6 +1071,13 @@ class _Translations$settingsTab$network$gu extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'ડિસ્કવરી ટાઈમઆઉટ';
   @override
+  String get maxInterfaces => 'મહત્તમ ઇન્ટરફેસ (સ્માર્ટ સ્કેન)';
+  @override
+  String get vpnInterfaces => 'VPN ઇન્ટરફેસ સમાવો (સ્માર્ટ સ્કેન)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN ટનલ ઇન્ટરફેસ (Tailscale, WireGuard, વગેરે)ના સબનેટવર્ક પણ સ્કેન થાય છે. VPN સામાન્ય રીતે મલ્ટીકાસ્ટ લઈ શકતા નથી, તેથી તેમના સબનેટવર્ક HTTP ફોલબેક સ્કેન દ્વારા ચકાસાય છે.';
+  @override
   String get useSystemName => 'સિસ્ટમ નામ વાપરો';
   @override
   String get generateRandomAlias => 'રેનડમ ઉપનામ બનાવો';
@@ -1045,6 +1091,33 @@ class _Translations$settingsTab$network$gu extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'તમે કસ્ટમ મલ્ટીકાસ્ટ સરનામાનો ઉપયોગ કરી રહ્યા છો તેથી તમે અન્ય ડિવાઇસ દ્વારા શોધી શકાય નહીં. (મૂળભૂત: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE ડિસ્કવરી (પ્રાયોગિક)';
+  @override
+  String get bleDiscoveryHint =>
+      'નેટવર્ક મલ્ટીકાસ્ટ બ્લોક કરતું હોય તો પણ (AP આઇસોલેશન) બ્લૂટૂથ દ્વારા નજીકના ઉપકરણો શોધે છે. Android, iOS, macOS અને Windows પર કામ કરે છે; Linux પર આ ડિવાઇસ બીજાઓને શોધી શકે છે પરંતુ તે પોતે શોધાઈ શકતું નથી. બંને ડિવાઇસને ઓપ્શન ચાલુ રાખીને આ ફોર્ક (fork) જોઈએ; ફાઇલ ટ્રાન્સફર પોતે હજી પણ નેટવર્ક વાપરે છે.';
+  @override
+  String get bleStatusActive =>
+      'ચાલુ: સ્કેનિંગ અને પ્રસારણ (advertising) ચાલુ છે. નજીકના ઉપકરણો ફક્ત ત્યારે દેખાય છે જ્યારે તેઓ પણ ઓપ્શન ચાલુ રાખીને આ ફોર્ક (fork) ચલાવતા હોય.';
+  @override
+  String get bleStatusScanOnly =>
+      'ચાલુ: ફક્ત સ્કેનિંગ. હાલમાં આ ડિવાઇસ બ્લૂટૂથ દ્વારા શોધાઈ શકતું નથી (આ પ્લેટફોર્મ પર BLE advertising નું સમર્થન નથી, અથવા હજી સુધી વાપરી શકાય એવું નેટવર્ક સરનામું નથી).';
+  @override
+  String get bleStatusPaused => 'થોભાવેલું છે. એપ ફોરગ્રાઉન્ડમાં પાછી આવે ત્યારે ફરી શરૂ થાય છે.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'બ્લૂટૂથની મંજૂરીઓ નામંજૂર કરાઈ છે. સિસ્ટમ સેટિંગ્સમાં "Nearby devices" (અથવા Android 11 કે તેથી જૂના સંસ્કરણ પર "Location") મંજૂરી આપો, પછી આ ઓપ્શન બંધ કરીને ફરી ચાલુ કરો.';
+  @override
+  String get bleStatusAdapterOff => 'બ્લૂટૂથ બંધ છે અથવા ઉપલબ્ધ નથી. બ્લૂટૂથ ફરી ઉપલબ્ધ થતાં ડિસ્કવરી આપોઆપ ફરી શરૂ થાય છે.';
+  @override
+  String get bleStatusUnsupported => 'આ ડિવાઇસ પર આધારભૂત નથી: BLE ડિસ્કવરી માટે Android 7 કે નવું સંસ્કરણ અને Bluetooth LE રેડિયો જોઈએ.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Android ના આ સંસ્કરણ પર બીજા ઉપકરણો શોધવા માટે સિસ્ટમની લોકેશન સેવાઓ પણ ચાલુ હોવી જરૂરી છે (મંજૂરી આપોઆપ માંગવામાં આવે છે; આ ડિવાઇસને બીજા પહેલેથી શોધી શકે છે).';
+  @override
+  String get bleStatusError => 'BLE ડિસ્કવરી શરૂ થઈ શકી નથી. વિગતો માટે ટ્રબલશૂટ > લોગ જુઓ.';
+  @override
+  String get bleOpenSystemSettings => 'સિસ્ટમ સેટિંગ્સ ખોલો';
 }
 
 // Path: settingsTab.other
@@ -1161,6 +1234,25 @@ class _Translations$deviceDetailsPage$logs$gu extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} દ્વારા અપડેટ થયું (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$gu extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'ચેકસમ ચકાસાયા';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} ફાઇલોના ચેકસમ ચકાસાયા';
+  @override
+  String get notVerifiable => 'મોકલનારે કોઈ ચેકસમ આપ્યા નથી';
+  @override
+  String get disabled => 'ચેકસમ ચકાસણી બંધ છે';
+  @override
+  String attached({required Object curr, required Object n}) => 'ચેકસમ જોડાયા (${curr} / ${n} ફાઇલો)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$gu extends Translations$progressPage$total$en {
   _Translations$progressPage$total$gu._(TranslationsGu root) : this._root = root, super.internal(root);
@@ -1254,6 +1346,11 @@ class _Translations$dialogs$addressInput$gu extends Translations$dialogs$address
   String get ip => 'IP સરનામું';
   @override
   String get recentlyUsed => 'હાલમાં ઉપયોગમાં લીધેલું: ';
+  @override
+  String get noHashtagCandidates =>
+      'વર્તમાન નેટવર્કનું કોઈ IPv4 સરનામું નથી, તેથી હૅશટૅગને માન્ય સરનામાંમાં ફેરવી શકાતું નથી. મહેરબાની કરીને આખું સરનામું દાખલ કરો (દા.ત. 192.168.1.5 અથવા fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$gu validation = _Translations$dialogs$addressInput$validation$gu._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1267,6 +1364,42 @@ class _Translations$dialogs$cancelSession$gu extends Translations$dialogs$cancel
   String get title => 'ફાઇલ ટ્રાન્સફર રદ કરો';
   @override
   String get content => 'શું તમે ખરેખર ફાઇલ ટ્રાન્સફર રદ કરવા માંગો છો?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$gu extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'કનેક્શન નિષ્ફળ';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$gu timeout = _Translations$dialogs$connectionError$timeout$gu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$gu refused = _Translations$dialogs$connectionError$refused$gu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$gu forbidden = _Translations$dialogs$connectionError$forbidden$gu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$gu other = _Translations$dialogs$connectionError$other$gu._(_root);
+  @override
+  String get retry => 'ફરી પ્રયાસ કરો';
+  @override
+  String get details => 'ભૂલની વિગતો:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$gu extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'સોર્સ ફાઇલો કાઢી નાખો';
+  @override
+  String get content => 'ફાઇલો સફળતાપૂર્વક મોકલાઈ ગયા પછી તે આ ડિવાઇસમાંથી કાઢી નાખાશે. આને પાછું ફેરવી શકાશે નહીં.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1557,6 +1690,32 @@ class _Translations$dialogs$sendModeHelp$gu extends Translations$dialogs$sendMod
   String get link => 'જે પ્રાપ્તકર્તાઓ પાસે LocalSend સ્થાપિત નથી તેઓ તેમના બ્રાઉઝરમાં લિંક ખોલીને પસંદ કરેલી ફાઈલો ડાઉનલોડ કરી શકે છે.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$gu extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'સર્વર શરૂ થઈ શક્યો નથી';
+  @override
+  String port({required Object port}) => 'પોર્ટ: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$gu windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$gu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$gu addressInUse = _Translations$dialogs$startupError$addressInUse$gu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$gu generic = _Translations$dialogs$startupError$generic$gu._(_root);
+  @override
+  String get details => 'ભૂલની વિગતો:';
+  @override
+  String get copyDetails => 'વિગતો કૉપિ કરો';
+  @override
+  String get openSettings => 'સેટિંગ્સ ખોલો';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$gu extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$gu._(TranslationsGu root) : this._root = root, super.internal(root);
@@ -1566,6 +1725,67 @@ class _Translations$dialogs$zoom$gu extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$gu extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'નેટવર્ક કનેક્શન નથી';
+  @override
+  String get advice => 'આ ડિવાઇસ કોઈપણ નેટવર્ક સાથે જોડાયેલો નથી. આ ડિવાઇસનું Wi-Fi અથવા કેબલ કનેક્શન તપાસો.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$gu extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'મલ્ટીકાસ્ટ ઉપલબ્ધ નથી';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend આ નેટવર્ક પર મલ્ટીકાસ્ટ ડિસ્કવરી વાપરી શકતું નથી. ખાતરી કરો કે બંને ડિવાઇસ એક જ નેટવર્ક પર છે, અને AP આઇસોલેશન કે ફાયરવોલ UDP પોર્ટ ${port} ને બ્લોક કરી રહ્યા નથી.';
+  @override
+  String reason({required Object reason}) => 'કારણ: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$gu extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'કોઈ ડિવાઇસ મળ્યા નથી';
+  @override
+  String get advice =>
+      'ડિસ્કવરી કામ કરી રહી છે, પરંતુ કોઈ ડિવાઇસે જાહેરાતો કે નેટવર્ક સ્કેનનો જવાબ આપ્યો નથી. બીજું ડિવાઇસ કદાચ ઓફલાઇન છે, સ્લીપ મોડમાં છે કે ફાયરવોલ તરફથી બ્લોક થયેલું છે. ખાતરી કરો કે LocalSend બીજા ડિવાઇસ પર ચાલી રહ્યું છે.';
+  @override
+  String detail({required Object announcements, required Object scans}) => 'જવાબ વિના ${announcements} જાહેરાતો અને ${scans} નેટવર્ક સ્કેન મોકલાયા.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$gu extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP સરનામાં વારંવાર બદલાતા રહે છે. યાદીમાં ન હોય એવા ડિવાઇસ સુધી પણ તમે પહોંચી શકો છો: તેને મનપસંદમાં ઉમેરો અથવા તેનું સરનામું જાતે દાખલ કરો.';
+  @override
+  String get openFavorites => 'મનપસંદ ખોલો';
+  @override
+  String get manualInput => 'સરનામું જાતે દાખલ કરો';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1652,4 +1872,115 @@ class _Translations$whatsNewPage$changes$v1_18_0$gu extends Translations$whatsNe
     'મનપસંદમાંથી આવતી વિનંતીઓ હવે આપોઆપ સ્વીકારવામાં આવે છે. આ મૂળભૂત રીતે ચાલુ છે અને સેટિંગ્સમાં બંધ કરી શકાય છે.',
     'Android પર, એપ બેકગ્રાઉન્ડમાં હોય કે સ્ક્રીન બંધ હોય ત્યારે પણ ટ્રાન્સફર ચાલુ રહે છે. iOS પર, એપ હજુ પણ ફોરગ્રાઉન્ડમાં રહેવું જરૂરી છે.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$gu extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'માન્ય IPv4 સરનામું, IPv6 સરનામું અથવા હોસ્ટનું નામ દાખલ કરો.';
+  @override
+  String get scheme => 'ફક્ત સરનામું દાખલ કરો, "http://" કે "https://" વિના.';
+  @override
+  String get port => 'ફક્ત સરનામું દાખલ કરો. પોર્ટ સેટિંગ્સમાંથી લેવાય છે.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$gu extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ડિવાઇસે સમયસર જવાબ આપ્યો નથી.';
+  @override
+  String get advice =>
+      'કદાચ તે ઓફલાઇન છે, સ્લીપ મોડમાં છે, અથવા ફાયરવોલ કનેક્શન બ્લોક કરી રહ્યું છે. ખાતરી કરો કે LocalSend બીજા ડિવાઇસ પર ચાલી રહ્યું છે અને બંને ડિવાઇસ એક જ નેટવર્ક પર છે.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$gu extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ડિવાઇસે કનેક્શન નામંજૂર કર્યું.';
+  @override
+  String get advice =>
+      'લાગે છે કે LocalSend લક્ષ્ય ડિવાઇસ પર ચાલી રહ્યું નથી, અથવા તે બીજા પોર્ટ પર સાંભળી રહ્યું છે. LocalSend બીજા ડિવાઇસ પર ચાલુ કરો અથવા પોર્ટ તપાસો.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$gu extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ડિવાઇસે વિનંતી અસ્વીકાર કરી.';
+  @override
+  String get advice => 'કદાચ પિન જોઈએ, અથવા ડિવાઇસ સાથેનું પેરિંગ બદલાયું છે. લક્ષ્ય ડિવાઇસ પર પિન અને ઝડપી સેવની સેટિંગ્સ તપાસો.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$gu extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'કનેક્શન સ્થાપિત થઈ શક્યું નથી.';
+  @override
+  String get advice =>
+      'સરનામું અને પોર્ટ તપાસો, ખાતરી કરો કે LocalSend લક્ષ્ય ડિવાઇસ પર ચાલી રહ્યું છે, અને કોઈ ફાયરવોલ કે VPN કનેક્શન બ્લોક કરી રહ્યા નથી.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$gu extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows એ પોર્ટની ઍક્સેસ નામંજૂર કરી (સોકેટ ભૂલ 10013).';
+  @override
+  String get advice =>
+      'આ મોટાભાગે Hyper-V, WSL કે Docker દ્વારા અનામત રાખાયેલ પોર્ટ રેન્જ, અથવા બગડેલા Winsock કૅટલોગને કારણે થાય છે:\n• સેટિંગ્સ (નેટવર્ક)માં પોર્ટ બદલો\n• અનામત રેન્જ આ કમાન્ડથી તપાસો: netsh interface ipv4 show excludedportrange protocol=tcp\n• એડમિન તરીકે Winsock આ કમાન્ડથી સુધારો: netsh winsock reset (પછી રીસ્ટાર્ટ કરો)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$gu extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'આ પોર્ટ પહેલેથી બીજી એપ્લિકેશન વાપરી રહી છે.';
+  @override
+  String get advice =>
+      'બીજું પ્રોગ્રામ (અથવા LocalSendની બીજી નકલ) આ પોર્ટ પર સાંભળી રહ્યું છે:\n• બીજી એપ્લિકેશન બંધ કરો, અથવા\n• સેટિંગ્સ (નેટવર્ક)માં પોર્ટ બદલો';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$gu extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$gu._(TranslationsGu root) : this._root = root, super.internal(root);
+
+  final TranslationsGu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'સર્વર શરૂ થઈ શક્યો નથી.';
+  @override
+  String get advice => '• તમારું ફાયરવોલ અને નેટવર્ક સેટિંગ્સ તપાસો\n• સેટિંગ્સ (નેટવર્ક)માં પોર્ટ બદલવાનો પ્રયાસ કરો';
 }

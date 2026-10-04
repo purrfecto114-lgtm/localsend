@@ -234,6 +234,8 @@ class _Translations$sendTab$sr_Cyrl extends Translations$sendTab$sr {
   String get help => 'Уверите се да је прималац такође на истој Wi-Fi мрежи.';
   @override
   String get placeItems => 'Поставите предмете за дељење.';
+  @override
+  late final _Translations$sendTab$diagnosis$sr_Cyrl diagnosis = _Translations$sendTab$diagnosis$sr_Cyrl._(_root);
 }
 
 // Path: settingsTab
@@ -458,6 +460,8 @@ class _Translations$progressPage$sr_Cyrl extends Translations$progressPage$sr {
   @override
   String get savedToGallery => 'Сачувано у галерији';
   @override
+  late final _Translations$progressPage$checksum$sr_Cyrl checksum = _Translations$progressPage$checksum$sr_Cyrl._(_root);
+  @override
   late final _Translations$progressPage$total$sr_Cyrl total = _Translations$progressPage$total$sr_Cyrl._(_root);
   @override
   late final _Translations$progressPage$remainingTime$sr_Cyrl remainingTime = _Translations$progressPage$remainingTime$sr_Cyrl._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$sr_Cyrl extends Translations$dialogs$sr {
   @override
   late final _Translations$dialogs$cancelSession$sr_Cyrl cancelSession = _Translations$dialogs$cancelSession$sr_Cyrl._(_root);
   @override
+  late final _Translations$dialogs$connectionError$sr_Cyrl connectionError = _Translations$dialogs$connectionError$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$sr_Cyrl deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$sr_Cyrl._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$sr_Cyrl cannotOpenFile = _Translations$dialogs$cannotOpenFile$sr_Cyrl._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$sr_Cyrl encryptionDisabledNotice =
@@ -723,6 +732,8 @@ class _Translations$dialogs$sr_Cyrl extends Translations$dialogs$sr {
   late final _Translations$dialogs$pin$sr_Cyrl pin = _Translations$dialogs$pin$sr_Cyrl._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$sr_Cyrl sendModeHelp = _Translations$dialogs$sendModeHelp$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$sr_Cyrl startupError = _Translations$dialogs$startupError$sr_Cyrl._(_root);
   @override
   late final _Translations$dialogs$zoom$sr_Cyrl zoom = _Translations$dialogs$zoom$sr_Cyrl._(_root);
 }
@@ -927,6 +938,31 @@ class _Translations$sendTab$sendModes$sr_Cyrl extends Translations$sendTab$sendM
   String get link => 'Дељење путем линка';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$sr_Cyrl extends Translations$sendTab$diagnosis$sr {
+  _Translations$sendTab$diagnosis$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Претрага уређаја у близини…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$sr_Cyrl noInterface = _Translations$sendTab$diagnosis$noInterface$sr_Cyrl._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$sr_Cyrl multicastUnavailable =
+      _Translations$sendTab$diagnosis$multicastUnavailable$sr_Cyrl._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$sr_Cyrl scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$sr_Cyrl._(_root);
+  @override
+  String get rescan => 'Претражи поново';
+  @override
+  String get bleHint =>
+      'BLE откривање је активно: уређаји се проналазе путем Bluetooth-а само ако и они користе овај форк са укљученом опцијом; сам пренос фајлова и даље иде преко мреже.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$sr_Cyrl manualFallback = _Translations$sendTab$diagnosis$manualFallback$sr_Cyrl._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$sr_Cyrl extends Translations$settingsTab$general$sr {
   _Translations$settingsTab$general$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
@@ -1009,6 +1045,8 @@ class _Translations$settingsTab$send$sr_Cyrl extends Translations$settingsTab$se
   String get shareViaLinkAutoAccept => 'Аутоматски прихвати захтеве у режиму „Дељење путем линка“';
   @override
   String get createChecksums => 'Направи контролне суме при слању датотека';
+  @override
+  String get deleteSourceAfterSend => 'Избриши изворне фајлове након успешног слања';
 }
 
 // Path: settingsTab.network
@@ -1041,6 +1079,13 @@ class _Translations$settingsTab$network$sr_Cyrl extends Translations$settingsTab
   @override
   String get discoveryTimeout => 'Откривање је истекло';
   @override
+  String get maxInterfaces => 'Максималан број интерфејса (паметно скенирање)';
+  @override
+  String get vpnInterfaces => 'Укључи VPN интерфејсе (паметно скенирање)';
+  @override
+  String get vpnInterfacesHint =>
+      'Скенирај и подмреже интерфејса VPN тунела (Tailscale, WireGuard, ...). VPN обично не преноси вишесмерно емитовање, па се њихове подмреже проверавају резервним HTTP скенирањем.';
+  @override
   String get useSystemName => 'Користи системски назив';
   @override
   String get generateRandomAlias => 'Генериши насумични псеудоним';
@@ -1054,6 +1099,33 @@ class _Translations$settingsTab$network$sr_Cyrl extends Translations$settingsTab
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Други уређаји вас можда неће открити, јер користите прилагођену адресу вишесмерног емитовања. (подразумевана: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE откривање (експериментално)';
+  @override
+  String get bleDiscoveryHint =>
+      'Проналази уређаје у близини путем Bluetooth-а чак и када мрежа блокира вишесмерно емитовање (изолација приступне тачке). Ради на Android-у, iOS-у, macOS-у и Windows-у; на Linux-у овај уређај може да проналази друге, али сам не може бити пронађен. Оба уређаја морају да користе овај форк са укљученом опцијом; сам пренос фајлова и даље иде преко мреже.';
+  @override
+  String get bleStatusActive =>
+      'Активно: скенирање и најављивање. Уређаји у близини се појављују само ако и они користе овај форк са укљученом опцијом.';
+  @override
+  String get bleStatusScanOnly =>
+      'Активно: само скенирање. Овај уређај тренутно не може бити откривен путем Bluetooth-а (ова платформа не подржава BLE најављивање или још нема употребљиву мрежну адресу).';
+  @override
+  String get bleStatusPaused => 'Паузирано. Наставља се када се апликација врати у први план.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Дозволе за Bluetooth су одбијене. Дајте дозволу „Уређаји у близини“ (или „Локација“ на Android-у 11 и старијим) у системским подешавањима, а затим искључите и поново укључите ову опцију.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth је искључен или недоступан. Откривање се само поново покреће када Bluetooth поново постане доступан.';
+  @override
+  String get bleStatusUnsupported => 'Није подржано на овом уређају: BLE откривање захтева Android 7 или новији и Bluetooth LE радио.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'На овој верзији Android-а, проналажење других уређаја захтева и да системске услуге локације буду укључене (дозвола се тражи аутоматски; овај уређај већ могу да пронађу други).';
+  @override
+  String get bleStatusError => 'BLE откривање није могло да се покрене. Детаље погледајте у Отклањање грешака > Евиденција.';
+  @override
+  String get bleOpenSystemSettings => 'Отвори системска подешавања';
 }
 
 // Path: settingsTab.other
@@ -1170,6 +1242,25 @@ class _Translations$deviceDetailsPage$logs$sr_Cyrl extends Translations$deviceDe
   String updated({required Object protocol, required Object host}) => 'Ажурирано путем ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$sr_Cyrl extends Translations$progressPage$checksum$sr {
+  _Translations$progressPage$checksum$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Контролне суме су проверене';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Контролне суме су проверене за ${curr} / ${n} фајлова';
+  @override
+  String get notVerifiable => 'Пошиљалац није обезбедио контролне суме';
+  @override
+  String get disabled => 'Провера контролних сума је искључена';
+  @override
+  String attached({required Object curr, required Object n}) => 'Контролне суме су приложене (${curr} / ${n} фајлова)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$sr_Cyrl extends Translations$progressPage$total$sr {
   _Translations$progressPage$total$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
@@ -1263,6 +1354,11 @@ class _Translations$dialogs$addressInput$sr_Cyrl extends Translations$dialogs$ad
   String get ip => 'IP адреса';
   @override
   String get recentlyUsed => 'Недавно коришћено: ';
+  @override
+  String get noHashtagCandidates =>
+      'Тренутна мрежа нема IPv4 адресу, па се хеш-ознака не може развити у адресу кандидата. Унесите комплетну адресу (нпр. 192.168.1.5 или fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$sr_Cyrl validation = _Translations$dialogs$addressInput$validation$sr_Cyrl._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1276,6 +1372,42 @@ class _Translations$dialogs$cancelSession$sr_Cyrl extends Translations$dialogs$c
   String get title => 'Откажите пренос фајлова';
   @override
   String get content => 'Желите ли заиста да откажете пренос фајлова?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$sr_Cyrl extends Translations$dialogs$connectionError$sr {
+  _Translations$dialogs$connectionError$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Веза није успела';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$sr_Cyrl timeout = _Translations$dialogs$connectionError$timeout$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$sr_Cyrl refused = _Translations$dialogs$connectionError$refused$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$sr_Cyrl forbidden = _Translations$dialogs$connectionError$forbidden$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$sr_Cyrl other = _Translations$dialogs$connectionError$other$sr_Cyrl._(_root);
+  @override
+  String get retry => 'Покушај поново';
+  @override
+  String get details => 'Детаљи грешке:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$sr_Cyrl extends Translations$dialogs$deleteSourceAfterSendDialog$sr {
+  _Translations$dialogs$deleteSourceAfterSendDialog$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Избриши изворне фајлове';
+  @override
+  String get content => 'Након успешног слања, фајлови ће бити избрисани са овог уређаја. Ово није могуће опозвати.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1567,6 +1699,32 @@ class _Translations$dialogs$sendModeHelp$sr_Cyrl extends Translations$dialogs$se
   String get link => 'Примаоци који немају инсталиран LocalSend могу преузети изабране фајлове отварањем линка у свом прегледачу.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$sr_Cyrl extends Translations$dialogs$startupError$sr {
+  _Translations$dialogs$startupError$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Није могуће покренути сервер';
+  @override
+  String port({required Object port}) => 'Порт: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$sr_Cyrl windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$sr_Cyrl addressInUse = _Translations$dialogs$startupError$addressInUse$sr_Cyrl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$sr_Cyrl generic = _Translations$dialogs$startupError$generic$sr_Cyrl._(_root);
+  @override
+  String get details => 'Детаљи грешке:';
+  @override
+  String get copyDetails => 'Копирај детаље';
+  @override
+  String get openSettings => 'Отвори подешавања';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$sr_Cyrl extends Translations$dialogs$zoom$sr {
   _Translations$dialogs$zoom$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
@@ -1576,6 +1734,68 @@ class _Translations$dialogs$zoom$sr_Cyrl extends Translations$dialogs$zoom$sr {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$sr_Cyrl extends Translations$sendTab$diagnosis$noInterface$sr {
+  _Translations$sendTab$diagnosis$noInterface$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Нема мрежне везе';
+  @override
+  String get advice => 'Овај уређај није повезан ни са једном мрежом. Проверите Wi-Fi или кабловску везу овог уређаја.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$sr_Cyrl extends Translations$sendTab$diagnosis$multicastUnavailable$sr {
+  _Translations$sendTab$diagnosis$multicastUnavailable$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Вишесмерно емитовање није доступно';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend не може да користи откривање путем вишесмерног емитовања на овој мрежи. Уверите се да су оба уређаја на истој мрежи и да изолација приступне тачке (AP) или заштитни зид не блокирају UDP порт ${port}.';
+  @override
+  String reason({required Object reason}) => 'Разлог: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$sr_Cyrl extends Translations$sendTab$diagnosis$scanNoResult$sr {
+  _Translations$sendTab$diagnosis$scanNoResult$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Нема пронађених уређаја';
+  @override
+  String get advice =>
+      'Претрага ради, али ниједан уређај није одговорио на најаве ни на скенирање мреже. Други уређај је можда офлајн, у режиму спавања или га блокира заштитни зид. Уверите се да на другом уређају ради LocalSend.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Послато је ${announcements} најава и извршено ${scans} скенирања мреже — без одговора.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$sr_Cyrl extends Translations$sendTab$diagnosis$manualFallback$sr {
+  _Translations$sendTab$diagnosis$manualFallback$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP адресе се често мењају. И даље можете достићи уређај који није на листи: додајте га у омиљене или ручно унесите његову адресу.';
+  @override
+  String get openFavorites => 'Отвори омиљено';
+  @override
+  String get manualInput => 'Ручно унеси адресу';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1662,4 +1882,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$sr_Cyrl extends Translations$wh
     'Захтеви од омиљених се сада аутоматски прихватају. Ово је подразумевано укључено и може се искључити у подешавањима.',
     'На Android-у, преноси се настављају док је апликација у позадини или је екран искључен. На iOS-у, апликација и даље мора остати у првом плану.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$sr_Cyrl extends Translations$dialogs$addressInput$validation$sr {
+  _Translations$dialogs$addressInput$validation$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Унесите исправну IPv4 адресу, IPv6 адресу или име хоста.';
+  @override
+  String get scheme => 'Унесите само адресу, без „http://“ или „https://“.';
+  @override
+  String get port => 'Унесите само адресу. Порт се узима из подешавања.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$sr_Cyrl extends Translations$dialogs$connectionError$timeout$sr {
+  _Translations$dialogs$connectionError$timeout$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Уређај није одговорио на време.';
+  @override
+  String get advice =>
+      'Вероватно је офлајн, у режиму спавања или заштитни зид блокира везу. Уверите се да на другом уређају ради LocalSend и да су оба уређаја на истој мрежи.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$sr_Cyrl extends Translations$dialogs$connectionError$refused$sr {
+  _Translations$dialogs$connectionError$refused$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Уређај је одбио везу.';
+  @override
+  String get advice =>
+      'Изгледа да на циљном уређају не ради LocalSend или да слуша на другом порту. Покрените LocalSend на другом уређају или проверите порт.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$sr_Cyrl extends Translations$dialogs$connectionError$forbidden$sr {
+  _Translations$dialogs$connectionError$forbidden$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Уређај је одбио захтев.';
+  @override
+  String get advice => 'Можда је потребан PIN или се променило упаривање са уређајем. Проверите PIN и подешавања брзог чувања на циљном уређају.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$sr_Cyrl extends Translations$dialogs$connectionError$other$sr {
+  _Translations$dialogs$connectionError$other$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Није било могуће успоставити везу.';
+  @override
+  String get advice => 'Проверите адресу и порт, уверите се да на циљном уређају ради LocalSend и да везу не блокира заштитни зид или VPN.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$sr_Cyrl extends Translations$dialogs$startupError$windowsAccessDenied$sr {
+  _Translations$dialogs$startupError$windowsAccessDenied$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows је одбио приступ порту (грешка сокета 10013).';
+  @override
+  String get advice =>
+      'Ово је обично узроковано опсегом портова које су резервисали Hyper-V, WSL или Docker, или оштећеним Winsock каталогом:\n• Промените порт у подешавањима (Мрежа)\n• Проверите резервисане опсеге командом: netsh interface ipv4 show excludedportrange protocol=tcp\n• Поправите Winsock као администратор командом: netsh winsock reset (затим рестартујте рачунар)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$sr_Cyrl extends Translations$dialogs$startupError$addressInUse$sr {
+  _Translations$dialogs$startupError$addressInUse$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Порт већ користи друга апликација.';
+  @override
+  String get advice =>
+      'Други програм (или друга инстанца LocalSend-а) слуша на овом порту:\n• Затворите другу апликацију или\n• Промените порт у подешавањима (Мрежа)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$sr_Cyrl extends Translations$dialogs$startupError$generic$sr {
+  _Translations$dialogs$startupError$generic$sr_Cyrl._(TranslationsSrCyrl root) : this._root = root, super.internal(root);
+
+  final TranslationsSrCyrl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Није било могуће покренути сервер.';
+  @override
+  String get advice => '• Проверите заштитни зид и мрежна подешавања\n• Покушајте да промените порт у подешавањима (Мрежа)';
 }

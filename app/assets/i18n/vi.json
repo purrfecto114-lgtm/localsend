@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Giải thích",
     "help": "Vui lòng đảm bảo thiết bị gửi và nhận dùng chung mạng wifi.",
-    "placeItems": "Đặt các mục để chia sẻ."
+    "placeItems": "Đặt các mục để chia sẻ.",
+    "diagnosis": {
+      "scanning": "Đang tìm kiếm thiết bị lân cận…",
+      "noInterface": {
+        "title": "Không có kết nối mạng",
+        "advice": "Thiết bị này chưa kết nối với mạng nào. Hãy kiểm tra kết nối Wi-Fi hoặc dây mạng của thiết bị này."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast không khả dụng",
+        "advice": "LocalSend không thể dùng tính năng phát hiện qua multicast trên mạng này. Hãy đảm bảo cả hai thiết bị cùng nằm trên một mạng và rằng chế độ cô lập AP (AP isolation) hay tường lửa không đang chặn port UDP {port}.",
+        "reason": "Nguyên nhân: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Không tìm thấy thiết bị nào",
+        "advice": "Quá trình tìm kiếm vẫn hoạt động, nhưng không có thiết bị nào phản hồi thông báo quảng bá lẫn lần quét mạng. Thiết bị kia có thể đang ngoại tuyến, ở chế độ ngủ hoặc bị tường lửa chặn. Hãy đảm bảo LocalSend đang chạy trên thiết bị kia.",
+        "detail": "Đã gửi {announcements} thông báo quảng bá và {scans} lần quét mạng nhưng không nhận được phản hồi."
+      },
+      "rescan": "Tìm kiếm lại",
+      "bleHint": "Tính năng phát hiện BLE đang bật: thiết bị chỉ được tìm thấy qua Bluetooth nếu chúng cũng chạy bản fork này với tùy chọn được bật; bản thân quá trình truyền vẫn đi qua mạng.",
+      "manualFallback": {
+        "message": "Địa chỉ IP thường xuyên thay đổi. Bạn vẫn có thể kết nối tới một thiết bị không có trong danh sách: thêm nó vào yêu thích hoặc nhập địa chỉ của nó thủ công.",
+        "openFavorites": "Mở mục yêu thích",
+        "manualInput": "Nhập địa chỉ thủ công"
+      }
+    }
   },
   "settingsTab": {
     "title": "Cài đặt",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Gửi",
       "shareViaLinkAutoAccept": "Chia sẻ qua liên kết: Tự động chấp nhận",
-      "createChecksums": "Tạo checksum khi gửi tệp"
+      "createChecksums": "Tạo checksum khi gửi tệp",
+      "deleteSourceAfterSend": "Xoá tập tin nguồn sau khi gửi thành công"
     },
     "network": {
       "title": "Mạng",
@@ -143,12 +168,26 @@
         "filtered": "Đã lọc"
       },
       "discoveryTimeout": "Hết thời gian tìm kiếm",
+      "maxInterfaces": "Số giao diện tối đa (quét thông minh)",
+      "vpnInterfaces": "Bao gồm cả giao diện VPN (quét thông minh)",
+      "vpnInterfacesHint": "Đồng thời quét các subnet của giao diện đường hầm VPN (Tailscale, WireGuard, …). VPN thường không hỗ trợ multicast nên subnet của chúng sẽ được thăm dò bằng lần quét HTTP dự phòng.",
       "useSystemName": "Dùng tên hệ thống",
       "generateRandomAlias": "Dùng bí danh ngẫu nhiên",
       "portWarning": "Các thiết bị khác có thể không nhận diện được thiết bị của bạn, vì bạn đang dùng port tuỳ chỉnh. (mặc định: {defaultPort})",
       "encryption": "Mã hoá",
       "multicastGroup": "Đa phương tiện",
-      "multicastGroupWarning": "Các thiết bị khác có thể không nhận diện được thiết bị của bạn, vì bạn đang dùng địa chỉ multicast tuỳ chỉnh. (mặc định: {defaultMulticast})"
+      "multicastGroupWarning": "Các thiết bị khác có thể không nhận diện được thiết bị của bạn, vì bạn đang dùng địa chỉ multicast tuỳ chỉnh. (mặc định: {defaultMulticast})",
+      "bleDiscovery": "Phát hiện BLE (thử nghiệm)",
+      "bleDiscoveryHint": "Phát hiện các thiết bị lân cận qua Bluetooth kể cả khi mạng chặn multicast (cô lập AP). Hoạt động trên Android, iOS, macOS và Windows; trên Linux, thiết bị này tìm được thiết bị khác nhưng không thể được tìm thấy. Cả hai thiết bị đều cần bản fork này với tùy chọn được bật; bản thân việc truyền tập tin vẫn dùng mạng.",
+      "bleStatusActive": "Đang hoạt động: quét và quảng bá. Thiết bị lân cận chỉ xuất hiện nếu chúng cũng chạy bản fork này với tùy chọn được bật.",
+      "bleStatusScanOnly": "Đang hoạt động: chỉ quét. Thiết bị này hiện không thể được phát hiện qua Bluetooth (nền tảng này không hỗ trợ quảng bá BLE, hoặc chưa có địa chỉ mạng dùng được).",
+      "bleStatusPaused": "Tạm dừng. Sẽ tiếp tục khi ứng dụng quay lại nền trước.",
+      "bleStatusPermissionDenied": "Quyền Bluetooth bị từ chối. Hãy cấp quyền \"Thiết bị gần đó\" (hoặc \"Vị trí\" trên Android 11 trở xuống) trong cài đặt hệ thống, sau đó tắt rồi bật lại tùy chọn này.",
+      "bleStatusAdapterOff": "Bluetooth đang tắt hoặc không khả dụng. Tính năng phát hiện sẽ tự khởi động lại khi Bluetooth khả dụng trở lại.",
+      "bleStatusUnsupported": "Không được hỗ trợ trên thiết bị này: phát hiện BLE cần Android 7 trở lên và radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Trên phiên bản Android này, việc tìm thiết bị khác còn yêu cầu dịch vụ vị trí của hệ thống phải bật (quyền được yêu cầu tự động; thiết bị này đã có thể được thiết bị khác tìm thấy).",
+      "bleStatusError": "Không thể khởi động tính năng phát hiện BLE. Xem chi tiết trong Gỡ lỗi > Nhật ký.",
+      "bleOpenSystemSettings": "Mở cài đặt hệ thống"
     },
     "other": {
       "title": "Khác",
@@ -256,6 +295,13 @@
     "titleSending": "Đang gửi tập tin",
     "titleReceiving": "Đang nhận tập tin",
     "savedToGallery": "Đã lưu vào Ảnh",
+    "checksum": {
+      "verified": "Checksum đã được xác minh",
+      "partiallyVerified": "Checksum đã được xác minh cho {curr} / {n} tập tin",
+      "notVerifiable": "Người gửi không cung cấp checksum",
+      "disabled": "Xác minh checksum đã tắt",
+      "attached": "Đã đính kèm checksum ({curr} / {n} tập tin)"
+    },
     "total": {
       "title": {
         "sending": "Tổng tiến độ ({time})",
@@ -348,11 +394,42 @@
       "title": "Nhập địa chỉ",
       "hashtag": "Hashtag",
       "ip": "Địa chỉ IP",
-      "recentlyUsed": "Sử dụng gần đây: "
+      "recentlyUsed": "Sử dụng gần đây: ",
+      "noHashtagCandidates": "Mạng hiện tại không có địa chỉ IPv4 nên không thể mở rộng hashtag thành địa chỉ ứng viên. Vui lòng nhập địa chỉ đầy đủ (vd. 192.168.1.5 hoặc fe80::1).",
+      "validation": {
+        "invalid": "Hãy nhập địa chỉ IPv4, địa chỉ IPv6 hoặc tên máy chủ hợp lệ.",
+        "scheme": "Chỉ nhập địa chỉ, không kèm \"http://\" hay \"https://\".",
+        "port": "Chỉ nhập địa chỉ. Port được lấy từ cài đặt."
+      }
     },
     "cancelSession": {
       "title": "Dừng gửi tập tin",
       "content": "Bạn có thực sự muống dừng quá trình gửi tập tin?"
+    },
+    "connectionError": {
+      "title": "Kết nối thất bại",
+      "timeout": {
+        "message": "Thiết bị không phản hồi kịp thời.",
+        "advice": "Có thể nó đang ngoại tuyến, ở chế độ ngủ, hoặc tường lửa đang chặn kết nối. Hãy đảm bảo LocalSend đang chạy trên thiết bị kia và cả hai thiết bị cùng nằm trên một mạng."
+      },
+      "refused": {
+        "message": "Thiết bị đã từ chối kết nối.",
+        "advice": "Có vẻ LocalSend không đang chạy trên thiết bị đích, hoặc nó lắng nghe trên port khác. Hãy khởi động LocalSend trên thiết bị kia hoặc kiểm tra port."
+      },
+      "forbidden": {
+        "message": "Thiết bị đã từ chối yêu cầu.",
+        "advice": "Có thể cần mã PIN, hoặc việc ghép nối với thiết bị đã thay đổi. Hãy kiểm tra mã PIN và cài đặt lưu nhanh trên thiết bị đích."
+      },
+      "other": {
+        "message": "Không thể thiết lập kết nối.",
+        "advice": "Hãy kiểm tra địa chỉ và port, đảm bảo LocalSend đang chạy trên thiết bị đích và không có tường lửa hay VPN nào chặn kết nối."
+      },
+      "retry": "Thử lại",
+      "details": "Chi tiết lỗi:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Xoá tập tin nguồn",
+      "content": "Sau khi các tập tin được gửi thành công, chúng sẽ bị xoá khỏi thiết bị này. Hành động này không thể hoàn tác."
     },
     "cannotOpenFile": {
       "title": "Không thể mở tập tin",
@@ -448,6 +525,25 @@
       "single": "Gửi tập tin tới một người nhận. Lựa chọn sẽ được xoá sau khi quá trình gửi hoàn thành.",
       "multiple": "Gửi tập tin tới nhiều người nhận. Lựa chọn sẽ không bị xoá.",
       "link": "Người nhận chưa cài đặt LocalSend có thể nhận tập tin bằng cách mở liên kết trong trình duyệt."
+    },
+    "startupError": {
+      "title": "Không thể khởi động server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows đã từ chối truy cập port (lỗi socket 10013).",
+        "advice": "Việc này thường do một dải port đã được Hyper-V, WSL hoặc Docker dành riêng, hoặc do catalog Winsock bị hỏng:\n• Đổi port trong Cài đặt (Mạng)\n• Kiểm tra các dải đã dành riêng bằng: netsh interface ipv4 show excludedportrange protocol=tcp\n• Sửa Winsock với quyền quản trị bằng: netsh winsock reset (khởi động lại sau đó)"
+      },
+      "addressInUse": {
+        "hint": "Port đã được ứng dụng khác sử dụng.",
+        "advice": "Một chương trình khác (hoặc một phiên bản LocalSend thứ hai) đang lắng nghe trên port này:\n• Đóng ứng dụng kia, hoặc\n• Đổi port trong Cài đặt (Mạng)"
+      },
+      "generic": {
+        "hint": "Không thể khởi động server.",
+        "advice": "• Kiểm tra tường lửa và cài đặt mạng\n• Thử đổi port trong Cài đặt (Mạng)"
+      },
+      "details": "Chi tiết lỗi:",
+      "copyDetails": "Sao chép chi tiết",
+      "openSettings": "Mở cài đặt"
     },
     "zoom": {
       "title": "Đường dẫn"

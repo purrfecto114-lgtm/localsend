@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicação",
     "help": "Certifique-se de que ambos os dispositivos estão na mesma rede Wi-Fi.",
-    "placeItems": "Insira os itens que quer compartilhar."
+    "placeItems": "Insira os itens que quer compartilhar.",
+    "diagnosis": {
+      "scanning": "Procurando dispositivos por perto…",
+      "noInterface": {
+        "title": "Sem conexão de rede",
+        "advice": "Este dispositivo não está conectado a nenhuma rede. Verifique a conexão Wi-Fi ou por cabo deste dispositivo."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast indisponível",
+        "advice": "O LocalSend não consegue usar a descoberta por multicast nesta rede. Certifique-se de que ambos os dispositivos estão na mesma rede e de que a isolação de ponto de acesso (AP) ou um firewall não está bloqueando a porta UDP {port}.",
+        "reason": "Motivo: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nenhum dispositivo encontrado",
+        "advice": "A descoberta está funcionando, mas nenhum dispositivo respondeu aos anúncios nem ao escaneamento da rede. O outro dispositivo pode estar desligado, em suspensão ou bloqueado por um firewall. Certifique-se de que o LocalSend está em execução no outro dispositivo.",
+        "detail": "Foram enviados {announcements} anúncios e {scans} escaneamentos de rede sem resposta."
+      },
+      "rescan": "Procurar de novo",
+      "bleHint": "A descoberta BLE está ativa: os dispositivos são encontrados por Bluetooth somente se eles também usarem este fork com a opção ativada; a transferência em si continua ocorrendo pela rede.",
+      "manualFallback": {
+        "message": "Endereços IP mudam com frequência. Você ainda pode acessar um dispositivo que não está na lista: adicione-o aos favoritos ou digite o endereço dele manualmente.",
+        "openFavorites": "Abrir favoritos",
+        "manualInput": "Digitar o endereço manualmente"
+      }
+    }
   },
   "settingsTab": {
     "title": "Configurações",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Envio",
       "shareViaLinkAutoAccept": "Aceitar solicitações por link automaticamente",
-      "createChecksums": "Criar checksums ao enviar arquivos"
+      "createChecksums": "Criar checksums ao enviar arquivos",
+      "deleteSourceAfterSend": "Apagar os arquivos de origem após um envio bem-sucedido"
     },
     "network": {
       "title": "Rede",
@@ -143,12 +168,26 @@
         "filtered": "Filtradas"
       },
       "discoveryTimeout": "Tempo limite de descoberta",
+      "maxInterfaces": "N.º máx. de interfaces (busca inteligente)",
+      "vpnInterfaces": "Incluir interfaces de VPN (busca inteligente)",
+      "vpnInterfacesHint": "Também escaneia as sub-redes das interfaces de túnel VPN (Tailscale, WireGuard, …). VPNs normalmente não permitem multicast, então suas sub-redes são sondadas pelo escaneamento HTTP alternativo.",
       "useSystemName": "Usar nome do sistema",
       "generateRandomAlias": "Gerar apelido aleatório",
       "portWarning": "Você pode estar indetectável para outros dispositivos por estar usando uma porta customizada. (Padrão: {defaultPort})",
       "encryption": "Criptografia",
       "multicastGroup": "Endereço de multicast",
-      "multicastGroupWarning": "Você pode estar indetectável para outros dispositivos por estar usando um endereço de multicast customizado. (Padrão: {defaultMulticast})"
+      "multicastGroupWarning": "Você pode estar indetectável para outros dispositivos por estar usando um endereço de multicast customizado. (Padrão: {defaultMulticast})",
+      "bleDiscovery": "Descoberta BLE (experimental)",
+      "bleDiscoveryHint": "Descobre dispositivos por perto via Bluetooth mesmo quando a rede bloqueia o multicast (isolação de ponto de acesso). Funciona no Android, iOS, macOS e Windows; no Linux, este dispositivo consegue encontrar os outros, mas não pode ser encontrado. Ambos os dispositivos precisam deste fork com a opção ativada; a transferência de arquivos em si ainda usa a rede.",
+      "bleStatusActive": "Ativa: escaneando e divulgando. Os dispositivos por perto só aparecem se eles também usarem este fork com a opção ativada.",
+      "bleStatusScanOnly": "Ativa: somente escaneamento. Este dispositivo não pode ser descoberto por Bluetooth no momento (sem suporte a divulgação BLE nesta plataforma, ou ainda sem um endereço de rede utilizável).",
+      "bleStatusPaused": "Pausada. Retoma quando o aplicativo voltar ao primeiro plano.",
+      "bleStatusPermissionDenied": "Permissões de Bluetooth negadas. Conceda a permissão \"Dispositivos próximos\" (ou \"Localização\" no Android 11 e anteriores) nas configurações do sistema e depois desative e ative esta opção novamente.",
+      "bleStatusAdapterOff": "O Bluetooth está desligado ou indisponível. A descoberta reinicia sozinha quando o Bluetooth ficar disponível novamente.",
+      "bleStatusUnsupported": "Sem suporte neste dispositivo: a descoberta BLE precisa do Android 7 ou mais recente e de um rádio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Nesta versão do Android, encontrar outros dispositivos também exige que os serviços de localização do sistema estejam ativados (a permissão é solicitada automaticamente; este dispositivo já pode ser encontrado pelos outros).",
+      "bleStatusError": "Não foi possível iniciar a descoberta BLE. Veja Resolução de problemas > Registros para mais detalhes.",
+      "bleOpenSystemSettings": "Abrir configurações do sistema"
     },
     "other": {
       "title": "Outras",
@@ -256,6 +295,13 @@
     "titleSending": "Enviando arquivos",
     "titleReceiving": "Recebendo arquivos",
     "savedToGallery": "Salvo na Galeria",
+    "checksum": {
+      "verified": "Checksums verificados",
+      "partiallyVerified": "Checksums verificados para {curr} / {n} arquivos",
+      "notVerifiable": "O remetente não forneceu checksums",
+      "disabled": "A verificação de checksums está desativada",
+      "attached": "Checksums anexados ({curr} / {n} arquivos)"
+    },
     "total": {
       "title": {
         "sending": "Progresso total ({time})",
@@ -408,11 +454,42 @@
       "title": "Digite o endereço",
       "hashtag": "Jogo da velha",
       "ip": "Endereço de IP",
-      "recentlyUsed": "Usado recentemente: "
+      "recentlyUsed": "Usado recentemente: ",
+      "noHashtagCandidates": "A rede atual não tem endereço IPv4, então o jogo da velha não pode ser expandido para um endereço candidato. Digite o endereço completo (ex.: 192.168.1.5 ou fe80::1).",
+      "validation": {
+        "invalid": "Digite um endereço IPv4, um endereço IPv6 ou um nome de host válido.",
+        "scheme": "Digite somente o endereço, sem \"http://\" ou \"https://\".",
+        "port": "Digite somente o endereço. A porta vem das configurações."
+      }
     },
     "cancelSession": {
       "title": "Cancelar transferência de arquivos",
       "content": "Você quer mesmo cancelar a transferência de arquivos?"
+    },
+    "connectionError": {
+      "title": "Falha na conexão",
+      "timeout": {
+        "message": "O dispositivo não respondeu a tempo.",
+        "advice": "Ele provavelmente está desligado, em suspensão ou um firewall está bloqueando a conexão. Certifique-se de que o LocalSend está em execução no outro dispositivo e de que ambos os dispositivos estão na mesma rede."
+      },
+      "refused": {
+        "message": "O dispositivo recusou a conexão.",
+        "advice": "O LocalSend parece não estar em execução no dispositivo de destino, ou está escutando em uma porta diferente. Inicie o LocalSend no outro dispositivo ou verifique a porta."
+      },
+      "forbidden": {
+        "message": "O dispositivo rejeitou a solicitação.",
+        "advice": "Um PIN pode ser necessário, ou o pareamento com o dispositivo mudou. Verifique o PIN e as configurações de salvamento rápido no dispositivo de destino."
+      },
+      "other": {
+        "message": "Não foi possível estabelecer a conexão.",
+        "advice": "Verifique o endereço e a porta, certifique-se de que o LocalSend está em execução no dispositivo de destino e de que nenhum firewall ou VPN está bloqueando a conexão."
+      },
+      "retry": "Tentar de novo",
+      "details": "Detalhes do erro:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Apagar arquivos de origem",
+      "content": "Depois que os arquivos forem enviados com sucesso, eles serão apagados deste dispositivo. Isso não pode ser desfeito."
     },
     "cannotOpenFile": {
       "title": "Não foi possível abrir o arquivo",
@@ -508,6 +585,25 @@
       "single": "Envia arquivos para um destinatário. A seleção será apagada após a conclusão da transferência dos arquivos.",
       "multiple": "Envia arquivos para vários destinatários. A seleção não será apagada.",
       "link": "Os destinatários que não têm o LocalSend instalado podem baixar os arquivos selecionados abrindo o link fornecido no navegador."
+    },
+    "startupError": {
+      "title": "Não foi possível iniciar o servidor",
+      "port": "Porta: {port}",
+      "windowsAccessDenied": {
+        "hint": "O Windows negou o acesso à porta (erro de socket 10013).",
+        "advice": "Isso geralmente é causado por um intervalo de portas reservado pelo Hyper-V, WSL ou Docker, ou por um catálogo Winsock corrompido:\n• Mude a porta nas Configurações (Rede)\n• Verifique os intervalos reservados com: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repare o Winsock como administrador com: netsh winsock reset (reinicie depois)"
+      },
+      "addressInUse": {
+        "hint": "A porta já está sendo usada por outro aplicativo.",
+        "advice": "Outro programa (ou uma segunda instância do LocalSend) está escutando nesta porta:\n• Feche o outro aplicativo, ou\n• Mude a porta nas Configurações (Rede)"
+      },
+      "generic": {
+        "hint": "Não foi possível iniciar o servidor.",
+        "advice": "• Verifique seu firewall e as configurações de rede\n• Tente mudar a porta nas Configurações (Rede)"
+      },
+      "details": "Detalhes do erro:",
+      "copyDetails": "Copiar detalhes",
+      "openSettings": "Abrir configurações"
     },
     "zoom": {
       "title": "URL"

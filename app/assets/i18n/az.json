@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "İzahat",
     "help": "Xahiş olunur, əmin olun ki, istədiyiniz hədəf eyni Wi-Fi şəbəkəsindədir.",
-    "placeItems": "Paylaşmaq üçün elementləri yerləşdir."
+    "placeItems": "Paylaşmaq üçün elementləri yerləşdir.",
+    "diagnosis": {
+      "scanning": "Yaxınlıqdakı cihazlar axtarılır…",
+      "noInterface": {
+        "title": "Şəbəkə bağlantısı yoxdur",
+        "advice": "Bu cihaz heç bir şəbəkəyə qoşulmayıb. Bu cihazın Wi-Fi və ya kabel bağlantısını yoxlayın."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast əlçatan deyil",
+        "advice": "LocalSend bu şəbəkədə multicast aşkarlamadan istifadə edə bilmir. Hər iki cihazın eyni şəbəkədə olduğundan və AP izolyasiyasının və ya firewall-un {port} UDP portunu bloklamadığından əmin olun.",
+        "reason": "Səbəb: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Heç bir cihaz tapılmadı",
+        "advice": "Axtarış işləyir, lakin heç bir cihaz elanlara və ya şəbəkə skanına cavab vermədi. Digər cihaz oflayn, yuxu rejimində ola və ya firewall tərəfindən bloklana bilər. LocalSend-in digər cihazda işlədiyindən əmin olun.",
+        "detail": "{announcements} elan və {scans} şəbəkə skanı göndərildi, cavab alınmadı."
+      },
+      "rescan": "Yenidən axtar",
+      "bleHint": "BLE aşkarlaması aktivdir: cihazlar yalnız onlar da bu seçim aktiv olan bu fork-u işlətdikdə Bluetooth vasitəsilə tapılır; ötürmənin özü yenə də şəbəkə üzərindən həyata keçir.",
+      "manualFallback": {
+        "message": "IP ünvanları tez-tez dəyişir. Siyahıda olmayan cihaza yenə də çata bilərsiniz: onu sevimlilərə əlavə edin və ya ünvanını əl ilə daxil edin.",
+        "openFavorites": "Sevimliləri aç",
+        "manualInput": "Ünvanı əl ilə daxil et"
+      }
+    }
   },
   "settingsTab": {
     "title": "Tənzimləmələr",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Göndər",
       "shareViaLinkAutoAccept": "\"Keçid vasitəsilə paylaş\" rejimində sorğuları avtomatik qəbul et",
-      "createChecksums": "Faylları göndərərkən yoxlama məbləğləri yarat"
+      "createChecksums": "Faylları göndərərkən yoxlama məbləğləri yarat",
+      "deleteSourceAfterSend": "Uğurla göndərmədən sonra mənbə fayllarını sil"
     },
     "network": {
       "title": "Şəbəkə",
@@ -143,12 +168,26 @@
         "filtered": "Filtrlənmiş"
       },
       "discoveryTimeout": "Axtarışın zaman aşımı",
+      "maxInterfaces": "Maksimal interfeys sayı (Ağıllı skan)",
+      "vpnInterfaces": "VPN interfeyslərini daxil et (Ağıllı skan)",
+      "vpnInterfacesHint": "VPN tunnel interfeyslərinin alt şəbəkələrini də skan et (Tailscale, WireGuard, ...). VPN-lər adətən multicast daşımır, ona görə də onların alt şəbəkələri HTTP ehtiyat skanı ilə yoxlanılır.",
       "useSystemName": "Sistemin adından istifadə et",
       "generateRandomAlias": "Təsadüfi ad yarat",
       "portWarning": "Fərdi portdan istifadə etdiyiniz üçün başqa cihazlar tərəfindən aşkarlanmaya bilərsiniz. (defolt: {defaultPort})",
       "encryption": "Şifrələmə",
       "multicastGroup": "Multicast ünvanı",
-      "multicastGroupWarning": "Fərdi multicast ünvanından istifadə etdiyiniz üçün başqa cihazlar tərəfindən aşkarlanmaya bilərsiniz. (defolt: {defaultMulticast})"
+      "multicastGroupWarning": "Fərdi multicast ünvanından istifadə etdiyiniz üçün başqa cihazlar tərəfindən aşkarlanmaya bilərsiniz. (defolt: {defaultMulticast})",
+      "bleDiscovery": "BLE aşkarlaması (eksperimental)",
+      "bleDiscoveryHint": "Şəbəkə multicast-i blokladıqda (AP izolyasiyası) belə yaxınlıqdakı cihazları Bluetooth vasitəsilə tapır. Android, iOS, macOS və Windows-da işləyir; Linux-da isə bu cihaz digərlərini tapa bilir, lakin özü tapıla bilmir. Hər iki cihazda bu seçim aktiv edilmiş bu fork olmalıdır; fayl köçürməsinin özü yenə də şəbəkədən istifadə edir.",
+      "bleStatusActive": "Aktiv: skan edilir və özünü elan verir. Yaxınlıqdakı cihazlar yalnız bu seçim aktiv edilmiş halda bu fork-u işlətdikdə görünür.",
+      "bleStatusScanOnly": "Aktiv: yalnız skan. Bu cihaz hazırda Bluetooth üzərindən aşkarlana bilmir (bu platformada BLE vasitəsilə özünü elan etmə dəstəklənmir və ya hələ istifadə edilə bilən şəbəkə ünvanı yoxdur).",
+      "bleStatusPaused": "Dayandırılıb. Tətbiq ön plana qayıdanda bərpa olunur.",
+      "bleStatusPermissionDenied": "Bluetooth icazələri verilməyib. Sistem parametrlərində \"Yaxınlıqdakı cihazlar\" (və ya Android 11 və aşağısında \"Məkan\") icazəsini verin, sonra bu seçimi söndürüb yenidən yandırın.",
+      "bleStatusAdapterOff": "Bluetooth söndürülüb və ya əlçatan deyil. Bluetooth yenidən əlçatan olanda aşkarlama özü yenidən başlayacaq.",
+      "bleStatusUnsupported": "Bu cihazda dəstəklənmir: BLE aşkarlaması Android 7 və ya daha yeni versiya, həmçinin Bluetooth LE radio tələb edir.",
+      "bleStatusLegacyLocation": "Bu Android versiyasında digər cihazları tapmaq üçün sistem məkan xidmətlərinin də aktiv olması lazımdır (icazə avtomatik soruşulur; bu cihazı başqaları artıq tapa bilir).",
+      "bleStatusError": "BLE aşkarlaması başlaya bilmədi. Ətraflı məlumat üçün Problemləri həll etmə > Jurnallar bölməsinə baxın.",
+      "bleOpenSystemSettings": "Sistem parametrlərinə get"
     },
     "other": {
       "title": "Digər",
@@ -256,6 +295,13 @@
     "titleSending": "Fayllar göndərilir",
     "titleReceiving": "Fayllar qəbul edilir",
     "savedToGallery": "Qalereyada saxlanıldı",
+    "checksum": {
+      "verified": "Yoxlama məbləğləri yoxlanıldı",
+      "partiallyVerified": "{curr} / {n} fayl üçün yoxlama məbləğləri yoxlanıldı",
+      "notVerifiable": "Göndərən tərəfindən yoxlama məbləği təqdim edilməyib",
+      "disabled": "Yoxlama məbləğlərinin yoxlanılması deaktivdir",
+      "attached": "Yoxlama məbləğləri əlavə edildi ({curr} / {n} fayl)"
+    },
     "total": {
       "title": {
         "sending": "Ümumi proses ({time})",
@@ -348,11 +394,42 @@
       "title": "Ünvanı daxil et",
       "hashtag": "Heşteq",
       "ip": "IP ünvan",
-      "recentlyUsed": "Son istifadə olunan: "
+      "recentlyUsed": "Son istifadə olunan: ",
+      "noHashtagCandidates": "Hazırkı şəbəkədə IPv4 ünvanı olmadığı üçün heşteq namizəd ünvana genişləndirilə bilməz. Bunun əvəzinə tam ünvanı daxil edin (məsələn, 192.168.1.5 və ya fe80::1).",
+      "validation": {
+        "invalid": "Düzgün IPv4 ünvanı, IPv6 ünvanı və ya host adı daxil edin.",
+        "scheme": "Yalnız ünvanı daxil edin, \"http://\" və ya \"https://\" olmadan.",
+        "port": "Yalnız ünvanı daxil edin. Port parametrlərdən götürülür."
+      }
     },
     "cancelSession": {
       "title": "Fayl transferini ləğv et",
       "content": "Siz həqiqətən faylların transferini ləğv etmək istəyirsiniz?"
+    },
+    "connectionError": {
+      "title": "Bağlantı uğursuz oldu",
+      "timeout": {
+        "message": "Cihaz vaxtında cavab vermədi.",
+        "advice": "O, böyük ehtimalla oflayndır, yuxu rejimindədir və ya firewall bağlantını bloklayır. LocalSend-in digər cihazda işlədiyindən və hər iki cihazın eyni şəbəkədə olduğundan əmin olun."
+      },
+      "refused": {
+        "message": "Cihaz bağlantını rədd etdi.",
+        "advice": "Görünür, LocalSend hədəf cihazda işləmir və ya başqa portda dinləyir. LocalSend-i digər cihazda başladın və ya portu yoxlayın."
+      },
+      "forbidden": {
+        "message": "Cihaz sorğunu rədd etdi.",
+        "advice": "PIN tələb oluna bilər və ya cihazla cütləşmə dəyişmiş ola bilər. Hədəf cihazda PIN və cəld yadda saxlama parametrlərini yoxlayın."
+      },
+      "other": {
+        "message": "Bağlantı qurula bilmədi.",
+        "advice": "Ünvanı və portu yoxlayın, LocalSend-in hədəf cihazda işlədiyinə və bağlantını heç bir firewall və ya VPN-in bloklamadığına əmin olun."
+      },
+      "retry": "Yenidən cəhd et",
+      "details": "Xəta təfərrüatları:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Mənbə fayllarını sil",
+      "content": "Fayllar uğurla göndərildikdən sonra bu cihazdan silinəcək. Bu əməliyyat geri qaytarıla bilməz."
     },
     "cannotOpenFile": {
       "title": "Faylı açmaq mümkün olmadı",
@@ -448,6 +525,25 @@
       "single": "Faylları bir cihaza göndərir. Faylların ötürülməsi başa çatdıqdan sonra seçim silinəcək.",
       "multiple": "Faylları birdən çox cihaza göndərir. Faylların ötürülməsi tamamlandıqdan sonra seçim silinməyəcək.",
       "link": "LocalSend-i quraşdırmamış alıcılar linki brauzerlərində açaraq seçilmiş faylları endirə bilərlər."
+    },
+    "startupError": {
+      "title": "Serveri başlatmaq mümkün olmadı",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows porta girişi rədd etdi (socket xətası 10013).",
+        "advice": "Buna səbəb adətən Hyper-V, WSL və ya Docker tərəfindən ayrılmış port diapazonu və ya zədələnmiş Winsock kataloqudur:\n• Portu Parametrlərdə (Şəbəkə) dəyişdirin\n• Ayrılmış diapazonları yoxlayın: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsock-u administrator kimi təmir edin: netsh winsock reset (sonra yenidən başladın)"
+      },
+      "addressInUse": {
+        "hint": "Port artıq başqa tətbiq tərəfindən istifadə olunur.",
+        "advice": "Başqa proqram (və ya ikinci LocalSend nüsxəsi) bu portda dinləyir:\n• Həmin tətbiqi bağlayın və ya\n• Portu Parametrlərdə (Şəbəkə) dəyişdirin"
+      },
+      "generic": {
+        "hint": "Serveri başlatmaq mümkün olmadı.",
+        "advice": "• Firewall və şəbəkə parametrlərini yoxlayın\n• Portu Parametrlərdə (Şəbəkə) dəyişməyi sınayın"
+      },
+      "details": "Xəta təfərrüatları:",
+      "copyDetails": "Təfərrüatları köçür",
+      "openSettings": "Parametrləri aç"
     },
     "zoom": {
       "title": "URL"

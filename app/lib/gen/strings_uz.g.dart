@@ -231,6 +231,8 @@ class _Translations$sendTab$uz extends Translations$sendTab$en {
   String get help => 'Kerakli qurilma ham bir xil Wi-Fi tarmogʻida ekanligiga ishonch hosil qiling.';
   @override
   String get placeItems => 'Ulashish uchun elementlarni joylashtiring.';
+  @override
+  late final _Translations$sendTab$diagnosis$uz diagnosis = _Translations$sendTab$diagnosis$uz._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$uz extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Suratlarga saqlandi';
   @override
+  late final _Translations$progressPage$checksum$uz checksum = _Translations$progressPage$checksum$uz._(_root);
+  @override
   late final _Translations$progressPage$total$uz total = _Translations$progressPage$total$uz._(_root);
   @override
   late final _Translations$progressPage$remainingTime$uz remainingTime = _Translations$progressPage$remainingTime$uz._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$uz extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$uz cancelSession = _Translations$dialogs$cancelSession$uz._(_root);
   @override
+  late final _Translations$dialogs$connectionError$uz connectionError = _Translations$dialogs$connectionError$uz._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$uz deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$uz._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$uz cannotOpenFile = _Translations$dialogs$cannotOpenFile$uz._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$uz encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$uz._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$uz extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$uz pin = _Translations$dialogs$pin$uz._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$uz sendModeHelp = _Translations$dialogs$sendModeHelp$uz._(_root);
+  @override
+  late final _Translations$dialogs$startupError$uz startupError = _Translations$dialogs$startupError$uz._(_root);
   @override
   late final _Translations$dialogs$zoom$uz zoom = _Translations$dialogs$zoom$uz._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$uz extends Translations$sendTab$sendModes$
   String get link => 'Havola orqali ulashish';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$uz extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Yaqin atrofdagi qurilmalar qidirilmoqda…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$uz noInterface = _Translations$sendTab$diagnosis$noInterface$uz._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$uz multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$uz._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$uz scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$uz._(_root);
+  @override
+  String get rescan => 'Qayta qidirish';
+  @override
+  String get bleHint =>
+      'BLE orqali aniqlash faol: qurilmalar faqat ular ham bu opsiya yoqilgan shu forkni ishlatgan holda Bluetooth orqali topiladi; uzatishning oʻzi baribir tarmoq orqali amalga oshadi.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$uz manualFallback = _Translations$sendTab$diagnosis$manualFallback$uz._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$uz extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$uz._(TranslationsUz root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$uz extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"Havola orqali ulashish" rejimida soʻrovlarni avtomatik qabul qilish';
   @override
   String get createChecksums => 'Fayllarni yuborishda nazorat summalarini yaratish';
+  @override
+  String get deleteSourceAfterSend => 'Muvaffaqiyatli yuborilgandan soʻng manba fayllarini oʻchirish';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$uz extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Aniqlash vaqti tugashi';
   @override
+  String get maxInterfaces => 'Interfeyslarning maksimal soni (Aqlli skan)';
+  @override
+  String get vpnInterfaces => 'VPN interfeyslarini qoʻshish (Aqlli skan)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN tunnel interfeyslarining subnetlarini ham skan qilish (Tailscale, WireGuard, ...). VPNlar odatda multicast uzatmaydi, shuning uchun ularning subnetlari HTTP zaxira skani orqali tekshiriladi.';
+  @override
   String get useSystemName => 'Tizim nomidan foydalanish';
   @override
   String get generateRandomAlias => 'Tasodifiy nom yaratish';
@@ -962,6 +1008,34 @@ class _Translations$settingsTab$network$uz extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Maxsus multicast manzilidan foydalanayotganingiz uchun boshqa qurilmalar sizni aniqlay olmasligi mumkin. (standart: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE orqali aniqlash (eksperimental)';
+  @override
+  String get bleDiscoveryHint =>
+      'Tarmoq multicastni bloklaganda ham (AP izolyatsiyasi) yaqin atrofdagi qurilmalarni Bluetooth orqali topadi. Android, iOS, macOS va Windowsda ishlaydi; Linuxda esa bu qurilma boshqalarni topa oladi, lekin oʻzi topilmaydi. Ikkala qurilmada ham bu opsiya yoqilgan shu fork boʻlishi kerak; fayl uzatishning oʻzi baribir tarmoqdan foydalanadi.';
+  @override
+  String get bleStatusActive =>
+      'Faol: skan qilinmoqda va eʼlon berilmoqda. Yaqin atrofdagi qurilmalar faqat ular ham bu opsiya yoqilgan shu forkni ishlatganda koʻrinadi.';
+  @override
+  String get bleStatusScanOnly =>
+      'Faol: faqat skan qilinmoqda. Bu qurilma hozircha Bluetooth orqali aniqlanmaydi (bu platformada BLE eʼlon berish qoʻllab-quvvatlanmaydi yoki hozircha ishlatish mumkin boʻlgan tarmoq manzili yoʻq).';
+  @override
+  String get bleStatusPaused => 'Toʻxtatilgan. Ilova old fonga qaytganda davom etadi.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth ruxsatlari rad etildi. Tizim sozlamalarida "Yaqin atrofdagi qurilmalar" (yoki Android 11 va undan past versiyalarda "Joylashuv") ruxsatini bering, soʻng bu opsiyani oʻchirib qayta yoqing.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth oʻchiq yoki mavjud emas. Bluetooth qayta mavjud boʻlganda aniqlash oʻzi qayta boshlanadi.';
+  @override
+  String get bleStatusUnsupported =>
+      'Bu qurilmada qoʻllab-quvvatlanmaydi: BLE orqali aniqlash Android 7 yoki undan yangi versiyani hamda Bluetooth LE radiotasini talab qiladi.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Bu Android versiyasida boshqa qurilmalarni topish uchun tizimning joylashuv xizmatlari ham yoqilgan boʻlishi kerak (ruxsat avtomatik soʻraladi; bu qurilmani boshqalar allaqachon topa oladi).';
+  @override
+  String get bleStatusError => 'BLE orqali aniqlashni boshlab boʻlmadi. Tafsilotlar uchun Muammolarni bartaraf etish > Jurnallar boʻlimiga qarang.';
+  @override
+  String get bleOpenSystemSettings => 'Tizim sozlamalariga oʻtish';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$uz extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} orqali yangilandi (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$uz extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Nazorat summalari tekshirildi';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} ta fayl uchun nazorat summalari tekshirildi';
+  @override
+  String get notVerifiable => 'Yuboruvchi nazorat summalari bermagan';
+  @override
+  String get disabled => 'Nazorat summalarini tekshirish oʻchirilgan';
+  @override
+  String attached({required Object curr, required Object n}) => 'Nazorat summalari qoʻshildi (${curr} / ${n} ta fayl)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$uz extends Translations$progressPage$total$en {
   _Translations$progressPage$total$uz._(TranslationsUz root) : this._root = root, super.internal(root);
@@ -1171,6 +1264,11 @@ class _Translations$dialogs$addressInput$uz extends Translations$dialogs$address
   String get ip => 'IP manzil';
   @override
   String get recentlyUsed => 'Yaqinda ishlatilgan: ';
+  @override
+  String get noHashtagCandidates =>
+      'Joriy tarmoqda IPv4 manzili yoʻqligi uchun hashtag nomzod manzilga kengaytirilmaydi. Iltimos, toʻliq manzilni kiriting (masalan, 192.168.1.5 yoki fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$uz validation = _Translations$dialogs$addressInput$validation$uz._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1282,42 @@ class _Translations$dialogs$cancelSession$uz extends Translations$dialogs$cancel
   String get title => 'Fayl uzatishni bekor qilish';
   @override
   String get content => 'Fayl uzatishni haqiqatan ham bekor qilmoqchimisiz?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$uz extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ulanish amalga oshmadi';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$uz timeout = _Translations$dialogs$connectionError$timeout$uz._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$uz refused = _Translations$dialogs$connectionError$refused$uz._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$uz forbidden = _Translations$dialogs$connectionError$forbidden$uz._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$uz other = _Translations$dialogs$connectionError$other$uz._(_root);
+  @override
+  String get retry => 'Qayta urinish';
+  @override
+  String get details => 'Xato tafsilotlari:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$uz extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Manba fayllarini oʻchirish';
+  @override
+  String get content => 'Fayllar muvaffaqiyatli yuborilgandan soʻng bu qurilmadan oʻchiriladi. Buni qaytarib boʻlmaydi.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1477,6 +1611,32 @@ class _Translations$dialogs$sendModeHelp$uz extends Translations$dialogs$sendMod
   String get link => 'LocalSend oʻrnatilmagan qabul qiluvchilar havolani brauzerlarida ochish orqali tanlangan fayllarni yuklab olishlari mumkin.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$uz extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Serverni ishga tushirib boʻlmadi';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$uz windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$uz._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$uz addressInUse = _Translations$dialogs$startupError$addressInUse$uz._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$uz generic = _Translations$dialogs$startupError$generic$uz._(_root);
+  @override
+  String get details => 'Xato tafsilotlari:';
+  @override
+  String get copyDetails => 'Tafsilotlarni nusxalash';
+  @override
+  String get openSettings => 'Sozlamalarni ochish';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$uz extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$uz._(TranslationsUz root) : this._root = root, super.internal(root);
@@ -1486,6 +1646,68 @@ class _Translations$dialogs$zoom$uz extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$uz extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Tarmoq ulanishi yoʻq';
+  @override
+  String get advice => 'Bu qurilma hech qanday tarmoqqa ulanmagan. Bu qurilmaning Wi-Fi yoki kabel ulanishini tekshiring.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$uz extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast mavjud emas';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend bu tarmoqda multicast orqali aniqlashdan foydalana olmaydi. Ikkala qurilma ham bir xil tarmoqda ekanligiga va AP izolyatsiyasi yoki xavfsizlik devori ${port} UDP portini bloklamayotganiga ishonch hosil qiling.';
+  @override
+  String reason({required Object reason}) => 'Sabab: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$uz extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Qurilmalar topilmadi';
+  @override
+  String get advice =>
+      'Aniqlash ishlayapti, lekin hech qanday qurilma eʼlonlarga yoki tarmoq skaniga javob bermadi. Boshqa qurilma oflayn, uyku rejimida boʻlishi yoki xavfsizlik devori tomonidan bloklangan boʻlishi mumkin. LocalSend boshqa qurilmada ishlab turganiga ishonch hosil qiling.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} ta eʼlon va ${scans} ta tarmoq skani yuborildi, ammo javob olinmadi.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$uz extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP manzillar tez-tez oʻzgaradi. Roʻyxatda yoʻq qurilmaga ham murojaat qilish mumkin: uni sevimlilarga qoʻshing yoki manzilini qoʻlda kiriting.';
+  @override
+  String get openFavorites => 'Sevimlilarni ochish';
+  @override
+  String get manualInput => 'Manzilni qoʻlda kiriting';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1572,4 +1794,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$uz extends Translations$whatsNe
     'Sevimlilardan kelgan soʻrovlar endi avtomatik qabul qilinadi. Bu sukut boʻyicha yoqilgan va sozlamalarda oʻchirib qoʻyish mumkin.',
     'Androidda ilova fonda boʻlsa yoki ekran oʻchiq boʻlsa ham uzatishlar davom etadi. iOSda ilova hali ham old fonda qolishi kerak.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$uz extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Yaroqli IPv4 manzili, IPv6 manzili yoki host nomini kiriting.';
+  @override
+  String get scheme => 'Faqat manzilning oʻzini kiriting, "http://" yoki "https://" qoʻshmagan holda.';
+  @override
+  String get port => 'Faqat manzilni kiriting. Port sozlamalardan olinadi.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$uz extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Qurilma belgilangan vaqtda javob bermadi.';
+  @override
+  String get advice =>
+      'U oflayn boʻlishi, uyku rejimida boʻlishi yoki ulanishni xavfsizlik devori bloklashi mumkin. LocalSend boshqa qurilmada ishlab turganiga va ikkala qurilma ham bir xil tarmoqda ekanligiga ishonch hosil qiling.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$uz extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Qurilma ulanishni rad etdi.';
+  @override
+  String get advice =>
+      'LocalSend maqsadli qurilmada ishlamayotgan boʻlishi yoki boshqa portda tinglayotgan boʻlishi mumkin. LocalSendni boshqa qurilmada ishga tushiring yoki portni tekshiring.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$uz extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Qurilma soʻrovni rad etdi.';
+  @override
+  String get advice =>
+      'PIN talab qilinishi yoki qurilma bilan juftlashuv oʻzgargan boʻlishi mumkin. Maqsadli qurilmadagi PIN va tez saqlash sozlamalarini tekshiring.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$uz extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Ulanishni oʻrnatib boʻlmadi.';
+  @override
+  String get advice =>
+      'Manzil va portni tekshiring, LocalSend maqsadli qurilmada ishlayotganiga va ulanishni xavfsizlik devori yoki VPN bloklamayotganiga ishonch hosil qiling.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$uz extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows portga kirishga ruxsat bermadi (socket xatosi 10013).';
+  @override
+  String get advice =>
+      'Bunga odatda Hyper-V, WSL yoki Docker tomonidan zaxiralangan portlar oraligʻi yoki buzilgan Winsock katalogi sabab boʻladi:\n• Portni Sozlamalarda (Tarmoq) oʻzgartiring\n• Zaxiralangan oraligʻlarni tekshiring: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsockni administrator sifatida tuzating: netsh winsock reset (soʻng qayta ishga tushiring)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$uz extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Portni allaqachon boshqa ilova ishlatmoqda.';
+  @override
+  String get advice =>
+      'Boshqa dastur (yoki ikkinchi LocalSend nusxasi) bu portni tinglamoqda:\n• Oʻsha ilovani yoping, yoki\n• Portni Sozlamalarda (Tarmoq) oʻzgartiring';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$uz extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$uz._(TranslationsUz root) : this._root = root, super.internal(root);
+
+  final TranslationsUz _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Serverni ishga tushirish mumkin boʻlmadi.';
+  @override
+  String get advice => '• Xavfsizlik devori va tarmoq sozlamalarini tekshiring\n• Portni Sozlamalarda (Tarmoq) oʻzgartirib koʻring';
 }

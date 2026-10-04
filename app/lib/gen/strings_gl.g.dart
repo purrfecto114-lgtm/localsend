@@ -231,6 +231,8 @@ class _Translations$sendTab$gl extends Translations$sendTab$en {
   String get help => 'Asegúrate de que o obxectivo desexado tamén estea na mesma rede wifi.';
   @override
   String get placeItems => 'Coloca elementos para compartir.';
+  @override
+  late final _Translations$sendTab$diagnosis$gl diagnosis = _Translations$sendTab$diagnosis$gl._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$gl extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Gardado en Fotos';
   @override
+  late final _Translations$progressPage$checksum$gl checksum = _Translations$progressPage$checksum$gl._(_root);
+  @override
   late final _Translations$progressPage$total$gl total = _Translations$progressPage$total$gl._(_root);
   @override
   late final _Translations$progressPage$remainingTime$gl remainingTime = _Translations$progressPage$remainingTime$gl._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$gl extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$gl cancelSession = _Translations$dialogs$cancelSession$gl._(_root);
   @override
+  late final _Translations$dialogs$connectionError$gl connectionError = _Translations$dialogs$connectionError$gl._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$gl deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$gl._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$gl cannotOpenFile = _Translations$dialogs$cannotOpenFile$gl._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$gl encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$gl._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$gl extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$gl pin = _Translations$dialogs$pin$gl._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$gl sendModeHelp = _Translations$dialogs$sendModeHelp$gl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$gl startupError = _Translations$dialogs$startupError$gl._(_root);
   @override
   late final _Translations$dialogs$zoom$gl zoom = _Translations$dialogs$zoom$gl._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$gl extends Translations$sendTab$sendModes$
   String get link => 'Comparte via ligazón';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$gl extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Buscando dispositivos próximos…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$gl noInterface = _Translations$sendTab$diagnosis$noInterface$gl._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$gl multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$gl._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$gl scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$gl._(_root);
+  @override
+  String get rescan => 'Buscar de novo';
+  @override
+  String get bleHint =>
+      'O descubrimento por BLE está activo: os dispositivos atópanse por Bluetooth só se tamén executan este fork coa opción activada; a transferencia en si segue a facerse pola rede.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$gl manualFallback = _Translations$sendTab$diagnosis$manualFallback$gl._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$gl extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$gl._(TranslationsGl root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$gl extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Aceptar automáticamente peticións no modo "Compartir mediante ligazón"';
   @override
   String get createChecksums => 'Crear sumas de comprobación ao enviar ficheiros';
+  @override
+  String get deleteSourceAfterSend => 'Eliminar os ficheiros de orixe despois dun envío correcto';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$gl extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Tempo límite de Descubrimento';
   @override
+  String get maxInterfaces => 'Máx. de interfaces (Busca intelixente)';
+  @override
+  String get vpnInterfaces => 'Incluír interfaces VPN (Busca intelixente)';
+  @override
+  String get vpnInterfacesHint =>
+      'Tamén se buscan as subredes das interfaces de túnel VPN (Tailscale, WireGuard, ...). As VPN normalmente non admiten multicast, polo que as súas subredes se comproban coa busca alternativa por HTTP.';
+  @override
   String get useSystemName => 'Usar o nome do sistema';
   @override
   String get generateRandomAlias => 'Xerar alias aleatorio';
@@ -962,6 +1008,35 @@ class _Translations$settingsTab$network$gl extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Pode que non sexas detectado por outros dispositivos porque estás a empregar un enderezo multicast personalizada. (Por defecto: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Descubrimento por BLE (experimental)';
+  @override
+  String get bleDiscoveryHint =>
+      'Descubre dispositivos próximos por Bluetooth mesmo cando a rede bloquea o multicast (illamento do punto de acceso, AP). Funciona en Android, iOS, macOS e Windows; en Linux este dispositivo pode atopar outros, pero el non pode ser atopado. Ambos os dispositivos necesitan este fork coa opción activada; a transferencia de ficheiros en si segue a usar a rede.';
+  @override
+  String get bleStatusActive =>
+      'Activo: buscando e anunciándose. Os dispositivos próximos aparecen só se tamén executan este fork coa opción activada.';
+  @override
+  String get bleStatusScanOnly =>
+      'Activo: só busca. Este dispositivo non pode ser descuberto por Bluetooth neste momento (esta plataforma non admite publicidade BLE ou aínda non hai un enderezo de rede utilizábel).';
+  @override
+  String get bleStatusPaused => 'En pausa. Continuarase cando a aplicación volva ao primeiro plano.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Permisos de Bluetooth denegados. Concede o permiso "Dispositivos próximos" (ou "Localización" en Android 11 e anteriores) na configuración do sistema e, despois, desactiva e volve activar esta opción.';
+  @override
+  String get bleStatusAdapterOff =>
+      'O Bluetooth está apagado ou non está dispoñíbel. O descubrimento reiníciase só cando o Bluetooth volva estar dispoñíbel.';
+  @override
+  String get bleStatusUnsupported =>
+      'Non é compatíbel con este dispositivo: o descubrimento por BLE necesita Android 7 ou superior e unha radio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Nesta versión de Android, para atopar outros dispositivos tamén cómpre ter activados os servizos de localización do sistema (o permiso pídense automaticamente; este dispositivo xa pode ser atopado por outros).';
+  @override
+  String get bleStatusError => 'Non se puido iniciar o descubrimento por BLE. Consulta Solucionar problemas > Rexistros para máis detalles.';
+  @override
+  String get bleOpenSystemSettings => 'Abrir a configuración do sistema';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1153,25 @@ class _Translations$deviceDetailsPage$logs$gl extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Actualizado mediante ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$gl extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Sumas de comprobación verificadas';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Sumas de comprobación verificadas para ${curr} / ${n} ficheiros';
+  @override
+  String get notVerifiable => 'O remitente non forneceu sumas de comprobación';
+  @override
+  String get disabled => 'A verificación de sumas de comprobación está desactivada';
+  @override
+  String attached({required Object curr, required Object n}) => 'Sumas de comprobación anexadas (${curr} / ${n} ficheiros)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$gl extends Translations$progressPage$total$en {
   _Translations$progressPage$total$gl._(TranslationsGl root) : this._root = root, super.internal(root);
@@ -1171,6 +1265,11 @@ class _Translations$dialogs$addressInput$gl extends Translations$dialogs$address
   String get ip => 'Enderezo IP';
   @override
   String get recentlyUsed => 'Empregados recentemente: ';
+  @override
+  String get noHashtagCandidates =>
+      'A rede actual non ten enderezo IPv4, polo que a etiqueta non se pode expandir a un enderezo candidato. Introduce o enderezo completo no seu lugar (p. ex., 192.168.1.5 ou fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$gl validation = _Translations$dialogs$addressInput$validation$gl._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1283,42 @@ class _Translations$dialogs$cancelSession$gl extends Translations$dialogs$cancel
   String get title => 'Cancelar a transferencia de ficheiros';
   @override
   String get content => 'Realmente queres cancelar a transferencia de ficheiros?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$gl extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'A conexión fallou';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$gl timeout = _Translations$dialogs$connectionError$timeout$gl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$gl refused = _Translations$dialogs$connectionError$refused$gl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$gl forbidden = _Translations$dialogs$connectionError$forbidden$gl._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$gl other = _Translations$dialogs$connectionError$other$gl._(_root);
+  @override
+  String get retry => 'Tentar de novo';
+  @override
+  String get details => 'Detalles do erro:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$gl extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Eliminar os ficheiros de orixe';
+  @override
+  String get content => 'Despois de que os ficheiros se envíen correctamente, eliminaranse deste dispositivo. Isto non se pode desfacer.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1478,6 +1613,32 @@ class _Translations$dialogs$sendModeHelp$gl extends Translations$dialogs$sendMod
       'Os destinatarios que non teñan instalado LocalSend poden descargar os ficheiros seleccionados abrindo a ligazón no seu navegador.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$gl extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Non se puido iniciar o servidor';
+  @override
+  String port({required Object port}) => 'Porto: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$gl windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$gl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$gl addressInUse = _Translations$dialogs$startupError$addressInUse$gl._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$gl generic = _Translations$dialogs$startupError$generic$gl._(_root);
+  @override
+  String get details => 'Detalles do erro:';
+  @override
+  String get copyDetails => 'Copiar os detalles';
+  @override
+  String get openSettings => 'Abrir a configuración';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$gl extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$gl._(TranslationsGl root) : this._root = root, super.internal(root);
@@ -1487,6 +1648,68 @@ class _Translations$dialogs$zoom$gl extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$gl extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Sen conexión de rede';
+  @override
+  String get advice => 'Este dispositivo non está conectado a ningunha rede. Comproba a conexión Wi-Fi ou por cable deste dispositivo.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$gl extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast non dispoñíbel';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend non pode usar o multicast para descubrir dispositivos nesta rede. Asegúrate de que ambos os dispositivos están na mesma rede e de que o illamento do punto de acceso (AP) ou un firewall non está bloqueando o porto UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Motivo: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$gl extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Non se atoparon dispositivos';
+  @override
+  String get advice =>
+      'O descubrimento funciona, pero ningún dispositivo respondeu aos anuncios nin á busca de rede. O outro dispositivo pode estar desconectado, en repouso ou bloqueado por un firewall. Asegúrate de que LocalSend está en execución no outro dispositivo.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Enviáronse ${announcements} anuncios e ${scans} buscas de rede sen resposta.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$gl extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Os enderezos IP cambian a miúdo. Aínda podes acceder a un dispositivo que non estea na lista: engádeo aos favoritos ou introduce o seu enderezo manualmente.';
+  @override
+  String get openFavorites => 'Abrir favoritos';
+  @override
+  String get manualInput => 'Introducir o enderezo manualmente';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1573,4 +1796,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$gl extends Translations$whatsNe
     'As solicitudes dos favoritos acéptanse agora automaticamente. Isto está activado por defecto e pódese desactivar na configuración.',
     'En Android, as transferencias continúan mentres a aplicación está en segundo plano ou a pantalla está apagada. En iOS, a aplicación aínda debe permanecer en primeiro plano.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$gl extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Introduce un enderezo IPv4, IPv6 ou nome de host válido.';
+  @override
+  String get scheme => 'Introduce só o enderezo, sen "http://" ou "https://".';
+  @override
+  String get port => 'Introduce só o enderezo. O porto tómase da configuración.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$gl extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'O dispositivo non respondeu a tempo.';
+  @override
+  String get advice =>
+      'Probabelmente estea desconectado, en repouso ou un firewall estea bloqueando a conexión. Asegúrate de que LocalSend está en execución no outro dispositivo e de que ambos están na mesma rede.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$gl extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'O dispositivo rexeitou a conexión.';
+  @override
+  String get advice =>
+      'Semella que LocalSend non está en execución no dispositivo de destino, ou que está escoitando noutro porto. Inicia LocalSend no outro dispositivo ou comproba o porto.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$gl extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'O dispositivo rexeitou a solicitude.';
+  @override
+  String get advice =>
+      'Pode que se precise un PIN ou que o emparellamento co dispositivo cambiase. Comproba o PIN e a configuración de gardado rápido no dispositivo de destino.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$gl extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Non se puido establecer a conexión.';
+  @override
+  String get advice =>
+      'Comproba o enderezo e o porto, asegúrate de que LocalSend está en execución no dispositivo de destino e de que ningún firewall nin VPN está bloqueando a conexión.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$gl extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows denegou o acceso ao porto (erro de socket 10013).';
+  @override
+  String get advice =>
+      'Isto adoita estar causado por un intervalo de portos reservado por Hyper-V, WSL ou Docker, ou por un catálogo Winsock danado:\n• Cambia o porto na configuración (Rede)\n• Comproba os intervalos reservados con: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repara Winsock como administrador con: netsh winsock reset (reinicia despois)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$gl extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'O porto xa está sendo usado por outra aplicación.';
+  @override
+  String get advice =>
+      'Outro programa (ou unha segunda instancia de LocalSend) está escoitando neste porto:\n• Pecha a outra aplicación, ou\n• Cambia o porto na configuración (Rede)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$gl extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$gl._(TranslationsGl root) : this._root = root, super.internal(root);
+
+  final TranslationsGl _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Non se puido iniciar o servidor.';
+  @override
+  String get advice => '• Comproba a configuración do firewall e da rede\n• Tenta cambiar o porto na configuración (Rede)';
 }

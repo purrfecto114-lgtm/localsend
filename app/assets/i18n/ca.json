@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicació",
     "help": "Comproveu que el destinatari està en la mateixa xarxa Wi-Fi.",
-    "placeItems": "Col·loqueu els elements per compartir."
+    "placeItems": "Col·loqueu els elements per compartir.",
+    "diagnosis": {
+      "scanning": "S'estan cercant dispositius propers…",
+      "noInterface": {
+        "title": "Sense connexió de xarxa",
+        "advice": "Aquest dispositiu no està connectat a cap xarxa. Comproveu la connexió Wi-Fi o per cable d'aquest dispositiu."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast no disponible",
+        "advice": "El LocalSend no pot utilitzar el multicast per a descobrir dispositius en aquesta xarxa. Assegureu-vos que tots dos dispositius són a la mateixa xarxa i que l'aïllament del punt d'accés (AP) o un tallafocs no bloquegen el port UDP {port}.",
+        "reason": "Motiu: {reason}"
+      },
+      "scanNoResult": {
+        "title": "No s'han trobat dispositius",
+        "advice": "La descoberta funciona, però cap dispositiu ha contestat als anuncis ni a l'escaneig de xarxa. L'altre dispositiu pot estar desconnectat, en repòs o bloquejat per un tallafocs. Assegureu-vos que el LocalSend s'està executant a l'altre dispositiu.",
+        "detail": "S'han enviat {announcements} anuncis i {scans} escanejos de xarxa sense resposta."
+      },
+      "rescan": "Torneu a cercar",
+      "bleHint": "La descoberta per BLE és activa: els dispositius es troben per Bluetooth només si també executen aquest fork amb l'opció activada; la transferència en si continua fent-se per la xarxa.",
+      "manualFallback": {
+        "message": "Les adreces IP canvien sovint. Tot i així, podeu accedir a un dispositiu que no surt a la llista: afegiu-lo als preferits o introduïu la seva adreça manualment.",
+        "openFavorites": "Obre els preferits",
+        "manualInput": "Introduïu l'adreça manualment"
+      }
+    }
   },
   "settingsTab": {
     "title": "Configuració",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Enviament",
       "shareViaLinkAutoAccept": "Accepta peticions de manera automàtica en el mode «Comparteix via enllaç»",
-      "createChecksums": "Crea sumes de verificació en enviar fitxers"
+      "createChecksums": "Crea sumes de verificació en enviar fitxers",
+      "deleteSourceAfterSend": "Elimina els fitxers d'origen després d'un enviament correcte"
     },
     "network": {
       "title": "Xarxa",
@@ -143,12 +168,26 @@
         "filtered": "Filtrades"
       },
       "discoveryTimeout": "Temps d'espera de descobriment",
+      "maxInterfaces": "Màxim d'interfícies (Escaneig intel·ligent)",
+      "vpnInterfaces": "Inclou interfícies VPN (Escaneig intel·ligent)",
+      "vpnInterfacesHint": "També escaneja les subxarxes de les interfícies de túnel VPN (Tailscale, WireGuard, ...). Les VPN normalment no admeten multicast, per la qual cosa les seves subxarxes es comproven amb l'escaneig alternatiu per HTTP.",
       "useSystemName": "Utilitza el nom del sistema",
       "generateRandomAlias": "Genera un àlies aleatori",
       "portWarning": "Altres dispositius podrien no detectar-vos perquè utilitzeu un port personalitzat. (predefinit: {defaultPort})",
       "encryption": "Xifratge",
       "multicastGroup": "Adreça del Multicast",
-      "multicastGroupWarning": "Altres dispositius podrien no detectar-vos perquè utilitzeu una adreça multicast personalitzada. (predefinida: {defaultMulticast})"
+      "multicastGroupWarning": "Altres dispositius podrien no detectar-vos perquè utilitzeu una adreça multicast personalitzada. (predefinida: {defaultMulticast})",
+      "bleDiscovery": "Descoberta per BLE (experimental)",
+      "bleDiscoveryHint": "Descobreix dispositius propers mitjançant Bluetooth fins i tot quan la xarxa bloqueja el multicast (aïllament del punt d'accés, AP). Funciona a Android, iOS, macOS i Windows; a Linux aquest dispositiu en pot trobar d'altres però no pot ser trobat. Tots dos dispositius necessiten aquest fork amb l'opció activada; la transferència de fitxers en si continua utilitzant la xarxa.",
+      "bleStatusActive": "Actiu: s'està escanejant i emetent anuncis. Els dispositius propers només apareixen si també executen aquest fork amb l'opció activada.",
+      "bleStatusScanOnly": "Actiu: només escaneja. Aquest dispositiu no es pot descobrir per Bluetooth ara mateix (la plataforma no admet l'emissió d'anuncis BLE, o encara no hi ha cap adreça de xarxa utilitzable).",
+      "bleStatusPaused": "En pausa. Es reprendrà quan l'aplicació torni al primer pla.",
+      "bleStatusPermissionDenied": "S'han denegat els permisos de Bluetooth. Concediu el permís «Dispositius propers» (o «Ubicació» a Android 11 i anteriors) a la configuració del sistema i, després, desactiveu i torneu a activar aquesta opció.",
+      "bleStatusAdapterOff": "El Bluetooth està desactivat o no està disponible. La descoberta es reiniciarà tota sola quan el Bluetooth torni a estar disponible.",
+      "bleStatusUnsupported": "No és compatible amb aquest dispositiu: la descoberta per BLE necessita Android 7 o posterior i una ràdio Bluetooth LE.",
+      "bleStatusLegacyLocation": "En aquesta versió d'Android, per a trobar altres dispositius també cal que els serveis d'ubicació del sistema estiguin activats (el permís es demana automàticament; aquest dispositiu ja pot ser trobat per altres).",
+      "bleStatusError": "No s'ha pogut iniciar la descoberta per BLE. Vegeu Solució de problemes > Registres per a més detalls.",
+      "bleOpenSystemSettings": "Obre la configuració del sistema"
     },
     "other": {
       "title": "Altres",
@@ -256,6 +295,13 @@
     "titleSending": "S'estan enviant els fitxers",
     "titleReceiving": "S'estan rebent els fitxers",
     "savedToGallery": "Desat a Fotos",
+    "checksum": {
+      "verified": "Sumes de verificació verificades",
+      "partiallyVerified": "Sumes de verificació verificades per a {curr} / {n} fitxers",
+      "notVerifiable": "El remitent no ha proporcionat sumes de verificació",
+      "disabled": "La verificació de sumes de verificació està desactivada",
+      "attached": "Sumes de verificació adjuntes ({curr} / {n} fitxers)"
+    },
     "total": {
       "title": {
         "sending": "Progrés total ({time})",
@@ -418,11 +464,42 @@
       "title": "Introduïu l'adreça",
       "hashtag": "Etiqueta",
       "ip": "Adreça IP",
-      "recentlyUsed": "Utilitzades recentment: "
+      "recentlyUsed": "Utilitzades recentment: ",
+      "noHashtagCandidates": "La xarxa actual no té cap adreça IPv4, per la qual cosa l'etiqueta no es pot ampliar a una adreça candidata. Introduïu l'adreça completa en el seu lloc (p. ex. 192.168.1.5 o fe80::1).",
+      "validation": {
+        "invalid": "Introduïu una adreça IPv4, una adreça IPv6 o un nom de host vàlid.",
+        "scheme": "Introduïu només l'adreça, sense «http://» ni «https://».",
+        "port": "Introduïu només l'adreça. El port s'agafa de la configuració."
+      }
     },
     "cancelSession": {
       "title": "Cancel·la la transferència de fitxers",
       "content": "Segur que voleu cancel·lar la transferència dels fitxers?"
+    },
+    "connectionError": {
+      "title": "Ha fallat la connexió",
+      "timeout": {
+        "message": "El dispositiu no ha respost a temps.",
+        "advice": "Probablement està desconnectat, en repòs o un tallafocs està bloquejant la connexió. Assegureu-vos que el LocalSend s'està executant a l'altre dispositiu i que tots dos dispositius són a la mateixa xarxa."
+      },
+      "refused": {
+        "message": "El dispositiu ha rebutjat la connexió.",
+        "advice": "Sembla que el LocalSend no s'està executant al dispositiu de destí, o que escolta en un port diferent. Inicieu el LocalSend a l'altre dispositiu o comproveu el port."
+      },
+      "forbidden": {
+        "message": "El dispositiu ha rebutjat la sol·licitud.",
+        "advice": "Pot ser que calgui un PIN o que l'aparellament amb el dispositiu hagi canviat. Comproveu el PIN i la configuració del desat ràpid al dispositiu de destí."
+      },
+      "other": {
+        "message": "No s'ha pogut establir la connexió.",
+        "advice": "Comproveu l'adreça i el port, assegureu-vos que el LocalSend s'està executant al dispositiu de destí i que cap tallafocs ni VPN bloqueja la connexió."
+      },
+      "retry": "Torna-ho a provar",
+      "details": "Detalls de l'error:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Elimina els fitxers d'origen",
+      "content": "Quan els fitxers s'hagin enviat correctament, se suprimiran d'aquest dispositiu. Això no es pot desfer."
     },
     "cannotOpenFile": {
       "title": "No es pot obrir el fitxer",
@@ -518,6 +595,25 @@
       "single": "Envia fitxers a un destinatari. La selecció s'esborrarà un cop finalitzada la transferència de fitxers.",
       "multiple": "Envia fitxers a diversos destinataris. La selecció no s'esborrarà en finalitzar la trasferència.",
       "link": "Els destinataris que no tinguin el LocalSend instal·lat poden baixar els fitxers seleccionats obrint l'enllaç al seu navegador."
+    },
+    "startupError": {
+      "title": "No s'ha pogut iniciar el servidor",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "El Windows ha denegat l'accés al port (error de sòcol 10013).",
+        "advice": "Això sol estar causat per un interval de ports reservat per Hyper-V, WSL o Docker, o per un catàleg Winsock malmès:\n• Canvieu el port a la configuració (Xarxa)\n• Comproveu els intervals reservats amb: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repareu el Winsock com a administrador amb: netsh winsock reset (reinicieu després)"
+      },
+      "addressInUse": {
+        "hint": "El port ja l'utilitza una altra aplicació.",
+        "advice": "Un altre programa (o una segona instància del LocalSend) escolta en aquest port:\n• Tanqueu l'altra aplicació, o\n• Canvieu el port a la configuració (Xarxa)"
+      },
+      "generic": {
+        "hint": "No s'ha pogut iniciar el servidor.",
+        "advice": "• Comproveu la configuració del tallafocs i de la xarxa\n• Proveu de canviar el port a la configuració (Xarxa)"
+      },
+      "details": "Detalls de l'error:",
+      "copyDetails": "Copia els detalls",
+      "openSettings": "Obre la configuració"
     },
     "zoom": {
       "title": "URL"

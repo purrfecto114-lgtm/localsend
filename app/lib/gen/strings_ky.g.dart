@@ -233,6 +233,8 @@ class _Translations$sendTab$ky extends Translations$sendTab$en {
   String get help => 'Кабыл алуучу сиз менен бир Wi-Fi тармагында экенин текшериңиз.';
   @override
   String get placeItems => 'Бөлүшө турган элементтерди кошуңуз.';
+  @override
+  late final _Translations$sendTab$diagnosis$ky diagnosis = _Translations$sendTab$diagnosis$ky._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$ky extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Сүрөттөргө сакталды';
   @override
+  late final _Translations$progressPage$checksum$ky checksum = _Translations$progressPage$checksum$ky._(_root);
+  @override
   late final _Translations$progressPage$total$ky total = _Translations$progressPage$total$ky._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ky remainingTime = _Translations$progressPage$remainingTime$ky._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$ky extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ky cancelSession = _Translations$dialogs$cancelSession$ky._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ky connectionError = _Translations$dialogs$connectionError$ky._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ky deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ky._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ky cannotOpenFile = _Translations$dialogs$cannotOpenFile$ky._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ky encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ky._(_root);
@@ -719,6 +728,8 @@ class _Translations$dialogs$ky extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ky pin = _Translations$dialogs$pin$ky._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ky sendModeHelp = _Translations$dialogs$sendModeHelp$ky._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ky startupError = _Translations$dialogs$startupError$ky._(_root);
   @override
   late final _Translations$dialogs$zoom$ky zoom = _Translations$dialogs$zoom$ky._(_root);
 }
@@ -923,6 +934,32 @@ class _Translations$sendTab$sendModes$ky extends Translations$sendTab$sendModes$
   String get link => 'Шилтеме аркылуу бөлүшүү';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ky extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Жакындагы түзмөктөр изделүүдө…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ky noInterface = _Translations$sendTab$diagnosis$noInterface$ky._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ky multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ky._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ky scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ky._(_root);
+  @override
+  String get rescan => 'Кайра издөө';
+  @override
+  String get bleHint =>
+      'BLE аркылуу табуу актив: түзмөктөр Bluetooth аркылуу алар да бул опция күйүк турган бул форкту колдонгондо гана табылат; берилиштерди өткөрүүнүн өзү дагы эле тармак аркылуу жүргүзүлөт.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ky manualFallback = _Translations$sendTab$diagnosis$manualFallback$ky._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ky extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ky._(TranslationsKy root) : this._root = root, super.internal(root);
@@ -1004,6 +1041,8 @@ class _Translations$settingsTab$send$ky extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"Шилтеме аркылуу бөлүшүү" режиминде сурамдарды автоматтык түрдө кабыл алуу';
   @override
   String get createChecksums => 'Файлдарды жөнөтүүдө текшерүү суммаларын түзүү';
+  @override
+  String get deleteSourceAfterSend => 'Ийгиликтүү жөнөтүүдөн кийин баштапкы файлдарды өчүрүү';
 }
 
 // Path: settingsTab.network
@@ -1034,6 +1073,13 @@ class _Translations$settingsTab$network$ky extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Түзмөктөрдү табуу тайм-ауту';
   @override
+  String get maxInterfaces => 'Интерфейстердин максималдуу саны (Акылдуу сканерлөө)';
+  @override
+  String get vpnInterfaces => 'VPN интерфейстерин кошуу (Акылдуу сканерлөө)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN туннель интерфейстеринин ички тармактарын да сканерлөө (Tailscale, WireGuard, ...). VPN\'лер адатта мультикастти ташый албагандыктан, алардын тармактары HTTP запастык сканы менен текшерилет.';
+  @override
   String get useSystemName => 'Системалык аталышты колдонуу';
   @override
   String get generateRandomAlias => 'Кокус түзмөктүн атын түзүү';
@@ -1047,6 +1093,34 @@ class _Translations$settingsTab$network$ky extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Башка мультикаст дареги колдонулуп жаткандыктан, башка түзмөктөр сизди таппай калышы мүмкүн. (демейки: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE аркылуу табуу (эксперименталдык)';
+  @override
+  String get bleDiscoveryHint =>
+      'Тармак мультикастти бөгөттөсө да (AP обочолонуусу) жакындагы түзмөктөрдү Bluetooth аркылуу табат. Android, iOS, macOS жана Windows\'ta иштейт; Linux\'ta бул түзмөк башкаларды таба алат, бирок өзү табылбайт. Эки түзмөктө тең бул опция күйүк турган бул форк болушу керек; файл өткөрүүнүн өзү дагы эле тармакты колдонот.';
+  @override
+  String get bleStatusActive =>
+      'Активдүү: сканерлөө жана өзүн жарыялоо жүрүп жатат. Жакындагы түзмөктөр алар да бул опция күйүк турган бул форкту колдонгондо гана көрүнөт.';
+  @override
+  String get bleStatusScanOnly =>
+      'Активдүү: сканерлөө гана. Бул түзмөк азырын Bluetooth аркылуу табылбайт (бул платформада BLE аркылуу өзүн жарыялоо колдоого ээ эмес, же азырын колдонула турган тармак дареги жок).';
+  @override
+  String get bleStatusPaused => 'Токтотулган. Тиркеме алдыңкы планга кайтып келгенде уланат.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth уруксаттары берилген жок. Системалык жөндөөлөрдө "Жакындагы түзмөктөр" (же Android 11 жана төмөнкү версияларда "Жайгашкан жер") уруксатын бериңиз, андан кийин бул опцияны өчүрүп, кайра күйгүзүңүз.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth өчүк же жок. Bluetooth кайра жеткиликтүү болгондо табуу өзү кайрадан башталат.';
+  @override
+  String get bleStatusUnsupported =>
+      'Бул түзмөктө колдоого алынбайт: BLE аркылуу табуу Android 7 же жаңыраак версияны жана Bluetooth LE радиосун талап кылат.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Бул Android версиясында башка түзмөктөрдү табуу үчүн системалык жайгашкан жер кызматтарынын да күйүк болушу керек (уруксат автоматтык түрдө суралат; бул түзмөктү башкалар дагы эле таба алат).';
+  @override
+  String get bleStatusError => 'BLE аркылуу табууну баштоо мүмкүн болбоду. Толук маалымат үчүн Көйгөйлөрдү чечүү > Журналдар бөлүмүн караңыз.';
+  @override
+  String get bleOpenSystemSettings => 'Системалык жөндөөлөргө өтүү';
 }
 
 // Path: settingsTab.other
@@ -1163,6 +1237,25 @@ class _Translations$deviceDetailsPage$logs$ky extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} аркылуу жаңыртылды (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ky extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Текшерүү суммалары текшерилди';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} файл үчүн текшерүү суммалары текшерилди';
+  @override
+  String get notVerifiable => 'Жөнөтүүчү текшерүү суммаларын берген жок';
+  @override
+  String get disabled => 'Текшерүү суммаларын текшерүү өчүрүлгөн';
+  @override
+  String attached({required Object curr, required Object n}) => 'Текшерүү суммалары кошулду (${curr} / ${n} файл)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ky extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ky._(TranslationsKy root) : this._root = root, super.internal(root);
@@ -1252,6 +1345,11 @@ class _Translations$dialogs$addressInput$ky extends Translations$dialogs$address
   String get title => 'Даректи киргизиңиз';
   @override
   String get recentlyUsed => 'Акыркы колдонулгандар: ';
+  @override
+  String get noHashtagCandidates =>
+      'Учурдагы тармакта IPv4 дареги жок болгондуктан, хештег күтүлгөн дарекке кеңейтиле албайт. Анын ордуна толук даректи киргизиңиз (мисалы, 192.168.1.5 же fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ky validation = _Translations$dialogs$addressInput$validation$ky._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1265,6 +1363,42 @@ class _Translations$dialogs$cancelSession$ky extends Translations$dialogs$cancel
   String get title => 'Файлдарды өткөрүүнү жокко чыгаруу';
   @override
   String get content => 'Файлдарды өткөрүүнү чын эле жокко чыгаргыңыз келеби?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ky extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Байланыш амалга ашпады';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ky timeout = _Translations$dialogs$connectionError$timeout$ky._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ky refused = _Translations$dialogs$connectionError$refused$ky._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ky forbidden = _Translations$dialogs$connectionError$forbidden$ky._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ky other = _Translations$dialogs$connectionError$other$ky._(_root);
+  @override
+  String get retry => 'Кайра аракет кылуу';
+  @override
+  String get details => 'Ката тууралуу маалымат:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ky extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Баштапкы файлдарды өчүрүү';
+  @override
+  String get content => 'Файлдар ийгиликтүү жөнөтүлгөндөн кийин бул түзмөктөн өчүрүлөт. Бул кайтарылып берилбейт.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1557,6 +1691,32 @@ class _Translations$dialogs$sendModeHelp$ky extends Translations$dialogs$sendMod
   String get link => 'LocalSend орнотулбаган кабыл алуучулар шилтемени браузерде ачып, тандалган файлдарды жүктөй алышат.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ky extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Серверди баштоо мүмкүн болбоду';
+  @override
+  String port({required Object port}) => 'Порт: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ky windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ky._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ky addressInUse = _Translations$dialogs$startupError$addressInUse$ky._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ky generic = _Translations$dialogs$startupError$generic$ky._(_root);
+  @override
+  String get details => 'Ката тууралуу маалымат:';
+  @override
+  String get copyDetails => 'Маалыматтарды көчүрүү';
+  @override
+  String get openSettings => 'Жөндөөлөрдү ачуу';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ky extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ky._(TranslationsKy root) : this._root = root, super.internal(root);
@@ -1566,6 +1726,68 @@ class _Translations$dialogs$zoom$ky extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ky extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Тармак туташуусу жок';
+  @override
+  String get advice => 'Бул түзмөк эч кандай тармакка туташкан эмес. Бул түзмөктүн Wi-Fi же кабель туташуусун текшериңиз.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ky extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Мультикаст жеткиликсиз';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend бул тармакта мультикаст аркылуу табууну колдоно албай жатат. Эки түзмөк тең бир тармакта экенин жана AP обочолонуусунун же брандмауэрдин ${port} UDP портун бөгөттөбөй турганын текшериңиз.';
+  @override
+  String reason({required Object reason}) => 'Себеп: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ky extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Түзмөктөр табылган жок';
+  @override
+  String get advice =>
+      'Издөө иштеп жатат, бирок эч бир түзмөк жарыяламаларга же тармак сканине жооп берген жок. Башка түзмөк өчүк, уктап жаткан же брандмауэр тарабынан бөгөттөлгөн болушу мүмкүн. LocalSend башка түзмөктө иштеп жатканын текшериңиз.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} жарыялама жана ${scans} тармак скани жөнөтүлдү, бирок жооп алынган жок.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ky extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP даректери көп өзгөрөт. Тизмеде жок түзмөктү дагы эле таба аласыз: аны тандалмаларга кошуңуз же дарегин кол менен киргизиңиз.';
+  @override
+  String get openFavorites => 'Тандалмаларды ачуу';
+  @override
+  String get manualInput => 'Даректи кол менен киргизиңиз';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1652,4 +1874,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$ky extends Translations$whatsNe
     'Тандалма түзмөктөрдөн келген сурамдар эми автоматтык түрдө кабыл алынат. Бул параметр демейки боюнча күйгүзүлгөн жана жөндөөлөрдөн өчүрүлөт.',
     'Android түзмөктөрүндө тиркеме фондо иштеп жатканда же экран өчүк кезде да берилиштер өткөрүлө берет. iOS түзмөктөрүндө тиркеме алдыңкы планда иштеп турушу керек.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ky extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Жарактуу IPv4 дарегин, IPv6 дарегин же хост аталышын киргизиңиз.';
+  @override
+  String get scheme => 'Жөн гана даректи киргизиңиз, "http://" же "https://" кошпой.';
+  @override
+  String get port => 'Жөн гана даректи киргизиңиз. Порт жөндөөлөрдөн алынат.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ky extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Түзмөк убагында жооп берген жок.';
+  @override
+  String get advice =>
+      'Ал өчүк, уктап жаткан же брандмауэр байланышты бөгөттөп жаткан болушу мүмкүн. LocalSend башка түзмөктө иштеп жатканын жана эки түзмөк тең бир тармакта экенин текшериңиз.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ky extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Түзмөк туташуудан баш тартты.';
+  @override
+  String get advice =>
+      'LocalSend максаттуу түзмөктө иштеп жаткан окшобойт, же ал башка портто угуп жатат. LocalSend\'ди башка түзмөктө иштетиңиз же портту текшериңиз.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ky extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Түзмөк сурамды четке какты.';
+  @override
+  String get advice =>
+      'PIN-код талап кынышы мүмкүн же түзмөк менен жупташуу өзгөргөн болушу мүмкүн. Максаттуу түзмөктө PIN-кодду жана тез сактоо жөндөөлөрүн текшериңиз.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ky extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Байланыш түзүлбөй калды.';
+  @override
+  String get advice =>
+      'Даректи жана портту текшириңиз, LocalSend максаттуу түзмөктө иштеп жатканын жана байланышты брандмауэр же VPN бөгөттөп жатпаганын текшериңиз.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ky extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows портко кирүүдөн баш тартты (socket катасы 10013).';
+  @override
+  String get advice =>
+      'Бул адатта Hyper-V, WSL же Docker тарабынан резервделген порт аралыгынан же бузулган Winsock каталогунан болот:\n• Портту Жөндөөлөрдө (Тармак) өзгөртүңүз\n• Резервделген аралыктарды текшериңиз: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsock\'ту администратор катары оңдоңуз: netsh winsock reset (андан кийин кайра иштетиңиз)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ky extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Портту башка тиркеме ал эле колдонуп жатат.';
+  @override
+  String get advice =>
+      'Башка программа (же экинчи LocalSend көчүрмөсү) бул портто угуп жатат:\n• Ал тиркемени жабыңыз, же\n• Портту Жөндөөлөрдө (Тармак) өзгөртүңүз';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ky extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ky._(TranslationsKy root) : this._root = root, super.internal(root);
+
+  final TranslationsKy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Серверди баштоо мүмкүн болбоду.';
+  @override
+  String get advice => '• Брандмауэрди жана тармак жөндөөлөрүн текшериңиз\n• Портту Жөндөөлөрдө (Тармак) өзгөртүп көрүңүз';
 }

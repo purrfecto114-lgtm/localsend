@@ -233,6 +233,8 @@ class _Translations$sendTab$km extends Translations$sendTab$en {
   String get help => 'សូមប្រាកដថាទីតាំងដែលអ្នកចង់ផ្ញើគឺត្រូវតែភ្ជាប់បណ្តាញ Wi-Fi តែមួយដូចគ្នា។';
   @override
   String get placeItems => 'ដាក់ធាតុដែលត្រូវចែករំលែក។';
+  @override
+  late final _Translations$sendTab$diagnosis$km diagnosis = _Translations$sendTab$diagnosis$km._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$km extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'បានរក្សាទុកក្នុងកម្មវិធីរូបថត';
   @override
+  late final _Translations$progressPage$checksum$km checksum = _Translations$progressPage$checksum$km._(_root);
+  @override
   late final _Translations$progressPage$total$km total = _Translations$progressPage$total$km._(_root);
   @override
   late final _Translations$progressPage$remainingTime$km remainingTime = _Translations$progressPage$remainingTime$km._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$km extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$km cancelSession = _Translations$dialogs$cancelSession$km._(_root);
   @override
+  late final _Translations$dialogs$connectionError$km connectionError = _Translations$dialogs$connectionError$km._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$km deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$km._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$km cannotOpenFile = _Translations$dialogs$cannotOpenFile$km._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$km encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$km._(_root);
@@ -719,6 +728,8 @@ class _Translations$dialogs$km extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$km pin = _Translations$dialogs$pin$km._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$km sendModeHelp = _Translations$dialogs$sendModeHelp$km._(_root);
+  @override
+  late final _Translations$dialogs$startupError$km startupError = _Translations$dialogs$startupError$km._(_root);
   @override
   late final _Translations$dialogs$zoom$km zoom = _Translations$dialogs$zoom$km._(_root);
 }
@@ -923,6 +934,32 @@ class _Translations$sendTab$sendModes$km extends Translations$sendTab$sendModes$
   String get link => 'ចែករំលែកតាមតំណភ្ជាប់';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$km extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'កំពុងស្វែងរកឧបករណ៍ដែលនៅជិតនេះ...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$km noInterface = _Translations$sendTab$diagnosis$noInterface$km._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$km multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$km._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$km scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$km._(_root);
+  @override
+  String get rescan => 'ស្វែងរកម្តងទៀត';
+  @override
+  String get bleHint =>
+      'ការរកឃើញតាម BLE កំពុងសកម្ម៖ ឧបករណ៍នឹងត្រូវរកឃើញតាមប៊្លូធូស តែក្នុងករណីដែលឧបករណ៍ម្ខាងទៀតក៏ប្រើកម្មវិធីកែសម្រួលនេះ (fork) ហើយបានបើកជម្រើសនេះដែរ។ ការផ្ទេរឯកសារនៅតែធ្វើឡើងតាមបណ្តាញ។';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$km manualFallback = _Translations$sendTab$diagnosis$manualFallback$km._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$km extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$km._(TranslationsKm root) : this._root = root, super.internal(root);
@@ -1004,6 +1041,8 @@ class _Translations$settingsTab$send$km extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'ទទួលការស្នើដោយស្វ័យប្រវត្តិនៅក្នុងម៉ូដ"ចែករំលែកតាមរយៈតំណភ្ជាប់"';
   @override
   String get createChecksums => 'បង្កើត checksum នៅពេលផ្ញើឯកសារ';
+  @override
+  String get deleteSourceAfterSend => 'លុបឯកសារដើម បន្ទាប់ពីផ្ញើជោគជ័យ';
 }
 
 // Path: settingsTab.network
@@ -1034,6 +1073,13 @@ class _Translations$settingsTab$network$km extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'ថេរវេលាក្នុងការស្វែងរក';
   @override
+  String get maxInterfaces => 'ចំនួនចំណុចប្រទាក់អតិបរមា (ស្កេនឆ្លាតវៃ)';
+  @override
+  String get vpnInterfaces => 'រួមបញ្ចូលចំណុចប្រទាក់ VPN (ស្កេនឆ្លាតវៃ)';
+  @override
+  String get vpnInterfacesHint =>
+      'ស្កេន subnet របស់ចំណុចប្រទាក់សូរន៍ VPN ផងដែរ (Tailscale, WireGuard, ...)។ VPN ជាធម្មតាមិនផ្ទុកពហុផ្សាយទេ ដូច្នេះ subnet របស់ពួកវាត្រូវបានស្វែងរកដោយការស្កេន HTTP ជំនួសវិញ។';
+  @override
   String get useSystemName => 'ប្រើប្រាស់ឈ្មោះរបស់ប្រព័ន្ធ';
   @override
   String get generateRandomAlias => 'បង្កើតឈ្មោះដទៃដោយដៃចៃដន្យ';
@@ -1047,6 +1093,33 @@ class _Translations$settingsTab$network$km extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'អ្នកប្រហែលជាមិនត្រូវបានរកឃើញដោយឧបករណ៍ផ្សេងទៀតទេ ដោយសារតែអ្នកកំពុងប្រើអាសយដ្ឋានពហុផ្សាយដែលបង្កើតផ្ទាល់ខ្លួន។ (ច្រកដើម: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'ការរកឃើញតាម BLE (ពិសោធន៍)';
+  @override
+  String get bleDiscoveryHint =>
+      'រកឃើញឧបករណ៍ដែលនៅជិតតាមរយៈប៊្លូធូស សូម្បីតែពេលបណ្តាញរារាំងពហុផ្សាយ (ការដាច់ដោយឡែកចំណុចចូល AP)។ ដំណើរការលើ Android, iOS, macOS និង Windows។ លើ Linux ឧបករណ៍នេះអាចរកឃើញគេ ប៉ុន្តែគេមិនអាចរកឃើញវាមកវិញទេ។ ឧបករណ៍ទាំងពីរត្រូវការកម្មវិធីកែសម្រួលនេះ (fork) ដែលបានបើកជម្រើសនេះ។ ការផ្ទេរឯកសារនៅតែប្រើបណ្តាញដូច្នេះ។';
+  @override
+  String get bleStatusActive =>
+      'សកម្ម៖ កំពុងស្កេន និងផ្សាយខ្លួន។ ឧបករណ៍ដែលនៅជិតនឹងបង្ហាញ តែក្នុងករណីដែលវាក៏ប្រើកម្មវិធីកែសម្រួលនេះ (fork) ហើយបានបើកជម្រើសនេះដែរ។';
+  @override
+  String get bleStatusScanOnly =>
+      'សកម្ម៖ ស្កេនតែប៉ុណ្ណោះ។ ឧបករណ៍នេះពុំអាចត្រូវរកឃើញតាមប៊្លូធូសនៅពេលនេះទេ (គ្មានការគាំទ្រការផ្សាយខ្លួនតាម BLE លើវេទិកានេះ ឬមិនទាន់មានអាសយដ្ឋានបណ្តាញដែលអាចប្រើបាននៅឡើយទេ)។';
+  @override
+  String get bleStatusPaused => 'បានផ្អាក។ នឹងបន្តឡើងវិញ នៅពេលកម្មវិធីត្រឡប់មកផ្ទៃខាងមុខវិញ។';
+  @override
+  String get bleStatusPermissionDenied =>
+      'សិទ្ធិប៊្លូធូសត្រូវបានបដិសេធ។ សូមផ្តល់សិទ្ធិ "ឧបករណ៍ជិតខាង" (ឬ "ទីតាំង" លើ Android 11 និងចាស់ជាង) នៅក្នុងការកំណត់ប្រព័ន្ធ បន្ទាប់មកបិទជម្រើសនេះ ហើយបើកវាឡើងវិញ។';
+  @override
+  String get bleStatusAdapterOff => 'ប៊្លូធូសត្រូវបានបិទ ឬមិនអាចប្រើបានទេ។ ការរកឃើញនឹងចាប់ផ្តើមឡើងវិញដោយខ្លួនឯង នៅពេលប៊្លូធូសអាចប្រើបានម្តងទៀត។';
+  @override
+  String get bleStatusUnsupported => 'មិនគាំទ្រលើឧបករណ៍នេះទេ៖ ការរកឃើញតាម BLE ត្រូវការ Android 7 ឬថ្មីជាង និងរ៉ាឌីអូប៊្លូធូស LE។';
+  @override
+  String get bleStatusLegacyLocation =>
+      'លើកំណែ Android នេះ ការរកឃើញឧបករណ៍ផ្សេងទៀតក៏ត្រូវការបើកសេវាទីតាំងរបស់ប្រព័ន្ធផងដែរ (សិទ្ធិត្រូវបានស្នើសុំដោយស្វ័យប្រវត្តិ។ ឧបករណ៍នេះអាចត្រូវគេរកឃើញរួចហើយ)។';
+  @override
+  String get bleStatusError => 'ការរកឃើញតាម BLE មិនអាចចាប់ផ្តើមបានទេ។ សូមមើល ដោះស្រាយបញ្ហា > កំណត់ហេតុ សម្រាប់ព័ត៌មានលម្អិត។';
+  @override
+  String get bleOpenSystemSettings => 'បើកការកំណត់ប្រព័ន្ធ';
 }
 
 // Path: settingsTab.other
@@ -1163,6 +1236,25 @@ class _Translations$deviceDetailsPage$logs$km extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'បានធ្វើបច្ចុប្បន្នភាពតាមរយៈ ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$km extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'បានផ្ទៀងផ្ទាត់ checksum';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'បានផ្ទៀងផ្ទាត់ checksum សម្រាប់ឯកសារ ${curr} / ${n}';
+  @override
+  String get notVerifiable => 'អ្នកផ្ញើមិនបានផ្តល់ checksum ទេ';
+  @override
+  String get disabled => 'ការផ្ទៀងផ្ទាត់ checksum ត្រូវបានបិទ';
+  @override
+  String attached({required Object curr, required Object n}) => 'បានភ្ជាប់ checksum (${curr} / ${n} ឯកសារ)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$km extends Translations$progressPage$total$en {
   _Translations$progressPage$total$km._(TranslationsKm root) : this._root = root, super.internal(root);
@@ -1256,6 +1348,11 @@ class _Translations$dialogs$addressInput$km extends Translations$dialogs$address
   String get ip => 'អាស័យដ្ឋាន IP';
   @override
   String get recentlyUsed => 'បានប្រើថ្មីៗនេះ: ';
+  @override
+  String get noHashtagCandidates =>
+      'បណ្តាញបច្ចុប្បន្នគ្មានអាសយដ្ឋាន IPv4 ដូច្នេះ hashtag មិនអាចពង្រីកទៅជាអាសយដ្ឋានបេក្ខជនបានទេ។ សូមបញ្ចូលអាសយដ្ឋានពេញលេញជំនួសវិញ (ឧ. 192.168.1.5 ឬ fe80::1)។';
+  @override
+  late final _Translations$dialogs$addressInput$validation$km validation = _Translations$dialogs$addressInput$validation$km._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1269,6 +1366,42 @@ class _Translations$dialogs$cancelSession$km extends Translations$dialogs$cancel
   String get title => 'បោះបង់ការផ្ទេរឯកសារ';
   @override
   String get content => 'តើអ្នកពិតជាចង់បោះបង់ការផ្ទេរឯកសារមែនទេ?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$km extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ការតភ្ជាប់បរាជ័យ';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$km timeout = _Translations$dialogs$connectionError$timeout$km._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$km refused = _Translations$dialogs$connectionError$refused$km._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$km forbidden = _Translations$dialogs$connectionError$forbidden$km._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$km other = _Translations$dialogs$connectionError$other$km._(_root);
+  @override
+  String get retry => 'ព្យាយាមម្តងទៀត';
+  @override
+  String get details => 'ព័ត៌មានលម្អិតនៃកំហុស៖';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$km extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'លុបឯកសារដើម';
+  @override
+  String get content => 'បន្ទាប់ពីឯកសារត្រូវបានផ្ញើដោយជោគជ័យ ពួកវានឹងត្រូវលុបចេញពីឧបករណ៍នេះ។ ការនេះមិនអាចត្រឡប់វិញបានទេ។';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1562,6 +1695,32 @@ class _Translations$dialogs$sendModeHelp$km extends Translations$dialogs$sendMod
   String get link => 'អ្នកទទួលដែលមិនបានដំឡើង LocalSend អាចទាញយកឯកសារដែលបានជ្រើសរើសដោយបើកតំណនៅក្នុងកម្មវិធី browser របស់ពួកគេ។';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$km extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'មិនអាចចាប់ផ្តើម server បានទេ';
+  @override
+  String port({required Object port}) => 'ច្រក៖ ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$km windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$km._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$km addressInUse = _Translations$dialogs$startupError$addressInUse$km._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$km generic = _Translations$dialogs$startupError$generic$km._(_root);
+  @override
+  String get details => 'ព័ត៌មានលម្អិតនៃកំហុស៖';
+  @override
+  String get copyDetails => 'ចម្លងព័ត៌មានលម្អិត';
+  @override
+  String get openSettings => 'បើកការកំណត់';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$km extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$km._(TranslationsKm root) : this._root = root, super.internal(root);
@@ -1571,6 +1730,68 @@ class _Translations$dialogs$zoom$km extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'តំណភ្ជាប់ URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$km extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'មិនមានការតភ្ជាប់បណ្តាញទេ';
+  @override
+  String get advice => 'ឧបករណ៍នេះមិនបានតភ្ជាប់ទៅបណ្តាញណាមួយទេ។ សូមពិនិត្យមើលការតភ្ជាប់ Wi-Fi ឬខ្សែបណ្តាញរបស់ឧបករណ៍នេះ។';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$km extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'មិនអាចប្រើពហុផ្សាយបានទេ';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend មិនអាចប្រើការរកឃើញឧបករណ៍តាមពហុផ្សាយលើបណ្តាញនេះបានទេ។ សូមប្រាកដថាឧបករណ៍ទាំងពីរស្ថិតលើបណ្តាញដូចគ្នា ហើយការដាច់ដោយឡែកចំណុចចូល (AP isolation) ឬ Firewall មិនកំពុងរារាំងច្រក UDP ${port} ទេ។';
+  @override
+  String reason({required Object reason}) => 'មូលហេតុ៖ ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$km extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'រកមិនឃើញឧបករណ៍ទេ';
+  @override
+  String get advice =>
+      'ការរកឃើញកំពុងដំណើរការធម្មតា ប៉ុន្តែគ្មានឧបករណ៍តបទៅនឹងការជូនដំណឹង ឬការស្កេនបណ្តាញទេ។ ឧបករណ៍ម្ខាងទៀតប្រហែលជាបិទ ឬកំពុងគេង ឬត្រូវបានរារាំងដោយ Firewall។ សូមប្រាកដថា LocalSend កំពុងដំណើរការលើឧបករណ៍ម្ខាងទៀត។';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'បានផ្ញើការជូនដំណឹង ${announcements} ដង និងការស្កេនបណ្តាញ ${scans} ដង ដោយគ្មានការតបទេ។';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$km extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'អាសយដ្ឋាន IP ជារឿយៗផ្លាស់ប្តូរ។ អ្នកនៅតែអាចទំនាក់ទំនងជាមួយឧបករណ៍ដែលមិនបានបង្ហាញក្នុងបញ្ជីបាន៖ បន្ថែមវាទៅឧបករណ៍សំណព្វ ឬបញ្ចូលអាសយដ្ឋានរបស់វាដោយខ្លួនឯង។';
+  @override
+  String get openFavorites => 'បើកឧបករណ៍សំណព្វ';
+  @override
+  String get manualInput => 'បញ្ចូលអាសយដ្ឋានដោយខ្លួនឯង';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1657,4 +1878,113 @@ class _Translations$whatsNewPage$changes$v1_18_0$km extends Translations$whatsNe
     'សំណើពីសំណព្វឥឡូវត្រូវបានទទួលយកដោយស្វ័យប្រវត្តិ។ វាត្រូវបានបើកតាមលំនាំដើម ហើយអាចបិទបាននៅក្នុងការកំណត់។',
     'នៅលើ Android ការផ្ទេរបន្តដំណើរការ ខណៈកម្មវិធីនៅផ្ទៃខាងក្រោយ ឬអេក្រង់បិទ។ នៅលើ iOS កម្មវិធីនៅតែត្រូវស្ថិតនៅផ្ទៃខាងមុខ។',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$km extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'សូមបញ្ចូលអាសយដ្ឋាន IPv4, អាសយដ្ឋាន IPv6 ឬឈ្មោះម៉ាស៊ីនដែលត្រឹមត្រូវ។';
+  @override
+  String get scheme => 'សូមបញ្ចូលតែអាសយដ្ឋានប៉ុណ្ណោះ ដោយមិនរួមបញ្ចូល "http://" ឬ "https://" ទេ។';
+  @override
+  String get port => 'សូមបញ្ចូលតែអាសយដ្ឋានប៉ុណ្ណោះ។ ច្រកត្រូវយកពីការកំណត់។';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$km extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ឧបករណ៍មិនបានតបទាន់ពេលវេលាទេ។';
+  @override
+  String get advice =>
+      'វាប្រហែលជាបិទ ឬកំពុងគេង ឬ Firewall កំពុងរារាំងការតភ្ជាប់។ សូមប្រាកដថា LocalSend កំពុងដំណើរការលើឧបករណ៍ម្ខាងទៀត ហើយឧបករណ៍ទាំងពីរស្ថិតក្នុងបណ្តាញដូចគ្នា។';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$km extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ឧបករណ៍បានបដិសេធការតភ្ជាប់។';
+  @override
+  String get advice =>
+      'LocalSend ហាក់ដូចជាមិនដំណើរការលើឧបករណ៍គោលដៅទេ ឬវាកំពុងស្តាប់លើច្រកផ្សេងពីនេះ។ សូមចាប់ផ្តើម LocalSend លើឧបករណ៍ម្ខាងទៀត ឬពិនិត្យមើលច្រក។';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$km extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ឧបករណ៍បានបដិសេធសំណើនេះ។';
+  @override
+  String get advice => 'ប្រហែលជាត្រូវការលេខកូដ ឬការផ្គូផ្គងជាមួយឧបករណ៍ត្រូវបានផ្លាស់ប្តូរ។ សូមពិនិត្យលេខកូដ និងការកំណត់រក្សាទុករហ័សលើឧបករណ៍គោលដៅ។';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$km extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'មិនអាចបង្កើតការតភ្ជាប់បានទេ។';
+  @override
+  String get advice => 'សូមពិនិត្យអាសយដ្ឋាន និងច្រក ប្រាកដថា LocalSend កំពុងដំណើរការលើឧបករណ៍គោលដៅ ហើយគ្មាន Firewall ឬ VPN រារាំងការតភ្ជាប់ទេ។';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$km extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows បានបដិសេធការចូលប្រើច្រកនេះ (កំហុស socket 10013)។';
+  @override
+  String get advice =>
+      'រឿងនេះជាធម្មតាកើតឡើងដោយសារជួរច្រកដែលបម្រុងទុកដោយ Hyper-V, WSL ឬ Docker ឬដោយសារកាតាឡុក Winsock ខូច៖\n• ផ្លាស់ប្តូរច្រកនៅក្នុងការកំណត់ (បណ្តាញ)\n• ពិនិត្យជួរដែលបម្រុងទុកដោយបញ្ជា៖ netsh interface ipv4 show excludedportrange protocol=tcp\n• ជួសជុល Winsock ជាអ្នកគ្រប់គ្រងដោយបញ្ជា៖ netsh winsock reset (បើកម៉ាស៊ីនឡើងវិញបន្ទាប់ពីនោះ)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$km extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ច្រកនេះត្រូវបានប្រើដោយកម្មវិធីផ្សេងទៀតរួចហើយ។';
+  @override
+  String get advice => 'កម្មវិធីផ្សេងទៀត (ឬ LocalSend ទីពីរ) កំពុងស្តាប់លើច្រកនេះ៖\n• បិទកម្មវិធីនោះចេញ ឬ\n• ផ្លាស់ប្តូរច្រកនៅក្នុងការកំណត់ (បណ្តាញ)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$km extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$km._(TranslationsKm root) : this._root = root, super.internal(root);
+
+  final TranslationsKm _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'មិនអាចចាប់ផ្តើម server បានទេ។';
+  @override
+  String get advice => '• ពិនិត្យការកំណត់ Firewall និងបណ្តាញរបស់អ្នក\n• សាកល្បងផ្លាស់ប្តូរច្រកនៅក្នុងការកំណត់ (បណ្តាញ)';
 }

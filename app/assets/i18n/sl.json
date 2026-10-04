@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Pojasnilo",
     "help": "Preverite, da je ciljna naprava povezana v isto Wi-Fi omrežje.",
-    "placeItems": "Postavite elemente za deljenje."
+    "placeItems": "Postavite elemente za deljenje.",
+    "diagnosis": {
+      "scanning": "Iskanje naprav v bližini...",
+      "noInterface": {
+        "title": "Ni omrežne povezave",
+        "advice": "Ta naprava ni povezana z nobenim omrežjem. Preverite Wi-Fi ali kabelsko povezavo te naprave."
+      },
+      "multicastUnavailable": {
+        "title": "Večtočkovno oddajanje ni na voljo",
+        "advice": "LocalSend v tem omrežju ne more uporabiti odkrivanja z večtočkovnim oddajanjem. Preverite, da sta obe napravi v istem omrežju in da izolacija AP ali požarni zid ne blokirata UDP vrat {port}.",
+        "reason": "Vzrok: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Ni najdenih naprav",
+        "advice": "Iskanje deluje, vendar se na obvestila ali omrežno preverjanje ni odzvala nobena naprava. Druga naprava je morda brez povezave, v stanju pripravljenosti ali jo blokira požarni zid. Preverite, da na drugi napravi deluje LocalSend.",
+        "detail": "Poslanih je bilo {announcements} obvestil in opravljenih {scans} omrežnih preverjanj — brez odziva."
+      },
+      "rescan": "Poišči znova",
+      "bleHint": "Odkrivanje BLE je aktivno: naprave se prek Bluetootha poiščejo samo, če tudi one uporabljajo ta fork z omogočeno možnostjo; sam prenos datotek se še vedno izvede prek omrežja.",
+      "manualFallback": {
+        "message": "IP naslovi se pogosto spreminjajo. Do naprave, ki ni na seznamu, lahko še vedno dostopate: dodajte jo med priljubljene ali ročno vnesite njen naslov.",
+        "openFavorites": "Odpri priljubljene",
+        "manualInput": "Ročno vnesi naslov"
+      }
+    }
   },
   "settingsTab": {
     "title": "Nastavitve",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Pošlji",
       "shareViaLinkAutoAccept": "Samodejno sprejmi zahteve v načinu »Deli prek povezave«",
-      "createChecksums": "Ustvari kontrolne vsote ob pošiljanju datotek"
+      "createChecksums": "Ustvari kontrolne vsote ob pošiljanju datotek",
+      "deleteSourceAfterSend": "Po uspešnem pošiljanju izbriši izvorne datoteke"
     },
     "network": {
       "title": "Omrežje",
@@ -143,12 +168,26 @@
         "filtered": "Filtrirana"
       },
       "discoveryTimeout": "Časovna omejitev za odkrivanje",
+      "maxInterfaces": "Največje število vmesnikov (pametno iskanje)",
+      "vpnInterfaces": "Vključi vmesnike VPN (pametno iskanje)",
+      "vpnInterfacesHint": "Preveri tudi podomrežja vmesnikov VPN tunelov (Tailscale, WireGuard, ...). VPN običajno ne prenaša večtočkovnega oddajanja, zato se njihova podomrežja preverijo z nadomestnim HTTP pregledom.",
       "useSystemName": "Uporabi sistemsko ime",
       "generateRandomAlias": "Ustvari naključni vzdevek",
       "portWarning": "Morda vas druge naprave ne bodo zaznale, ker uporabljate nestandardna vrata. (privzeto: {defaultPort})",
       "encryption": "Šifriranje",
       "multicastGroup": "Večtočkovni naslov",
-      "multicastGroupWarning": "Morda vas druge naprave ne bodo zaznale, ker uporabljate nestandardni večtočkovni naslov. (privzeto: {defaultMulticast})"
+      "multicastGroupWarning": "Morda vas druge naprave ne bodo zaznale, ker uporabljate nestandardni večtočkovni naslov. (privzeto: {defaultMulticast})",
+      "bleDiscovery": "Odkrivanje BLE (eksperimentalno)",
+      "bleDiscoveryHint": "Najde bližnje naprave prek Bluetootha, tudi ko omrežje blokira večtočkovno oddajanje (izolacija AP). Deluje na Androidu, iOS, macOS in Windows; v sistemu Linux ta naprava lahko najde druge, sama pa ne more biti najdena. Obe napravi morata uporabljati ta fork z omogočeno možnostjo; sam prenos datotek se še vedno izvede prek omrežja.",
+      "bleStatusActive": "Aktivno: iskanje in obveščanje. Naprave v bližini se prikažejo samo, če tudi one uporabljajo ta fork z omogočeno možnostjo.",
+      "bleStatusScanOnly": "Aktivno: samo iskanje. Te naprave trenutno ni mogoče odkriti prek Bluetootha (ta platforma ne podpira BLE obveščanja ali uporabnega omrežnega naslova še ni).",
+      "bleStatusPaused": "Zaustavljeno. Nadaljuje, ko se aplikacija vrne v ospredje.",
+      "bleStatusPermissionDenied": "Dovoljenja za Bluetooth so zavrnjena. V sistemskih nastavitvah omogočite dovoljenje »Naprave v bližini« (ali »Lokacija« na Androidu 11 in starejših), nato to možnost izklopite in znova vklopite.",
+      "bleStatusAdapterOff": "Bluetooth je izklopljen ali ni na voljo. Odkrivanje se samo znova zažene, ko Bluetooth spet postane na voljo.",
+      "bleStatusUnsupported": "Na tej napravi ni podprto: odkrivanje BLE zahteva Android 7 ali novejšega in radijski sprejemnik Bluetooth LE.",
+      "bleStatusLegacyLocation": "V tej različici Androida iskanje drugih naprav zahteva tudi vklopljene sistemske storitve določanja lokacije (dovoljenje se zahteva samodejno; to napravo že lahko najdejo drugi).",
+      "bleStatusError": "Odkrivanja BLE ni bilo mogoče zagnati. Podrobnosti so v razdelku Odpravljanje težav > Dnevniki.",
+      "bleOpenSystemSettings": "Odpri sistemske nastavitve"
     },
     "other": {
       "title": "Drugo",
@@ -256,6 +295,13 @@
     "titleSending": "Pošiljanje datotek",
     "titleReceiving": "Prejemanje datotek",
     "savedToGallery": "Shranjeno v Fotografije",
+    "checksum": {
+      "verified": "Kontrolne vsote preverjene",
+      "partiallyVerified": "Kontrolne vsote preverjene za {curr} / {n} datotek",
+      "notVerifiable": "Pošiljatelj ni posredoval kontrolnih vsot",
+      "disabled": "Preverjanje kontrolnih vsot je izklopljeno",
+      "attached": "Kontrolne vsote priložene ({curr} / {n} datotek)"
+    },
     "total": {
       "title": {
         "sending": "Skupni napredek ({time})",
@@ -418,11 +464,42 @@
       "title": "Vnesite naslov",
       "hashtag": "Hashtag",
       "ip": "IP naslov",
-      "recentlyUsed": "Nedavno uporabljeno: "
+      "recentlyUsed": "Nedavno uporabljeno: ",
+      "noHashtagCandidates": "Trenutno omrežje nima naslova IPv4, zato hashtaga ni mogoče razširiti v naslov kandidata. Vnesite celoten naslov (npr. 192.168.1.5 ali fe80::1).",
+      "validation": {
+        "invalid": "Vnesite veljaven naslov IPv4, naslov IPv6 ali ime gostitelja.",
+        "scheme": "Vnesite samo naslov, brez »http://« ali »https://«.",
+        "port": "Vnesite samo naslov. Vrata se vzamejo iz nastavitev."
+      }
     },
     "cancelSession": {
       "title": "Prekliči prenos datotek",
       "content": "Ali res želite preklicati prenos datotek?"
+    },
+    "connectionError": {
+      "title": "Povezava ni uspela",
+      "timeout": {
+        "message": "Naprava se ni pravočasno odzvala.",
+        "advice": "Verjetno je brez povezave, v stanju pripravljenosti ali povezavo blokira požarni zid. Preverite, da na drugi napravi deluje LocalSend in da sta obe napravi v istem omrežju."
+      },
+      "refused": {
+        "message": "Naprava je zavrnila povezavo.",
+        "advice": "Kot kaže, na ciljni napravi LocalSend ne deluje ali posluša na drugih vratih. Zaženite LocalSend na drugi napravi ali preverite vrata."
+      },
+      "forbidden": {
+        "message": "Naprava je zavrnila zahtevo.",
+        "advice": "Morda je zahtevan PIN ali se je parjenje z napravo spremenilo. Preverite PIN in nastavitve hitrega shranjevanja na ciljni napravi."
+      },
+      "other": {
+        "message": "Povezave ni bilo mogoče vzpostaviti.",
+        "advice": "Preverite naslov in vrata, preverite, da na ciljni napravi deluje LocalSend in da povezave ne blokira požarni zid ali VPN."
+      },
+      "retry": "Poskusi znova",
+      "details": "Podrobnosti napake:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Izbriši izvorne datoteke",
+      "content": "Po uspešnem pošiljanju bodo datoteke izbrisane s te naprave. Tega ni mogoče razveljaviti."
     },
     "cannotOpenFile": {
       "title": "Ne morem odpreti datoteke",
@@ -518,6 +595,25 @@
       "single": "Pošlje datoteke enemu prejemniku. Izbira bo po končanem prenosu izbrisana.",
       "multiple": "Pošlje datoteke več prejemnikom. Izbira po končanem prenosu ne bo izbrisana.",
       "link": "Prejemniki, ki nimajo nameščenega LocalSend, lahko prenesejo izbrane datoteke z odpiranjem povezave v brskalniku."
+    },
+    "startupError": {
+      "title": "Strežnika ni bilo mogoče zagnati",
+      "port": "Vrata: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows je zavrnil dostop do vrat (napaka vtičnice 10013).",
+        "advice": "To običajno povzroča obseg vrat, ki ga je rezerviral Hyper-V, WSL ali Docker, ali pokvarjen katalog Winsock:\n• Spremenite vrata v nastavitvah (Omrežje)\n• Preverite rezervirane obsege z ukazom: netsh interface ipv4 show excludedportrange protocol=tcp\n• Popravite Winsock kot skrbnik z ukazom: netsh winsock reset (nato znova zaženite računalnik)"
+      },
+      "addressInUse": {
+        "hint": "Vrata že uporablja druga aplikacija.",
+        "advice": "Ta vrata posluša drug program (ali drug primerek LocalSend):\n• Zaprite drugo aplikacijo ali\n• Spremenite vrata v nastavitvah (Omrežje)"
+      },
+      "generic": {
+        "hint": "Strežnika ni bilo mogoče zagnati.",
+        "advice": "• Preverite požarni zid in omrežne nastavitve\n• Poskusite spremeniti vrata v nastavitvah (Omrežje)"
+      },
+      "details": "Podrobnosti napake:",
+      "copyDetails": "Kopiraj podrobnosti",
+      "openSettings": "Odpri nastavitve"
     },
     "zoom": {
       "title": "URL"

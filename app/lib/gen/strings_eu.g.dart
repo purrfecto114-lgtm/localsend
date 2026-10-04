@@ -231,6 +231,8 @@ class _Translations$sendTab$eu extends Translations$sendTab$en {
   String get help => 'Ziurtatu zaitez aukeratutako hartzailea zure Wi-Fi sare berean dagoela.';
   @override
   String get placeItems => 'Aukeratu elkarbanatzeko elementuak.';
+  @override
+  late final _Translations$sendTab$diagnosis$eu diagnosis = _Translations$sendTab$diagnosis$eu._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$eu extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Galerian gordeta';
   @override
+  late final _Translations$progressPage$checksum$eu checksum = _Translations$progressPage$checksum$eu._(_root);
+  @override
   late final _Translations$progressPage$total$eu total = _Translations$progressPage$total$eu._(_root);
   @override
   late final _Translations$progressPage$remainingTime$eu remainingTime = _Translations$progressPage$remainingTime$eu._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$eu extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$eu cancelSession = _Translations$dialogs$cancelSession$eu._(_root);
   @override
+  late final _Translations$dialogs$connectionError$eu connectionError = _Translations$dialogs$connectionError$eu._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$eu deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$eu._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$eu cannotOpenFile = _Translations$dialogs$cannotOpenFile$eu._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$eu encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$eu._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$eu extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$eu pin = _Translations$dialogs$pin$eu._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$eu sendModeHelp = _Translations$dialogs$sendModeHelp$eu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$eu startupError = _Translations$dialogs$startupError$eu._(_root);
   @override
   late final _Translations$dialogs$zoom$eu zoom = _Translations$dialogs$zoom$eu._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$eu extends Translations$sendTab$sendModes$
   String get link => 'URL bidez partekatu';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$eu extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Inguruko gailuak bilatzen…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$eu noInterface = _Translations$sendTab$diagnosis$noInterface$eu._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$eu multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$eu._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$eu scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$eu._(_root);
+  @override
+  String get rescan => 'Bilatu berriro';
+  @override
+  String get bleHint =>
+      'BLE aurkikuntza aktibo dago: gailuak Bluetooth bidez aurkituko dira soilik baldin eta hauek fork hau ere badarabilte aukera gaituta; transferentzia bera sarearen bidez egiten da oraindik.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$eu manualFallback = _Translations$sendTab$diagnosis$manualFallback$eu._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$eu extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$eu._(TranslationsEu root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$eu extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Eskaerak automatikoki onartu “URL bidez partekatu” moduan';
   @override
   String get createChecksums => 'Sortu kontrol-baturak fitxategiak bidaltzean';
+  @override
+  String get deleteSourceAfterSend => 'Ezabatu iturri-fitxategiak ondo bidali ondoren';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$eu extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Aurkikuntza denbora muga';
   @override
+  String get maxInterfaces => 'Gehienezko interfazeak (Eskaneatze adimenduna)';
+  @override
+  String get vpnInterfaces => 'Sartu VPN interfazeak (Eskaneatze adimenduna)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN tunnel interfazeen azpisareak ere eskaneatzen ditu (Tailscale, WireGuard, ...). VPNek normalean ez dute multicast onartzen, beraz haien azpisareak HTTP ordezko eskaneatzearekin aztertzen dira.';
+  @override
   String get useSystemName => 'Erabili sistemaren izena';
   @override
   String get generateRandomAlias => 'Ausazko "alias" sortu';
@@ -962,6 +1008,34 @@ class _Translations$settingsTab$network$eu extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Multicast helbide berezi bat erabiltzen ari zarenez, agian ez zara beste gailuentzat ikusgarri izango. (Lehenetsitako multicast helbidea: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE aurkikuntza (esperimentala)';
+  @override
+  String get bleDiscoveryHint =>
+      'Inguruko gailuak Bluetooth bidez aurkitzen ditu, sareak multicast blokeatzen duen kasuan ere (AP isolamendua). Android, iOS, macOS eta Windows-en funtzionatzen du; Linux-en gailu honek besteak aurki ditzake, baina bera ezin da aurkitu. Bi gailuek fork hau behar dute aukera gaituta izateko; fitxategi-transferentzia bera sarearen bidez egiten da oraindik.';
+  @override
+  String get bleStatusActive =>
+      'Aktibo: eskaneatzen eta iragarkitzen. Inguruko gailuak agertuko dira soilik baldin eta hauek fork hau ere badarabilte aukera gaituta.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktibo: soilik eskaneatzen. Gailu hau ezin da une honetan Bluetooth bidez aurkitu (plataforma honek ez du BLE iragarkirik onartzen, edo oraindik ez dago sare-helbide erabilgarririk).';
+  @override
+  String get bleStatusPaused => 'Geldituta. Berrekingo da aplikazioa aurreko platura itzultzen denean.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth baimenak ukatu dira. Eman "Gertuko gailuak" (edo "Kokapena" Android 11 eta beheragokoetan) baimena sistemako ezarpenetan, eta gero desgaitu eta gaitu berriro aukera hau.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth itzalita dago edo ez dago eskuragarri. Aurkikuntzak bere kabuz berrabiaraziko da Bluetooth berriro eskuragarri egiten denean.';
+  @override
+  String get bleStatusUnsupported => 'Ez da gailu honetan onartzen: BLE aurkikuntzak Android 7 edo berriagoa eta Bluetooth LE irrati bat behar ditu.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Android bertsio honetan, beste gailu batzuk aurkitzeko sistemaren kokapen-zerbitzuak ere piztu behar dira (baimena automatikoki eskatzen da; gailu hau jada besteek aurki dezakete).';
+  @override
+  String get bleStatusError => 'BLE aurkikuntza ezin izan da hasi. Ikusi Konpondu arazoak > Erregistroak xehetasunetarako.';
+  @override
+  String get bleOpenSystemSettings => 'Ireki sistemako ezarpenak';
 }
 
 // Path: settingsTab.other
@@ -1079,6 +1153,25 @@ class _Translations$deviceDetailsPage$logs$eu extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} bidez eguneratua (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$eu extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Kontrol-baturak egiaztatuta';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Kontrol-baturak egiaztatuta ${curr} / ${n} fitxategirentzat';
+  @override
+  String get notVerifiable => 'Bidaltzaileak ez du kontrol-baturarik bidali';
+  @override
+  String get disabled => 'Kontrol-baturen egiaztapena desgaituta dago';
+  @override
+  String attached({required Object curr, required Object n}) => 'Kontrol-baturak erantsita (${curr} / ${n} fitxategi)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$eu extends Translations$progressPage$total$en {
   _Translations$progressPage$total$eu._(TranslationsEu root) : this._root = root, super.internal(root);
@@ -1172,6 +1265,11 @@ class _Translations$dialogs$addressInput$eu extends Translations$dialogs$address
   String get ip => 'IP Helbidea';
   @override
   String get recentlyUsed => 'Duela gutxi erabilitakoak: ';
+  @override
+  String get noHashtagCandidates =>
+      'Uneko sareak ez du IPv4 helbiderik, beraz hashtag-a ezin da helbide hautagai batera zabaldu. Sartu helbide osoa horren ordez (adib. 192.168.1.5 edo fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$eu validation = _Translations$dialogs$addressInput$validation$eu._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1185,6 +1283,42 @@ class _Translations$dialogs$cancelSession$eu extends Translations$dialogs$cancel
   String get title => 'Bertan behera utzi fitxategi bidalketa';
   @override
   String get content => '¿Benetan nahi duzu bertan behera utzi fitxategi bidalketa?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$eu extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Konexioak huts egin du';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$eu timeout = _Translations$dialogs$connectionError$timeout$eu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$eu refused = _Translations$dialogs$connectionError$refused$eu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$eu forbidden = _Translations$dialogs$connectionError$forbidden$eu._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$eu other = _Translations$dialogs$connectionError$other$eu._(_root);
+  @override
+  String get retry => 'Saiatu berriro';
+  @override
+  String get details => 'Errore-xehetasunak:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$eu extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ezabatu iturri-fitxategiak';
+  @override
+  String get content => 'Fitxategiak ondo bidali ondoren, gailu honetatik ezabatuko dira. Hau ezin da desegin.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1477,6 +1611,32 @@ class _Translations$dialogs$sendModeHelp$eu extends Translations$dialogs$sendMod
   String get link => 'LocalSend instalatuta ez duten hartzaileak fitxategiak eskuratu ahali zango dituzte lotura nabigatzailean zabalduz.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$eu extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ezin izan da zerbitzaria abiarazi';
+  @override
+  String port({required Object port}) => 'Portua: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$eu windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$eu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$eu addressInUse = _Translations$dialogs$startupError$addressInUse$eu._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$eu generic = _Translations$dialogs$startupError$generic$eu._(_root);
+  @override
+  String get details => 'Errore-xehetasunak:';
+  @override
+  String get copyDetails => 'Kopiatu xehetasunak';
+  @override
+  String get openSettings => 'Ireki ezarpenak';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$eu extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$eu._(TranslationsEu root) : this._root = root, super.internal(root);
@@ -1486,6 +1646,68 @@ class _Translations$dialogs$zoom$eu extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$eu extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Sare-konexiorik ez';
+  @override
+  String get advice => 'Gailu hau ez dago inolako sarera konektatuta. Egiaztatu gailu honen Wi-Fi edo kable konexioa.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$eu extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast ez dago eskuragarri';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend-ek ezin du multicast erabili gailuak aurkitzeko sare honetan. Ziurtatu bi gailuak sare berean daudela eta AP isolamenduak edo suhesiak ez duela ${port} UDP portua blokeatzen.';
+  @override
+  String reason({required Object reason}) => 'Arrazoia: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$eu extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ez da gailurik aurkitu';
+  @override
+  String get advice =>
+      'Bilaketak funtzionatzen du, baina gailu bakar batek ere ez du iragarkiei edo sare-eskaneatuari erantzun. Beste gailua agian deskonektatuta dago, lotan edo suhesiak blokeatuta. Ziurtatu LocalSend martxan dagoela beste gailuan.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} iragarki eta ${scans} sare-eskaneatze bidali dira erantzunik jaso gabe.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$eu extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP helbideak maiz aldatzen dira. Zerrendan agertzen ez den gailua ere atzi dezakezu: gehitu gogokoetara edo sartu bere helbidea eskuz.';
+  @override
+  String get openFavorites => 'Ireki gogokoak';
+  @override
+  String get manualInput => 'Sartu helbidea eskuz';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1572,4 +1794,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$eu extends Translations$whatsNe
     'Gogokoen eskaerak orain automatikoki onartzen dira. Lehenespenez gaituta dago eta ezarpenetan desgaitu daiteke.',
     'Android-en, transferentziek jarraitzen dute aplikazioa atzeko planoan dagoenean edo pantaila itzalita dagoenean. iOS-en, aplikazioak aurreko planoan egon behar du oraindik.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$eu extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Sartu IPv4 helbide, IPv6 helbide edo ostalari-izen baliozko bat.';
+  @override
+  String get scheme => 'Sartu helbidea soilik, "http://" edo "https://" gabe.';
+  @override
+  String get port => 'Sartu helbidea soilik. Portua ezarpenetatik hartzen da.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$eu extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Gailuak ez du denboran erantzun.';
+  @override
+  String get advice =>
+      'Baliteke deskonektatuta egotea, lotan egotea edo suhesiak konexioa blokeatzea. Ziurtatu LocalSend martxan dagoela beste gailuan eta bi gailuak sare berean daudela.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$eu extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Gailuak konexioa ukatu du.';
+  @override
+  String get advice =>
+      'Badirudi LocalSend ez dagoela martxan helburuko gailuan, edo portu ezberdin batean entzuten ari da. Abiarazi LocalSend beste gailuan edo egiaztatu portua.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$eu extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Gailuak eskaera baztertu du.';
+  @override
+  String get advice =>
+      'Baliteke PIN bat behar izatea, edo gailuarekiko parekatzea aldatu izana. Egiaztatu PINa eta gordetze azkarraren ezarpenak helburuko gailuan.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$eu extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Ezin izan da konexioa ezarri.';
+  @override
+  String get advice =>
+      'Egiaztatu helbidea eta portua, ziurtatu LocalSend martxan dagoela helburuko gailuan, eta suhesiak edo VPN batek ez duela konexioa blokeatzen.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$eu extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows-ek portuaren atzipena ukatu du (socket errorea 10013).';
+  @override
+  String get advice =>
+      'Hau normalean Hyper-V, WSL edo Dockerrek erreserbatutako portu-tarte batek edo hondatutako Winsock katalogo batek eragiten du:\n• Aldatu portua ezarpenetan (Sarea)\n• Egiaztatu erreserbatutako tarteak honekin: netsh interface ipv4 show excludedportrange protocol=tcp\n• Konpondu Winsock administratzaile gisa honekin: netsh winsock reset (berrabiarazi gero)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$eu extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Portua dagoeneko beste aplikazio batek erabiltzen du.';
+  @override
+  String get advice =>
+      'Beste programa bat (edo bigarren LocalSend instantzia bat) portu honetan ari da entzuten:\n• Itxi beste aplikazioa, edo\n• Aldatu portua ezarpenetan (Sarea)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$eu extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$eu._(TranslationsEu root) : this._root = root, super.internal(root);
+
+  final TranslationsEu _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Ezin izan da zerbitzaria abiarazi.';
+  @override
+  String get advice => '• Egiaztatu zure suhesi eta sare ezarpenak\n• Saiatu portua aldatzen ezarpenetan (Sarea)';
 }

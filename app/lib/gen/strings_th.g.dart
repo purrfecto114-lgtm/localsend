@@ -233,6 +233,8 @@ class _Translations$sendTab$th extends Translations$sendTab$en {
   String get help => 'โปรดตรวจสอบให้แน่ใจว่าอุปกรณ์เป้าหมายเชื่อมต่ออยู่ภายในเครือข่าย WiFi เดียวกันแล้ว';
   @override
   String get placeItems => 'วางไฟล์ที่ต้องการแชร์';
+  @override
+  late final _Translations$sendTab$diagnosis$th diagnosis = _Translations$sendTab$diagnosis$th._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$th extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'บันทึกไว้ในแอปรูปถ่ายแล้ว';
   @override
+  late final _Translations$progressPage$checksum$th checksum = _Translations$progressPage$checksum$th._(_root);
+  @override
   late final _Translations$progressPage$total$th total = _Translations$progressPage$total$th._(_root);
   @override
   late final _Translations$progressPage$remainingTime$th remainingTime = _Translations$progressPage$remainingTime$th._(_root);
@@ -680,6 +684,11 @@ class _Translations$dialogs$th extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$th cancelSession = _Translations$dialogs$cancelSession$th._(_root);
   @override
+  late final _Translations$dialogs$connectionError$th connectionError = _Translations$dialogs$connectionError$th._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$th deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$th._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$th cannotOpenFile = _Translations$dialogs$cannotOpenFile$th._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$th encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$th._(_root);
@@ -720,6 +729,8 @@ class _Translations$dialogs$th extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$th pin = _Translations$dialogs$pin$th._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$th sendModeHelp = _Translations$dialogs$sendModeHelp$th._(_root);
+  @override
+  late final _Translations$dialogs$startupError$th startupError = _Translations$dialogs$startupError$th._(_root);
   @override
   late final _Translations$dialogs$zoom$th zoom = _Translations$dialogs$zoom$th._(_root);
 }
@@ -924,6 +935,32 @@ class _Translations$sendTab$sendModes$th extends Translations$sendTab$sendModes$
   String get link => 'แชร์ผ่านลิงก์';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$th extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'กำลังค้นหาอุปกรณ์ใกล้เคียง...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$th noInterface = _Translations$sendTab$diagnosis$noInterface$th._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$th multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$th._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$th scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$th._(_root);
+  @override
+  String get rescan => 'ค้นหาอีกครั้ง';
+  @override
+  String get bleHint =>
+      'การค้นหาด้วย BLE ทำงานอยู่: จะพบอุปกรณ์ผ่านบลูทูธได้ก็ต่อเมื่ออีกฝ่ายใช้เวอร์ชันดัดแปลงนี้ (fork) และเปิดใช้ตัวเลือกนี้ด้วยเท่านั้น ส่วนการถ่ายโอนไฟล์ยังคงทำผ่านเครือข่ายเหมือนเดิม';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$th manualFallback = _Translations$sendTab$diagnosis$manualFallback$th._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$th extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$th._(TranslationsTh root) : this._root = root, super.internal(root);
@@ -1005,6 +1042,8 @@ class _Translations$settingsTab$send$th extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'ตอบรับคำขอในการโอนถ่ายข้อมูลจากโหมด "แชร์ผ่านลิงก์" โดยอัตโนมัติ';
   @override
   String get createChecksums => 'สร้าง checksum เมื่อส่งไฟล์';
+  @override
+  String get deleteSourceAfterSend => 'ลบไฟล์ต้นฉบับหลังส่งสำเร็จ';
 }
 
 // Path: settingsTab.network
@@ -1035,6 +1074,13 @@ class _Translations$settingsTab$network$th extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'สิ้นสุดเวลาสำหรับการค้นหาอุปกรณ์ในเครือข่าย';
   @override
+  String get maxInterfaces => 'จำนวนอินเทอร์เฟซสูงสุด (สมาร์ทสแกน)';
+  @override
+  String get vpnInterfaces => 'รวมอินเทอร์เฟซ VPN (สมาร์ทสแกน)';
+  @override
+  String get vpnInterfacesHint =>
+      'สแกน subnet ของอินเทอร์เฟซอุโมงค์ VPN ด้วย (Tailscale, WireGuard, ...) VPN โดยทั่วไปไม่รองรับมัลติคาสต์ จึงตรวจสอบ subnet เหล่านั้นด้วยการสแกนสำรองแบบ HTTP แทน';
+  @override
   String get useSystemName => 'ใช้ชื่อในระบบ';
   @override
   String get generateRandomAlias => 'สุ่มนามแฝง';
@@ -1048,6 +1094,33 @@ class _Translations$settingsTab$network$th extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'อุปกรณ์เครื่องอื่นอาจจะไม่สามารถค้นหาอุปกรณ์เครื่องนี้เจอในเครื่อข่ายได้เนื่องจากคุณกำหนดที่อยู่มัลติคาสต์ใหม่ด้วยตนเอง (default: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'การค้นหาด้วย BLE (ทดลอง)';
+  @override
+  String get bleDiscoveryHint =>
+      'ค้นหาอุปกรณ์ใกล้เคียงผ่านบลูทูธได้แม้เครือข่ายปิดกั้นมัลติคาสต์ (การแยก AP) ใช้ได้บน Android, iOS, macOS และ Windows ส่วนบน Linux เครื่องนี้หาอุปกรณ์อื่นได้แต่จะไม่ถูกค้นพบ ทั้งสองเครื่องต้องใช้เวอร์ชันดัดแปลงนี้ (fork) พร้อมเปิดใช้ตัวเลือกนี้ การถ่ายโอนไฟล์ยังคงใช้เครือข่ายเหมือนเดิม';
+  @override
+  String get bleStatusActive =>
+      'ใช้งานอยู่: กำลังสแกนและโฆษณาตัว อุปกรณ์ใกล้เคียงจะปรากฏก็ต่อเมื่ออีกฝ่ายใช้เวอร์ชันดัดแปลงนี้ (fork) และเปิดใช้ตัวเลือกนี้ด้วย';
+  @override
+  String get bleStatusScanOnly =>
+      'ใช้งานอยู่: สแกนอย่างเดียว อุปกรณ์นี้ยังไม่สามารถถูกค้นพบผ่านบลูทูธได้ในขณะนี้ (แพลตฟอร์มนี้ไม่รองรับการโฆษณา BLE หรือยังไม่มีที่อยู่เครือข่ายที่ใช้ได้)';
+  @override
+  String get bleStatusPaused => 'หยุดชั่วคราว จะทำงานต่อเมื่อแอปกลับมาอยู่เบื้องหน้า';
+  @override
+  String get bleStatusPermissionDenied =>
+      'สิทธิ์บลูทูธถูกปฏิเสธ กรุณาอนุญาตสิทธิ์ "อุปกรณ์ใกล้เคียง" (หรือ "ตำแหน่ง" ใน Android 11 และต่ำกว่า) ในการตั้งค่าระบบ จากนั้นปิดตัวเลือกนี้แล้วเปิดใหม่อีกครั้ง';
+  @override
+  String get bleStatusAdapterOff => 'บลูทูธถูกปิดหรือใช้ไม่ได้ การค้นหาจะเริ่มต้นใหม่เองเมื่อบลูทูธกลับมาใช้ได้';
+  @override
+  String get bleStatusUnsupported => 'ไม่รองรับบนอุปกรณ์นี้: การค้นหาด้วย BLE ต้องใช้ Android 7 ขึ้นไปพร้อมวิทยุบลูทูธ LE';
+  @override
+  String get bleStatusLegacyLocation =>
+      'ในเวอร์ชัน Android นี้ การค้นหาอุปกรณ์อื่นต้องเปิดบริการตำแหน่งของระบบด้วย (จะขอสิทธิ์ให้โดยอัตโนมัติ อุปกรณ์นี้ถูกค้นพบโดยผู้อื่นได้อยู่แล้ว)';
+  @override
+  String get bleStatusError => 'เริ่มการค้นหาด้วย BLE ไม่ได้ ดูรายละเอียดที่ แก้ไขปัญหาเบื้องต้น > บันทึก';
+  @override
+  String get bleOpenSystemSettings => 'เปิดการตั้งค่าระบบ';
 }
 
 // Path: settingsTab.other
@@ -1164,6 +1237,25 @@ class _Translations$deviceDetailsPage$logs$th extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'อัปเดตผ่าน ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$th extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'ตรวจสอบ checksum แล้ว';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'ตรวจสอบ checksum แล้วสำหรับ ${curr} / ${n} ไฟล์';
+  @override
+  String get notVerifiable => 'ผู้ส่งไม่ได้ระบุ checksum ไว้';
+  @override
+  String get disabled => 'การตรวจสอบ checksum ถูกปิดใช้งาน';
+  @override
+  String attached({required Object curr, required Object n}) => 'แนบ checksum แล้ว (${curr} / ${n} ไฟล์)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$th extends Translations$progressPage$total$en {
   _Translations$progressPage$total$th._(TranslationsTh root) : this._root = root, super.internal(root);
@@ -1257,6 +1349,11 @@ class _Translations$dialogs$addressInput$th extends Translations$dialogs$address
   String get ip => 'ที่อยู่ไอพี';
   @override
   String get recentlyUsed => 'ใช้งานล่าสุดเมื่อ: ';
+  @override
+  String get noHashtagCandidates =>
+      'เครือข่ายปัจจุบันไม่มีที่อยู่ IPv4 จึงขยายแฮชแท็กเป็นที่อยู่ที่เป็นไปได้ไม่ได้ กรุณากรอกที่อยู่แบบเต็มแทน (เช่น 192.168.1.5 หรือ fe80::1)';
+  @override
+  late final _Translations$dialogs$addressInput$validation$th validation = _Translations$dialogs$addressInput$validation$th._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1270,6 +1367,42 @@ class _Translations$dialogs$cancelSession$th extends Translations$dialogs$cancel
   String get title => 'ยกเลิกการโอนไฟล์';
   @override
   String get content => 'คุณต้องการยกเลิกการโอนไฟล์หรือไม่?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$th extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'การเชื่อมต่อล้มเหลว';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$th timeout = _Translations$dialogs$connectionError$timeout$th._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$th refused = _Translations$dialogs$connectionError$refused$th._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$th forbidden = _Translations$dialogs$connectionError$forbidden$th._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$th other = _Translations$dialogs$connectionError$other$th._(_root);
+  @override
+  String get retry => 'ลองใหม่';
+  @override
+  String get details => 'รายละเอียดข้อผิดพลาด:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$th extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ลบไฟล์ต้นฉบับ';
+  @override
+  String get content => 'หลังจากส่งไฟล์สำเร็จแล้ว ไฟล์เหล่านั้นจะถูกลบออกจากอุปกรณ์นี้ การกระทำนี้ไม่สามารถย้อนกลับได้';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1563,6 +1696,32 @@ class _Translations$dialogs$sendModeHelp$th extends Translations$dialogs$sendMod
   String get link => 'ผู้รับที่ไม่ได้ติดตั้งแอป LocalSend สามารถดาวน์โหลดไฟล์ที่เลือกไว้ในรายการได้โดยการเปิดลิงก์ในเบราว์เซอร์';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$th extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'เริ่มเซิร์ฟเวอร์ไม่ได้';
+  @override
+  String port({required Object port}) => 'พอร์ต: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$th windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$th._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$th addressInUse = _Translations$dialogs$startupError$addressInUse$th._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$th generic = _Translations$dialogs$startupError$generic$th._(_root);
+  @override
+  String get details => 'รายละเอียดข้อผิดพลาด:';
+  @override
+  String get copyDetails => 'คัดลอกรายละเอียด';
+  @override
+  String get openSettings => 'เปิดการตั้งค่า';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$th extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$th._(TranslationsTh root) : this._root = root, super.internal(root);
@@ -1572,6 +1731,67 @@ class _Translations$dialogs$zoom$th extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$th extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ไม่มีการเชื่อมต่อเครือข่าย';
+  @override
+  String get advice => 'อุปกรณ์นี้ไม่ได้เชื่อมต่อกับเครือข่ายใดๆ กรุณาตรวจสอบการเชื่อมต่อ Wi-Fi หรือสายเคเบิลของอุปกรณ์นี้';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$th extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ใช้มัลติคาสต์ไม่ได้';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend ไม่สามารถใช้การค้นหาด้วยมัลติคาสต์บนเครือข่ายนี้ได้ กรุณาตรวจสอบว่าอุปกรณ์ทั้งสองอยู่บนเครือข่ายเดียวกัน และการแยก AP (AP isolation) หรือไฟร์วอลล์ไม่ได้ปิดกั้นพอร์ต UDP ${port}';
+  @override
+  String reason({required Object reason}) => 'สาเหตุ: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$th extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ไม่พบอุปกรณ์';
+  @override
+  String get advice =>
+      'การค้นหาทำงานปกติ แต่ไม่มีอุปกรณ์ใดตอบสนองต่อการประกาศหรือการสแกนเครือข่าย อีกฝ่ายอาจออฟไลน์อยู่ อยู่ในโหมดพัก หรือถูกปิดกั้นโดยไฟร์วอลล์ กรุณาตรวจสอบว่า LocalSend กำลังทำงานอยู่บนอุปกรณ์อีกเครื่อง';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'ส่งการประกาศ ${announcements} ครั้งและสแกนเครือข่าย ${scans} ครั้งแล้วแต่ไม่มีการตอบสนอง';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$th extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ที่อยู่ IP เปลี่ยนแปลงบ่อย คุณยังคงติดต่ออุปกรณ์ที่ไม่แสดงในรายการได้: เพิ่มไปยังรายการโปรดหรือกรอกที่อยู่ด้วยตนเอง';
+  @override
+  String get openFavorites => 'เปิดรายการโปรด';
+  @override
+  String get manualInput => 'กรอกที่อยู่ด้วยตนเอง';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1658,4 +1878,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$th extends Translations$whatsNe
     'คำขอจากรายการโปรดจะถูกยอมรับโดยอัตโนมัติแล้ว โดยเปิดใช้งานเป็นค่าเริ่มต้น และสามารถปิดได้ในการตั้งค่า',
     'บน Android การโอนจะดำเนินต่อขณะที่แอปอยู่เบื้องหลังหรือปิดหน้าจอ บน iOS แอปยังคงต้องอยู่เบื้องหน้า',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$th extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'กรอกที่อยู่ IPv4, IPv6 หรือชื่อโฮสต์ที่ถูกต้อง';
+  @override
+  String get scheme => 'กรอกเฉพาะที่อยู่เท่านั้น โดยไม่ต้องมี "http://" หรือ "https://"';
+  @override
+  String get port => 'กรอกเฉพาะที่อยู่เท่านั้น พอร์ตจะถูกดึงมาจากการตั้งค่า';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$th extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'อุปกรณ์ไม่ได้ตอบสนองภายในเวลาที่กำหนด';
+  @override
+  String get advice =>
+      'อาจออฟไลน์อยู่ อยู่ในโหมดพัก หรือถูกไฟร์วอลล์ปิดกั้นการเชื่อมต่อ กรุณาตรวจสอบว่า LocalSend กำลังทำงานอยู่บนอุปกรณ์อีกเครื่อง และอุปกรณ์ทั้งสองอยู่บนเครือข่ายเดียวกัน';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$th extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'อุปกรณ์ปฏิเสธการเชื่อมต่อ';
+  @override
+  String get advice =>
+      'ดูเหมือนว่า LocalSend ไม่ได้ทำงานอยู่บนอุปกรณ์ปลายทาง หรือกำลังรับฟังบนพอร์ตอื่น ลองเปิด LocalSend บนอุปกรณ์อีกเครื่องหรือตรวจสอบพอร์ต';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$th extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'อุปกรณ์ปฏิเสธคำขอ';
+  @override
+  String get advice => 'อาจต้องใช้รหัส PIN หรือการจับคู่กับอุปกรณ์มีการเปลี่ยนแปลง กรุณาตรวจสอบรหัส PIN และการตั้งค่าบันทึกด่วนบนอุปกรณ์ปลายทาง';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$th extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ไม่สามารถสร้างการเชื่อมต่อได้';
+  @override
+  String get advice => 'ตรวจสอบที่อยู่และพอร์ต ให้แน่ใจว่า LocalSend กำลังทำงานอยู่บนอุปกรณ์ปลายทาง และไม่มีไฟร์วอลล์หรือ VPN ปิดกั้นการเชื่อมต่อ';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$th extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows ปฏิเสธการเข้าถึงพอร์ต (ข้อผิดพลาด socket 10013)';
+  @override
+  String get advice =>
+      'สาเหตุมักมาจากช่วงพอร์ตที่ถูกจองไว้โดย Hyper-V, WSL หรือ Docker หรือ Winsock catalog เสียหาย:\n• เปลี่ยนพอร์ตในการตั้งค่า (เครือข่าย)\n• ตรวจสอบช่วงที่ถูกจองด้วยคำสั่ง: netsh interface ipv4 show excludedportrange protocol=tcp\n• ซ่อมแซม Winsock ในฐานะผู้ดูแลระบบด้วยคำสั่ง: netsh winsock reset (รีสตาร์ทเครื่องหลังจากนั้น)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$th extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'พอร์ตนี้ถูกใช้งานโดยแอปพลิเคชันอื่นแล้ว';
+  @override
+  String get advice =>
+      'โปรแกรมอื่น (หรือ LocalSend ตัวที่สอง) กำลังรับฟังบนพอร์ตนี้:\n• ปิดแอปพลิเคชันนั้น หรือ\n• เปลี่ยนพอร์ตในการตั้งค่า (เครือข่าย)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$th extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$th._(TranslationsTh root) : this._root = root, super.internal(root);
+
+  final TranslationsTh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ไม่สามารถเริ่มเซิร์ฟเวอร์ได้';
+  @override
+  String get advice => '• ตรวจสอบไฟร์วอลล์และการตั้งค่าเครือข่ายของคุณ\n• ลองเปลี่ยนพอร์ตในการตั้งค่า (เครือข่าย)';
 }

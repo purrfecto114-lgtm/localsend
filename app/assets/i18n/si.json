@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "පැහැදිලි කිරීම",
     "help": "කරුණාකර ලබන්නාගේ උපාංගය හා ඔබේ උපාංගය එකම Wi-Fi ජාලයේ ඇති බව සහතික කර ගන්න.",
-    "placeItems": "බෙදා (Share) ගැනීමට අවශ්‍ය දේ තබන්න."
+    "placeItems": "බෙදා (Share) ගැනීමට අවශ්‍ය දේ තබන්න.",
+    "diagnosis": {
+      "scanning": "ආසන්න උපාංග සොයමින්…",
+      "noInterface": {
+        "title": "ජාල සම්බන්ධතාවක් නැත",
+        "advice": "මෙම උපාංගය කිසිදු ජාලයකට සම්බන්ධ වී නැත. මෙම උපාංගයේ Wi-Fi හෝ කේබල් සම්බන්ධතාව පරීක්ෂා කරන්න."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast ලබා ගත නොහැක",
+        "advice": "මෙම ජාලය තුළ LocalSend හට multicast සොයාගැනීම භාවිත කළ නොහැක. උපාංග දෙකම එකම ජාලයේ ඇති බවත්, Access Point (AP) Isolation හෝ firewall එකක් UDP {port} port එක අවහිර නොකරන බවත් සහතික කරගන්න.",
+        "reason": "හේතුව: {reason}"
+      },
+      "scanNoResult": {
+        "title": "උපාංග හමු නොවීය",
+        "advice": "සොයාගැනීම ක්‍රියාත්මක වුවද, නිවේදන හෝ ජාල ස්කෑනට කිසිදු උපාංගයක් පිළිතුරු නොදුන්නේය. අනෙක් උපාංගය offline වී, නිදන්නට ගොස්, හෝ firewall එකකින් අවහිර වී තිබිය හැක. අනෙක් උපාංගයේ LocalSend ක්‍රියාත්මක බව සහතික කරගන්න.",
+        "detail": "පිළිතුරු නොමැතිව නිවේදන {announcements}ක් සහ ජාල ස්කෑන් {scans}ක් යවන ලදි."
+      },
+      "rescan": "නැවත සොයන්න",
+      "bleHint": "BLE සොයාගැනීම ක්‍රියාත්මකයි: උපාංගද මෙම fork එක (විකල්පය සක්‍රීයව) ධාවනය කරන්නේ නම් පමණක් ඒවා Bluetooth හරහා සොයාගත හැක; හුවමාරුවම තවමත් ජාලය හරහා සිදු වේ.",
+      "manualFallback": {
+        "message": "IP ලිපින නිතර වෙනස් වේ. ලැයිස්තුගත නොකළ උපාංගයකටද ඔබට ළඟා විය හැක: එය ප්‍රියතම වලට එක් කරන්න, නැතහොත් එහි ලිපිනය අතින් ඇතුල් කරන්න.",
+        "openFavorites": "ප්‍රියතම විවෘත කරන්න",
+        "manualInput": "ලිපිනය අතින් ඇතුල් කරන්න"
+      }
+    }
   },
   "settingsTab": {
     "title": "සැකසුම්",
@@ -127,7 +151,8 @@
     "send": {
       "title": "යවන්න",
       "shareViaLinkAutoAccept": "\"ලින්ක් (Link) ඔස්සේ බෙදාගන්න (Share)\" මාදිලියේ ඉල්ලීම් ස්වයංක්‍රීයව පිළිගන්න",
-      "createChecksums": "ගොනු යවන විට checksum සාදන්න"
+      "createChecksums": "ගොනු යවන විට checksum සාදන්න",
+      "deleteSourceAfterSend": "සාර්ථකව යැවීමෙන් පසු මූල ගොනු මකන්න"
     },
     "network": {
       "title": "ජාලය",
@@ -143,12 +168,26 @@
         "filtered": "වර්ග කළ"
       },
       "discoveryTimeout": "සොයා ගැනීමේ කාලසීමාව",
+      "maxInterfaces": "උපරිම අතුරුමුහුණත් (Smart Scan)",
+      "vpnInterfaces": "VPN අතුරුමුහුණත් ඇතුළත් කරන්න (Smart Scan)",
+      "vpnInterfacesHint": "VPN tunnel අතුරුමුහුණත්වල subnet ද (Tailscale, WireGuard, ...) ස්කෑන් කරන්න. VPN සාමාන්‍යයෙන් multicast රැගෙන යන්නේ නැති බැවින්, ඒවායේ subnet HTTP fallback ස්කෑනයෙන් පරීක්ෂා වේ.",
       "useSystemName": "පද්ධති නම භාවිතා කරන්න",
       "generateRandomAlias": "අහඹු නමක් ජනනය කරන්න",
       "portWarning": "ඔබ custom port එකක් භාවිතා කරන්නේ නම්, වෙනත් උපාංග වලට ඔබව හඳුනා ගත නොහැක. (default: {defaultPort})",
       "encryption": "කේතනය",
       "multicastGroup": "Multicast ලිපිනය",
-      "multicastGroupWarning": "ඔබ custom multicast ලිපිනයක් භාවිතා කරන්නේ නම්, වෙනත් උපාංග වලට ඔබව හඳුනා ගත නොහැක. (default: {defaultMulticast})"
+      "multicastGroupWarning": "ඔබ custom multicast ලිපිනයක් භාවිතා කරන්නේ නම්, වෙනත් උපාංග වලට ඔබව හඳුනා ගත නොහැක. (default: {defaultMulticast})",
+      "bleDiscovery": "BLE සොයාගැනීම (පරීක්ෂණාත්මක)",
+      "bleDiscoveryHint": "ජාලය multicast අවහිර කරන විටද (Access Point (AP) Isolation) ආසන්න උපාංග Bluetooth හරහා සොයාගනී. Android, iOS, macOS සහ Windows මත ක්‍රියා කරයි; Linux මත මෙම උපාංගයට වෙනත් උපාංග සොයාගත හැකි නමුත් මෙම උපාංගයම සොයාගැනීමට ලක් නොවේ. උපාංග දෙකටම මෙම fork එක (විකල්පය සක්‍රීයව) ධාවනය කළ යුතුය; ගොනු හුවමාරුව තවමත් ජාලය භාවිතා කරයි.",
+      "bleStatusActive": "සක්‍රීයයි: ස්කෑන් කරමින් සහ advertise කරමින්. අනෙක් උපාංගද මෙම fork එක (විකල්පය සක්‍රීයව) ක්‍රියාත්මක කරන්නේ නම් පමණක් ආසන්න උපාංග දිස්වේ.",
+      "bleStatusScanOnly": "සක්‍රීයයි: ස්කෑන් කිරීම පමණි. මෙම උපාංගයට දැනට Bluetooth හරහා සොයාගත නොහැක (මෙම platform එකේ BLE advertising සහාය නොමැති නිසා, හෝ තවම භාවිත කළ හැකි ජාල ලිපිනයක් නොමැති නිසා).",
+      "bleStatusPaused": "විරාමයි. ඇප් එක නැවත foreground එකට පැමිණි විට නැවත අරඹයි.",
+      "bleStatusPermissionDenied": "Bluetooth අවසර ප්‍රතික්ෂේප වී ඇත. පද්ධති සැකසුම් තුළ \"ආසන්න උපාංග\" (හෝ Android 11 සහ ඊට පහළ වල \"ස්ථානය\") අවසරය ලබා දී, මෙම විකල්පය off කර නැවත on කරන්න.",
+      "bleStatusAdapterOff": "Bluetooth off වී ඇත හෝ ලබා ගත නොහැක. Bluetooth නැවත ලබා ගත හැකි වූ විට සොයාගැනීම ස්වයංක්‍රීයව නැවත අරඹයි.",
+      "bleStatusUnsupported": "මෙම උපාංගයේ සහාය නොදක්වයි: BLE සොයාගැනීමට Android 7 හෝ ඊට නව අනුවාදයක් සහ Bluetooth LE radio එකක් අවශ්‍ය වේ.",
+      "bleStatusLegacyLocation": "මෙම Android අනුවාදයේදී වෙනත් උපාංග සොයාගැනීමට පද්ධතියේ ස්ථාන සේවාදායකයන්ද on කර තිබිය යුතුය (අවසරය ස්වයංක්‍රීයව ඉල්ලේ; මෙම උපාංගය දැනටමත් වෙනත් උපාංග වලට සොයාගත හැක).",
+      "bleStatusError": "BLE සොයාගැනීම ආරම්භ කළ නොහැක. විස්තර සඳහා ගැටලු විසඳන්න > ලොග බලන්න.",
+      "bleOpenSystemSettings": "පද්ධති සැකසුම් විවෘත කරන්න"
     },
     "other": {
       "title": "වෙනත්",
@@ -256,6 +295,13 @@
     "titleSending": "ගොනු යවමින්",
     "titleReceiving": "ගොනු ලබා ගනිමින්",
     "savedToGallery": "Photos තුළ සේව් කරන ලදි",
+    "checksum": {
+      "verified": "Checksum සත්‍යාපනය කරන ලදි",
+      "partiallyVerified": "ගොනු {curr} / {n} සඳහා checksum සත්‍යාපනය කරන ලදි",
+      "notVerifiable": "යවන්නාගෙන් checksum ලබා නොදී ඇත",
+      "disabled": "Checksum සත්‍යාපනය අක්‍රීයයි",
+      "attached": "Checksum අමුණා ඇත (ගොනු {curr} / {n})"
+    },
     "total": {
       "title": {
         "sending": "සම්පූර්ණ ප්‍රගතිය ({time})",
@@ -348,11 +394,42 @@
       "title": "ලිපිනය ඇතුලත් කරන්න",
       "hashtag": "හැශ්ටැග්",
       "ip": "IP ලිපිනය",
-      "recentlyUsed": "පෙර භාවිතා කළ: "
+      "recentlyUsed": "පෙර භාවිතා කළ: ",
+      "noHashtagCandidates": "වත්මන් ජාලයට IPv4 ලිපිනයක් නොමැති නිසා, හැශ්ටැග් එක අපේක්ෂක ලිපිනයකට දිගු කළ නොහැක. කරුණාකර සම්පූර්ණ ලිපිනය ඇතුල් කරන්න (උදා. 192.168.1.5 හෝ fe80::1).",
+      "validation": {
+        "invalid": "වලංගු IPv4 ලිපිනයක්, IPv6 ලිපිනයක් හෝ host නමක් ඇතුල් කරන්න.",
+        "scheme": "ලිපිනය පමණක් ඇතුල් කරන්න, \"http://\" හෝ \"https://\" රහිතව.",
+        "port": "ලිපිනය පමණක් ඇතුල් කරන්න. Port එක සැකසුම් වලින් ලබා ගැනේ."
+      }
     },
     "cancelSession": {
       "title": "ගොනු මාරු අවලංගු කරන්න",
       "content": "ඔබට ඇත්තටම ගොනු හුවමාරුව අවලංගු කිරීමට අවශ්‍යද?"
+    },
+    "connectionError": {
+      "title": "සම්බන්ධතාව අසාර්ථක විය",
+      "timeout": {
+        "message": "උපාංගය නියමිත වේලාවට පිළිතුරු නොදුන්නේය.",
+        "advice": "එය බොහෝවිට offline, නිදන්නට ගොස්, හෝ firewall එකකින් අවහිර වී තිබිය හැක. අනෙක් උපාංගයේ LocalSend ක්‍රියාත්මක බවත් උපාංග දෙකම එකම ජාලයේ ඇති බවත් සහතික කරගන්න."
+      },
+      "refused": {
+        "message": "උපාංගය සම්බන්ධතාව ප්‍රතික්ෂේප කළේය.",
+        "advice": "ඉලක්ක උපාංගයේ LocalSend ක්‍රියාත්මක නොවන බව පෙනේ, නැතහොත් වෙනත් port එකකින් සවන් දෙයි. අනෙක් උපාංගයේ LocalSend ආරම්භ කරන්න, නැතහොත් port එක පරීක්ෂා කරන්න."
+      },
+      "forbidden": {
+        "message": "උපාංගය ඉල්ලීම ප්‍රතික්ෂේප කළේය.",
+        "advice": "PIN එකක් අවශ්‍ය විය හැකි අතර, නැතහොත් උපාංගයේ යුගල වීම (pairing) වෙනස් වී ඇත. ඉලක්ක උපාංගයේ PIN සහ Quick සේව් සැකසුම් පරීක්ෂා කරන්න."
+      },
+      "other": {
+        "message": "සම්බන්ධතාව ඇති කළ නොහැක.",
+        "advice": "ලිපිනය සහ port එක පරීක්ෂා කර, ඉලක්ක උපාංගයේ LocalSend ක්‍රියාත්මක බවත්, firewall හෝ VPN එකක් සම්බන්ධතාව අවහිර නොකරන බවත් සහතික කරගන්න."
+      },
+      "retry": "නැවත උත්සාහ කරන්න",
+      "details": "දෝෂ විස්තර:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "මූල ගොනු මකන්න",
+      "content": "ගොනු සාර්ථකව යැවූ පසු, ඒවා මෙම උපාංගයෙන් මකා දමනු ලැබේ. මෙය ආපසු හැරවිය නොහැක."
     },
     "cannotOpenFile": {
       "title": "ගොනුව විවෘත කළ නොහැක",
@@ -448,6 +525,25 @@
       "single": "එක් ලබන්නෙකුට පමණක් ගොනු යැවීම කරයි. ගොනු හුවමාරු කිරීමෙන් පසුව, තේරීම මකා දමනු ලැබේ.",
       "multiple": "ලබන්නන් කිහිපදෙනෙකු වෙත ගොනු යැවීම කරයි. ගොනු හුවමාරු කිරීමෙන් පසුව ද තේරීම මකා දමන්නේ නැත.",
       "link": "ලබන්නන් LocalSend ස්ථාපනය කර නොමැති නම්, ඔව්න්ගේ බ්‍රවුසර් (Browser) තුළ අදාල ලින්ක් (Link) එක විවෘත කර, ගොනු බාගත (Download) කළ හැක."
+    },
+    "startupError": {
+      "title": "සේවාදායකය ආරම්භ කළ නොහැක",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows විසින් port එකට ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී (socket error 10013).",
+        "advice": "මෙය බොහෝවිට Hyper-V, WSL හෝ Docker විසින් වෙන් කරන ලද port පරාසයක් නිසා, හෝ හානි වූ Winsock catalog එකක් නිසා සිදු වේ:\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කරන්න\n• වෙන් කළ පරාස පරීක්ෂා කරන්න: netsh interface ipv4 show excludedportrange protocol=tcp\n• පරිපාලක (administrator) ලෙස Winsock අලුත්වැඩියා කරන්න: netsh winsock reset (පසුව restart කරන්න)"
+      },
+      "addressInUse": {
+        "hint": "මෙම port එක දැනටමත් වෙනත් යෙදුමක් විසින් භාවිතා වේ.",
+        "advice": "වෙනත් වැඩසටහනක් (හෝ දෙවන LocalSend අවස්ථාවක්) මෙම port එකෙන් සවන් දෙයි:\n• එම යෙදුම වසා දමන්න, නැතහොත්\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කරන්න"
+      },
+      "generic": {
+        "hint": "සේවාදායකය ආරම්භ කළ නොහැකි විය.",
+        "advice": "• Firewall සහ ජාල සැකසුම් පරීක්ෂා කරන්න\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කර බලන්න"
+      },
+      "details": "දෝෂ විස්තර:",
+      "copyDetails": "විස්තර කොපි කරන්න",
+      "openSettings": "සැකසුම් විවෘත කරන්න"
     },
     "zoom": {
       "title": "URL"

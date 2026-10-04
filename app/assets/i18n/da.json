@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Forklaring",
     "help": "Sørg for, at den ønskede enhed er på det samme Wi-Fi-netværk.",
-    "placeItems": "Placer filer til deling."
+    "placeItems": "Placer filer til deling.",
+    "diagnosis": {
+      "scanning": "Søger efter enheder i nærheden…",
+      "noInterface": {
+        "title": "Ingen netværksforbindelse",
+        "advice": "Denne enhed er ikke forbundet til noget netværk. Tjek enhedens Wi-Fi- eller kabelforbindelse."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast er ikke tilgængelig",
+        "advice": "LocalSend kan ikke bruge multicast til at finde enheder på dette netværk. Sørg for, at begge enheder er på samme netværk, og at AP-isolering eller en firewall ikke blokerer UDP-port {port}.",
+        "reason": "Årsag: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Ingen enheder fundet",
+        "advice": "Søgningen virker, men ingen enheder svarede på annonceringerne eller netværksscanningen. Den anden enhed er måske offline, i dvale eller blokeret af en firewall. Sørg for, at LocalSend kører på den anden enhed.",
+        "detail": "Sendte {announcements} annonceringer og {scans} netværksscanninger uden svar."
+      },
+      "rescan": "Søg igen",
+      "bleHint": "BLE-opdagelse er aktiv: Enheder findes kun via Bluetooth, hvis de også kører denne fork med indstillingen slået til; selve overførslen foregår stadig over netværket.",
+      "manualFallback": {
+        "message": "IP-adresser ændrer sig ofte. Du kan stadig nå en enhed, der ikke er på listen: Føj den til dine favoritter, eller indtast dens adresse manuelt.",
+        "openFavorites": "Åbn favoritter",
+        "manualInput": "Indtast adresse manuelt"
+      }
+    }
   },
   "settingsTab": {
     "title": "Indstillinger",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Send",
       "shareViaLinkAutoAccept": "Acceptér automatisk anmodninger i \"Del med link\"-tilstand",
-      "createChecksums": "Opret kontrolsummer ved afsendelse af filer"
+      "createChecksums": "Opret kontrolsummer ved afsendelse af filer",
+      "deleteSourceAfterSend": "Slet kildefiler efter vellykket afsendelse"
     },
     "network": {
       "title": "Netværk",
@@ -143,12 +168,26 @@
         "filtered": "Filtreret"
       },
       "discoveryTimeout": "Timeout for søgning",
+      "maxInterfaces": "Maks. grænseflader (Smartscanning)",
+      "vpnInterfaces": "Medtag VPN-grænseflader (Smartscanning)",
+      "vpnInterfacesHint": "Scanner også subnettene på VPN-tunnelgrænseflader (Tailscale, WireGuard, ...). VPN-forbindelser understøtter normalt ikke multicast, så deres subnet kontrolleres i stedet med HTTP-fallbackscanningen.",
       "useSystemName": "Brug systemnavn",
       "generateRandomAlias": "Generér tilfældigt alias",
       "portWarning": "Andre enheder registrerer dig muligvis ikke, da du bruger en brugerdefineret port (standard: {defaultPort}).",
       "encryption": "Kryptering",
       "multicastGroup": "Multicast-adresse",
-      "multicastGroupWarning": "Andre enheder registrerer dig muligvis ikke, da du bruger en brugerdefineret multicast-adresse (standard: {defaultMulticast})."
+      "multicastGroupWarning": "Andre enheder registrerer dig muligvis ikke, da du bruger en brugerdefineret multicast-adresse (standard: {defaultMulticast}).",
+      "bleDiscovery": "BLE-opdagelse (eksperimentel)",
+      "bleDiscoveryHint": "Finder enheder i nærheden via Bluetooth, selv når netværket blokerer multicast (AP-isolering). Virker på Android, iOS, macOS og Windows; på Linux kan denne enhed finde andre, men kan ikke selv findes. Begge enheder skal have denne fork med indstillingen slået til; selve filoverførslen bruger stadig netværket.",
+      "bleStatusActive": "Aktiv: Scanner og annoncerer. Enheder i nærheden vises kun, hvis de også kører denne fork med indstillingen slået til.",
+      "bleStatusScanOnly": "Aktiv: Kun scanning. Denne enhed kan i øjeblikket ikke opdages via Bluetooth (ingen understøttelse af BLE-advertising på denne platform, eller endnu ingen brugbar netværksadresse).",
+      "bleStatusPaused": "På pause. Genoptages, når appen kommer tilbage i forgrunden.",
+      "bleStatusPermissionDenied": "Bluetooth-tilladelser afvist. Giv tilladelsen \"Enheder i nærheden\" (eller \"Placering\" på Android 11 og tidligere) i systemindstillingerne, og slå derefter denne indstilling fra og til igen.",
+      "bleStatusAdapterOff": "Bluetooth er slukket eller utilgængelig. Opdagelsen genstarter af sig selv, når Bluetooth bliver tilgængelig igen.",
+      "bleStatusUnsupported": "Understøttes ikke på denne enhed: BLE-opdagelse kræver Android 7 eller nyere samt en Bluetooth LE-radio.",
+      "bleStatusLegacyLocation": "På denne Android-version skal systemets placeringstjenester også være slået til for at finde andre enheder (tilladelsen anmodes om automatisk; denne enhed kan allerede findes af andre).",
+      "bleStatusError": "BLE-opdagelsen kunne ikke starte. Se Fejlsøgning > Logfiler for detaljer.",
+      "bleOpenSystemSettings": "Åbn systemindstillinger"
     },
     "other": {
       "title": "Andet",
@@ -256,6 +295,13 @@
     "titleSending": "Sender filer",
     "titleReceiving": "Modtager filer",
     "savedToGallery": "Gemt i fotos",
+    "checksum": {
+      "verified": "Kontrolsummer verificeret",
+      "partiallyVerified": "Kontrolsummer verificeret for {curr} / {n} filer",
+      "notVerifiable": "Ingen kontrolsummer angivet af afsenderen",
+      "disabled": "Verificering af kontrolsummer er deaktiveret",
+      "attached": "Kontrolsummer vedhæftet ({curr} / {n} filer)"
+    },
     "total": {
       "title": {
         "sending": "Samlet tid ({time})",
@@ -348,11 +394,42 @@
       "title": "Indtast adresse",
       "hashtag": "Hashtag",
       "ip": "IP-adresse",
-      "recentlyUsed": "Senest brugt: "
+      "recentlyUsed": "Senest brugt: ",
+      "noHashtagCandidates": "Det aktuelle netværk har ingen IPv4-adresse, så hashtagget kan ikke udvides til en kandidatadresse. Indtast i stedet den fulde adresse (f.eks. 192.168.1.5 eller fe80::1).",
+      "validation": {
+        "invalid": "Indtast en gyldig IPv4-adresse, IPv6-adresse eller værtsnavn.",
+        "scheme": "Indtast kun adressen, uden \"http://\" eller \"https://\".",
+        "port": "Indtast kun adressen. Porten hentes fra indstillingerne."
+      }
     },
     "cancelSession": {
       "title": "Afbryd filoverførsel",
       "content": "Vil du virkelig afbryde filoverførslen?"
+    },
+    "connectionError": {
+      "title": "Forbindelsen mislykkedes",
+      "timeout": {
+        "message": "Enheden svarede ikke i tide.",
+        "advice": "Den er sandsynligvis offline, i dvale, eller en firewall blokerer forbindelsen. Sørg for, at LocalSend kører på den anden enhed, og at begge enheder er på samme netværk."
+      },
+      "refused": {
+        "message": "Enheden afviste forbindelsen.",
+        "advice": "LocalSend ser ikke ud til at køre på målenheden, eller den lytter på en anden port. Start LocalSend på den anden enhed, eller tjek porten."
+      },
+      "forbidden": {
+        "message": "Enheden afviste anmodningen.",
+        "advice": "Der kræves måske en PIN-kode, eller parringen med enheden er ændret. Tjek PIN-koden og indstillingerne for \"Gem hurtigt\" på målenheden."
+      },
+      "other": {
+        "message": "Forbindelsen kunne ikke oprettes.",
+        "advice": "Tjek adresse og port, sørg for, at LocalSend kører på målenheden, og at ingen firewall eller VPN blokerer forbindelsen."
+      },
+      "retry": "Prøv igen",
+      "details": "Fejldetaljer:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Slet kildefiler",
+      "content": "Når filerne er blevet sendt, bliver de slettet fra denne enhed. Dette kan ikke fortrydes."
     },
     "cannotOpenFile": {
       "title": "Kan ikke åbne filen",
@@ -448,6 +525,25 @@
       "single": "Sender filer til én modtager. Valget ryddes efter filoverførsel er færdig.",
       "multiple": "Sender filer til flere modtager. Valget ryddes ikke efter filoverførsel er færdig.",
       "link": "Modtagere, der ikke har LocalSend installeret, kan hente de valgte filer ved at åbne linket i deres browser."
+    },
+    "startupError": {
+      "title": "Serveren kunne ikke startes",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows nægtede adgang til porten (socketfejl 10013).",
+        "advice": "Dette skyldes normalt et portinterval reserveret af Hyper-V, WSL eller Docker, eller en beskadiget Winsock-katalog:\n• Ændr porten i indstillingerne (Netværk)\n• Tjek de reserverede intervaller med: netsh interface ipv4 show excludedportrange protocol=tcp\n• Reparér Winsock som administrator med: netsh winsock reset (genstart bagefter)"
+      },
+      "addressInUse": {
+        "hint": "Porten bruges allerede af et andet program.",
+        "advice": "Et andet program (eller en anden LocalSend-instans) lytter på denne port:\n• Luk det andet program, eller\n• Ændr porten i indstillingerne (Netværk)"
+      },
+      "generic": {
+        "hint": "Serveren kunne ikke startes.",
+        "advice": "• Tjek dine firewall- og netværksindstillinger\n• Prøv at ændre porten i indstillingerne (Netværk)"
+      },
+      "details": "Fejldetaljer:",
+      "copyDetails": "Kopiér detaljer",
+      "openSettings": "Åbn indstillinger"
     },
     "zoom": {
       "title": "URL"

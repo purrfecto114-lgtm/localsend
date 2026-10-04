@@ -233,6 +233,8 @@ class _Translations$sendTab$fi extends Translations$sendTab$en {
   String get help => 'Varmista, että haluttu kohde on myös samassa Wi-Fi-verkossa.';
   @override
   String get placeItems => 'Lisää tiedostot tähän, jotta voit lähettää ne.';
+  @override
+  late final _Translations$sendTab$diagnosis$fi diagnosis = _Translations$sendTab$diagnosis$fi._(_root);
 }
 
 // Path: settingsTab
@@ -456,6 +458,8 @@ class _Translations$progressPage$fi extends Translations$progressPage$en {
   String get titleReceiving => 'Tiedostojen vastaanotto';
   @override
   String get savedToGallery => 'Tallennettu Kuvat-kansioon';
+  @override
+  late final _Translations$progressPage$checksum$fi checksum = _Translations$progressPage$checksum$fi._(_root);
   @override
   late final _Translations$progressPage$total$fi total = _Translations$progressPage$total$fi._(_root);
   @override
@@ -686,6 +690,11 @@ class _Translations$dialogs$fi extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$fi cancelSession = _Translations$dialogs$cancelSession$fi._(_root);
   @override
+  late final _Translations$dialogs$connectionError$fi connectionError = _Translations$dialogs$connectionError$fi._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$fi deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$fi._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$fi cannotOpenFile = _Translations$dialogs$cannotOpenFile$fi._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$fi encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$fi._(_root);
@@ -726,6 +735,8 @@ class _Translations$dialogs$fi extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$fi pin = _Translations$dialogs$pin$fi._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$fi sendModeHelp = _Translations$dialogs$sendModeHelp$fi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$fi startupError = _Translations$dialogs$startupError$fi._(_root);
   @override
   late final _Translations$dialogs$zoom$fi zoom = _Translations$dialogs$zoom$fi._(_root);
 }
@@ -930,6 +941,32 @@ class _Translations$sendTab$sendModes$fi extends Translations$sendTab$sendModes$
   String get link => 'Jaa linkillä';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$fi extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Etsitään lähellä olevia laitteita…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$fi noInterface = _Translations$sendTab$diagnosis$noInterface$fi._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$fi multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$fi._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$fi scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$fi._(_root);
+  @override
+  String get rescan => 'Etsi uudelleen';
+  @override
+  String get bleHint =>
+      'BLE-etsintä on käynnissä: laitteet löytyvät Bluetoothin kautta vain, jos niillä on myös tämä forkki, jossa asetus on käytössä; itse tiedonsiirto tapahtuu edelleen verkon kautta.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$fi manualFallback = _Translations$sendTab$diagnosis$manualFallback$fi._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$fi extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$fi._(TranslationsFi root) : this._root = root, super.internal(root);
@@ -1011,6 +1048,8 @@ class _Translations$settingsTab$send$fi extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Jaa linkki: Hyväksy automaattisesti';
   @override
   String get createChecksums => 'Luo tarkistussummat tiedostoja lähetettäessä';
+  @override
+  String get deleteSourceAfterSend => 'Poista lähdetiedostot onnistuneen lähetyksen jälkeen';
 }
 
 // Path: settingsTab.network
@@ -1041,6 +1080,13 @@ class _Translations$settingsTab$network$fi extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Laitteiden etsintäaika';
   @override
+  String get maxInterfaces => 'Liitännöiden enimmäismäärä (Älykäs haku)';
+  @override
+  String get vpnInterfaces => 'Sisällytä VPN-liitännät (Älykäs haku)';
+  @override
+  String get vpnInterfacesHint =>
+      'Skannaa myös VPN-tunneliliitäntöjen aliverkot (Tailscale, WireGuard, ...). VPN-verkot eivät yleensä tue multicast-lähetystä, joten niiden aliverkot tarkistetaan HTTP-fallback-skannauksella.';
+  @override
   String get useSystemName => 'Käytä järjestelmän nimeä';
   @override
   String get generateRandomAlias => 'Luo satunnainen alias';
@@ -1054,6 +1100,34 @@ class _Translations$settingsTab$network$fi extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Sinua ei ehkä havaita muiden laitteiden toimesta, koska käytät mukautettua multicast-osoitetta. (oletus: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE-etsintä (kokeellinen)';
+  @override
+  String get bleDiscoveryHint =>
+      'Löytää lähistön laitteita Bluetoothin kautta silloinkin, kun verkko estää multicast-lähetyksen (AP-eristys). Toimii Androidilla, iOS:llä, macOS:lla ja Windowsilla; Linuxilla tämä laite voi löytää muita, mutta ei itse olla löydettävissä. Molemmilla laitteilla pitää olla tämä forkki, jossa asetus on käytössä; itse tiedostonsiirto tapahtuu edelleen verkon kautta.';
+  @override
+  String get bleStatusActive =>
+      'Aktiivinen: skannaa ja mainostaa. Lähilaitteet näkyvät vain, jos niillä on myös tämä forkki, jossa asetus on käytössä.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktiivinen: vain skannaus. Tätä laitetta ei juuri nyt voida löytää Bluetoothin kautta (ei BLE-mainostuksen tukea tällä alustalla tai ei vielä käytettävää verkko-osoitetta).';
+  @override
+  String get bleStatusPaused => 'Keskeytetty. Jatkuu, kun sovellus palaa etualalle.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth-käyttöoikeudet on evätty. Myönnä käyttöoikeus "Läheiset laitteet" (tai "Sijainti" Android 11:ssä ja vanhemmissa) järjestelmäasetuksista ja kytke tämä asetus sitten pois ja takaisin päälle.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth on pois päältä tai ei käytettävissä. Etsintä käynnistyy automaattisesti uudelleen, kun Bluetooth tulee jälleen saataville.';
+  @override
+  String get bleStatusUnsupported => 'Ei tuettu tällä laitteella: BLE-etsintä vaatii Android 7:n tai uudemman sekä Bluetooth LE -radion.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Tällä Android-versiolla muiden laitteiden löytäminen vaatii myös järjestelmän sijaintipalveluiden päällä olon (käyttöoikeutta pyydetään automaattisesti; muut voivat jo löytää tämän laitteen).';
+  @override
+  String get bleStatusError => 'BLE-etsintää ei voitu käynnistää. Katso yksityiskohdat kohdasta Ongelmanratkaisu > Lokit.';
+  @override
+  String get bleOpenSystemSettings => 'Avaa järjestelmäasetukset';
 }
 
 // Path: settingsTab.other
@@ -1171,6 +1245,25 @@ class _Translations$deviceDetailsPage$logs$fi extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Päivitetty ${protocol}-protokollan kautta (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$fi extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Tarkistussummat varmistettu';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Tarkistussummat varmistettu ${curr} / ${n} tiedostosta';
+  @override
+  String get notVerifiable => 'Lähettäjä ei toimittanut tarkistussummia';
+  @override
+  String get disabled => 'Tarkistussummien varmistus on poistettu käytöstä';
+  @override
+  String attached({required Object curr, required Object n}) => 'Tarkistussummat liitetty (${curr} / ${n} tiedostoa)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$fi extends Translations$progressPage$total$en {
   _Translations$progressPage$total$fi._(TranslationsFi root) : this._root = root, super.internal(root);
@@ -1264,6 +1357,11 @@ class _Translations$dialogs$addressInput$fi extends Translations$dialogs$address
   String get ip => 'IP-osoite';
   @override
   String get recentlyUsed => 'Äskettäin käytetty: ';
+  @override
+  String get noHashtagCandidates =>
+      'Nykyisessä verkossa ei ole IPv4-osoitetta, joten hashtagia ei voida laajentaa ehdokasosoitteeksi. Syötä sen sijaan koko osoite (esim. 192.168.1.5 tai fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$fi validation = _Translations$dialogs$addressInput$validation$fi._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1277,6 +1375,42 @@ class _Translations$dialogs$cancelSession$fi extends Translations$dialogs$cancel
   String get title => 'Peruuta tiedostonsiirto';
   @override
   String get content => 'Haluatko varmasti peruuttaa tiedostonsiirron?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$fi extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Yhteys epäonnistui';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$fi timeout = _Translations$dialogs$connectionError$timeout$fi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$fi refused = _Translations$dialogs$connectionError$refused$fi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$fi forbidden = _Translations$dialogs$connectionError$forbidden$fi._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$fi other = _Translations$dialogs$connectionError$other$fi._(_root);
+  @override
+  String get retry => 'Yritä uudelleen';
+  @override
+  String get details => 'Virhetiedot:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$fi extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Poista lähdetiedostot';
+  @override
+  String get content => 'Kun tiedostot on lähetetty onnistuneesti, ne poistetaan tältä laitteelta. Tätä ei voi kumota.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1567,6 +1701,32 @@ class _Translations$dialogs$sendModeHelp$fi extends Translations$dialogs$sendMod
   String get link => 'Vastaanottajat, joilla ei ole LocalSendia asennettuna, voivat ladata valitut tiedostot avaamalla linkin selaimessaan.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$fi extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Palvelinta ei voitu käynnistää';
+  @override
+  String port({required Object port}) => 'Portti: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$fi windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$fi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$fi addressInUse = _Translations$dialogs$startupError$addressInUse$fi._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$fi generic = _Translations$dialogs$startupError$generic$fi._(_root);
+  @override
+  String get details => 'Virhetiedot:';
+  @override
+  String get copyDetails => 'Kopioi tiedot';
+  @override
+  String get openSettings => 'Avaa asetukset';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$fi extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$fi._(TranslationsFi root) : this._root = root, super.internal(root);
@@ -1576,6 +1736,68 @@ class _Translations$dialogs$zoom$fi extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$fi extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ei verkkoyhteyttä';
+  @override
+  String get advice => 'Tämä laite ei ole yhdistetty mihinkään verkkoon. Tarkista laitteen Wi-Fi- tai kaapeliyhteys.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$fi extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast ei ole käytettävissä';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend ei voi käyttää multicast-lähetystä laitteiden löytämiseen tässä verkossa. Varmista, että molemmat laitteet ovat samassa verkossa ja ettei AP-eristys tai palomuuri estä UDP-porttia ${port}.';
+  @override
+  String reason({required Object reason}) => 'Syy: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$fi extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Laitteita ei löytynyt';
+  @override
+  String get advice =>
+      'Haku toimii, mutta mikään laite ei vastannut ilmoituksiin tai verkkohakuun. Toinen laite saattaa olla offline-tilassa, lepotilassa tai palomuurin estämä. Varmista, että LocalSend on käynnissä toisessa laitteessa.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Lähetettiin ${announcements} ilmoitusta ja ${scans} verkkohakua ilman vastausta.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$fi extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP-osoitteet muuttuvat usein. Voit silti tavoittaa laitteen, jota ei ole listassa: lisää se suosikkeihin tai syötä sen osoite manuaalisesti.';
+  @override
+  String get openFavorites => 'Avaa suosikit';
+  @override
+  String get manualInput => 'Syötä osoite manuaalisesti';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1662,4 +1884,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$fi extends Translations$whatsNe
     'Suosikkien pyynnöt hyväksytään nyt automaattisesti. Tämä on oletuksena käytössä ja sen voi poistaa käytöstä asetuksista.',
     'Androidilla siirrot jatkuvat, kun sovellus on taustalla tai näyttö on sammutettu. iOS:llä sovelluksen on edelleen pysyttävä etualalla.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$fi extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Syötä kelvollinen IPv4-osoite, IPv6-osoite tai isäntänimi.';
+  @override
+  String get scheme => 'Syötä vain osoite ilman "http://" tai "https://".';
+  @override
+  String get port => 'Syötä vain osoite. Portti otetaan asetuksista.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$fi extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Laite ei vastannut ajallaan.';
+  @override
+  String get advice =>
+      'Se on todennäköisesti offline-tilassa, lepotilassa tai palomuuri estää yhteyden. Varmista, että LocalSend on käynnissä toisessa laitteessa ja että molemmat laitteet ovat samassa verkossa.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$fi extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Laite hylkäsi yhteyden.';
+  @override
+  String get advice =>
+      'LocalSend ei vaikuta olevan käynnissä kohdelaitteessa, tai se kuuntelee eri portissa. Käynnistä LocalSend toisessa laitteessa tai tarkista portti.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$fi extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Laite hylkäsi pyynnön.';
+  @override
+  String get advice => 'PIN-koodi voi olla vaadittu tai laiteparitus on muuttunut. Tarkista PIN-koodi ja pikatallennusasetukset kohdelaitteelta.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$fi extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Yhteyttä ei voitu muodostaa.';
+  @override
+  String get advice => 'Tarkista osoite ja portti, varmista että LocalSend on käynnissä kohdelaitteessa ja ettei palomuuri tai VPN estä yhteyttä.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$fi extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows esti pääsyn porttiin (socket-virhe 10013).';
+  @override
+  String get advice =>
+      'Tämän aiheuttaa yleensä Hyper-V:n, WSL:n tai Dockerin varaama porttialue tai rikki oleva Winsock-luettelo:\n• Vaihda portti asetuksista (Verkko)\n• Tarkista varatut alueet komennolla: netsh interface ipv4 show excludedportrange protocol=tcp\n• Korjaa Winsock järjestelmänvalvojana komennolla: netsh winsock reset (käynnistä uudelleen jälkeenpäin)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$fi extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Portti on jo toisen sovelluksen käytössä.';
+  @override
+  String get advice =>
+      'Toinen ohjelma (tai toinen LocalSend-instanssi) kuuntelee tätä porttia:\n• Sulje toinen sovellus tai\n• Vaihda portti asetuksista (Verkko)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$fi extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$fi._(TranslationsFi root) : this._root = root, super.internal(root);
+
+  final TranslationsFi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Palvelinta ei voitu käynnistää.';
+  @override
+  String get advice => '• Tarkista palomuuri- ja verkkoasetuksesi\n• Kokeile vaihtaa porttia asetuksista (Verkko)';
 }

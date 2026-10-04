@@ -231,6 +231,8 @@ class _Translations$sendTab$mn extends Translations$sendTab$en {
   String get help => 'Хүлээн авах төхөөрөмжийг адилхан Wi-Fi сүлжээнд байгаа эсэхийг шалгана уу.';
   @override
   String get placeItems => 'Хуваалцах зүйлсээ орулна уу.';
+  @override
+  late final _Translations$sendTab$diagnosis$mn diagnosis = _Translations$sendTab$diagnosis$mn._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$mn extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Photos дээр амжилттай хадгаллаа';
   @override
+  late final _Translations$progressPage$checksum$mn checksum = _Translations$progressPage$checksum$mn._(_root);
+  @override
   late final _Translations$progressPage$total$mn total = _Translations$progressPage$total$mn._(_root);
   @override
   late final _Translations$progressPage$remainingTime$mn remainingTime = _Translations$progressPage$remainingTime$mn._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$mn extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$mn cancelSession = _Translations$dialogs$cancelSession$mn._(_root);
   @override
+  late final _Translations$dialogs$connectionError$mn connectionError = _Translations$dialogs$connectionError$mn._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$mn deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$mn._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$mn cannotOpenFile = _Translations$dialogs$cannotOpenFile$mn._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$mn encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$mn._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$mn extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$mn pin = _Translations$dialogs$pin$mn._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$mn sendModeHelp = _Translations$dialogs$sendModeHelp$mn._(_root);
+  @override
+  late final _Translations$dialogs$startupError$mn startupError = _Translations$dialogs$startupError$mn._(_root);
   @override
   late final _Translations$dialogs$zoom$mn zoom = _Translations$dialogs$zoom$mn._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$mn extends Translations$sendTab$sendModes$
   String get link => 'Холбоосоор хуваалцах';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$mn extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Ойролцоо төхөөрөмжүүдийг хайж байна…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$mn noInterface = _Translations$sendTab$diagnosis$noInterface$mn._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$mn multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$mn._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$mn scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$mn._(_root);
+  @override
+  String get rescan => 'Дахин хайх';
+  @override
+  String get bleHint =>
+      'BLE илрүүлэлт идэвхтэй: төхөөрөмжүүдийг зөвхөн тэдгээр нь бас энэ опц нээлттэйгээр энэ fork-г ашиглаж байж л Bluetooth-оор олно; дамжуулалтын өөрөө хэвээр сүлжээгээр явна.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$mn manualFallback = _Translations$sendTab$diagnosis$manualFallback$mn._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$mn extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$mn._(TranslationsMn root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$mn extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"Холбоосоор илгээх" горимын хүсэлтүүдийн шууд зөвшөөрөх';
   @override
   String get createChecksums => 'Файл илгээхдээ шалгах нийлбэр үүсгэх';
+  @override
+  String get deleteSourceAfterSend => 'Амжилттай илгээсний дараа эх файлуудыг устгах';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$mn extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Хайх хүчинтэй хугацаа';
   @override
+  String get maxInterfaces => 'Интерфэйсүүдийн дээд хязгаар (Ухаалаг хайлт)';
+  @override
+  String get vpnInterfaces => 'VPN интерфэйсүүдийг багтаах (Ухаалаг хайлт)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN туннель интерфэйсүүдийн дэд сүлжээг мөн шүүнэ (Tailscale, WireGuard, ...). VPN нь ихэвчлэн мультикаст дамжуулдаггүй тул тэдгээрийн дэд сүлжээг HTTP нөөц сканаар шалгадаг.';
+  @override
   String get useSystemName => 'Системийн нэр ашиглах';
   @override
   String get generateRandomAlias => 'Санамсаргүй нэр үүсгэх';
@@ -962,6 +1008,34 @@ class _Translations$settingsTab$network$mn extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Хувийн multicast хаяг ашиглаж үед бусад төхөөрөмжид илрэхгүй байх магадлалтай. (default: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE илрүүлэлт (туршилтын)';
+  @override
+  String get bleDiscoveryHint =>
+      'Сүлжээ мультикастийг хаасан байсан ч (AP тусгаарлалт) ойролцоо төхөөрөмжүүдийг Bluetooth-оор илрүүлнэ. Android, iOS, macOS, Windows дээр ажиллана; Linux дээр энэ төхөөрөмж бусдыг олж чадах ч өөрөө олдохгүй. Хоёр төхөөрөмж хоёулаа энэ опц нээлттэй энэ fork-г ашиглах ёстой; файл дамжуулалтын өөрөө хэвээр сүлжээг ашиглана.';
+  @override
+  String get bleStatusActive =>
+      'Идэвхтэй: скан хийж, өөрийгөө зарлаж байна. Ойролцоо төхөөрөмжүүд зөвхөн тэдгээр нь бас энэ опц нээлттэйгээр энэ fork-г ашиглавал л харагдана.';
+  @override
+  String get bleStatusScanOnly =>
+      'Идэвхтэй: зөвхөн скан хийж байна. Энэ төхөөрөмж одоогоор Bluetooth-оор илрүүлэгдэх боломжгүй байна (энэ платформ дээр BLE өөрийгөө зарлах дэмжлэг байхгүй, эсвэл ашиглах боломжтой сүлжээний хаяг хараахан байхгүй).';
+  @override
+  String get bleStatusPaused => 'Түр зогсоосон. Апп урд талаа эргэж ирэхэд үргэлжлэнэ.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth зөвшөөрлүүд татгалзагдсан. Системийн тохиргоонд "Ойролцоо төхөөрөмжүүд" (эсвэл Android 11 ба түүнээс доош "Байршил") зөвшөөрлийг олгоод, дараа нь энэ опцийг унтраагаад дахин асаана уу.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth унтарсан эсвэл байхгүй байна. Bluetooth дахин боломжтой болохоор илрүүлэлт өөрөө дахин эхэлнэ.';
+  @override
+  String get bleStatusUnsupported =>
+      'Энэ төхөөрөмжид дэмжигдээгүй: BLE илрүүлэлт нь Android 7 ба түүнээс дээш хувилбар, мөн Bluetooth LE радиог шаардана.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Энэ Android хувилбарт бусад төхөөрөмжийг олоход системийн байршлын үйлчилгээнүүд бас асаалттай байх шаардлагатай (зөвшөөрлийг автоматаар хүсдэг; энэ төхөөрөмжийг бусад нь аль хэдийн олж чадна).';
+  @override
+  String get bleStatusError => 'BLE илрүүлэлтийг эхлүүлж чадсангүй. Дэлгэрэнгүйг Асуудал илрүүлэх > Логууд хэсгээс үзнэ үү.';
+  @override
+  String get bleOpenSystemSettings => 'Системийн тохиргоо руу очих';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$mn extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol}-оор шинэчлэгдсэн (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$mn extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Шалгах нийлбэрүүд баталгаажлаа';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} файлын шалгах нийлбэрүүд баталгаажлаа';
+  @override
+  String get notVerifiable => 'Илгээгч шалгах нийлбэр өгөөгүй';
+  @override
+  String get disabled => 'Шалгах нийлбэрийг баталгаажуулах унтраалттай';
+  @override
+  String attached({required Object curr, required Object n}) => 'Шалгах нийлбэрүүд хавсаргагдлаа (${curr} / ${n} файл)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$mn extends Translations$progressPage$total$en {
   _Translations$progressPage$total$mn._(TranslationsMn root) : this._root = root, super.internal(root);
@@ -1167,6 +1260,11 @@ class _Translations$dialogs$addressInput$mn extends Translations$dialogs$address
   String get title => 'Хаяг оруулах';
   @override
   String get recentlyUsed => 'Саяхан ашигласан: ';
+  @override
+  String get noHashtagCandidates =>
+      'Одоогийн сүлжээнд IPv4 хаяг байхгүй тул хэштэгийг нэр дэвшүүлэгч хаяг болгон өргөтгөх боломжгүй. Оронд нь бүтэн хаягийг оруулна уу (жишээ нь 192.168.1.5 эсвэл fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$mn validation = _Translations$dialogs$addressInput$validation$mn._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1180,6 +1278,42 @@ class _Translations$dialogs$cancelSession$mn extends Translations$dialogs$cancel
   String get title => 'Файл дамжуулалтыг цуцлах';
   @override
   String get content => 'Та файл дамжуулалтыг үнэхээр цуцлах уу?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$mn extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Холболт амжилтгүй боллоо';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$mn timeout = _Translations$dialogs$connectionError$timeout$mn._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$mn refused = _Translations$dialogs$connectionError$refused$mn._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$mn forbidden = _Translations$dialogs$connectionError$forbidden$mn._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$mn other = _Translations$dialogs$connectionError$other$mn._(_root);
+  @override
+  String get retry => 'Дахин оролдох';
+  @override
+  String get details => 'Алдааны дэлгэрэнгүй:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$mn extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Эх файлуудыг устгах';
+  @override
+  String get content => 'Файлууд амжилттай илгээгдсэний дараа энэ төхөөрөмжөөс устгагдах болно. Үүнийг буцаах боломжгүй.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1471,6 +1605,32 @@ class _Translations$dialogs$sendModeHelp$mn extends Translations$dialogs$sendMod
   String get link => 'LocalSend суулгаагүй хүлээн авагчид холбоосыг хөтчөөрөө нээж сонгосон файлуудыг татаж авах боломжтой.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$mn extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Серверийг эхлүүлж чадсангүй';
+  @override
+  String port({required Object port}) => 'Порт: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$mn windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$mn._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$mn addressInUse = _Translations$dialogs$startupError$addressInUse$mn._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$mn generic = _Translations$dialogs$startupError$generic$mn._(_root);
+  @override
+  String get details => 'Алдааны дэлгэрэнгүй:';
+  @override
+  String get copyDetails => 'Дэлгэрэнгүйг хуулах';
+  @override
+  String get openSettings => 'Тохиргоог нээх';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$mn extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$mn._(TranslationsMn root) : this._root = root, super.internal(root);
@@ -1480,6 +1640,68 @@ class _Translations$dialogs$zoom$mn extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$mn extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Сүлжээний холболт байхгүй';
+  @override
+  String get advice => 'Энэ төхөөрөмж ямар ч сүлжээнд холбогдоогүй байна. Энэ төхөөрөмжийн Wi-Fi эсвэл кабель холболтыг шалгана уу.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$mn extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Мультикаст боломжгүй';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend энэ сүлжээнд мультикаст ашиглан төхөөрөмж илрүүлж чадахгүй байна. Хоёр төхөөрөмж хоёулаа нэг сүлжээнд байгаа эсэхийг, мөн AP тусгаарлалт эсвэл firewall ${port} UDP портыг хаагаагүй эсэхийг шалгана уу.';
+  @override
+  String reason({required Object reason}) => 'Шалтгаан: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$mn extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Төхөөрөмж олдсонгүй';
+  @override
+  String get advice =>
+      'Хайлт ажиллаж байгаа ч ямар ч төхөөрөмж зарлалд эсвэл сүлжээний сканд хариулаагүй. Нөгөө төхөөрөмж оффлайн, унтсан эсвэл firewall-аар хаагдсан байж магадгүй. LocalSend нөгөө төхөөрөмж дээр ажиллаж байгаа эсэхийг шалгана уу.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} зарлал, ${scans} сүлжээний скан илгээсэн боловч хариулт ирсэнгүй.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$mn extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP хаягууд байнга өөрчлөгддөг. Жагсаалтад байхгүй төхөөрөмжид хэвээр хандаж болно: үүнийг Дуртай хэсэгт нэмэх эсвэл хаягийг гараар оруулна уу.';
+  @override
+  String get openFavorites => 'Дуртай хэсгийг нээх';
+  @override
+  String get manualInput => 'Хаягийг гараар оруулах';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1566,4 +1788,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$mn extends Translations$whatsNe
     'Дуртай төхөөрөмжүүдийн хүсэлтийг одоо автоматаар хүлээн авдаг боллоо. Энэ нь анхдагчаар идэвхтэй бөгөөд тохиргооноос унтрааж болно.',
     'Android дээр апп ар талд байх эсвэл дэлгэц унтарсан үед дамжуулалт үргэлжилнэ. iOS дээр апп урд талд байх ёстой хэвээр.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$mn extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Зөв IPv4 хаяг, IPv6 хаяг эсвэл хостын нэр оруулна уу.';
+  @override
+  String get scheme => 'Зөвхөн хаягийг оруулна уу, "http://" эсвэл "https://"-гүйгээр.';
+  @override
+  String get port => 'Зөвхөн хаягийг оруулна уу. Портыг тохиргооноос авна.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$mn extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Төхөөрөмж цагтаа хариулаагүй.';
+  @override
+  String get advice =>
+      'Оффлайн байж, унтаж байж эсвэл firewall холболтыг хааж байж магадгүй. LocalSend нөгөө төхөөрөмж дээр ажиллаж байгаа болон хоёр төхөөрөмж нэг сүлжээнд байгаа эсэхийг шалгана уу.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$mn extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Төхөөрөмж холболтоос татгалзлаа.';
+  @override
+  String get advice =>
+      'LocalSend зорилтот төхөөрөмж дээр ажиллахгүй байна уу, эсвэл өөр порт дээр сонсож байна уу. LocalSend-г нөгөө төхөөрөмж дээр эхлүүлэх эсвэл портыг шалгана уу.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$mn extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Төхөөрөмж хүсэлтээс татгалзлаа.';
+  @override
+  String get advice =>
+      'PIN шаардлагатай байж эсвэл төхөөрөмжтэй хослол өөрчлөгдсөн байж магадгүй. Зорилтот төхөөрөмж дээрх PIN болон шууд хадгалах тохиргоог шалгана уу.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$mn extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Холболтыг тогтоох боломжгүй болов.';
+  @override
+  String get advice =>
+      'Хаяг, портыг шалгаж, LocalSend зорилтот төхөөрөмж дээр ажиллаж байгаа эсэхийг, мөн холболтыг firewall эсвэл VPN хаагаагүй эсэхийг шалгана уу.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$mn extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows портын хандалтаас татгалзлаа (socket алдаа 10013).';
+  @override
+  String get advice =>
+      'Үүнийг ихэвчлэн Hyper-V, WSL эсвэл Docker-ийн захиалсан портын муж, эсвэл гэмтсэн Winsock каталог шийддэг:\n• Портыг Тохиргоо (Сүлжээ)-д өөрчилнө үү\n• Захиалсан мужийг шалгана уу: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsock-ийг администратор эрхээр засварлана уу: netsh winsock reset (дараа нь дахин ачаална уу)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$mn extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Портыг аль хэдийн өөр апп ашиглаж байна.';
+  @override
+  String get advice =>
+      'Өөр программ (эсвэл хоёр дахь LocalSend хувилбар) энэ порт дээр сонсож байна:\n• Тэр аппыг хаана уу, эсвэл\n• Портыг Тохиргоо (Сүлжээ)-д өөрчилнө үү';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$mn extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$mn._(TranslationsMn root) : this._root = root, super.internal(root);
+
+  final TranslationsMn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Серверийг эхлүүлж чадсангүй.';
+  @override
+  String get advice => '• Firewall болон сүлжээний тохиргоог шалгана уу\n• Портыг Тохиргоо (Сүлжээ)-д өөрчлөөд үзнэ үү';
 }

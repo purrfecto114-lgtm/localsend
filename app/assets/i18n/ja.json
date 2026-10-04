@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "説明",
     "help": "目標のデバイスが同じWi-Fiネットワーク内にあることを確認してください。",
-    "placeItems": "共有するアイテムを配置してください。"
+    "placeItems": "共有するアイテムを配置してください。",
+    "diagnosis": {
+      "scanning": "近くのデバイスを検索しています...",
+      "noInterface": {
+        "title": "ネットワークに接続していません",
+        "advice": "このデバイスはどのネットワークにも接続されていません。このデバイスのWi-Fiまたはケーブル接続を確認してください。"
+      },
+      "multicastUnavailable": {
+        "title": "マルチキャストを利用できません",
+        "advice": "LocalSendはこのネットワークでマルチキャストによる探索を利用できません。両方のデバイスが同じネットワーク上にあり、AP隔離やファイアウォールによってUDPポート {port} がブロックされていないことを確認してください。",
+        "reason": "理由: {reason}"
+      },
+      "scanNoResult": {
+        "title": "デバイスが見つかりません",
+        "advice": "探索は機能していますが、アナウンスにもネットワークスキャンにも応答したデバイスがありません。相手のデバイスがオフライン、スリープ中、またはファイアウォールによってブロックされている可能性があります。相手のデバイスでLocalSendが実行されていることを確認してください。",
+        "detail": "{announcements}回のアナウンスと{scans}回のネットワークスキャンを送信しましたが、応答はありませんでした。"
+      },
+      "rescan": "再検索",
+      "bleHint": "BLE探索が有効です: デバイスがBluetooth経由で見つかるのは、相手もこのフォーク版を実行してこのオプションを有効にしている場合のみです。転送自体は引き続きネットワーク経由で行われます。",
+      "manualFallback": {
+        "message": "IPアドレスは変わることがよくあります。一覧に表示されていないデバイスにも接続できます: お気に入りに追加するか、アドレスを手動で入力してください。",
+        "openFavorites": "お気に入りを開く",
+        "manualInput": "アドレスを手動で入力"
+      }
+    }
   },
   "settingsTab": {
     "title": "設定",
@@ -127,7 +151,8 @@
     "send": {
       "title": "送信",
       "shareViaLinkAutoAccept": "リンク経由で共有時: 自動で承諾",
-      "createChecksums": "ファイル送信時にチェックサムを作成する"
+      "createChecksums": "ファイル送信時にチェックサムを作成する",
+      "deleteSourceAfterSend": "送信成功後に元のファイルを削除"
     },
     "network": {
       "title": "ネットワーク",
@@ -143,12 +168,26 @@
         "filtered": "フィルター"
       },
       "discoveryTimeout": "探索がタイムアウトしました",
+      "maxInterfaces": "最大インターフェース数（スマートスキャン）",
+      "vpnInterfaces": "VPNインターフェースを含める（スマートスキャン）",
+      "vpnInterfacesHint": "VPNトンネルインターフェースのサブネットもスキャンします（Tailscale、WireGuardなど）。VPNは通常マルチキャストを扱えないため、それらのサブネットはHTTPフォールバックスキャンによって探査されます。",
       "useSystemName": "システム名を使用",
       "generateRandomAlias": "ランダムな別名を生成",
       "portWarning": "ポートが変更されているため、このデバイスが他のデバイスから検出されなくなる場合があります。(デフォルト: {defaultPort})",
       "encryption": "暗号化",
       "multicastGroup": "マルチキャスト",
-      "multicastGroupWarning": "マルチキャストアドレスが変更されているため、他のデバイスから検出されなくなる場合があります。(デフォルト: {defaultMulticast})"
+      "multicastGroupWarning": "マルチキャストアドレスが変更されているため、他のデバイスから検出されなくなる場合があります。(デフォルト: {defaultMulticast})",
+      "bleDiscovery": "BLE探索（実験的）",
+      "bleDiscoveryHint": "ネットワークがマルチキャストをブロックしている場合（AP隔離）でも、Bluetooth経由で近くのデバイスを探索します。Android、iOS、macOS、Windowsで動作します。Linuxでは、このデバイスは他のデバイスを見つけられますが、このデバイス自身が見つかることはありません。両方のデバイスがこのフォーク版でこのオプションを有効にしている必要があります。ファイル転送自体は引き続きネットワークを使用します。",
+      "bleStatusActive": "有効: スキャンとアドバタイズを実行中。近くのデバイスは、相手もこのフォーク版を実行してこのオプションを有効にしている場合にのみ表示されます。",
+      "bleStatusScanOnly": "有効: スキャンのみ。このデバイスは現在Bluetooth経由で探索できません（このプラットフォームはBLEアドバタイズに対応していないか、利用可能なネットワークアドレスがまだありません）。",
+      "bleStatusPaused": "一時停止中です。アプリがフォアグラウンドに戻ると再開します。",
+      "bleStatusPermissionDenied": "Bluetoothの権限が拒否されました。システム設定で「付近のデバイス」権限（Android 11以下では「位置情報」権限）を許可してから、このオプションを一度オフにして再度オンにしてください。",
+      "bleStatusAdapterOff": "Bluetoothがオフか利用できません。Bluetoothが再び利用可能になると、探索は自動的に再開されます。",
+      "bleStatusUnsupported": "このデバイスではサポートされていません: BLE探索にはAndroid 7以降とBluetooth LE対応の無線機能が必要です。",
+      "bleStatusLegacyLocation": "このAndroidバージョンでは、他のデバイスを見つけるためにシステムの位置情報サービスをオンにする必要もあります（権限は自動的に要求されます。このデバイスはすでに他のデバイスから見つかります）。",
+      "bleStatusError": "BLE探索を開始できませんでした。詳細はトラブルシューティング > ログを確認してください。",
+      "bleOpenSystemSettings": "システム設定を開く"
     },
     "other": {
       "title": "その他",
@@ -256,6 +295,13 @@
     "titleSending": "ファイルを送信中",
     "titleReceiving": "ファイルを受信中",
     "savedToGallery": "写真に保存しました",
+    "checksum": {
+      "verified": "チェックサムを検証しました",
+      "partiallyVerified": "{curr} / {n}件のファイルのチェックサムを検証しました",
+      "notVerifiable": "送信者がチェックサムを提供していません",
+      "disabled": "チェックサム検証は無効です",
+      "attached": "チェックサムを添付しました（{curr} / {n}件のファイル）"
+    },
     "total": {
       "title": {
         "sending": "総進捗 ({time})",
@@ -348,11 +394,42 @@
       "title": "アドレスを入力",
       "hashtag": "ハッシュタグ",
       "ip": "IPアドレス",
-      "recentlyUsed": "最近使用したアドレス: "
+      "recentlyUsed": "最近使用したアドレス: ",
+      "noHashtagCandidates": "現在のネットワークにはIPv4アドレスがないため、ハッシュタグを候補アドレスに展開できません。完全なアドレスを入力してください（例: 192.168.1.5やfe80::1）。",
+      "validation": {
+        "invalid": "有効なIPv4アドレス、IPv6アドレス、またはホスト名を入力してください。",
+        "scheme": "アドレスのみを入力してください。「http://」や「https://」は含めないでください。",
+        "port": "アドレスのみを入力してください。ポートは設定から使用されます。"
+      }
     },
     "cancelSession": {
       "title": "ファイル転送をキャンセル",
       "content": "本当にファイル転送をキャンセルしますか？"
+    },
+    "connectionError": {
+      "title": "接続に失敗しました",
+      "timeout": {
+        "message": "デバイスが時間内に応答しませんでした。",
+        "advice": "おそらくオフライン、スリープ中、またはファイアウォールが接続をブロックしています。相手のデバイスでLocalSendが実行されており、両方のデバイスが同じネットワーク上にあることを確認してください。"
+      },
+      "refused": {
+        "message": "デバイスが接続を拒否しました。",
+        "advice": "対象のデバイスでLocalSendが実行されていないか、別のポートでリッスンしている可能性があります。相手のデバイスでLocalSendを起動するか、ポートを確認してください。"
+      },
+      "forbidden": {
+        "message": "デバイスがリクエストを拒否しました。",
+        "advice": "PINコードが必要か、デバイスとのペアリングが変更された可能性があります。対象のデバイスのPINコードとクイックセーブの設定を確認してください。"
+      },
+      "other": {
+        "message": "接続を確立できませんでした。",
+        "advice": "アドレスとポートを確認し、対象のデバイスでLocalSendが実行されていること、ファイアウォールやVPNが接続をブロックしていないことを確認してください。"
+      },
+      "retry": "再試行",
+      "details": "エラーの詳細:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "元のファイルを削除",
+      "content": "ファイルの送信に成功した後、それらのファイルはこのデバイスから削除されます。この操作は元に戻せません。"
     },
     "cannotOpenFile": {
       "title": "ファイルを開けません",
@@ -448,6 +525,25 @@
       "single": "単一の受信者にファイルを送信します。ファイルの転送完了後、選択は解除されます。",
       "multiple": "複数の受信者にファイルを送信します。ファイルの選択は解除されません。",
       "link": "LocalSendをインストールしていない受信者でも、ブラウザでリンクを開くことで選択したファイルをダウンロードできます。"
+    },
+    "startupError": {
+      "title": "サーバーを開始できません",
+      "port": "ポート: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windowsがポートへのアクセスを拒否しました（ソケットエラー10013）。",
+        "advice": "これは通常、Hyper-V、WSL、またはDockerによって予約されたポート範囲、または壊れたWinsockカタログが原因です:\n• 設定（ネットワーク）でポートを変更する\n• 予約された範囲を次のコマンドで確認する: netsh interface ipv4 show excludedportrange protocol=tcp\n• 管理者としてWinsockを修復する: netsh winsock reset（その後再起動する）"
+      },
+      "addressInUse": {
+        "hint": "このポートは既に他のアプリケーションによって使用されています。",
+        "advice": "別のプログラム（または2番目のLocalSendインスタンス）がこのポートでリッスンしています:\n• 他のアプリケーションを閉じる、または\n• 設定（ネットワーク）でポートを変更する"
+      },
+      "generic": {
+        "hint": "サーバーを開始できませんでした。",
+        "advice": "• ファイアウォールとネットワークの設定を確認する\n• 設定（ネットワーク）でポートを変更してみる"
+      },
+      "details": "エラーの詳細:",
+      "copyDetails": "詳細をコピー",
+      "openSettings": "設定を開く"
     },
     "zoom": {
       "title": "URL"

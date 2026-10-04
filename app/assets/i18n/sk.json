@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Vysvetlenie",
     "help": "Uistite sa, že je požadované zariadenie v rovnakej Wi-Fi sieti.",
-    "placeItems": "Umiestnite položky na zdieľanie."
+    "placeItems": "Umiestnite položky na zdieľanie.",
+    "diagnosis": {
+      "scanning": "Vyhľadávajú sa zariadenia v blízkosti…",
+      "noInterface": {
+        "title": "Žiadne pripojenie k sieti",
+        "advice": "Toto zariadenie nie je pripojené k žiadnej sieti. Skontrolujte pripojenie tohto zariadenia k Wi-Fi alebo káblu."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast nie je dostupný",
+        "advice": "LocalSend nemôže v tejto sieti použiť vyhľadávanie pomocou multicastu. Uistite sa, že sú obe zariadenia v rovnakej sieti a že izolácia prístupového bodu (AP) ani firewall neblokujú UDP port {port}.",
+        "reason": "Príčina: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nenašli sa žiadne zariadenia",
+        "advice": "Vyhľadávanie funguje, ale žiadne zariadenie neodpovedalo na oznámenia ani na skenovanie siete. Druhé zariadenie môže byť offline, v režime spánku alebo blokované firewallom. Uistite sa, že na druhom zariadení beží LocalSend.",
+        "detail": "Odoslaných {announcements} oznámení a vykonaných {scans} skenovaní siete bez odpovede."
+      },
+      "rescan": "Hľadať znova",
+      "bleHint": "Vyhľadávanie BLE je aktívne: zariadenia sa nájdu cez Bluetooth, len ak tiež používajú tento fork so zapnutou možnosťou; samotný prenos súborov stále prebieha cez sieť.",
+      "manualFallback": {
+        "message": "IP adresy sa často menia. Ku zariadeniu, ktoré nie je v zozname, sa stále môžete dostať: pridajte ho do obľúbených alebo zadajte jeho adresu ručne.",
+        "openFavorites": "Otvoriť obľúbené",
+        "manualInput": "Zadať adresu ručne"
+      }
+    }
   },
   "settingsTab": {
     "title": "Nastavenia",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Odoslať",
       "shareViaLinkAutoAccept": "Automaticky prijímať žiadosti v režime \"Zdieľať cez odkaz\"",
-      "createChecksums": "Vytvárať kontrolné súčty pri odosielaní súborov"
+      "createChecksums": "Vytvárať kontrolné súčty pri odosielaní súborov",
+      "deleteSourceAfterSend": "Po úspešnom odoslaní odstrániť zdrojové súbory"
     },
     "network": {
       "title": "Sieť",
@@ -143,12 +168,26 @@
         "filtered": "Filtrované"
       },
       "discoveryTimeout": "Časový limit hľadania",
+      "maxInterfaces": "Maximálny počet rozhraní (inteligentné skenovanie)",
+      "vpnInterfaces": "Zahrnúť rozhrania VPN (inteligentné skenovanie)",
+      "vpnInterfacesHint": "Skenovať aj podsiete rozhraní VPN tunelov (Tailscale, WireGuard, ...). VPN zvyčajne neprenáša multicast, preto sa ich podsiete preskúmavajú náhradným HTTP skenovaním.",
       "useSystemName": "Použiť systémové meno",
       "generateRandomAlias": "Generovať náhodnú prezývku",
       "portWarning": "Iné zariadenia vás nemusia rozpoznať, pretože používate vlastný port. (predvolené: {defaultPort})",
       "encryption": "Šifrovanie",
       "multicastGroup": "Multicast adresa",
-      "multicastGroupWarning": "Iné zariadenia vás nemusia rozpoznať, pretože používate vlastnú multicast adresu. (predvolené: {defaultMulticast})"
+      "multicastGroupWarning": "Iné zariadenia vás nemusia rozpoznať, pretože používate vlastnú multicast adresu. (predvolené: {defaultMulticast})",
+      "bleDiscovery": "Vyhľadávanie BLE (experimentálne)",
+      "bleDiscoveryHint": "Nájde zariadenia v blízkosti cez Bluetooth, aj keď sieť blokuje multicast (izolácia prístupového bodu). Funguje na Androide, iOS, macOS a Windows; na Linuxe môže toto zariadenie nájsť ostatné, ale samo nájdené byť nemôže. Obe zariadenia musia používať tento fork so zapnutou možnosťou; samotný prenos súborov stále prebieha cez sieť.",
+      "bleStatusActive": "Aktívne: skenovanie aj oznamovanie. Zariadenia v blízkosti sa zobrazia, len ak tiež používajú tento fork so zapnutou možnosťou.",
+      "bleStatusScanOnly": "Aktívne: iba skenovanie. Toto zariadenie teraz nemôže byť cez Bluetooth nájdené (táto platforma nepodporuje BLE oznamovanie alebo ešte nie je k dispozícii použiteľná sieťová adresa).",
+      "bleStatusPaused": "Pozastavené. Obnoví sa, keď sa aplikácia vráti do popredia.",
+      "bleStatusPermissionDenied": "Povolenia pre Bluetooth boli zamietnuté. Udeľte povolenie \"Zariadenia v blízkosti\" (alebo \"Poloha\" na Androide 11 a staršom) v systémových nastaveniach a potom túto možnosť vypnite a znova zapnite.",
+      "bleStatusAdapterOff": "Bluetooth je vypnutý alebo nedostupný. Vyhľadávanie sa samo reštartuje, keď bude Bluetooth znova k dispozícii.",
+      "bleStatusUnsupported": "Na tomto zariadení nepodporované: vyhľadávanie BLE vyžaduje Android 7 alebo novší a rádio Bluetooth LE.",
+      "bleStatusLegacyLocation": "V tejto verzii Androidu vyžaduje hľadanie iných zariadení tiež zapnuté systémové služby určovania polohy (povolenie sa vyžaduje automaticky; toto zariadenie už môžu ostatní nájsť).",
+      "bleStatusError": "Vyhľadávanie BLE sa nepodarilo spustiť. Podrobnosti nájdete v časti Riešenie problémov > Záznamy.",
+      "bleOpenSystemSettings": "Otvoriť systémové nastavenia"
     },
     "other": {
       "title": "Iné",
@@ -256,6 +295,13 @@
     "titleSending": "Odosielanie súborov",
     "titleReceiving": "Prijímanie súborov",
     "savedToGallery": "Uložené vo Fotkách",
+    "checksum": {
+      "verified": "Kontrolné súčty overené",
+      "partiallyVerified": "Kontrolné súčty overené pre {curr} / {n} súborov",
+      "notVerifiable": "Odosielateľ neposkytol kontrolné súčty",
+      "disabled": "Overovanie kontrolných súčtov je vypnuté",
+      "attached": "Kontrolné súčty priložené ({curr} / {n} súborov)"
+    },
     "total": {
       "title": {
         "sending": "Celkový priebeh ({time})",
@@ -418,11 +464,42 @@
       "title": "Zadajte adresu",
       "hashtag": "Hashtag",
       "ip": "IP adresa",
-      "recentlyUsed": "Nedávno použité: "
+      "recentlyUsed": "Nedávno použité: ",
+      "noHashtagCandidates": "Aktuálna sieť nemá IPv4 adresu, takže hashtag nemožno rozšíriť na kandidátsku adresu. Zadajte prosím celú adresu (napr. 192.168.1.5 alebo fe80::1).",
+      "validation": {
+        "invalid": "Zadajte platnú IPv4 adresu, IPv6 adresu alebo názov hostiteľa.",
+        "scheme": "Zadajte iba adresu, bez \"http://\" alebo \"https://\".",
+        "port": "Zadajte iba adresu. Port sa berie z nastavení."
+      }
     },
     "cancelSession": {
       "title": "Zrušiť prenos súborov",
       "content": "Naozaj chcete zrušiť prenos súborov?"
+    },
+    "connectionError": {
+      "title": "Pripojenie zlyhalo",
+      "timeout": {
+        "message": "Zariadenie včas neodpovedalo.",
+        "advice": "Pravdepodobne je offline, v režime spánku alebo pripojenie blokuje firewall. Uistite sa, že na druhom zariadení beží LocalSend a že sú obe zariadenia v rovnakej sieti."
+      },
+      "refused": {
+        "message": "Zariadenie odmietlo pripojenie.",
+        "advice": "Zdá sa, že na cieľovom zariadení LocalSend nebeží, alebo počúva na inom porte. Spustite LocalSend na druhom zariadení alebo skontrolujte port."
+      },
+      "forbidden": {
+        "message": "Zariadenie zamietlo žiadosť.",
+        "advice": "Možno je vyžadovaný PIN alebo sa zmenilo spárovanie so zariadením. Skontrolujte PIN a nastavenia rýchleho uloženia na cieľovom zariadení."
+      },
+      "other": {
+        "message": "Pripojenie sa nepodarilo nadviazať.",
+        "advice": "Skontrolujte adresu a port, uistite sa, že na cieľovom zariadení beží LocalSend a že pripojenie neblokuje firewall ani VPN."
+      },
+      "retry": "Skúsiť znova",
+      "details": "Podrobnosti chyby:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Odstrániť zdrojové súbory",
+      "content": "Po úspešnom odoslaní budú súbory z tohto zariadenia odstránené. Túto akciu nie je možné vrátiť späť."
     },
     "cannotOpenFile": {
       "title": "Nie je možné otvoriť súbor",
@@ -518,6 +595,25 @@
       "single": "Odošle súbory jednému príjemcovi. Výber sa vymaže po dokončení prenosu súborov.",
       "multiple": "Posiela súbory viacerým príjemcom. Výber sa vymaže po dokončení prenosu súborov.",
       "link": "Príjemcovia, ktorí nemajú nainštalovaný LocalSend, si môžu stiahnuť vybrané súbory otvorením odkazu vo svojom prehliadači."
+    },
+    "startupError": {
+      "title": "Server sa nepodarilo spustiť",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows zamietli prístup k portu (chyba soketu 10013).",
+        "advice": "Obvykle je to spôsobené rozsahom portov rezervovaným pre Hyper-V, WSL alebo Docker, alebo poškodeným katalógom Winsock:\n• Zmeňte port v nastaveniach (Sieť)\n• Skontrolujte rezervované rozsahy príkazom: netsh interface ipv4 show excludedportrange protocol=tcp\n• Opravte Winsock ako správca príkazom: netsh winsock reset (následne reštartujte počítač)"
+      },
+      "addressInUse": {
+        "hint": "Port už používa iná aplikácia.",
+        "advice": "Na tomto porte počúva iný program (alebo druhá inštancia LocalSend):\n• Zavrite druhú aplikáciu alebo\n• Zmeňte port v nastaveniach (Sieť)"
+      },
+      "generic": {
+        "hint": "Server sa nepodarilo spustiť.",
+        "advice": "• Skontrolujte firewall a nastavenia siete\n• Skúste zmeniť port v nastaveniach (Sieť)"
+      },
+      "details": "Podrobnosti chyby:",
+      "copyDetails": "Skopírovať podrobnosti",
+      "openSettings": "Otvoriť nastavenia"
     },
     "zoom": {
       "title": "URL"

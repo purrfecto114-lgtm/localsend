@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Paliwanag",
     "help": "Mangyaring siguraduhin na ang target ay nasa parehas na wifi network.",
-    "placeItems": "Maglagay ng mga bagay na i-share."
+    "placeItems": "Maglagay ng mga bagay na i-share.",
+    "diagnosis": {
+      "scanning": "Naghahanap ng mga malalapit na device...",
+      "noInterface": {
+        "title": "Walang network connection",
+        "advice": "Hindi nakakonekta ang device na ito sa anumang network. Suriin ang Wi-Fi o cable connection ng device na ito."
+      },
+      "multicastUnavailable": {
+        "title": "Hindi available ang multicast",
+        "advice": "Hindi magamit ng LocalSend ang discovery sa multicast sa network na ito. Siguraduhin na parehas ang network ng dalawang device at hindi hinaharang ng AP isolation o firewall ang UDP port {port}.",
+        "reason": "Dahilan: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Walang nahanap na device",
+        "advice": "Gumagana ang discovery, ngunit walang device na sumagot sa mga announcement o sa network scan. Maaaring offline, tulog, o hinarang ng firewall ang kabilang device. Siguraduhin na tumatakbo ang LocalSend sa kabilang device.",
+        "detail": "Nagpadala ng {announcements} na announcement at {scans} na network scan nang walang sagot."
+      },
+      "rescan": "Maghanap muli",
+      "bleHint": "Aktibo ang BLE discovery: matutuklasan ang mga device sa Bluetooth kung nakatakbo rin sa kanila ang fork na ito nang naka-enable ang opsyon; ang mismong paglilipat ng file ay ginagawa pa rin sa network.",
+      "manualFallback": {
+        "message": "Madalas magbabago ang mga IP address. Maaari mo pa ring maabot ang device na hindi nakalista: idagdag ito sa favorites o ilagay ang address nito nang mano-mano.",
+        "openFavorites": "Buksan ang favorites",
+        "manualInput": "Ilagay ang address nang mano-mano"
+      }
+    }
   },
   "settingsTab": {
     "title": "Settings",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Ipasa",
       "shareViaLinkAutoAccept": "Kusang tanggapin ang request sa \"Share via link\" mode",
-      "createChecksums": "Gumawa ng mga checksum kapag nagpapadala ng mga file"
+      "createChecksums": "Gumawa ng mga checksum kapag nagpapadala ng mga file",
+      "deleteSourceAfterSend": "Burahin ang source files pagkatapos ng matagumpay na pagpapadala"
     },
     "network": {
       "title": "Network",
@@ -143,12 +168,26 @@
         "filtered": "Na-filter"
       },
       "discoveryTimeout": "Nag Timeout ang Discovery",
+      "maxInterfaces": "Pinakamaraming interfaces (Smart Scan)",
+      "vpnInterfaces": "Isama ang mga VPN interface (Smart Scan)",
+      "vpnInterfacesHint": "Isinasama rin sa scan ang mga subnet ng mga VPN tunnel interface (Tailscale, WireGuard, ...). Karaniwang hindi dinadala ng mga VPN ang multicast, kaya sinusuri ang mga subnet nito gamit ang HTTP fallback scan.",
       "useSystemName": "Gamitin ang pangalan ng system",
       "generateRandomAlias": "Mag-generate ng random na alias",
       "portWarning": "Maaaring hindi ka ma-detect ng ibang devices dahil ikaw ay gumagamit ng ibang port. (default: {defaultPort})",
       "encryption": "Encryption",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Maaaring hindi ka ma-detect ng ibang devices dahil ikaw ay gumagamit ng ibang multicast address. (default: {defaultMulticast})"
+      "multicastGroupWarning": "Maaaring hindi ka ma-detect ng ibang devices dahil ikaw ay gumagamit ng ibang multicast address. (default: {defaultMulticast})",
+      "bleDiscovery": "BLE discovery (eksperimental)",
+      "bleDiscoveryHint": "Natutuklasan ang mga kalapit na device sa pamamagitan ng Bluetooth kahit hinarang ng network ang multicast (AP isolation). Gumagana ito sa Android, iOS, macOS, at Windows; sa Linux, kayang hanapin ng device na ito ang iba ngunit hindi ito makikita ng iba. Kailangan ng dalawang device ang fork na ito nang naka-enable ang opsyon; ang mismong paglilipat ng file ay gumagamit pa rin ng network.",
+      "bleStatusActive": "Aktibo: nagse-scan at nag-a-advertise. Lalabas lang ang malalapit na device kung nakatakbo rin sa kanila ang fork na ito nang naka-enable ang opsyon.",
+      "bleStatusScanOnly": "Aktibo: scan lamang. Hindi matutuklasan ang device na ito sa Bluetooth sa ngayon (walang support sa BLE advertising sa platform na ito, o wala pang gagamiting network address).",
+      "bleStatusPaused": "Naka-pause. Magpapatuloy kapag bumalik sa foreground ang app.",
+      "bleStatusPermissionDenied": "Tinanggihan ang mga pahintulot sa Bluetooth. Ibigay ang pahintulot na \"Nearby devices\" (o \"Location\" sa Android 11 at mas mababa) sa system settings, pagkatapos ay i-off at i-on muli ang opsyong ito.",
+      "bleStatusAdapterOff": "Naka-off o hindi available ang Bluetooth. Magre-restart mag-isa ang discovery kapag naging available muli ang Bluetooth.",
+      "bleStatusUnsupported": "Hindi suportado sa device na ito: kailangan ng BLE discovery ng Android 7 o mas bago at isang Bluetooth LE radio.",
+      "bleStatusLegacyLocation": "Sa bersyon ng Android na ito, kailangan ding naka-on ang mga location service ng system para makahanap ng ibang device (awtomatikong hinihiling ang pahintulot; kayang matuklasan ng iba ang device na ito).",
+      "bleStatusError": "Hindi masimulan ang BLE discovery. Tingnan ang Troubleshoot > Mga Log para sa mga detalye.",
+      "bleOpenSystemSettings": "Buksan ang system settings"
     },
     "other": {
       "title": "Iba Pa",
@@ -256,6 +295,13 @@
     "titleSending": "Nagpapadala ng mga file",
     "titleReceiving": "Tumatanggap ng mga file",
     "savedToGallery": "Naka-save sa Photos",
+    "checksum": {
+      "verified": "Na-verify ang mga checksum",
+      "partiallyVerified": "Na-verify ang mga checksum para sa {curr} / {n} na file",
+      "notVerifiable": "Walang ibinigay na checksum ang sender",
+      "disabled": "Naka-disable ang pag-verify ng checksum",
+      "attached": "Nakalakip ang mga checksum ({curr} / {n} na file)"
+    },
     "total": {
       "title": {
         "sending": "Kabuuang progreso ({time})",
@@ -418,11 +464,42 @@
       "title": "Ilagay ang address",
       "hashtag": "Hashtag",
       "ip": "IP Address",
-      "recentlyUsed": "Recently used: "
+      "recentlyUsed": "Recently used: ",
+      "noHashtagCandidates": "Walang IPv4 address ang kasalukuyang network, kaya hindi ma-expand ang hashtag papunta sa isang candidate address. Mangyaring ilagay ang buong address (hal. 192.168.1.5 o fe80::1).",
+      "validation": {
+        "invalid": "Maglagay ng wastong IPv4 address, IPv6 address, o host name.",
+        "scheme": "Ilagay lamang ang address, walang \"http://\" o \"https://\".",
+        "port": "Ilagay lamang ang address. Kinukuha ang port mula sa settings."
+      }
     },
     "cancelSession": {
       "title": "Kanselahin ang pagpapadala ng file",
       "content": "Gusto mo ba talagang kanselahin ang pagpapadala ng file?"
+    },
+    "connectionError": {
+      "title": "Nabigo ang koneksyon",
+      "timeout": {
+        "message": "Hindi tumugon sa oras ang device.",
+        "advice": "Malamang ay offline ito, tulog, o hinarang ng firewall ang koneksyon. Siguraduhin na tumatakbo ang LocalSend sa kabilang device at nasa parehas na network ang dalawang device."
+      },
+      "refused": {
+        "message": "Tinanggihan ng device ang koneksyon.",
+        "advice": "Mukhang hindi tumatakbo ang LocalSend sa target device, o nakikinig ito sa ibang port. Simulan ang LocalSend sa kabilang device o tingnan ang port."
+      },
+      "forbidden": {
+        "message": "Tinanggihan ng device ang request.",
+        "advice": "Maaaring kailangan ng PIN, o nagbago ang pairing sa device. I-check ang PIN at quick save settings sa target device."
+      },
+      "other": {
+        "message": "Hindi ma-establish ang koneksyon.",
+        "advice": "I-check ang address at port, siguraduhin na tumatakbo ang LocalSend sa target device, at walang firewall o VPN na humaharang sa koneksyon."
+      },
+      "retry": "Subukan muli",
+      "details": "Mga detalye ng error:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Burahin ang source files",
+      "content": "Pagkatapos matagumpay na mapadala ang mga file, buburahin ang mga ito mula sa device na ito. Hindi na ito maibabalik."
     },
     "cannotOpenFile": {
       "title": "Hindi mabuksan ang file",
@@ -518,6 +595,25 @@
       "single": "Magpadala ng mga file sa iisang recipient o tatanggap. Ang mga pagpipilian ay maaalis pagkatapos ipadala ang file.",
       "multiple": "Magpadala ng mga file sa maraming recipient o tatanggap. Ang mga pagpipilian ay hindi maaalis.",
       "link": "Ang mga recipient o tatanggap na walang nakainstall na LocalSend ay maaaring mag download nang mga napiling file sa pamamagitan ng pagbukas ng link sa kanilang browser."
+    },
+    "startupError": {
+      "title": "Hindi masimulan ang server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Tinanggihan ng Windows ang access sa port (socket error 10013).",
+        "advice": "Karaniwang sanhi nito ay port range na reserba ng Hyper-V, WSL, o Docker, o sirang Winsock catalog:\n• Palitan ang port sa Settings (Network)\n• Tingnan ang mga reserbang range gamit ang: netsh interface ipv4 show excludedportrange protocol=tcp\n• Ayusin ang Winsock bilang administrator gamit ang: netsh winsock reset (i-restart pagkatapos)"
+      },
+      "addressInUse": {
+        "hint": "Ginagamit na ng ibang application ang port.",
+        "advice": "May ibang program (o pangalawang instance ng LocalSend) na nakikinig sa port na ito:\n• Isara ang ibang application, o\n• Palitan ang port sa Settings (Network)"
+      },
+      "generic": {
+        "hint": "Hindi masimulan ang server.",
+        "advice": "• I-check ang iyong firewall at mga network setting\n• Subukang palitan ang port sa Settings (Network)"
+      },
+      "details": "Mga detalye ng error:",
+      "copyDetails": "Kopyahin ang mga detalye",
+      "openSettings": "Buksan ang settings"
     },
     "zoom": {
       "title": "URL"

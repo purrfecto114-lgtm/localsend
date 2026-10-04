@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Selgitus",
     "help": "Palun kontrolli, et sihtseade asub sama WiFi ühenduse piires.",
-    "placeItems": "Lisa jagatavad failid siia."
+    "placeItems": "Lisa jagatavad failid siia.",
+    "diagnosis": {
+      "scanning": "Otsitakse läheduses asuvaid seadmeid…",
+      "noInterface": {
+        "title": "Pole võrguühendust",
+        "advice": "See seade pole ühendatud ühegi võrguga. Kontrolli selle seadme WiFi- või kaabliühendust."
+      },
+      "multicastUnavailable": {
+        "title": "Multiedastus pole saadaval",
+        "advice": "LocalSend ei saa selles võrgus multiedastuse abil seadmeid leida. Palun kontrolli, et mõlemad seadmed oleksid samas võrgus ning et AP-isolatsioon või tulemüür ei blokeeriks UDP-porti {port}.",
+        "reason": "Põhjus: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Seadmeid ei leitud",
+        "advice": "Leitavuse otsing toimib, kuid ükski seade ei vastanud kuulutustele ega võrgu skannimisele. Teine seade võib olla välja lülitatud, unerežiimis või tulemüüri poolt blokeeritud. Palun veendu, et LocalSend töötab teises seadmes.",
+        "detail": "{announcements} kuulutust ja {scans} võrgu skannimist saadeti ilma vastuseta."
+      },
+      "rescan": "Otsi uuesti",
+      "bleHint": "BLE-otsing on aktiivne: seadmeid leitakse Bluetoothi kaudu vaid siis, kui ka nemad kasutavad seda fork-i sisselülitatud valikuga; andmeedastus ise käib ikkagi võrgu kaudu.",
+      "manualFallback": {
+        "message": "IP-aadressid muutuvad sageli. Loendis mitte olevat seadet saad ikkagi kätte: lisa ta lemmikuks või sisesta ta aadress käsitsi.",
+        "openFavorites": "Ava lemmikud",
+        "manualInput": "Sisesta aadress käsitsi"
+      }
+    }
   },
   "settingsTab": {
     "title": "Seadistused",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Saatmine",
       "shareViaLinkAutoAccept": "Kui kasutusel on „Jaga lingi abil“, siis nõustu vastuvõtmisega automaatselt",
-      "createChecksums": "Loo failide saatmisel kontrollsummad"
+      "createChecksums": "Loo failide saatmisel kontrollsummad",
+      "deleteSourceAfterSend": "Kustuta lähtefailid pärast edukat saatmist"
     },
     "network": {
       "title": "Võrk",
@@ -143,12 +168,26 @@
         "filtered": "Filtreeritud"
       },
       "discoveryTimeout": "Leitavuse aegumine",
+      "maxInterfaces": "Liideste maks. arv (Tark skaneerimine)",
+      "vpnInterfaces": "Kaasa VPN-liidesed (Tark skaneerimine)",
+      "vpnInterfacesHint": "Skanneeritakse ka VPN-tunneliliideste alamvõrke (Tailscale, WireGuard, ...). VPN-id ei edasta tavaliselt multiedastust, seega kontrollitakse nende alamvõrke HTTP-varuskaneerimisega.",
       "useSystemName": "Kasuta süsteemset nime",
       "generateRandomAlias": "Loo juhuslik nimi",
       "portWarning": "Kuna kasutad endamääratud porti, siis muud seadmed ei pruugi seda seadet leida. (vaikimisi: {defaultPort})",
       "encryption": "Krüptimine",
       "multicastGroup": "Multiedastuse aadress",
-      "multicastGroupWarning": "Kuna kasutad endamääratud multiedastuse aadressi, siis muud seadmed ei pruugi seda seadet leida. (vaikimisi: {defaultMulticast})"
+      "multicastGroupWarning": "Kuna kasutad endamääratud multiedastuse aadressi, siis muud seadmed ei pruugi seda seadet leida. (vaikimisi: {defaultMulticast})",
+      "bleDiscovery": "BLE-otsing (eksperimentaalne)",
+      "bleDiscoveryHint": "Leiab läheduses asuvaid seadmeid Bluetoothi kaudu ka siis, kui võrk blokeerib multiedastuse (AP-isolatsioon). Töötab Androidil, iOS-il, macOS-il ja Windowsil; Linuxil saab see seade teisi leida, kuid teda enda ise leida ei saa. Mõlemad seadmed vajavad seda fork-i sisselülitatud valikuga; failiedastus ise kasutab ikkagi võrku.",
+      "bleStatusActive": "Aktiivne: skaneerib ja advertiseerib. Läheduses asuvad seadmed ilmuvad nähtavale vaid siis, kui ka nemad kasutavad seda fork-i sisselülitatud valikuga.",
+      "bleStatusScanOnly": "Aktiivne: ainult skaneerimine. Seda seadet ei saa praegu Bluetoothi kaudu leida (sel platvormil puudub BLE-advertiseerimise tugi või pole veel kasutatavat võrguaadressi).",
+      "bleStatusPaused": "Pausis. Jätkub, kui rakendus naaseb esiplaanile.",
+      "bleStatusPermissionDenied": "Bluetoothi õigused on keelatud. Anna süsteemi seadistustes õigus „Lähedal olevad seadmed“ (või „Asukoht“ Android 11 ja vanemate puhul) ning lülita see valik seejärel välja ja uuesti sisse.",
+      "bleStatusAdapterOff": "Bluetooth on välja lülitatud või pole saadaval. Otsing käivitub ise uuesti, kui Bluetooth taas saadavale tuleb.",
+      "bleStatusUnsupported": "Sellel seadmel pole toetatud: BLE-otsing vajab Android 7 või uuemat ning Bluetooth LE raadiot.",
+      "bleStatusLegacyLocation": "Selles Androidi versioonis peab teiste seadmete leidmiseks olema sisselülitatud ka süsteemi asukohateenused (õigust küsitakse automaatselt; teised saavad seda seadet juba leida).",
+      "bleStatusError": "BLE-otsingut ei õnnestunud käivitada. Detailide jaoks vaata Veaotsing > Logid.",
+      "bleOpenSystemSettings": "Ava süsteemi seadistused"
     },
     "other": {
       "title": "Muu teave",
@@ -256,6 +295,13 @@
     "titleSending": "Saadame faile",
     "titleReceiving": "Võtame faile vastu",
     "savedToGallery": "Salvestatud kausta Fotod",
+    "checksum": {
+      "verified": "Kontrollsummad kontrollitud",
+      "partiallyVerified": "Kontrollsummad kontrollitud {curr} / {n} faili puhul",
+      "notVerifiable": "Saatja ei saatnud kontrollsummasid kaasa",
+      "disabled": "Kontrollsummade kontrollimine on välja lülitatud",
+      "attached": "Kontrollsummad kaasas ({curr} / {n} faili)"
+    },
     "total": {
       "title": {
         "sending": "Edenemine kokku ({time})",
@@ -348,11 +394,42 @@
       "title": "Sisesta aadress",
       "hashtag": "Teemaviide",
       "ip": "IP-aadress",
-      "recentlyUsed": "Hiljuti kasutatud: "
+      "recentlyUsed": "Hiljuti kasutatud: ",
+      "noHashtagCandidates": "Praegusel võrgul pole IPv4-aadressi, seetõttu ei saa teemaviidet kandidaataadressiks laiendada. Palun sisesta hoopis täielik aadress (nt 192.168.1.5 või fe80::1).",
+      "validation": {
+        "invalid": "Sisesta korrektne IPv4-aadress, IPv6-aadress või hostinimi.",
+        "scheme": "Sisesta ainult aadress, ilma „http://“ või „https://“-ta.",
+        "port": "Sisesta ainult aadress. Port võetakse seadistustest."
+      }
     },
     "cancelSession": {
       "title": "Katkesta failide edastamine",
       "content": "Kas sa kindlasti soovid katkestada failide edastamise?"
+    },
+    "connectionError": {
+      "title": "Ühendus ebaõnnestus",
+      "timeout": {
+        "message": "Seade ei vastanud õigeaegselt.",
+        "advice": "Ta on tõenäoliselt välja lülitatud, unerežiimis või tulemüür blokeerib ühenduse. Palun veendu, et LocalSend töötab teises seadmes ja et mõlemad seadmed on samas võrgus."
+      },
+      "refused": {
+        "message": "Seade keeldus ühendusest.",
+        "advice": "LocalSend ei paista sihtseadmes töötavat või kuulab ta teises portis. Käivita LocalSend teises seadmes või kontrolli porti."
+      },
+      "forbidden": {
+        "message": "Seade lükkas päringu tagasi.",
+        "advice": "Vajalik võib olla PIN-kood või on seadme sidumine muutunud. Kontrolli sihtseadme PIN-koodi ja kiirsalvestuse seadistusi."
+      },
+      "other": {
+        "message": "Ühendust ei õnnestunud luua.",
+        "advice": "Kontrolli aadressi ja porti, veendu, et LocalSend töötab sihtseadmes, ja et tulemüür ega VPN ühendust ei blokeeriks."
+      },
+      "retry": "Proovi uuesti",
+      "details": "Veateave:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Kustuta lähtefailid",
+      "content": "Kui failid on edukalt saadetud, kustutatakse need sellest seadmest. Seda ei saa tagasi võtta."
     },
     "cannotOpenFile": {
       "title": "Faili avamine ei õnnestu",
@@ -448,6 +525,25 @@
       "single": "Sellega saadame faile ühele vastuvõtjale. Peale failide saatmise lõppu eemaldame failid saatmisloendist.",
       "multiple": "Sellega saadame faile mitmele vastuvõtjale. Peale failide saatmise lõppu failid jäävad saatmisloendisse alles.",
       "link": "Kui failide vastuvõtjatel pole arvutis või nutiseadmes rakendust LocalSend, siis avades etteantud lingi oma veebibrauseris, saavad nad failid alla laadida."
+    },
+    "startupError": {
+      "title": "Serverit ei õnnestunud käivitada",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows keelas juurdepääsu pordile (soketi viga 10013).",
+        "advice": "Selle põhjustab tavaliselt Hyper-V, WSL või Dockeri reserveeritud portide vahemik või vigane Winsocki kataloog:\n• Muuda porti seadistustes (Võrk)\n• Kontrolli reserveeritud vahemikke käsuga: netsh interface ipv4 show excludedportrange protocol=tcp\n• Paranda Winsock administraatorina käsuga: netsh winsock reset (taaskäivita seejärel arvuti)"
+      },
+      "addressInUse": {
+        "hint": "Port on juba teise rakenduse kasutuses.",
+        "advice": "Teine rakendus (või teine LocalSendi instants) kuulab seda porti:\n• Sulge teine rakendus või\n• Muuda porti seadistustes (Võrk)"
+      },
+      "generic": {
+        "hint": "Serverit ei õnnestunud käivitada.",
+        "advice": "• Kontrolli oma tulemüüri ja võrgu seadistusi\n• Proovi porti seadistustes (Võrk) muuta"
+      },
+      "details": "Veateave:",
+      "copyDetails": "Kopeeri üksikasjad",
+      "openSettings": "Ava seadistused"
     },
     "zoom": {
       "title": "Võrguaadress"

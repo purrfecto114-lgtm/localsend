@@ -231,6 +231,8 @@ class _Translations$sendTab$tr extends Translations$sendTab$en {
   String get help => 'Lütfen hedef cihaz ile aynı wifi ağında olduğunuzdan emin olun.';
   @override
   String get placeItems => 'Paylaşmak istediğiniz dosyayı yerleştiriniz.';
+  @override
+  late final _Translations$sendTab$diagnosis$tr diagnosis = _Translations$sendTab$diagnosis$tr._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$tr extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Galeriye kaydedildi';
   @override
+  late final _Translations$progressPage$checksum$tr checksum = _Translations$progressPage$checksum$tr._(_root);
+  @override
   late final _Translations$progressPage$total$tr total = _Translations$progressPage$total$tr._(_root);
   @override
   late final _Translations$progressPage$remainingTime$tr remainingTime = _Translations$progressPage$remainingTime$tr._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$tr extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$tr cancelSession = _Translations$dialogs$cancelSession$tr._(_root);
   @override
+  late final _Translations$dialogs$connectionError$tr connectionError = _Translations$dialogs$connectionError$tr._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$tr deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$tr._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$tr cannotOpenFile = _Translations$dialogs$cannotOpenFile$tr._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$tr encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$tr._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$tr extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$tr pin = _Translations$dialogs$pin$tr._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$tr sendModeHelp = _Translations$dialogs$sendModeHelp$tr._(_root);
+  @override
+  late final _Translations$dialogs$startupError$tr startupError = _Translations$dialogs$startupError$tr._(_root);
   @override
   late final _Translations$dialogs$zoom$tr zoom = _Translations$dialogs$zoom$tr._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$tr extends Translations$sendTab$sendModes$
   String get link => 'Link üzerinden paylaşın';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$tr extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Yakınınızdaki cihazlar aranıyor…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$tr noInterface = _Translations$sendTab$diagnosis$noInterface$tr._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$tr multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$tr._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$tr scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$tr._(_root);
+  @override
+  String get rescan => 'Yeniden ara';
+  @override
+  String get bleHint =>
+      'BLE keşfi etkin: cihazlar yalnızca bu seçeneği etkinleştirmiş bu fork\'u çalıştırdıkları takdirde Bluetooth üzerinden bulunur; aktarımın kendisi yine ağ üzerinden yapılır.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$tr manualFallback = _Translations$sendTab$diagnosis$manualFallback$tr._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$tr extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$tr._(TranslationsTr root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$tr extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Link aracılığıyla paylaş: Otomatik olarak kabul et';
   @override
   String get createChecksums => 'Dosya gönderirken sağlama toplamlarını oluştur';
+  @override
+  String get deleteSourceAfterSend => 'Başarılı bir gönderimden sonra kaynak dosyaları sil';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$tr extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Arama zaman aşımına uğradı';
   @override
+  String get maxInterfaces => 'Maksimum arayüz sayısı (akıllı tarama)';
+  @override
+  String get vpnInterfaces => 'VPN arayüzlerini dahil et (akıllı tarama)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN tünel arayüzlerinin (Tailscale, WireGuard, …) alt ağlarını da tarar. VPN\'ler genellikle çoklu yayın taşımadığından alt ağları, HTTP yedek taraması ile yoklanır.';
+  @override
   String get useSystemName => 'Sistem adını kullan';
   @override
   String get generateRandomAlias => 'Rastgele takma ad oluştur';
@@ -962,6 +1008,34 @@ class _Translations$settingsTab$network$tr extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Özel çoklu yayın adresini kullandığınız için diğer cihazlar tarafından algılanamayabilirsiniz.(varsayılan: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE keşfi (deneysel)';
+  @override
+  String get bleDiscoveryHint =>
+      'Ağ çoklu yayını engellese de (AP izolasyonu) yakınınızdaki cihazları Bluetooth üzerinden keşfeder. Android, iOS, macOS ve Windows\'ta çalışır; Linux\'ta bu cihaz başkalarını bulabilir ama kendisi bulunamaz. Her iki cihazın da bu seçeneğin etkin olduğu bu fork\'a ihtiyacı vardır; dosya aktarımının kendisi yine ağı kullanır.';
+  @override
+  String get bleStatusActive =>
+      'Etkin: tarama ve yayın yapılıyor. Yakınınızdaki cihazlar yalnızca bu seçeneği etkinleştirmiş bu fork\'u çalıştırıyorsa görünür.';
+  @override
+  String get bleStatusScanOnly =>
+      'Etkin: yalnızca tarama. Bu cihaz şu anda Bluetooth üzerinden bulunamıyor (bu platformda BLE yayın desteği yok veya henüz kullanılabilir bir ağ adresi yok).';
+  @override
+  String get bleStatusPaused => 'Duraklatıldı. Uygulama ön plana döndüğünde devam eder.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth izinleri reddedildi. Sistem ayarlarından "Yakındaki cihazlar" (Android 11 ve öncesinde "Konum") iznini verin, sonra bu seçeneği kapatıp yeniden açın.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth kapalı veya kullanılamıyor. Bluetooth tekrar kullanılabilir olduğunda keşif kendiliğinden yeniden başlar.';
+  @override
+  String get bleStatusUnsupported => 'Bu cihazda desteklenmiyor: BLE keşfi Android 7 veya daha yenisini ve bir Bluetooth LE radyosu gerektirir.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Bu Android sürümünde diğer cihazları bulmak için ayrıca sistemin konum hizmetlerinin açık olması gerekir (izin otomatik olarak istenir; bu cihaz zaten başkaları tarafından bulunabilir).';
+  @override
+  String get bleStatusError => 'BLE keşfi başlatılamadı. Ayrıntılar için Sorun Giderme > Günlükler bölümüne bakın.';
+  @override
+  String get bleOpenSystemSettings => 'Sistem ayarlarını aç';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$tr extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} üzerinden güncellendi (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$tr extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Sağlama toplamları doğrulandı';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} dosya için sağlama toplamları doğrulandı';
+  @override
+  String get notVerifiable => 'Gönderen sağlama toplamı sağlamadı';
+  @override
+  String get disabled => 'Sağlama toplamı doğrulaması devre dışı';
+  @override
+  String attached({required Object curr, required Object n}) => 'Sağlama toplamları eklendi (${curr} / ${n} dosya)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$tr extends Translations$progressPage$total$en {
   _Translations$progressPage$total$tr._(TranslationsTr root) : this._root = root, super.internal(root);
@@ -1171,6 +1264,11 @@ class _Translations$dialogs$addressInput$tr extends Translations$dialogs$address
   String get ip => 'IP adresi';
   @override
   String get recentlyUsed => 'Daha önce kullanılmış: ';
+  @override
+  String get noHashtagCandidates =>
+      'Mevcut ağın IPv4 adresi yok, bu yüzden hashtag bir aday adrese genişletilemiyor. Lütfen tam adresi girin (örn. 192.168.1.5 veya fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$tr validation = _Translations$dialogs$addressInput$validation$tr._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1282,42 @@ class _Translations$dialogs$cancelSession$tr extends Translations$dialogs$cancel
   String get title => 'Dosya transferini iptal et';
   @override
   String get content => 'Gerçekten dosya transferini iptal etmek istiyor musunuz?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$tr extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Bağlantı başarısız';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$tr timeout = _Translations$dialogs$connectionError$timeout$tr._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$tr refused = _Translations$dialogs$connectionError$refused$tr._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$tr forbidden = _Translations$dialogs$connectionError$forbidden$tr._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$tr other = _Translations$dialogs$connectionError$other$tr._(_root);
+  @override
+  String get retry => 'Yeniden dene';
+  @override
+  String get details => 'Hata ayrıntıları:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$tr extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Kaynak dosyaları sil';
+  @override
+  String get content => 'Dosyalar başarıyla gönderildikten sonra bu cihazdan silinecekler. Bu işlem geri alınamaz.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1476,6 +1610,32 @@ class _Translations$dialogs$sendModeHelp$tr extends Translations$dialogs$sendMod
   String get link => 'LocalSend yüklü olmayan alıcılar, tarayıcılarındaki bağlantıyı açarak seçilen dosyaları indirebilir.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$tr extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Sunucu başlatılamadı';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$tr windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$tr._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$tr addressInUse = _Translations$dialogs$startupError$addressInUse$tr._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$tr generic = _Translations$dialogs$startupError$generic$tr._(_root);
+  @override
+  String get details => 'Hata ayrıntıları:';
+  @override
+  String get copyDetails => 'Ayrıntıları kopyala';
+  @override
+  String get openSettings => 'Ayarları aç';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$tr extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$tr._(TranslationsTr root) : this._root = root, super.internal(root);
@@ -1485,6 +1645,68 @@ class _Translations$dialogs$zoom$tr extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$tr extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ağ bağlantısı yok';
+  @override
+  String get advice => 'Bu cihaz herhangi bir ağa bağlı değil. Bu cihazın Wi-Fi veya kablo bağlantısını kontrol edin.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$tr extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Çoklu yayın kullanılamıyor';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend bu ağda çoklu yayın ile keşif yapamıyor. Her iki cihazın da aynı ağda olduğundan ve AP izolasyonu ya da bir güvenlik duvarının UDP ${port} portunu engellemediğinden emin olun.';
+  @override
+  String reason({required Object reason}) => 'Neden: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$tr extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Cihaz bulunamadı';
+  @override
+  String get advice =>
+      'Keşif çalışıyor ancak hiçbir cihaz duyurulara veya ağ taramasına yanıt vermedi. Diğer cihaz çevrim dışı, uyku modunda olabilir veya bir güvenlik duvarı tarafından engelleniyor olabilir. LocalSend\'in diğer cihazda çalıştığından emin olun.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} duyuru ve ${scans} ağ taraması yanıt almadan gönderildi.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$tr extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP adresleri sık değişir. Listede görünmeyen bir cihaza yine de ulaşabilirsiniz: onu favorilerinize ekleyin veya adresini elle girin.';
+  @override
+  String get openFavorites => 'Favorileri aç';
+  @override
+  String get manualInput => 'Adresi elle girin';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1571,4 +1793,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$tr extends Translations$whatsNe
     'Favorilerden gelen istekler artık otomatik olarak kabul ediliyor. Bu özellik varsayılan olarak etkindir ve ayarlardan devre dışı bırakılabilir.',
     'Android\'de, uygulama arka planda çalışırken veya ekran kapalıyken aktarımlar devam eder. iOS\'ta ise uygulamanın ön planda kalması gerekir.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$tr extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Geçerli bir IPv4 adresi, IPv6 adresi veya ana makine adı girin.';
+  @override
+  String get scheme => 'Yalnızca adresi girin, "http://" veya "https://" olmadan.';
+  @override
+  String get port => 'Yalnızca adresi girin. Port ayarlardan alınır.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$tr extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Cihaz zamanında yanıt vermedi.';
+  @override
+  String get advice =>
+      'Muhtemelen çevrim dışı, uyku modunda veya bir güvenlik duvarı bağlantıyı engelliyor. LocalSend\'in diğer cihazda çalıştığından ve her iki cihazın da aynı ağda olduğundan emin olun.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$tr extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Cihaz bağlantıyı reddetti.';
+  @override
+  String get advice =>
+      'LocalSend hedef cihazda çalışmıyor gibi görünüyor ya da farklı bir portta dinliyor. LocalSend\'i diğer cihazda başlatın veya portu kontrol edin.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$tr extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Cihaz isteği reddetti.';
+  @override
+  String get advice =>
+      'PIN gerekiyor olabilir veya cihazla eşleştirme değişmiş olabilir. Hedef cihazdaki PIN ve hızlı kaydetme ayarlarını kontrol edin.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$tr extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Bağlantı kurulamadı.';
+  @override
+  String get advice =>
+      'Adresi ve portu kontrol edin, LocalSend\'in hedef cihazda çalıştığından ve bağlantıyı engelleyen bir güvenlik duvarı ya da VPN olmadığından emin olun.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$tr extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows porta erişimi reddetti (soket hatası 10013).';
+  @override
+  String get advice =>
+      'Buna genellikle Hyper-V, WSL veya Docker tarafından ayrılmış bir port aralığı ya da bozuk bir Winsock kataloğu neden olur:\n• Portu Ayarlar (Ağ) bölümünden değiştirin\n• Ayrılmış aralıkları şu komutla kontrol edin: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsock\'u yönetici olarak şu komutla onarın: netsh winsock reset (sonrasında yeniden başlatın)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$tr extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port zaten başka bir uygulama tarafından kullanılıyor.';
+  @override
+  String get advice =>
+      'Başka bir program (veya ikinci bir LocalSend örneği) bu portta dinliyor:\n• Diğer uygulamayı kapatın veya\n• Portu Ayarlar (Ağ) bölümünden değiştirin';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$tr extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$tr._(TranslationsTr root) : this._root = root, super.internal(root);
+
+  final TranslationsTr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Sunucu başlatılamadı.';
+  @override
+  String get advice => '• Güvenlik duvarınızı ve ağ ayarlarınızı kontrol edin\n• Portu Ayarlar (Ağ) bölümünden değiştirmeyi deneyin';
 }

@@ -233,6 +233,8 @@ class Translations$sendTab$zh_CN extends Translations$sendTab$en {
   String get help => '请确保目标连接到同一个 Wi‑Fi 网络。';
   @override
   String get placeItems => '列出要分享的项目。';
+  @override
+  late final Translations$sendTab$diagnosis$zh_CN diagnosis = Translations$sendTab$diagnosis$zh_CN.internal(_root);
 }
 
 // Path: settingsTab
@@ -456,6 +458,8 @@ class Translations$progressPage$zh_CN extends Translations$progressPage$en {
   @override
   String get savedToGallery => '已保存到相册';
   @override
+  late final Translations$progressPage$checksum$zh_CN checksum = Translations$progressPage$checksum$zh_CN.internal(_root);
+  @override
   late final Translations$progressPage$total$zh_CN total = Translations$progressPage$total$zh_CN.internal(_root);
   @override
   late final Translations$progressPage$remainingTime$zh_CN remainingTime = Translations$progressPage$remainingTime$zh_CN.internal(_root);
@@ -675,6 +679,11 @@ class Translations$dialogs$zh_CN extends Translations$dialogs$en {
   @override
   late final Translations$dialogs$cancelSession$zh_CN cancelSession = Translations$dialogs$cancelSession$zh_CN.internal(_root);
   @override
+  late final Translations$dialogs$connectionError$zh_CN connectionError = Translations$dialogs$connectionError$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$deleteSourceAfterSendDialog$zh_CN deleteSourceAfterSendDialog =
+      Translations$dialogs$deleteSourceAfterSendDialog$zh_CN.internal(_root);
+  @override
   late final Translations$dialogs$cannotOpenFile$zh_CN cannotOpenFile = Translations$dialogs$cannotOpenFile$zh_CN.internal(_root);
   @override
   late final Translations$dialogs$encryptionDisabledNotice$zh_CN encryptionDisabledNotice =
@@ -719,6 +728,8 @@ class Translations$dialogs$zh_CN extends Translations$dialogs$en {
   late final Translations$dialogs$pin$zh_CN pin = Translations$dialogs$pin$zh_CN.internal(_root);
   @override
   late final Translations$dialogs$sendModeHelp$zh_CN sendModeHelp = Translations$dialogs$sendModeHelp$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$zh_CN startupError = Translations$dialogs$startupError$zh_CN.internal(_root);
   @override
   late final Translations$dialogs$zoom$zh_CN zoom = Translations$dialogs$zoom$zh_CN.internal(_root);
 }
@@ -922,6 +933,30 @@ class Translations$sendTab$sendModes$zh_CN extends Translations$sendTab$sendMode
   String get link => '通过链接分享';
 }
 
+// Path: sendTab.diagnosis
+class Translations$sendTab$diagnosis$zh_CN extends Translations$sendTab$diagnosis$en {
+  Translations$sendTab$diagnosis$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => '正在搜索附近的设备……';
+  @override
+  late final Translations$sendTab$diagnosis$noInterface$zh_CN noInterface = Translations$sendTab$diagnosis$noInterface$zh_CN.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$multicastUnavailable$zh_CN multicastUnavailable =
+      Translations$sendTab$diagnosis$multicastUnavailable$zh_CN.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$scanNoResult$zh_CN scanNoResult = Translations$sendTab$diagnosis$scanNoResult$zh_CN.internal(_root);
+  @override
+  String get rescan => '重新搜索';
+  @override
+  String get bleHint => 'BLE 发现已启用：只有对方设备也运行此修改版并启用了该选项，才能通过蓝牙发现设备；传输本身仍通过网络进行。';
+  @override
+  late final Translations$sendTab$diagnosis$manualFallback$zh_CN manualFallback = Translations$sendTab$diagnosis$manualFallback$zh_CN.internal(_root);
+}
+
 // Path: settingsTab.general
 class Translations$settingsTab$general$zh_CN extends Translations$settingsTab$general$en {
   Translations$settingsTab$general$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
@@ -1004,6 +1039,8 @@ class Translations$settingsTab$send$zh_CN extends Translations$settingsTab$send$
   String get shareViaLinkAutoAccept => '通过链接分享：自动同意接收请求';
   @override
   String get createChecksums => '发送文件时创建校验和';
+  @override
+  String get deleteSourceAfterSend => '发送成功后删除源文件';
 }
 
 // Path: settingsTab.network
@@ -1036,6 +1073,12 @@ class Translations$settingsTab$network$zh_CN extends Translations$settingsTab$ne
   @override
   String get discoveryTimeout => '搜索设备超时';
   @override
+  String get maxInterfaces => '最大接口数（智能扫描）';
+  @override
+  String get vpnInterfaces => '包含 VPN 接口（智能扫描）';
+  @override
+  String get vpnInterfacesHint => '同时扫描 VPN 隧道接口的子网（Tailscale、WireGuard 等）。VPN 通常不支持多播，因此其子网会改用 HTTP 回退扫描来探测。';
+  @override
   String get useSystemName => '使用系统名称';
   @override
   String get generateRandomAlias => '生成随机昵称';
@@ -1047,6 +1090,29 @@ class Translations$settingsTab$network$zh_CN extends Translations$settingsTab$ne
   String get multicastGroup => '多播';
   @override
   String multicastGroupWarning({required Object defaultMulticast}) => '由于正在使用自定义多播地址，你可能不会被其他设备检测到。（默认地址：${defaultMulticast}）';
+  @override
+  String get bleDiscovery => 'BLE 发现（实验性）';
+  @override
+  String get bleDiscoveryHint =>
+      '即使网络阻止多播（接入点(AP)隔离），也能通过蓝牙发现附近设备。支持 Android、iOS、macOS 和 Windows；在 Linux 上此设备可以找到其他设备，但无法被其他设备找到。双方设备都需要运行此修改版并启用该选项；文件传输本身仍使用网络。';
+  @override
+  String get bleStatusActive => '已启用：正在扫描和广播。只有对方设备也运行此修改版并启用该选项，附近设备才会显示。';
+  @override
+  String get bleStatusScanOnly => '已启用：仅扫描。此设备目前无法通过蓝牙被发现（此平台不支持 BLE 广播，或尚无可用的网络地址）。';
+  @override
+  String get bleStatusPaused => '已暂停。应用返回前台时会自动恢复。';
+  @override
+  String get bleStatusPermissionDenied => '蓝牙权限被拒绝。请在系统设置中授予“附近设备”权限（Android 11 及以下版本为“位置”权限），然后将此选项关闭后再重新打开。';
+  @override
+  String get bleStatusAdapterOff => '蓝牙已关闭或不可用。蓝牙恢复可用后，设备发现会自动重新启动。';
+  @override
+  String get bleStatusUnsupported => '此设备不支持：BLE 发现需要 Android 7 或更新版本以及蓝牙 LE 无线电。';
+  @override
+  String get bleStatusLegacyLocation => '在此 Android 版本上，发现其他设备还需要开启系统定位服务（权限会自动请求；此设备已可以被其他设备找到）。';
+  @override
+  String get bleStatusError => 'BLE 发现无法启动。详情请查看 故障排除 > 日志。';
+  @override
+  String get bleOpenSystemSettings => '打开系统设置';
 }
 
 // Path: settingsTab.other
@@ -1160,6 +1226,25 @@ class Translations$deviceDetailsPage$logs$zh_CN extends Translations$deviceDetai
   String updated({required Object protocol, required Object host}) => '通过 ${protocol} 更新 (${host})';
 }
 
+// Path: progressPage.checksum
+class Translations$progressPage$checksum$zh_CN extends Translations$progressPage$checksum$en {
+  Translations$progressPage$checksum$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => '校验和已验证';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '已验证 ${curr} / ${n} 个文件的校验和';
+  @override
+  String get notVerifiable => '发送方未提供校验和';
+  @override
+  String get disabled => '校验和验证已禁用';
+  @override
+  String attached({required Object curr, required Object n}) => '已附加校验和（${curr} / ${n} 个文件）';
+}
+
 // Path: progressPage.total
 class Translations$progressPage$total$zh_CN extends Translations$progressPage$total$en {
   Translations$progressPage$total$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
@@ -1253,6 +1338,10 @@ class Translations$dialogs$addressInput$zh_CN extends Translations$dialogs$addre
   String get ip => 'IP 地址';
   @override
   String get recentlyUsed => '最近使用： ';
+  @override
+  String get noHashtagCandidates => '当前网络没有 IPv4 地址，因此无法将标签展开为候选地址。请改为输入完整地址（例如 192.168.1.5 或 fe80::1）。';
+  @override
+  late final Translations$dialogs$addressInput$validation$zh_CN validation = Translations$dialogs$addressInput$validation$zh_CN.internal(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1266,6 +1355,42 @@ class Translations$dialogs$cancelSession$zh_CN extends Translations$dialogs$canc
   String get title => '取消文件传输';
   @override
   String get content => '要取消文件传输吗？';
+}
+
+// Path: dialogs.connectionError
+class Translations$dialogs$connectionError$zh_CN extends Translations$dialogs$connectionError$en {
+  Translations$dialogs$connectionError$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '连接失败';
+  @override
+  late final Translations$dialogs$connectionError$timeout$zh_CN timeout = Translations$dialogs$connectionError$timeout$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$refused$zh_CN refused = Translations$dialogs$connectionError$refused$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$forbidden$zh_CN forbidden = Translations$dialogs$connectionError$forbidden$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$other$zh_CN other = Translations$dialogs$connectionError$other$zh_CN.internal(_root);
+  @override
+  String get retry => '重试';
+  @override
+  String get details => '错误详情：';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class Translations$dialogs$deleteSourceAfterSendDialog$zh_CN extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  Translations$dialogs$deleteSourceAfterSendDialog$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '删除源文件';
+  @override
+  String get content => '文件发送成功后，将从本设备中删除这些文件。此操作无法撤消。';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1556,6 +1681,32 @@ class Translations$dialogs$sendModeHelp$zh_CN extends Translations$dialogs$sendM
   String get link => '未安装 LocalSend 的接收者可以在浏览器中打开链接以下载选中的文件。';
 }
 
+// Path: dialogs.startupError
+class Translations$dialogs$startupError$zh_CN extends Translations$dialogs$startupError$en {
+  Translations$dialogs$startupError$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '无法启动服务器';
+  @override
+  String port({required Object port}) => '端口：${port}';
+  @override
+  late final Translations$dialogs$startupError$windowsAccessDenied$zh_CN windowsAccessDenied =
+      Translations$dialogs$startupError$windowsAccessDenied$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$addressInUse$zh_CN addressInUse = Translations$dialogs$startupError$addressInUse$zh_CN.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$generic$zh_CN generic = Translations$dialogs$startupError$generic$zh_CN.internal(_root);
+  @override
+  String get details => '错误详情：';
+  @override
+  String get copyDetails => '复制详情';
+  @override
+  String get openSettings => '打开设置';
+}
+
 // Path: dialogs.zoom
 class Translations$dialogs$zoom$zh_CN extends Translations$dialogs$zoom$en {
   Translations$dialogs$zoom$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
@@ -1565,6 +1716,64 @@ class Translations$dialogs$zoom$zh_CN extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class Translations$sendTab$diagnosis$noInterface$zh_CN extends Translations$sendTab$diagnosis$noInterface$en {
+  Translations$sendTab$diagnosis$noInterface$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '未连接到网络';
+  @override
+  String get advice => '此设备未连接到任何网络。请检查此设备的 Wi‑Fi 或网线连接。';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class Translations$sendTab$diagnosis$multicastUnavailable$zh_CN extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  Translations$sendTab$diagnosis$multicastUnavailable$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '多播不可用';
+  @override
+  String advice({required Object port}) => 'LocalSend 无法在此网络中使用多播发现设备。请确保两台设备处于同一网络，并且接入点(AP)隔离或防火墙没有阻止 UDP 端口 ${port}。';
+  @override
+  String reason({required Object reason}) => '原因：${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class Translations$sendTab$diagnosis$scanNoResult$zh_CN extends Translations$sendTab$diagnosis$scanNoResult$en {
+  Translations$sendTab$diagnosis$scanNoResult$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '未找到设备';
+  @override
+  String get advice => '设备发现功能正常，但没有设备响应通告或网络扫描。对方设备可能已离线、休眠，或被防火墙拦截。请确保对方设备正在运行 LocalSend。';
+  @override
+  String detail({required Object announcements, required Object scans}) => '已发送 ${announcements} 次通告和 ${scans} 次网络扫描，均未收到响应。';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class Translations$sendTab$diagnosis$manualFallback$zh_CN extends Translations$sendTab$diagnosis$manualFallback$en {
+  Translations$sendTab$diagnosis$manualFallback$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'IP 地址经常变化。你仍可以连接未显示在列表中的设备：将其添加到收藏夹，或手动输入其地址。';
+  @override
+  String get openFavorites => '打开收藏夹';
+  @override
+  String get manualInput => '手动输入地址';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1651,4 +1860,111 @@ class Translations$whatsNewPage$changes$v1_18_0$zh_CN extends Translations$whats
     '来自收藏夹的请求现在会被自动接受。这项功能是默认打开的，可以在设置中禁用。',
     '在Android上，当应用处于后台或屏幕关闭时，传输仍会继续。在iOS上，应用仍必须保持在前台。',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class Translations$dialogs$addressInput$validation$zh_CN extends Translations$dialogs$addressInput$validation$en {
+  Translations$dialogs$addressInput$validation$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => '请输入有效的 IPv4 地址、IPv6 地址或主机名。';
+  @override
+  String get scheme => '请只输入地址，无需包含“http://”或“https://”。';
+  @override
+  String get port => '请只输入地址。端口将使用设置中的值。';
+}
+
+// Path: dialogs.connectionError.timeout
+class Translations$dialogs$connectionError$timeout$zh_CN extends Translations$dialogs$connectionError$timeout$en {
+  Translations$dialogs$connectionError$timeout$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '设备未及时响应。';
+  @override
+  String get advice => '对方设备可能已离线、休眠，或被防火墙阻止连接。请确保对方设备正在运行 LocalSend，且两台设备处于同一网络。';
+}
+
+// Path: dialogs.connectionError.refused
+class Translations$dialogs$connectionError$refused$zh_CN extends Translations$dialogs$connectionError$refused$en {
+  Translations$dialogs$connectionError$refused$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '设备拒绝了连接。';
+  @override
+  String get advice => '目标设备上似乎没有运行 LocalSend，或其正在使用其他端口。请在对方设备上启动 LocalSend，或检查端口。';
+}
+
+// Path: dialogs.connectionError.forbidden
+class Translations$dialogs$connectionError$forbidden$zh_CN extends Translations$dialogs$connectionError$forbidden$en {
+  Translations$dialogs$connectionError$forbidden$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '设备拒绝了请求。';
+  @override
+  String get advice => '可能需要输入 PIN，或与该设备的配对已发生变化。请检查目标设备上的 PIN 和自动保存设置。';
+}
+
+// Path: dialogs.connectionError.other
+class Translations$dialogs$connectionError$other$zh_CN extends Translations$dialogs$connectionError$other$en {
+  Translations$dialogs$connectionError$other$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '无法建立连接。';
+  @override
+  String get advice => '请检查地址和端口，确保目标设备正在运行 LocalSend，并确认没有防火墙或 VPN 阻止连接。';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class Translations$dialogs$startupError$windowsAccessDenied$zh_CN extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  Translations$dialogs$startupError$windowsAccessDenied$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows 拒绝访问该端口（套接字错误 10013）。';
+  @override
+  String get advice =>
+      '这通常是由 Hyper-V、WSL 或 Docker 保留的端口范围，或损坏的 Winsock 目录引起的：\n• 在设置（网络）中更改端口\n• 使用以下命令检查保留范围：netsh interface ipv4 show excludedportrange protocol=tcp\n• 以管理员身份修复 Winsock：netsh winsock reset（之后重启电脑）';
+}
+
+// Path: dialogs.startupError.addressInUse
+class Translations$dialogs$startupError$addressInUse$zh_CN extends Translations$dialogs$startupError$addressInUse$en {
+  Translations$dialogs$startupError$addressInUse$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '该端口已被其他应用程序占用。';
+  @override
+  String get advice => '另一个程序（或第二个 LocalSend 实例）正在监听此端口：\n• 关闭该应用程序，或\n• 在设置（网络）中更改端口';
+}
+
+// Path: dialogs.startupError.generic
+class Translations$dialogs$startupError$generic$zh_CN extends Translations$dialogs$startupError$generic$en {
+  Translations$dialogs$startupError$generic$zh_CN.internal(TranslationsZhCn root) : this._root = root, super.internal(root);
+
+  final TranslationsZhCn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '服务器无法启动。';
+  @override
+  String get advice => '• 检查防火墙和网络设置\n• 尝试在设置（网络）中更改端口';
 }

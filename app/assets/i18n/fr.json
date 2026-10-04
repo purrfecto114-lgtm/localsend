@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explication",
     "help": "Veuillez vous assurer que l'appareil cible se trouve sur le même réseau Wi-Fi.",
-    "placeItems": "Placez des éléments à partager."
+    "placeItems": "Placez des éléments à partager.",
+    "diagnosis": {
+      "scanning": "Recherche d'appareils à proximité…",
+      "noInterface": {
+        "title": "Aucune connexion réseau",
+        "advice": "Cet appareil n'est connecté à aucun réseau. Vérifiez la connexion Wi-Fi ou câblée de cet appareil."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast indisponible",
+        "advice": "LocalSend ne peut pas utiliser la découverte par multicast sur ce réseau. Assurez-vous que les deux appareils sont sur le même réseau et que l'isolement du point d'accès (AP isolation) ou un pare-feu ne bloque pas le port UDP {port}.",
+        "reason": "Raison : {reason}"
+      },
+      "scanNoResult": {
+        "title": "Aucun appareil trouvé",
+        "advice": "La recherche fonctionne, mais aucun appareil n'a répondu aux annonces ni à l'analyse du réseau. L'autre appareil est peut-être hors ligne, en veille ou bloqué par un pare-feu. Assurez-vous que LocalSend est en cours d'exécution sur l'autre appareil.",
+        "detail": "{announcements} annonces et {scans} analyses réseau ont été envoyées sans réponse."
+      },
+      "rescan": "Rechercher à nouveau",
+      "bleHint": "La découverte BLE est active : les appareils sont détectés via Bluetooth uniquement s'ils exécutent eux aussi ce fork avec l'option activée ; le transfert lui-même passe toujours par le réseau.",
+      "manualFallback": {
+        "message": "Les adresses IP changent souvent. Vous pouvez toujours joindre un appareil qui n'est pas dans la liste : ajoutez-le à vos favoris ou saisissez son adresse manuellement.",
+        "openFavorites": "Ouvrir les favoris",
+        "manualInput": "Saisir l'adresse manuellement"
+      }
+    }
   },
   "settingsTab": {
     "title": "Paramètres",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Envoyer",
       "shareViaLinkAutoAccept": "Accepter automatiquement les demandes de téléchargement d'un partage par lien",
-      "createChecksums": "Créer des sommes de contrôle lors de l'envoi de fichiers"
+      "createChecksums": "Créer des sommes de contrôle lors de l'envoi de fichiers",
+      "deleteSourceAfterSend": "Supprimer les fichiers sources après un envoi réussi"
     },
     "network": {
       "title": "Réseau",
@@ -143,12 +168,26 @@
         "filtered": "Filtré"
       },
       "discoveryTimeout": "Délai d'expiration de la recherche",
+      "maxInterfaces": "Nombre maximal d'interfaces (recherche intelligente)",
+      "vpnInterfaces": "Inclure les interfaces VPN (recherche intelligente)",
+      "vpnInterfacesHint": "Analyse également les sous-réseaux des interfaces de tunnel VPN (Tailscale, WireGuard, …). Les VPN ne prennent généralement pas en charge le multicast, leurs sous-réseaux sont donc sondés par l'analyse HTTP de repli.",
       "useSystemName": "Utiliser le nom du système",
       "generateRandomAlias": "Générer un alias aléatoire",
       "portWarning": "Il se peut que vous ne soyez pas détecté par d'autres appareils car vous utilisez un port personnalisé. (par défaut : {defaultPort})",
       "encryption": "Chiffrement",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Il est possible que vous ne soyez pas détecté par d'autres appareils car vous utilisez une adresse multicast différente de celle par défaut. (par défaut : {defaultMulticast})"
+      "multicastGroupWarning": "Il est possible que vous ne soyez pas détecté par d'autres appareils car vous utilisez une adresse multicast différente de celle par défaut. (par défaut : {defaultMulticast})",
+      "bleDiscovery": "Découverte BLE (expérimental)",
+      "bleDiscoveryHint": "Découvre les appareils à proximité via Bluetooth même lorsque le réseau bloque le multicast (isolement du point d'accès). Fonctionne sur Android, iOS, macOS et Windows ; sous Linux, cet appareil peut trouver les autres mais ne peut pas être trouvé lui-même. Les deux appareils doivent exécuter ce fork avec l'option activée ; le transfert de fichiers utilise toujours le réseau.",
+      "bleStatusActive": "Actif : analyse et diffusion. Les appareils à proximité n'apparaissent que s'ils exécutent eux aussi ce fork avec l'option activée.",
+      "bleStatusScanOnly": "Actif : analyse uniquement. Cet appareil ne peut pas être découvert via Bluetooth pour le moment (pas de prise en charge de la diffusion BLE sur cette plateforme, ou aucune adresse réseau utilisable pour l'instant).",
+      "bleStatusPaused": "En pause. Reprise lorsque l'application revient au premier plan.",
+      "bleStatusPermissionDenied": "Autorisations Bluetooth refusées. Accordez l'autorisation \"Appareils à proximité\" (ou \"Localisation\" sur Android 11 et versions antérieures) dans les paramètres système, puis désactivez et réactivez cette option.",
+      "bleStatusAdapterOff": "Bluetooth est désactivé ou indisponible. La recherche redémarre automatiquement lorsque le Bluetooth redevient disponible.",
+      "bleStatusUnsupported": "Non pris en charge sur cet appareil : la découverte BLE nécessite Android 7 ou une version plus récente ainsi qu'une radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Sur cette version d'Android, trouver d'autres appareils nécessite également que les services de localisation du système soient activés (l'autorisation est demandée automatiquement ; cet appareil peut déjà être trouvé par les autres).",
+      "bleStatusError": "La découverte BLE n'a pas pu démarrer. Consultez Dépannage > Journaux pour plus de détails.",
+      "bleOpenSystemSettings": "Ouvrir les paramètres système"
     },
     "other": {
       "title": "Autre",
@@ -256,6 +295,13 @@
     "titleSending": "Envoi de fichiers",
     "titleReceiving": "Réception des fichiers",
     "savedToGallery": "Sauvegardé dans la Galerie",
+    "checksum": {
+      "verified": "Sommes de contrôle vérifiées",
+      "partiallyVerified": "Sommes de contrôle vérifiées pour {curr} / {n} fichiers",
+      "notVerifiable": "Aucune somme de contrôle fournie par l'expéditeur",
+      "disabled": "La vérification des sommes de contrôle est désactivée",
+      "attached": "Sommes de contrôle jointes ({curr} / {n} fichiers)"
+    },
     "total": {
       "title": {
         "sending": "Progression totale ({time})",
@@ -348,11 +394,42 @@
       "title": "Entrez l'adresse IP",
       "hashtag": "Hashtag",
       "ip": "Adresse IP",
-      "recentlyUsed": "Récemment utilisé : "
+      "recentlyUsed": "Récemment utilisé : ",
+      "noHashtagCandidates": "Le réseau actuel ne possède pas d'adresse IPv4, le hashtag ne peut donc pas être développé en adresse candidate. Veuillez saisir l'adresse complète (par ex. 192.168.1.5 ou fe80::1).",
+      "validation": {
+        "invalid": "Saisissez une adresse IPv4, une adresse IPv6 ou un nom d'hôte valide.",
+        "scheme": "Saisissez uniquement l'adresse, sans \"http://\" ni \"https://\".",
+        "port": "Saisissez uniquement l'adresse. Le port est repris des paramètres."
+      }
     },
     "cancelSession": {
       "title": "Annuler le transfert de fichiers",
       "content": "Voulez-vous vraiment annuler le transfert de fichiers ?"
+    },
+    "connectionError": {
+      "title": "Échec de la connexion",
+      "timeout": {
+        "message": "L'appareil n'a pas répondu à temps.",
+        "advice": "Il est probablement hors ligne, en veille, ou un pare-feu bloque la connexion. Assurez-vous que LocalSend est en cours d'exécution sur l'autre appareil et que les deux appareils sont sur le même réseau."
+      },
+      "refused": {
+        "message": "L'appareil a refusé la connexion.",
+        "advice": "LocalSend ne semble pas être en cours d'exécution sur l'appareil cible, ou il écoute sur un port différent. Démarrez LocalSend sur l'autre appareil ou vérifiez le port."
+      },
+      "forbidden": {
+        "message": "L'appareil a rejeté la demande.",
+        "advice": "Un code PIN est peut-être requis, ou l'association avec l'appareil a changé. Vérifiez le code PIN et les paramètres de sauvegarde rapide sur l'appareil cible."
+      },
+      "other": {
+        "message": "La connexion n'a pas pu être établie.",
+        "advice": "Vérifiez l'adresse et le port, assurez-vous que LocalSend est en cours d'exécution sur l'appareil cible et qu'aucun pare-feu ni VPN ne bloque la connexion."
+      },
+      "retry": "Réessayer",
+      "details": "Détails de l'erreur :"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Supprimer les fichiers sources",
+      "content": "Une fois les fichiers envoyés avec succès, ils seront supprimés de cet appareil. Cette action est irréversible."
     },
     "cannotOpenFile": {
       "title": "Ne peut pas ouvrir le fichier",
@@ -448,6 +525,25 @@
       "single": "Envoyer des fichiers à un destinataire. La sélection sera effacée une fois l'envoi du fichier terminé.",
       "multiple": "Envoyer des fichiers à plusieurs destinataires. La sélection ne sera pas effacée.",
       "link": "Les destinataires n'ayant pas LocalSend installé peuvent télécharger les fichiers sélectionnés en ouvrant le lien dans leur navigateur."
+    },
+    "startupError": {
+      "title": "Impossible de démarrer le serveur",
+      "port": "Port : {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows a refusé l'accès au port (erreur de socket 10013).",
+        "advice": "Cela est généralement causé par une plage de ports réservée par Hyper-V, WSL ou Docker, ou par un catalogue Winsock endommagé :\n• Modifiez le port dans les paramètres (Réseau)\n• Vérifiez les plages réservées avec la commande : netsh interface ipv4 show excludedportrange protocol=tcp\n• Réparez Winsock en tant qu'administrateur avec la commande : netsh winsock reset (redémarrez ensuite)"
+      },
+      "addressInUse": {
+        "hint": "Le port est déjà utilisé par une autre application.",
+        "advice": "Un autre programme (ou une seconde instance de LocalSend) écoute sur ce port :\n• Fermez l'autre application, ou\n• Modifiez le port dans les paramètres (Réseau)"
+      },
+      "generic": {
+        "hint": "Le serveur n'a pas pu être démarré.",
+        "advice": "• Vérifiez votre pare-feu et vos paramètres réseau\n• Essayez de changer le port dans les paramètres (Réseau)"
+      },
+      "details": "Détails de l'erreur :",
+      "copyDetails": "Copier les détails",
+      "openSettings": "Ouvrir les paramètres"
     },
     "zoom": {
       "title": "URL"

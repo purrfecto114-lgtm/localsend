@@ -233,6 +233,8 @@ class _Translations$sendTab$ar extends Translations$sendTab$en {
   String get help => 'يُرجى التأكد من أن الهدف المطلوب موجود أيضًا في نفس شبكة الواي فاي.';
   @override
   String get placeItems => 'ضع العناصر للمشاركة.';
+  @override
+  late final _Translations$sendTab$diagnosis$ar diagnosis = _Translations$sendTab$diagnosis$ar._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$ar extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'حُفظ في الصور';
   @override
+  late final _Translations$progressPage$checksum$ar checksum = _Translations$progressPage$checksum$ar._(_root);
+  @override
   late final _Translations$progressPage$total$ar total = _Translations$progressPage$total$ar._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ar remainingTime = _Translations$progressPage$remainingTime$ar._(_root);
@@ -678,6 +682,11 @@ class _Translations$dialogs$ar extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ar cancelSession = _Translations$dialogs$cancelSession$ar._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ar connectionError = _Translations$dialogs$connectionError$ar._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ar deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ar._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ar cannotOpenFile = _Translations$dialogs$cannotOpenFile$ar._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ar encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ar._(_root);
@@ -718,6 +727,8 @@ class _Translations$dialogs$ar extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ar pin = _Translations$dialogs$pin$ar._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ar sendModeHelp = _Translations$dialogs$sendModeHelp$ar._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ar startupError = _Translations$dialogs$startupError$ar._(_root);
   @override
   late final _Translations$dialogs$zoom$ar zoom = _Translations$dialogs$zoom$ar._(_root);
 }
@@ -922,6 +933,32 @@ class _Translations$sendTab$sendModes$ar extends Translations$sendTab$sendModes$
   String get link => 'مشاركة عبر الرابط';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ar extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'جارِ البحث عن الأجهزة القريبة…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ar noInterface = _Translations$sendTab$diagnosis$noInterface$ar._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ar multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ar._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ar scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ar._(_root);
+  @override
+  String get rescan => 'ابحث مرة أخرى';
+  @override
+  String get bleHint =>
+      'اكتشاف BLE نشط: لا يتم العثور على الأجهزة عبر البلوتوث إلا إذا كانت تشغّل هذه النسخة المعدلة (fork) من LocalSend مع تفعيل الخيار؛ أما النقل نفسه فيتم عبر الشبكة.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ar manualFallback = _Translations$sendTab$diagnosis$manualFallback$ar._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ar extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ar._(TranslationsAr root) : this._root = root, super.internal(root);
@@ -1003,6 +1040,8 @@ class _Translations$settingsTab$send$ar extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'المشاركة عبر الرابط: قبول تلقائي';
   @override
   String get createChecksums => 'إنشاء المجاميع الاختبارية عند إرسال الملفات';
+  @override
+  String get deleteSourceAfterSend => 'حذف الملفات المصدر بعد نجاح الإرسال';
 }
 
 // Path: settingsTab.network
@@ -1033,6 +1072,13 @@ class _Translations$settingsTab$network$ar extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'مهلة الاكتشاف';
   @override
+  String get maxInterfaces => 'الحد الأقصى للواجهات (الفحص الذكي)';
+  @override
+  String get vpnInterfaces => 'تضمين واجهات VPN (الفحص الذكي)';
+  @override
+  String get vpnInterfacesHint =>
+      'يفحص أيضًا الشبكات الفرعية لواجهات أنفاق VPN (مثل Tailscale وWireGuard). لا تدعم شبكات VPN عادةً البث المتعدد، لذا يتم فحص شبكاتها الفرعية عبر فحص HTTP الاحتياطي بدلًا من ذلك.';
+  @override
   String get useSystemName => 'استخدم اسم النظام';
   @override
   String get generateRandomAlias => 'ولّد كنية عشوائية';
@@ -1046,6 +1092,33 @@ class _Translations$settingsTab$network$ar extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'ربما لا يتم الكشف عنك من قبل الأجهزة الأخرى لأنك تستخدم عنوان بث متعدد مخصص. (الافتراضي: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'اكتشاف BLE (تجريبي)';
+  @override
+  String get bleDiscoveryHint =>
+      'يكتشف الأجهزة القريبة عبر البلوتوث حتى عندما تمنع الشبكة البث المتعدد (عزل نقطة الوصول). يعمل على Android وiOS وmacOS وWindows؛ أما على Linux فيمكن لهذا الجهاز العثور على الأجهزة الأخرى لكن لا يمكن العثور عليه هو نفسه. يحتاج كلا الجهازين إلى هذه النسخة المعدلة (fork) مع تفعيل الخيار؛ أما نقل الملفات نفسه فيستخدم الشبكة.';
+  @override
+  String get bleStatusActive =>
+      'نشط: يتم الفحص والإعلان عن الجهاز. لا تظهر الأجهزة القريبة إلا إذا كانت أيضًا تشغّل هذه النسخة المعدلة (fork) مع تفعيل الخيار.';
+  @override
+  String get bleStatusScanOnly =>
+      'نشط: فحص فقط. لا يمكن اكتشاف هذا الجهاز عبر البلوتوث حاليًا (لا يوجد دعم للإعلان عبر BLE على هذا النظام، أو لا يوجد عنوان شبكة قابل للاستخدام بعد).';
+  @override
+  String get bleStatusPaused => 'متوقف مؤقتًا. يستأنف العمل تلقائيًا عند عودة التطبيق إلى المقدمة.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'أذونات البلوتوث مرفوضة. امنح إذن "الأجهزة القريبة" (أو "الموقع" على أندرويد 11 وما دونه) في إعدادات النظام، ثم عطّل هذا الخيار وأعد تفعيله.';
+  @override
+  String get bleStatusAdapterOff => 'البلوتوث متوقف أو غير متاح. يعيد الاكتشاف تشغيل نفسه تلقائيًا عندما يصبح البلوتوث متاحًا مرة أخرى.';
+  @override
+  String get bleStatusUnsupported => 'غير مدعوم على هذا الجهاز: يحتاج اكتشاف BLE إلى أندرويد 7 أو أحدث وراديو Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'في هذا الإصدار من أندرويد، يتطلب العثور على الأجهزة الأخرى أيضًا تشغيل خدمات الموقع في النظام (يُطلب الإذن تلقائيًا؛ يمكن للآخرين العثور على هذا الجهاز بالفعل).';
+  @override
+  String get bleStatusError => 'تعذر بدء اكتشاف BLE. راجع حل المشكلات > السجلات لمزيد من التفاصيل.';
+  @override
+  String get bleOpenSystemSettings => 'افتح إعدادات النظام';
 }
 
 // Path: settingsTab.other
@@ -1162,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$ar extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'تم التحديث عبر ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ar extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'تم التحقق من المجاميع الاختبارية';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'تم التحقق من المجاميع الاختبارية لـ ${curr} / ${n} من الملفات';
+  @override
+  String get notVerifiable => 'لم يوفر المرسل مجاميع اختبارية';
+  @override
+  String get disabled => 'التحقق من المجاميع الاختبارية معطّل';
+  @override
+  String attached({required Object curr, required Object n}) => 'تم إرفاق المجاميع الاختبارية (${curr} / ${n} من الملفات)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ar extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ar._(TranslationsAr root) : this._root = root, super.internal(root);
@@ -1255,6 +1347,11 @@ class _Translations$dialogs$addressInput$ar extends Translations$dialogs$address
   String get ip => 'عنوان IP';
   @override
   String get recentlyUsed => 'المستخدمة حديثًا: ';
+  @override
+  String get noHashtagCandidates =>
+      'لا يوجد للشبكة الحالية عنوان IPv4، لذا لا يمكن توسيع الهاشتاق إلى عنوان مرشح. يُرجى إدخال العنوان الكامل بدلًا من ذلك (مثل 192.168.1.5 أو fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ar validation = _Translations$dialogs$addressInput$validation$ar._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1268,6 +1365,42 @@ class _Translations$dialogs$cancelSession$ar extends Translations$dialogs$cancel
   String get title => 'ألغِ نقل الملف';
   @override
   String get content => 'أتريد حقًا إلغاء نقل الملف؟';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ar extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'فشل الاتصال';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ar timeout = _Translations$dialogs$connectionError$timeout$ar._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ar refused = _Translations$dialogs$connectionError$refused$ar._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ar forbidden = _Translations$dialogs$connectionError$forbidden$ar._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ar other = _Translations$dialogs$connectionError$other$ar._(_root);
+  @override
+  String get retry => 'أعد المحاولة';
+  @override
+  String get details => 'تفاصيل الخطأ:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ar extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'حذف الملفات المصدر';
+  @override
+  String get content => 'بعد نجاح إرسال الملفات، سيتم حذفها من هذا الجهاز. لا يمكن التراجع عن هذا الإجراء.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1558,6 +1691,32 @@ class _Translations$dialogs$sendModeHelp$ar extends Translations$dialogs$sendMod
   String get link => 'يمكن للمستلمين الذين لا يحتوون على LocalSend تنزيل الملفات المحددة عن طريق فتح الرابط في متصفحهم.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ar extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'تعذر بدء الخادم';
+  @override
+  String port({required Object port}) => 'المنفذ: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ar windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ar._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ar addressInUse = _Translations$dialogs$startupError$addressInUse$ar._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ar generic = _Translations$dialogs$startupError$generic$ar._(_root);
+  @override
+  String get details => 'تفاصيل الخطأ:';
+  @override
+  String get copyDetails => 'انسخ التفاصيل';
+  @override
+  String get openSettings => 'افتح الإعدادات';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ar extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ar._(TranslationsAr root) : this._root = root, super.internal(root);
@@ -1567,6 +1726,67 @@ class _Translations$dialogs$zoom$ar extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'عنوان URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ar extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'لا يوجد اتصال بالشبكة';
+  @override
+  String get advice => 'هذا الجهاز غير متصل بأي شبكة. تحقق من اتصال الواي فاي أو الكابل في هذا الجهاز.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ar extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'البث المتعدد غير متاح';
+  @override
+  String advice({required Object port}) =>
+      'لا يستطيع LocalSend استخدام اكتشاف البث المتعدد على هذه الشبكة. تأكد من أن كلا الجهازين على نفس الشبكة، وأن عزل نقطة الوصول (AP Isolation) أو جدار الحماية لا يحجبان منفذ UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'السبب: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ar extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'لم يُعثر على أجهزة';
+  @override
+  String get advice =>
+      'الاكتشاف يعمل، لكن لم يُجب أي جهاز على الإعلانات أو فحص الشبكة. قد يكون الجهاز الآخر غير متصل أو في وضع السكون أو محجوبًا بواسطة جدار حماية. تأكد من أن LocalSend يعمل على الجهاز الآخر.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'تم إرسال ${announcements} من الإعلانات و${scans} من فحوصات الشبكة دون تلقي رد.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ar extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'تتغير عناوين IP كثيرًا. لا يزال بإمكانك الوصول إلى جهاز غير مدرج في القائمة: أضِفه إلى المفضلات أو أدخل عنوانه يدويًا.';
+  @override
+  String get openFavorites => 'افتح المفضلات';
+  @override
+  String get manualInput => 'أدخل العنوان يدويًا';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1653,4 +1873,112 @@ class _Translations$whatsNewPage$changes$v1_18_0$ar extends Translations$whatsNe
     'يتم الآن قبول الطلبات الواردة من المفضلات تلقائيًا. هذه الميزة مفعَّلة افتراضيًا ويمكن تعطيلها من خلال الإعدادات.',
     'في نظام أندرويد، تستمر عمليات النقل حتى عندما يكون التطبيق قيد التشغيل في الخلفية أو تكون الشاشة مطفأة. أما في نظام iOS، فيجب أن يظل التطبيق قيد التشغيل في المقدمة.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ar extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'أدخل عنوان IPv4 أو عنوان IPv6 أو اسم مضيف صالحًا.';
+  @override
+  String get scheme => 'أدخل العنوان فقط، دون "http://" أو "https://".';
+  @override
+  String get port => 'أدخل العنوان فقط. يُؤخذ المنفذ من الإعدادات.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ar extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'لم يستجب الجهاز في الوقت المناسب.';
+  @override
+  String get advice =>
+      'من المحتمل أنه غير متصل أو في وضع السكون، أو أن جدار حماية يحجب الاتصال. تأكد من أن LocalSend يعمل على الجهاز الآخر وأن كلا الجهازين على نفس الشبكة.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ar extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'رفض الجهاز الاتصال.';
+  @override
+  String get advice => 'يبدو أن LocalSend لا يعمل على الجهاز الهدف، أو أنه يستمع على منفذ مختلف. شغّل LocalSend على الجهاز الآخر أو تحقق من المنفذ.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ar extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'رفض الجهاز الطلب.';
+  @override
+  String get advice => 'قد يكون رمز PIN مطلوبًا، أو أن الاقتران بالجهاز قد تغيّر. تحقق من رمز PIN وإعدادات الحفظ السريع على الجهاز الهدف.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ar extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'تعذر إنشاء الاتصال.';
+  @override
+  String get advice => 'تحقق من العنوان والمنفذ، وتأكد من أن LocalSend يعمل على الجهاز الهدف، ومن أنه لا يوجد جدار حماية أو VPN يحجب الاتصال.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ar extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'رفض Windows الوصول إلى المنفذ (خطأ في المقبس رقم 10013).';
+  @override
+  String get advice =>
+      'يحدث هذا عادةً بسبب نطاق منافذ محجوز بواسطة Hyper-V أو WSL أو Docker، أو بسبب تلف كتالوج Winsock:\n• غيّر المنفذ في الإعدادات (الشبكة)\n• تحقق من النطاقات المحجوزة باستخدام الأمر: netsh interface ipv4 show excludedportrange protocol=tcp\n• أصلح Winsock كمسؤول باستخدام الأمر: netsh winsock reset (أعد التشغيل بعد ذلك)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ar extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'المنفذ مستخدم بالفعل من قِبل تطبيق آخر.';
+  @override
+  String get advice => 'يستمع برنامج آخر (أو نسخة ثانية من LocalSend) على هذا المنفذ:\n• أغلق التطبيق الآخر، أو\n• غيّر المنفذ في الإعدادات (الشبكة)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ar extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ar._(TranslationsAr root) : this._root = root, super.internal(root);
+
+  final TranslationsAr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'تعذر بدء الخادم.';
+  @override
+  String get advice => '• تحقق من إعدادات جدار الحماية والشبكة\n• جرّب تغيير المنفذ في الإعدادات (الشبكة)';
 }

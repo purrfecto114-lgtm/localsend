@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Selitys",
     "help": "Varmista, että haluttu kohde on myös samassa Wi-Fi-verkossa.",
-    "placeItems": "Lisää tiedostot tähän, jotta voit lähettää ne."
+    "placeItems": "Lisää tiedostot tähän, jotta voit lähettää ne.",
+    "diagnosis": {
+      "scanning": "Etsitään lähellä olevia laitteita…",
+      "noInterface": {
+        "title": "Ei verkkoyhteyttä",
+        "advice": "Tämä laite ei ole yhdistetty mihinkään verkkoon. Tarkista laitteen Wi-Fi- tai kaapeliyhteys."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast ei ole käytettävissä",
+        "advice": "LocalSend ei voi käyttää multicast-lähetystä laitteiden löytämiseen tässä verkossa. Varmista, että molemmat laitteet ovat samassa verkossa ja ettei AP-eristys tai palomuuri estä UDP-porttia {port}.",
+        "reason": "Syy: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Laitteita ei löytynyt",
+        "advice": "Haku toimii, mutta mikään laite ei vastannut ilmoituksiin tai verkkohakuun. Toinen laite saattaa olla offline-tilassa, lepotilassa tai palomuurin estämä. Varmista, että LocalSend on käynnissä toisessa laitteessa.",
+        "detail": "Lähetettiin {announcements} ilmoitusta ja {scans} verkkohakua ilman vastausta."
+      },
+      "rescan": "Etsi uudelleen",
+      "bleHint": "BLE-etsintä on käynnissä: laitteet löytyvät Bluetoothin kautta vain, jos niillä on myös tämä forkki, jossa asetus on käytössä; itse tiedonsiirto tapahtuu edelleen verkon kautta.",
+      "manualFallback": {
+        "message": "IP-osoitteet muuttuvat usein. Voit silti tavoittaa laitteen, jota ei ole listassa: lisää se suosikkeihin tai syötä sen osoite manuaalisesti.",
+        "openFavorites": "Avaa suosikit",
+        "manualInput": "Syötä osoite manuaalisesti"
+      }
+    }
   },
   "settingsTab": {
     "title": "Asetukset",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Lähetys",
       "shareViaLinkAutoAccept": "Jaa linkki: Hyväksy automaattisesti",
-      "createChecksums": "Luo tarkistussummat tiedostoja lähetettäessä"
+      "createChecksums": "Luo tarkistussummat tiedostoja lähetettäessä",
+      "deleteSourceAfterSend": "Poista lähdetiedostot onnistuneen lähetyksen jälkeen"
     },
     "network": {
       "title": "Verkko",
@@ -143,12 +168,26 @@
         "filtered": "Suodatettu"
       },
       "discoveryTimeout": "Laitteiden etsintäaika",
+      "maxInterfaces": "Liitännöiden enimmäismäärä (Älykäs haku)",
+      "vpnInterfaces": "Sisällytä VPN-liitännät (Älykäs haku)",
+      "vpnInterfacesHint": "Skannaa myös VPN-tunneliliitäntöjen aliverkot (Tailscale, WireGuard, ...). VPN-verkot eivät yleensä tue multicast-lähetystä, joten niiden aliverkot tarkistetaan HTTP-fallback-skannauksella.",
       "useSystemName": "Käytä järjestelmän nimeä",
       "generateRandomAlias": "Luo satunnainen alias",
       "portWarning": "Sinua ei ehkä havaita muiden laitteiden toimesta, koska käytät mukautettua porttia. (oletus: {defaultPort})",
       "encryption": "Salaus",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Sinua ei ehkä havaita muiden laitteiden toimesta, koska käytät mukautettua multicast-osoitetta. (oletus: {defaultMulticast})"
+      "multicastGroupWarning": "Sinua ei ehkä havaita muiden laitteiden toimesta, koska käytät mukautettua multicast-osoitetta. (oletus: {defaultMulticast})",
+      "bleDiscovery": "BLE-etsintä (kokeellinen)",
+      "bleDiscoveryHint": "Löytää lähistön laitteita Bluetoothin kautta silloinkin, kun verkko estää multicast-lähetyksen (AP-eristys). Toimii Androidilla, iOS:llä, macOS:lla ja Windowsilla; Linuxilla tämä laite voi löytää muita, mutta ei itse olla löydettävissä. Molemmilla laitteilla pitää olla tämä forkki, jossa asetus on käytössä; itse tiedostonsiirto tapahtuu edelleen verkon kautta.",
+      "bleStatusActive": "Aktiivinen: skannaa ja mainostaa. Lähilaitteet näkyvät vain, jos niillä on myös tämä forkki, jossa asetus on käytössä.",
+      "bleStatusScanOnly": "Aktiivinen: vain skannaus. Tätä laitetta ei juuri nyt voida löytää Bluetoothin kautta (ei BLE-mainostuksen tukea tällä alustalla tai ei vielä käytettävää verkko-osoitetta).",
+      "bleStatusPaused": "Keskeytetty. Jatkuu, kun sovellus palaa etualalle.",
+      "bleStatusPermissionDenied": "Bluetooth-käyttöoikeudet on evätty. Myönnä käyttöoikeus \"Läheiset laitteet\" (tai \"Sijainti\" Android 11:ssä ja vanhemmissa) järjestelmäasetuksista ja kytke tämä asetus sitten pois ja takaisin päälle.",
+      "bleStatusAdapterOff": "Bluetooth on pois päältä tai ei käytettävissä. Etsintä käynnistyy automaattisesti uudelleen, kun Bluetooth tulee jälleen saataville.",
+      "bleStatusUnsupported": "Ei tuettu tällä laitteella: BLE-etsintä vaatii Android 7:n tai uudemman sekä Bluetooth LE -radion.",
+      "bleStatusLegacyLocation": "Tällä Android-versiolla muiden laitteiden löytäminen vaatii myös järjestelmän sijaintipalveluiden päällä olon (käyttöoikeutta pyydetään automaattisesti; muut voivat jo löytää tämän laitteen).",
+      "bleStatusError": "BLE-etsintää ei voitu käynnistää. Katso yksityiskohdat kohdasta Ongelmanratkaisu > Lokit.",
+      "bleOpenSystemSettings": "Avaa järjestelmäasetukset"
     },
     "other": {
       "title": "Muut",
@@ -256,6 +295,13 @@
     "titleSending": "Tiedostojen lähetys",
     "titleReceiving": "Tiedostojen vastaanotto",
     "savedToGallery": "Tallennettu Kuvat-kansioon",
+    "checksum": {
+      "verified": "Tarkistussummat varmistettu",
+      "partiallyVerified": "Tarkistussummat varmistettu {curr} / {n} tiedostosta",
+      "notVerifiable": "Lähettäjä ei toimittanut tarkistussummia",
+      "disabled": "Tarkistussummien varmistus on poistettu käytöstä",
+      "attached": "Tarkistussummat liitetty ({curr} / {n} tiedostoa)"
+    },
     "total": {
       "title": {
         "sending": "Lähetysprosessi ({time})",
@@ -425,11 +471,42 @@
       "title": "Anna osoite",
       "hashtag": "Hashtag",
       "ip": "IP-osoite",
-      "recentlyUsed": "Äskettäin käytetty: "
+      "recentlyUsed": "Äskettäin käytetty: ",
+      "noHashtagCandidates": "Nykyisessä verkossa ei ole IPv4-osoitetta, joten hashtagia ei voida laajentaa ehdokasosoitteeksi. Syötä sen sijaan koko osoite (esim. 192.168.1.5 tai fe80::1).",
+      "validation": {
+        "invalid": "Syötä kelvollinen IPv4-osoite, IPv6-osoite tai isäntänimi.",
+        "scheme": "Syötä vain osoite ilman \"http://\" tai \"https://\".",
+        "port": "Syötä vain osoite. Portti otetaan asetuksista."
+      }
     },
     "cancelSession": {
       "title": "Peruuta tiedostonsiirto",
       "content": "Haluatko varmasti peruuttaa tiedostonsiirron?"
+    },
+    "connectionError": {
+      "title": "Yhteys epäonnistui",
+      "timeout": {
+        "message": "Laite ei vastannut ajallaan.",
+        "advice": "Se on todennäköisesti offline-tilassa, lepotilassa tai palomuuri estää yhteyden. Varmista, että LocalSend on käynnissä toisessa laitteessa ja että molemmat laitteet ovat samassa verkossa."
+      },
+      "refused": {
+        "message": "Laite hylkäsi yhteyden.",
+        "advice": "LocalSend ei vaikuta olevan käynnissä kohdelaitteessa, tai se kuuntelee eri portissa. Käynnistä LocalSend toisessa laitteessa tai tarkista portti."
+      },
+      "forbidden": {
+        "message": "Laite hylkäsi pyynnön.",
+        "advice": "PIN-koodi voi olla vaadittu tai laiteparitus on muuttunut. Tarkista PIN-koodi ja pikatallennusasetukset kohdelaitteelta."
+      },
+      "other": {
+        "message": "Yhteyttä ei voitu muodostaa.",
+        "advice": "Tarkista osoite ja portti, varmista että LocalSend on käynnissä kohdelaitteessa ja ettei palomuuri tai VPN estä yhteyttä."
+      },
+      "retry": "Yritä uudelleen",
+      "details": "Virhetiedot:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Poista lähdetiedostot",
+      "content": "Kun tiedostot on lähetetty onnistuneesti, ne poistetaan tältä laitteelta. Tätä ei voi kumota."
     },
     "cannotOpenFile": {
       "title": "Tiedostoa ei voi avata",
@@ -525,6 +602,25 @@
       "single": "Lähettää tiedostoja yhdelle vastaanottajalle. Valinta tyhjennetään tiedostonsiirron päätyttyä.",
       "multiple": "Lähettää tiedostoja useille vastaanottajille. Valinta ei tyhjene.",
       "link": "Vastaanottajat, joilla ei ole LocalSendia asennettuna, voivat ladata valitut tiedostot avaamalla linkin selaimessaan."
+    },
+    "startupError": {
+      "title": "Palvelinta ei voitu käynnistää",
+      "port": "Portti: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows esti pääsyn porttiin (socket-virhe 10013).",
+        "advice": "Tämän aiheuttaa yleensä Hyper-V:n, WSL:n tai Dockerin varaama porttialue tai rikki oleva Winsock-luettelo:\n• Vaihda portti asetuksista (Verkko)\n• Tarkista varatut alueet komennolla: netsh interface ipv4 show excludedportrange protocol=tcp\n• Korjaa Winsock järjestelmänvalvojana komennolla: netsh winsock reset (käynnistä uudelleen jälkeenpäin)"
+      },
+      "addressInUse": {
+        "hint": "Portti on jo toisen sovelluksen käytössä.",
+        "advice": "Toinen ohjelma (tai toinen LocalSend-instanssi) kuuntelee tätä porttia:\n• Sulje toinen sovellus tai\n• Vaihda portti asetuksista (Verkko)"
+      },
+      "generic": {
+        "hint": "Palvelinta ei voitu käynnistää.",
+        "advice": "• Tarkista palomuuri- ja verkkoasetuksesi\n• Kokeile vaihtaa porttia asetuksista (Verkko)"
+      },
+      "details": "Virhetiedot:",
+      "copyDetails": "Kopioi tiedot",
+      "openSettings": "Avaa asetukset"
     },
     "zoom": {
       "title": "URL"

@@ -233,6 +233,8 @@ class Translations$sendTab$sr extends Translations$sendTab$en {
   String get help => 'Uverite se da je primalac takođe na istoj Wi-Fi mreži.';
   @override
   String get placeItems => 'Postavite predmete za deljenje.';
+  @override
+  late final Translations$sendTab$diagnosis$sr diagnosis = Translations$sendTab$diagnosis$sr.internal(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class Translations$progressPage$sr extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Sačuvano u galeriji';
   @override
+  late final Translations$progressPage$checksum$sr checksum = Translations$progressPage$checksum$sr.internal(_root);
+  @override
   late final Translations$progressPage$total$sr total = Translations$progressPage$total$sr.internal(_root);
   @override
   late final Translations$progressPage$remainingTime$sr remainingTime = Translations$progressPage$remainingTime$sr.internal(_root);
@@ -678,6 +682,11 @@ class Translations$dialogs$sr extends Translations$dialogs$en {
   @override
   late final Translations$dialogs$cancelSession$sr cancelSession = Translations$dialogs$cancelSession$sr.internal(_root);
   @override
+  late final Translations$dialogs$connectionError$sr connectionError = Translations$dialogs$connectionError$sr.internal(_root);
+  @override
+  late final Translations$dialogs$deleteSourceAfterSendDialog$sr deleteSourceAfterSendDialog =
+      Translations$dialogs$deleteSourceAfterSendDialog$sr.internal(_root);
+  @override
   late final Translations$dialogs$cannotOpenFile$sr cannotOpenFile = Translations$dialogs$cannotOpenFile$sr.internal(_root);
   @override
   late final Translations$dialogs$encryptionDisabledNotice$sr encryptionDisabledNotice = Translations$dialogs$encryptionDisabledNotice$sr.internal(
@@ -722,6 +731,8 @@ class Translations$dialogs$sr extends Translations$dialogs$en {
   late final Translations$dialogs$pin$sr pin = Translations$dialogs$pin$sr.internal(_root);
   @override
   late final Translations$dialogs$sendModeHelp$sr sendModeHelp = Translations$dialogs$sendModeHelp$sr.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$sr startupError = Translations$dialogs$startupError$sr.internal(_root);
   @override
   late final Translations$dialogs$zoom$sr zoom = Translations$dialogs$zoom$sr.internal(_root);
 }
@@ -926,6 +937,31 @@ class Translations$sendTab$sendModes$sr extends Translations$sendTab$sendModes$e
   String get link => 'Deljenje putem linka';
 }
 
+// Path: sendTab.diagnosis
+class Translations$sendTab$diagnosis$sr extends Translations$sendTab$diagnosis$en {
+  Translations$sendTab$diagnosis$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Pretraga uređaja u blizini…';
+  @override
+  late final Translations$sendTab$diagnosis$noInterface$sr noInterface = Translations$sendTab$diagnosis$noInterface$sr.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$multicastUnavailable$sr multicastUnavailable =
+      Translations$sendTab$diagnosis$multicastUnavailable$sr.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$scanNoResult$sr scanNoResult = Translations$sendTab$diagnosis$scanNoResult$sr.internal(_root);
+  @override
+  String get rescan => 'Pretraži ponovo';
+  @override
+  String get bleHint =>
+      'BLE otkrivanje je aktivno: uređaji se pronalaze putem Bluetooth-a samo ako i oni koriste ovaj fork sa uključenom opcijom; sam prenos fajlova i dalje ide preko mreže.';
+  @override
+  late final Translations$sendTab$diagnosis$manualFallback$sr manualFallback = Translations$sendTab$diagnosis$manualFallback$sr.internal(_root);
+}
+
 // Path: settingsTab.general
 class Translations$settingsTab$general$sr extends Translations$settingsTab$general$en {
   Translations$settingsTab$general$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
@@ -1009,6 +1045,8 @@ class Translations$settingsTab$send$sr extends Translations$settingsTab$send$en 
   String get shareViaLinkAutoAccept => 'Automatski prihvati zahteve u režimu „Deljenje putem linka“';
   @override
   String get createChecksums => 'Napravi kontrolne sume pri slanju fajlova';
+  @override
+  String get deleteSourceAfterSend => 'Izbriši izvorne fajlove nakon uspešnog slanja';
 }
 
 // Path: settingsTab.network
@@ -1039,6 +1077,13 @@ class Translations$settingsTab$network$sr extends Translations$settingsTab$netwo
   @override
   String get discoveryTimeout => 'Otkrivanje je isteklo';
   @override
+  String get maxInterfaces => 'Maksimalan broj interfejsa (pametno skeniranje)';
+  @override
+  String get vpnInterfaces => 'Uključi VPN interfejse (pametno skeniranje)';
+  @override
+  String get vpnInterfacesHint =>
+      'Skeniraj i podmreže interfejsa VPN tunela (Tailscale, WireGuard, ...). VPN obično ne prenosi višesmerno emitovanje, pa se njihove podmreže proveravaju rezervnim HTTP skeniranjem.';
+  @override
   String get useSystemName => 'Koristi sistemski naziv';
   @override
   String get generateRandomAlias => 'Generiši nasumični pseudonim';
@@ -1052,6 +1097,34 @@ class Translations$settingsTab$network$sr extends Translations$settingsTab$netwo
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Drugi uređaji vas možda neće otkriti, jer koristite prilagođenu adresu višesmernog emitovanja. (podrazumevana: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE otkrivanje (eksperimentalno)';
+  @override
+  String get bleDiscoveryHint =>
+      'Pronalazi uređaje u blizini putem Bluetooth-a čak i kada mreža blokira višesmerno emitovanje (izolacija pristupne tačke). Radi na Android-u, iOS-u, macOS-u i Windows-u; na Linux-u ovaj uređaj može da pronalazi druge, ali sam ne može biti pronađen. Oba uređaja moraju da koriste ovaj fork sa uključenom opcijom; sam prenos fajlova i dalje ide preko mreže.';
+  @override
+  String get bleStatusActive =>
+      'Aktivno: skeniranje i najavljivanje. Uređaji u blizini se pojavljuju samo ako i oni koriste ovaj fork sa uključenom opcijom.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktivno: samo skeniranje. Ovaj uređaj trenutno ne može biti otkriven putem Bluetooth-a (ova platforma ne podržava BLE najavljivanje ili još nema upotrebljivu mrežnu adresu).';
+  @override
+  String get bleStatusPaused => 'Pauzirano. Nastavlja se kada se aplikacija vrati u prvi plan.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Dozvole za Bluetooth su odbijene. Dajte dozvolu „Uređaji u blizini“ (ili „Lokacija“ na Android-u 11 i starijim) u sistemskim podešavanjima, a zatim isključite i ponovo uključite ovu opciju.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth je isključen ili nedostupan. Otkrivanje se samo ponovo pokreće kada Bluetooth ponovo postane dostupan.';
+  @override
+  String get bleStatusUnsupported => 'Nije podržano na ovom uređaju: BLE otkrivanje zahteva Android 7 ili noviji i Bluetooth LE radio.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Na ovoj verziji Android-a, pronalaženje drugih uređaja zahteva i da sistemske usluge lokacije budu uključene (dozvola se traži automatski; ovaj uređaj već mogu da pronađu drugi).';
+  @override
+  String get bleStatusError => 'BLE otkrivanje nije moglo da se pokrene. Detalje pogledajte u Otklanjanje grešaka > Evidencija.';
+  @override
+  String get bleOpenSystemSettings => 'Otvori sistemska podešavanja';
 }
 
 // Path: settingsTab.other
@@ -1168,6 +1241,25 @@ class Translations$deviceDetailsPage$logs$sr extends Translations$deviceDetailsP
   String updated({required Object protocol, required Object host}) => 'Ažurirano putem ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class Translations$progressPage$checksum$sr extends Translations$progressPage$checksum$en {
+  Translations$progressPage$checksum$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Kontrolne sume su proverene';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Kontrolne sume su proverene za ${curr} / ${n} fajlova';
+  @override
+  String get notVerifiable => 'Pošiljalac nije obezbedio kontrolne sume';
+  @override
+  String get disabled => 'Provera kontrolnih suma je isključena';
+  @override
+  String attached({required Object curr, required Object n}) => 'Kontrolne sume su priložene (${curr} / ${n} fajlova)';
+}
+
 // Path: progressPage.total
 class Translations$progressPage$total$sr extends Translations$progressPage$total$en {
   Translations$progressPage$total$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
@@ -1261,6 +1353,11 @@ class Translations$dialogs$addressInput$sr extends Translations$dialogs$addressI
   String get ip => 'IP adresa';
   @override
   String get recentlyUsed => 'Nedavno korišćeno: ';
+  @override
+  String get noHashtagCandidates =>
+      'Trenutna mreža nema IPv4 adresu, pa se heš-oznaka ne može razviti u adresu kandidata. Unesite kompletnu adresu (npr. 192.168.1.5 ili fe80::1).';
+  @override
+  late final Translations$dialogs$addressInput$validation$sr validation = Translations$dialogs$addressInput$validation$sr.internal(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1274,6 +1371,42 @@ class Translations$dialogs$cancelSession$sr extends Translations$dialogs$cancelS
   String get title => 'Otkažite prenos fajlova';
   @override
   String get content => 'Želite li zaista da otkažete prenos fajlova?';
+}
+
+// Path: dialogs.connectionError
+class Translations$dialogs$connectionError$sr extends Translations$dialogs$connectionError$en {
+  Translations$dialogs$connectionError$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Veza nije uspela';
+  @override
+  late final Translations$dialogs$connectionError$timeout$sr timeout = Translations$dialogs$connectionError$timeout$sr.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$refused$sr refused = Translations$dialogs$connectionError$refused$sr.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$forbidden$sr forbidden = Translations$dialogs$connectionError$forbidden$sr.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$other$sr other = Translations$dialogs$connectionError$other$sr.internal(_root);
+  @override
+  String get retry => 'Pokušaj ponovo';
+  @override
+  String get details => 'Detalji greške:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class Translations$dialogs$deleteSourceAfterSendDialog$sr extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  Translations$dialogs$deleteSourceAfterSendDialog$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Izbriši izvorne fajlove';
+  @override
+  String get content => 'Nakon uspešnog slanja, fajlovi će biti izbrisani sa ovog uređaja. Ovo nije moguće opozvati.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1565,6 +1698,32 @@ class Translations$dialogs$sendModeHelp$sr extends Translations$dialogs$sendMode
   String get link => 'Primaoci koji nemaju instaliran LocalSend mogu preuzeti izabrane fajlove otvaranjem linka u svom pregledaču.';
 }
 
+// Path: dialogs.startupError
+class Translations$dialogs$startupError$sr extends Translations$dialogs$startupError$en {
+  Translations$dialogs$startupError$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nije moguće pokrenuti server';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final Translations$dialogs$startupError$windowsAccessDenied$sr windowsAccessDenied =
+      Translations$dialogs$startupError$windowsAccessDenied$sr.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$addressInUse$sr addressInUse = Translations$dialogs$startupError$addressInUse$sr.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$generic$sr generic = Translations$dialogs$startupError$generic$sr.internal(_root);
+  @override
+  String get details => 'Detalji greške:';
+  @override
+  String get copyDetails => 'Kopiraj detalje';
+  @override
+  String get openSettings => 'Otvori podešavanja';
+}
+
 // Path: dialogs.zoom
 class Translations$dialogs$zoom$sr extends Translations$dialogs$zoom$en {
   Translations$dialogs$zoom$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
@@ -1574,6 +1733,68 @@ class Translations$dialogs$zoom$sr extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class Translations$sendTab$diagnosis$noInterface$sr extends Translations$sendTab$diagnosis$noInterface$en {
+  Translations$sendTab$diagnosis$noInterface$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nema mrežne veze';
+  @override
+  String get advice => 'Ovaj uređaj nije povezan ni sa jednom mrežom. Proverite Wi-Fi ili kablovsku vezu ovog uređaja.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class Translations$sendTab$diagnosis$multicastUnavailable$sr extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  Translations$sendTab$diagnosis$multicastUnavailable$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Višesmerno emitovanje nije dostupno';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend ne može da koristi otkrivanje putem višesmernog emitovanja na ovoj mreži. Uverite se da su oba uređaja na istoj mreži i da izolacija pristupne tačke (AP) ili zaštitni zid ne blokiraju UDP port ${port}.';
+  @override
+  String reason({required Object reason}) => 'Razlog: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class Translations$sendTab$diagnosis$scanNoResult$sr extends Translations$sendTab$diagnosis$scanNoResult$en {
+  Translations$sendTab$diagnosis$scanNoResult$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nema pronađenih uređaja';
+  @override
+  String get advice =>
+      'Pretraga radi, ali nijedan uređaj nije odgovorio na najave ni na skeniranje mreže. Drugi uređaj je možda oflajn, u režimu spavanja ili ga blokira zaštitni zid. Uverite se da na drugom uređaju radi LocalSend.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Poslato je ${announcements} najava i izvršeno ${scans} skeniranja mreže — bez odgovora.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class Translations$sendTab$diagnosis$manualFallback$sr extends Translations$sendTab$diagnosis$manualFallback$en {
+  Translations$sendTab$diagnosis$manualFallback$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP adrese se često menjaju. I dalje možete dostići uređaj koji nije na listi: dodajte ga u omiljene ili ručno unesite njegovu adresu.';
+  @override
+  String get openFavorites => 'Otvori omiljeno';
+  @override
+  String get manualInput => 'Ručno unesi adresu';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1660,4 +1881,114 @@ class Translations$whatsNewPage$changes$v1_18_0$sr extends Translations$whatsNew
     'Zahtevi od omiljenih se sada automatski prihvataju. Ovo je podrazumevano uključeno i može se isključiti u podešavanjima.',
     'Na Android-u, prenosi se nastavljaju dok je aplikacija u pozadini ili je ekran isključen. Na iOS-u, aplikacija i dalje mora ostati u prvom planu.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class Translations$dialogs$addressInput$validation$sr extends Translations$dialogs$addressInput$validation$en {
+  Translations$dialogs$addressInput$validation$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Unesite ispravnu IPv4 adresu, IPv6 adresu ili ime hosta.';
+  @override
+  String get scheme => 'Unesite samo adresu, bez „http://“ ili „https://“.';
+  @override
+  String get port => 'Unesite samo adresu. Port se uzima iz podešavanja.';
+}
+
+// Path: dialogs.connectionError.timeout
+class Translations$dialogs$connectionError$timeout$sr extends Translations$dialogs$connectionError$timeout$en {
+  Translations$dialogs$connectionError$timeout$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Uređaj nije odgovorio na vreme.';
+  @override
+  String get advice =>
+      'Verovatno je oflajn, u režimu spavanja ili zaštitni zid blokira vezu. Uverite se da na drugom uređaju radi LocalSend i da su oba uređaja na istoj mreži.';
+}
+
+// Path: dialogs.connectionError.refused
+class Translations$dialogs$connectionError$refused$sr extends Translations$dialogs$connectionError$refused$en {
+  Translations$dialogs$connectionError$refused$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Uređaj je odbio vezu.';
+  @override
+  String get advice =>
+      'Izgleda da na ciljnom uređaju ne radi LocalSend ili da sluša na drugom portu. Pokrenite LocalSend na drugom uređaju ili proverite port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class Translations$dialogs$connectionError$forbidden$sr extends Translations$dialogs$connectionError$forbidden$en {
+  Translations$dialogs$connectionError$forbidden$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Uređaj je odbio zahtev.';
+  @override
+  String get advice => 'Možda je potreban PIN ili se promenilo uparivanje sa uređajem. Proverite PIN i podešavanja brzog čuvanja na ciljnom uređaju.';
+}
+
+// Path: dialogs.connectionError.other
+class Translations$dialogs$connectionError$other$sr extends Translations$dialogs$connectionError$other$en {
+  Translations$dialogs$connectionError$other$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Nije bilo moguće uspostaviti vezu.';
+  @override
+  String get advice => 'Proverite adresu i port, uverite se da na ciljnom uređaju radi LocalSend i da vezu ne blokira zaštitni zid ili VPN.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class Translations$dialogs$startupError$windowsAccessDenied$sr extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  Translations$dialogs$startupError$windowsAccessDenied$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows je odbio pristup portu (greška soketa 10013).';
+  @override
+  String get advice =>
+      'Ovo je obično uzrokovano opsegom portova koje su rezervisali Hyper-V, WSL ili Docker, ili oštećenim Winsock katalogom:\n• Promenite port u podešavanjima (Mreža)\n• Proverite rezervisane opsege komandom: netsh interface ipv4 show excludedportrange protocol=tcp\n• Popravite Winsock kao administrator komandom: netsh winsock reset (zatim restartujte računar)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class Translations$dialogs$startupError$addressInUse$sr extends Translations$dialogs$startupError$addressInUse$en {
+  Translations$dialogs$startupError$addressInUse$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port već koristi druga aplikacija.';
+  @override
+  String get advice =>
+      'Drugi program (ili druga instanca LocalSend-a) sluša na ovom portu:\n• Zatvorite drugu aplikaciju ili\n• Promenite port u podešavanjima (Mreža)';
+}
+
+// Path: dialogs.startupError.generic
+class Translations$dialogs$startupError$generic$sr extends Translations$dialogs$startupError$generic$en {
+  Translations$dialogs$startupError$generic$sr.internal(TranslationsSr root) : this._root = root, super.internal(root);
+
+  final TranslationsSr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Nije bilo moguće pokrenuti server.';
+  @override
+  String get advice => '• Proverite zaštitni zid i mrežna podešavanja\n• Pokušajte da promenite port u podešavanjima (Mreža)';
 }

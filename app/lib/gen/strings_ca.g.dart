@@ -234,6 +234,8 @@ class _Translations$sendTab$ca extends Translations$sendTab$en {
   String get help => 'Comproveu que el destinatari està en la mateixa xarxa Wi-Fi.';
   @override
   String get placeItems => 'Col·loqueu els elements per compartir.';
+  @override
+  late final _Translations$sendTab$diagnosis$ca diagnosis = _Translations$sendTab$diagnosis$ca._(_root);
 }
 
 // Path: settingsTab
@@ -458,6 +460,8 @@ class _Translations$progressPage$ca extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Desat a Fotos';
   @override
+  late final _Translations$progressPage$checksum$ca checksum = _Translations$progressPage$checksum$ca._(_root);
+  @override
   late final _Translations$progressPage$total$ca total = _Translations$progressPage$total$ca._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ca remainingTime = _Translations$progressPage$remainingTime$ca._(_root);
@@ -680,6 +684,11 @@ class _Translations$dialogs$ca extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ca cancelSession = _Translations$dialogs$cancelSession$ca._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ca connectionError = _Translations$dialogs$connectionError$ca._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ca deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ca._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ca cannotOpenFile = _Translations$dialogs$cannotOpenFile$ca._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ca encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ca._(_root);
@@ -720,6 +729,8 @@ class _Translations$dialogs$ca extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ca pin = _Translations$dialogs$pin$ca._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ca sendModeHelp = _Translations$dialogs$sendModeHelp$ca._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ca startupError = _Translations$dialogs$startupError$ca._(_root);
   @override
   late final _Translations$dialogs$zoom$ca zoom = _Translations$dialogs$zoom$ca._(_root);
 }
@@ -924,6 +935,32 @@ class _Translations$sendTab$sendModes$ca extends Translations$sendTab$sendModes$
   String get link => 'Comparteix via enllaç';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ca extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'S\'estan cercant dispositius propers…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ca noInterface = _Translations$sendTab$diagnosis$noInterface$ca._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ca multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ca._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ca scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ca._(_root);
+  @override
+  String get rescan => 'Torneu a cercar';
+  @override
+  String get bleHint =>
+      'La descoberta per BLE és activa: els dispositius es troben per Bluetooth només si també executen aquest fork amb l\'opció activada; la transferència en si continua fent-se per la xarxa.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ca manualFallback = _Translations$sendTab$diagnosis$manualFallback$ca._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ca extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ca._(TranslationsCa root) : this._root = root, super.internal(root);
@@ -1005,6 +1042,8 @@ class _Translations$settingsTab$send$ca extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Accepta peticions de manera automàtica en el mode «Comparteix via enllaç»';
   @override
   String get createChecksums => 'Crea sumes de verificació en enviar fitxers';
+  @override
+  String get deleteSourceAfterSend => 'Elimina els fitxers d\'origen després d\'un enviament correcte';
 }
 
 // Path: settingsTab.network
@@ -1035,6 +1074,13 @@ class _Translations$settingsTab$network$ca extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Temps d\'espera de descobriment';
   @override
+  String get maxInterfaces => 'Màxim d\'interfícies (Escaneig intel·ligent)';
+  @override
+  String get vpnInterfaces => 'Inclou interfícies VPN (Escaneig intel·ligent)';
+  @override
+  String get vpnInterfacesHint =>
+      'També escaneja les subxarxes de les interfícies de túnel VPN (Tailscale, WireGuard, ...). Les VPN normalment no admeten multicast, per la qual cosa les seves subxarxes es comproven amb l\'escaneig alternatiu per HTTP.';
+  @override
   String get useSystemName => 'Utilitza el nom del sistema';
   @override
   String get generateRandomAlias => 'Genera un àlies aleatori';
@@ -1048,6 +1094,35 @@ class _Translations$settingsTab$network$ca extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Altres dispositius podrien no detectar-vos perquè utilitzeu una adreça multicast personalitzada. (predefinida: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Descoberta per BLE (experimental)';
+  @override
+  String get bleDiscoveryHint =>
+      'Descobreix dispositius propers mitjançant Bluetooth fins i tot quan la xarxa bloqueja el multicast (aïllament del punt d\'accés, AP). Funciona a Android, iOS, macOS i Windows; a Linux aquest dispositiu en pot trobar d\'altres però no pot ser trobat. Tots dos dispositius necessiten aquest fork amb l\'opció activada; la transferència de fitxers en si continua utilitzant la xarxa.';
+  @override
+  String get bleStatusActive =>
+      'Actiu: s\'està escanejant i emetent anuncis. Els dispositius propers només apareixen si també executen aquest fork amb l\'opció activada.';
+  @override
+  String get bleStatusScanOnly =>
+      'Actiu: només escaneja. Aquest dispositiu no es pot descobrir per Bluetooth ara mateix (la plataforma no admet l\'emissió d\'anuncis BLE, o encara no hi ha cap adreça de xarxa utilitzable).';
+  @override
+  String get bleStatusPaused => 'En pausa. Es reprendrà quan l\'aplicació torni al primer pla.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'S\'han denegat els permisos de Bluetooth. Concediu el permís «Dispositius propers» (o «Ubicació» a Android 11 i anteriors) a la configuració del sistema i, després, desactiveu i torneu a activar aquesta opció.';
+  @override
+  String get bleStatusAdapterOff =>
+      'El Bluetooth està desactivat o no està disponible. La descoberta es reiniciarà tota sola quan el Bluetooth torni a estar disponible.';
+  @override
+  String get bleStatusUnsupported =>
+      'No és compatible amb aquest dispositiu: la descoberta per BLE necessita Android 7 o posterior i una ràdio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'En aquesta versió d\'Android, per a trobar altres dispositius també cal que els serveis d\'ubicació del sistema estiguin activats (el permís es demana automàticament; aquest dispositiu ja pot ser trobat per altres).';
+  @override
+  String get bleStatusError => 'No s\'ha pogut iniciar la descoberta per BLE. Vegeu Solució de problemes > Registres per a més detalls.';
+  @override
+  String get bleOpenSystemSettings => 'Obre la configuració del sistema';
 }
 
 // Path: settingsTab.other
@@ -1164,6 +1239,25 @@ class _Translations$deviceDetailsPage$logs$ca extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Actualitzat mitjançant ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ca extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Sumes de verificació verificades';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Sumes de verificació verificades per a ${curr} / ${n} fitxers';
+  @override
+  String get notVerifiable => 'El remitent no ha proporcionat sumes de verificació';
+  @override
+  String get disabled => 'La verificació de sumes de verificació està desactivada';
+  @override
+  String attached({required Object curr, required Object n}) => 'Sumes de verificació adjuntes (${curr} / ${n} fitxers)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ca extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ca._(TranslationsCa root) : this._root = root, super.internal(root);
@@ -1257,6 +1351,11 @@ class _Translations$dialogs$addressInput$ca extends Translations$dialogs$address
   String get ip => 'Adreça IP';
   @override
   String get recentlyUsed => 'Utilitzades recentment: ';
+  @override
+  String get noHashtagCandidates =>
+      'La xarxa actual no té cap adreça IPv4, per la qual cosa l\'etiqueta no es pot ampliar a una adreça candidata. Introduïu l\'adreça completa en el seu lloc (p. ex. 192.168.1.5 o fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ca validation = _Translations$dialogs$addressInput$validation$ca._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1270,6 +1369,42 @@ class _Translations$dialogs$cancelSession$ca extends Translations$dialogs$cancel
   String get title => 'Cancel·la la transferència de fitxers';
   @override
   String get content => 'Segur que voleu cancel·lar la transferència dels fitxers?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ca extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ha fallat la connexió';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ca timeout = _Translations$dialogs$connectionError$timeout$ca._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ca refused = _Translations$dialogs$connectionError$refused$ca._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ca forbidden = _Translations$dialogs$connectionError$forbidden$ca._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ca other = _Translations$dialogs$connectionError$other$ca._(_root);
+  @override
+  String get retry => 'Torna-ho a provar';
+  @override
+  String get details => 'Detalls de l\'error:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ca extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Elimina els fitxers d\'origen';
+  @override
+  String get content => 'Quan els fitxers s\'hagin enviat correctament, se suprimiran d\'aquest dispositiu. Això no es pot desfer.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1563,6 +1698,32 @@ class _Translations$dialogs$sendModeHelp$ca extends Translations$dialogs$sendMod
       'Els destinataris que no tinguin el LocalSend instal·lat poden baixar els fitxers seleccionats obrint l\'enllaç al seu navegador.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ca extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'No s\'ha pogut iniciar el servidor';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ca windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ca._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ca addressInUse = _Translations$dialogs$startupError$addressInUse$ca._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ca generic = _Translations$dialogs$startupError$generic$ca._(_root);
+  @override
+  String get details => 'Detalls de l\'error:';
+  @override
+  String get copyDetails => 'Copia els detalls';
+  @override
+  String get openSettings => 'Obre la configuració';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ca extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ca._(TranslationsCa root) : this._root = root, super.internal(root);
@@ -1572,6 +1733,68 @@ class _Translations$dialogs$zoom$ca extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ca extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Sense connexió de xarxa';
+  @override
+  String get advice => 'Aquest dispositiu no està connectat a cap xarxa. Comproveu la connexió Wi-Fi o per cable d\'aquest dispositiu.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ca extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast no disponible';
+  @override
+  String advice({required Object port}) =>
+      'El LocalSend no pot utilitzar el multicast per a descobrir dispositius en aquesta xarxa. Assegureu-vos que tots dos dispositius són a la mateixa xarxa i que l\'aïllament del punt d\'accés (AP) o un tallafocs no bloquegen el port UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Motiu: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ca extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'No s\'han trobat dispositius';
+  @override
+  String get advice =>
+      'La descoberta funciona, però cap dispositiu ha contestat als anuncis ni a l\'escaneig de xarxa. L\'altre dispositiu pot estar desconnectat, en repòs o bloquejat per un tallafocs. Assegureu-vos que el LocalSend s\'està executant a l\'altre dispositiu.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'S\'han enviat ${announcements} anuncis i ${scans} escanejos de xarxa sense resposta.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ca extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Les adreces IP canvien sovint. Tot i així, podeu accedir a un dispositiu que no surt a la llista: afegiu-lo als preferits o introduïu la seva adreça manualment.';
+  @override
+  String get openFavorites => 'Obre els preferits';
+  @override
+  String get manualInput => 'Introduïu l\'adreça manualment';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1658,4 +1881,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$ca extends Translations$whatsNe
     'Les sol·licituds dels preferits ara s\'accepten automàticament. Aquesta opció està activada per defecte i es pot desactivar a la configuració.',
     'A Android, les transferències continuen mentre l\'aplicació és en segon pla o la pantalla està apagada. A iOS, l\'aplicació encara ha de romandre en primer pla.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ca extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Introduïu una adreça IPv4, una adreça IPv6 o un nom de host vàlid.';
+  @override
+  String get scheme => 'Introduïu només l\'adreça, sense «http://» ni «https://».';
+  @override
+  String get port => 'Introduïu només l\'adreça. El port s\'agafa de la configuració.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ca extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'El dispositiu no ha respost a temps.';
+  @override
+  String get advice =>
+      'Probablement està desconnectat, en repòs o un tallafocs està bloquejant la connexió. Assegureu-vos que el LocalSend s\'està executant a l\'altre dispositiu i que tots dos dispositius són a la mateixa xarxa.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ca extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'El dispositiu ha rebutjat la connexió.';
+  @override
+  String get advice =>
+      'Sembla que el LocalSend no s\'està executant al dispositiu de destí, o que escolta en un port diferent. Inicieu el LocalSend a l\'altre dispositiu o comproveu el port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ca extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'El dispositiu ha rebutjat la sol·licitud.';
+  @override
+  String get advice =>
+      'Pot ser que calgui un PIN o que l\'aparellament amb el dispositiu hagi canviat. Comproveu el PIN i la configuració del desat ràpid al dispositiu de destí.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ca extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'No s\'ha pogut establir la connexió.';
+  @override
+  String get advice =>
+      'Comproveu l\'adreça i el port, assegureu-vos que el LocalSend s\'està executant al dispositiu de destí i que cap tallafocs ni VPN bloqueja la connexió.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ca extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'El Windows ha denegat l\'accés al port (error de sòcol 10013).';
+  @override
+  String get advice =>
+      'Això sol estar causat per un interval de ports reservat per Hyper-V, WSL o Docker, o per un catàleg Winsock malmès:\n• Canvieu el port a la configuració (Xarxa)\n• Comproveu els intervals reservats amb: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repareu el Winsock com a administrador amb: netsh winsock reset (reinicieu després)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ca extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'El port ja l\'utilitza una altra aplicació.';
+  @override
+  String get advice =>
+      'Un altre programa (o una segona instància del LocalSend) escolta en aquest port:\n• Tanqueu l\'altra aplicació, o\n• Canvieu el port a la configuració (Xarxa)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ca extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ca._(TranslationsCa root) : this._root = root, super.internal(root);
+
+  final TranslationsCa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'No s\'ha pogut iniciar el servidor.';
+  @override
+  String get advice => '• Comproveu la configuració del tallafocs i de la xarxa\n• Proveu de canviar el port a la configuració (Xarxa)';
 }

@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Penerangan",
     "help": "Sila pastikan sasaran yang diingini juga berada dalam rangkaian Wi-Fi yang sama.",
-    "placeItems": "Letakkan item untuk dikongsi."
+    "placeItems": "Letakkan item untuk dikongsi.",
+    "diagnosis": {
+      "scanning": "Mencari peranti berdekatan…",
+      "noInterface": {
+        "title": "Tiada sambungan rangkaian",
+        "advice": "Peranti ini tidak disambungkan ke sebarang rangkaian. Sila semak sambungan Wi-Fi atau kabel peranti ini."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast tidak tersedia",
+        "advice": "LocalSend tidak dapat menggunakan penemuan multicast pada rangkaian ini. Sila pastikan kedua-dua peranti berada dalam rangkaian yang sama, dan pengasingan AP atau firewall tidak menyekat port UDP {port}.",
+        "reason": "Sebab: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Tiada peranti ditemui",
+        "advice": "Penemuan berfungsi dengan baik, tetapi tiada peranti yang membalas pengumuman atau imbasan rangkaian. Peranti yang satu lagi mungkin luar talian, dalam mod tidur, atau disekat oleh firewall. Sila pastikan LocalSend sedang berjalan pada peranti yang satu lagi.",
+        "detail": "Telah menghantar {announcements} pengumuman dan {scans} imbasan rangkaian tanpa balasan."
+      },
+      "rescan": "Cari semula",
+      "bleHint": "Penemuan BLE aktif: peranti hanya ditemui melalui Bluetooth jika peranti itu juga menjalankan versi terbitan ini (fork) dengan pilihan ini diaktifkan; pemindahan itu sendiri masih berjalan melalui rangkaian.",
+      "manualFallback": {
+        "message": "Alamat IP sering berubah. Anda tetap boleh menghubungi peranti yang tidak disenaraikan: tambahkannya ke kegemaran atau masukkan alamatnya secara manual.",
+        "openFavorites": "Buka kegemaran",
+        "manualInput": "Masukkan alamat secara manual"
+      }
+    }
   },
   "settingsTab": {
     "title": "Tetapan",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Hantar",
       "shareViaLinkAutoAccept": "Terima permintaan secara automatik dalam mod \"Kongsi melalui pautan\"",
-      "createChecksums": "Cipta checksum semasa menghantar fail"
+      "createChecksums": "Cipta checksum semasa menghantar fail",
+      "deleteSourceAfterSend": "Padam fail sumber selepas penghantaran berjaya"
     },
     "network": {
       "title": "Rangkaian",
@@ -143,12 +168,26 @@
         "filtered": "Ditapis"
       },
       "discoveryTimeout": "Tamat Masa Penemuan",
+      "maxInterfaces": "Antara Muka Maksimum (Imbasan Pintar)",
+      "vpnInterfaces": "Sertakan antara muka VPN (Imbasan Pintar)",
+      "vpnInterfacesHint": "Turut mengimbas subnet antara muka terowong VPN (Tailscale, WireGuard, ...). VPN biasanya tidak membawa multicast, jadi subnetnya diperiksa oleh imbasan sandaran HTTP sebagai gantinya.",
       "useSystemName": "Gunakan nama sistem",
       "generateRandomAlias": "Jana alias rawak",
       "portWarning": "Anda mungkin tidak dapat dikesan oleh peranti lain kerana anda menggunakan port tersuai. (lalai: {defaultPort})",
       "encryption": "Penyulitan",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Anda mungkin tidak dapat dikesan oleh peranti lain kerana anda menggunakan alamat multicast tersuai. (lalai: {defaultMulticast})"
+      "multicastGroupWarning": "Anda mungkin tidak dapat dikesan oleh peranti lain kerana anda menggunakan alamat multicast tersuai. (lalai: {defaultMulticast})",
+      "bleDiscovery": "Penemuan BLE (eksperimen)",
+      "bleDiscoveryHint": "Menemui peranti berdekatan melalui Bluetooth walaupun rangkaian menyekat multicast (pengasingan AP). Berfungsi pada Android, iOS, macOS dan Windows; pada Linux peranti ini boleh menemui yang lain tetapi tidak boleh ditemui. Kedua-dua peranti memerlukan versi terbitan ini (fork) dengan pilihan ini diaktifkan; pemindahan fail itu sendiri masih menggunakan rangkaian.",
+      "bleStatusActive": "Aktif: mengimbas dan mengiklankan. Peranti berdekatan hanya muncul jika ia juga menjalankan versi terbitan ini (fork) dengan pilihan ini diaktifkan.",
+      "bleStatusScanOnly": "Aktif: imbasan sahaja. Peranti ini tidak dapat ditemui melalui Bluetooth buat masa ini (tiada sokongan pengiklanan BLE pada platform ini, atau belum ada alamat rangkaian yang boleh digunakan).",
+      "bleStatusPaused": "Dijeda. Akan disambung semula apabila aplikasi kembali ke latar depan.",
+      "bleStatusPermissionDenied": "Kebenaran Bluetooth ditolak. Berikan kebenaran \"Peranti berdekatan\" (atau \"Lokasi\" pada Android 11 dan ke bawah) dalam tetapan sistem, kemudian matikan dan hidupkan semula pilihan ini.",
+      "bleStatusAdapterOff": "Bluetooth dimatikan atau tidak tersedia. Penemuan akan dimulakan semula secara automatik apabila Bluetooth tersedia semula.",
+      "bleStatusUnsupported": "Tidak disokong pada peranti ini: penemuan BLE memerlukan Android 7 atau lebih baharu serta radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Pada versi Android ini, mencari peranti lain juga memerlukan perkhidmatan lokasi sistem diaktifkan (kebenaran diminta secara automatik; peranti ini sudah boleh ditemui oleh orang lain).",
+      "bleStatusError": "Penemuan BLE tidak dapat dimulakan. Sila lihat Penyelesaian masalah > Log untuk butiran.",
+      "bleOpenSystemSettings": "Buka tetapan sistem"
     },
     "other": {
       "title": "Lain-lain",
@@ -256,6 +295,13 @@
     "titleSending": "Menghantar fail",
     "titleReceiving": "Menerima fail",
     "savedToGallery": "Disimpan dalam Foto",
+    "checksum": {
+      "verified": "Checksum disahkan",
+      "partiallyVerified": "Checksum disahkan untuk {curr} / {n} fail",
+      "notVerifiable": "Penghantar tidak menyediakan checksum",
+      "disabled": "Pengesahan checksum dilumpuhkan",
+      "attached": "Checksum dilampirkan ({curr} / {n} fail)"
+    },
     "total": {
       "title": {
         "sending": "Kemajuan keseluruhan ({time})",
@@ -415,11 +461,42 @@
       "title": "Masukkan alamat",
       "hashtag": "Tanda pagar",
       "ip": "Alamat IP",
-      "recentlyUsed": "Digunakan baru-baru ini: "
+      "recentlyUsed": "Digunakan baru-baru ini: ",
+      "noHashtagCandidates": "Rangkaian semasa tiada alamat IPv4, jadi tanda pagar tidak dapat dikembangkan menjadi alamat calon. Sila masukkan alamat penuh sebaliknya (cth. 192.168.1.5 atau fe80::1).",
+      "validation": {
+        "invalid": "Masukkan alamat IPv4, alamat IPv6 atau nama hos yang sah.",
+        "scheme": "Masukkan alamat sahaja, tanpa \"http://\" atau \"https://\".",
+        "port": "Masukkan alamat sahaja. Port diambil daripada tetapan."
+      }
     },
     "cancelSession": {
       "title": "Batalkan pemindahan fail",
       "content": "Adakah anda benar-benar mahu membatalkan pemindahan fail?"
+    },
+    "connectionError": {
+      "title": "Sambungan gagal",
+      "timeout": {
+        "message": "Peranti tidak membalas dalam masa yang ditetapkan.",
+        "advice": "Ia berkemungkinan luar talian, dalam mod tidur, atau firewall menyekat sambungan. Sila pastikan LocalSend sedang berjalan pada peranti yang satu lagi dan kedua-dua peranti berada dalam rangkaian yang sama."
+      },
+      "refused": {
+        "message": "Peranti menolak sambungan.",
+        "advice": "LocalSend nampaknya tidak berjalan pada peranti sasaran, atau ia mendengar pada port yang berbeza. Mulakan LocalSend pada peranti yang satu lagi atau semak port."
+      },
+      "forbidden": {
+        "message": "Peranti menolak permintaan.",
+        "advice": "PIN mungkin diperlukan, atau penggandingan dengan peranti telah berubah. Semak PIN dan tetapan simpan pantas pada peranti sasaran."
+      },
+      "other": {
+        "message": "Sambungan tidak dapat dibuat.",
+        "advice": "Semak alamat dan port, pastikan LocalSend sedang berjalan pada peranti sasaran, dan tiada firewall atau VPN yang menyekat sambungan."
+      },
+      "retry": "Cuba semula",
+      "details": "Butiran ralat:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Padam fail sumber",
+      "content": "Selepas fail berjaya dihantar, fail tersebut akan dipadamkan daripada peranti ini. Tindakan ini tidak boleh dibuat asal."
     },
     "cannotOpenFile": {
       "title": "Tidak dapat membuka fail",
@@ -515,6 +592,25 @@
       "single": "Menghantar fail kepada satu penerima. Pilihan akan dibersihkan selepas pemindahan fail selesai.",
       "multiple": "Menghantar fail kepada beberapa penerima. Pilihan tidak akan dibersihkan.",
       "link": "Penerima yang tidak mempunyai LocalSend dipasang boleh memuat turun fail yang dipilih dengan membuka pautan dalam pelayar mereka."
+    },
+    "startupError": {
+      "title": "Pelayan tidak dapat dimulakan",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows menafikan akses kepada port tersebut (ralat soket 10013).",
+        "advice": "Ini biasanya disebabkan oleh julat port yang dikhaskan oleh Hyper-V, WSL atau Docker, atau katalog Winsock yang rosak:\n• Tukar port dalam Tetapan (Rangkaian)\n• Semak julat dikhaskan dengan: netsh interface ipv4 show excludedportrange protocol=tcp\n• Baiki Winsock sebagai pentadbir dengan: netsh winsock reset (but semula selepas itu)"
+      },
+      "addressInUse": {
+        "hint": "Port tersebut sudah digunakan oleh aplikasi lain.",
+        "advice": "Program lain (atau contoh LocalSend kedua) sedang mendengar pada port ini:\n• Tutup aplikasi tersebut, atau\n• Tukar port dalam Tetapan (Rangkaian)"
+      },
+      "generic": {
+        "hint": "Pelayan tidak dapat dimulakan.",
+        "advice": "• Semak tetapan firewall dan rangkaian anda\n• Cuba tukar port dalam Tetapan (Rangkaian)"
+      },
+      "details": "Butiran ralat:",
+      "copyDetails": "Salin butiran",
+      "openSettings": "Buka tetapan"
     },
     "zoom": {
       "title": "URL"

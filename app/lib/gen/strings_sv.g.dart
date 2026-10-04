@@ -233,6 +233,8 @@ class _Translations$sendTab$sv extends Translations$sendTab$en {
   String get help => 'Kontrollera att målenheten är ansluten till samma Wi-Fi-nätverk.';
   @override
   String get placeItems => 'Lägg till objekt att dela.';
+  @override
+  late final _Translations$sendTab$diagnosis$sv diagnosis = _Translations$sendTab$diagnosis$sv._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$sv extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Sparat bland bilderna';
   @override
+  late final _Translations$progressPage$checksum$sv checksum = _Translations$progressPage$checksum$sv._(_root);
+  @override
   late final _Translations$progressPage$total$sv total = _Translations$progressPage$total$sv._(_root);
   @override
   late final _Translations$progressPage$remainingTime$sv remainingTime = _Translations$progressPage$remainingTime$sv._(_root);
@@ -678,6 +682,11 @@ class _Translations$dialogs$sv extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$sv cancelSession = _Translations$dialogs$cancelSession$sv._(_root);
   @override
+  late final _Translations$dialogs$connectionError$sv connectionError = _Translations$dialogs$connectionError$sv._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$sv deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$sv._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$sv cannotOpenFile = _Translations$dialogs$cannotOpenFile$sv._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$sv encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$sv._(_root);
@@ -718,6 +727,8 @@ class _Translations$dialogs$sv extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$sv pin = _Translations$dialogs$pin$sv._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$sv sendModeHelp = _Translations$dialogs$sendModeHelp$sv._(_root);
+  @override
+  late final _Translations$dialogs$startupError$sv startupError = _Translations$dialogs$startupError$sv._(_root);
   @override
   late final _Translations$dialogs$zoom$sv zoom = _Translations$dialogs$zoom$sv._(_root);
 }
@@ -922,6 +933,32 @@ class _Translations$sendTab$sendModes$sv extends Translations$sendTab$sendModes$
   String get link => 'Dela via länk';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$sv extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Söker efter enheter i närheten…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$sv noInterface = _Translations$sendTab$diagnosis$noInterface$sv._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$sv multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$sv._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$sv scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$sv._(_root);
+  @override
+  String get rescan => 'Sök igen';
+  @override
+  String get bleHint =>
+      'BLE-upptäckt är aktiv: enheter hittas via Bluetooth endast om de också kör denna fork med alternativet aktiverat; själva överföringen sker fortfarande via nätverket.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$sv manualFallback = _Translations$sendTab$diagnosis$manualFallback$sv._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$sv extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$sv._(TranslationsSv root) : this._root = root, super.internal(root);
@@ -1003,6 +1040,8 @@ class _Translations$settingsTab$send$sv extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Acceptera förfrågningar automatiskt i läget ”Dela via länk”';
   @override
   String get createChecksums => 'Skapa kontrollsummor när filer skickas';
+  @override
+  String get deleteSourceAfterSend => 'Ta bort källfiler efter lyckad sändning';
 }
 
 // Path: settingsTab.network
@@ -1033,6 +1072,13 @@ class _Translations$settingsTab$network$sv extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Tidsgräns för enhetssökning';
   @override
+  String get maxInterfaces => 'Max antal gränssnitt (Smartsökning)';
+  @override
+  String get vpnInterfaces => 'Inkludera VPN-gränssnitt (Smartsökning)';
+  @override
+  String get vpnInterfacesHint =>
+      'Skanna även undernäten i VPN-tunnelgränssnitt (Tailscale, WireGuard, ...). VPN stöder vanligtvis inte multicast, så deras undernät undersöks i stället med HTTP-fallbacksökningen.';
+  @override
   String get useSystemName => 'Använd systemnamn';
   @override
   String get generateRandomAlias => 'Skapa slumpmässigt enhetsnamn';
@@ -1046,6 +1092,34 @@ class _Translations$settingsTab$network$sv extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Andra enheter kanske inte hittar dig eftersom du använder en anpassad multicast-adress. (Standard: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE-upptäckt (experimentellt)';
+  @override
+  String get bleDiscoveryHint =>
+      'Upptäcker enheter i närheten via Bluetooth även när nätverket blockerar multicast (AP-isolering). Fungerar på Android, iOS, macOS och Windows; på Linux kan den här enheten hitta andra enheter men kan inte själv hittas. Båda enheterna behöver denna fork med alternativet aktiverat; själva filöverföringen sker fortfarande via nätverket.';
+  @override
+  String get bleStatusActive =>
+      'Aktiv: skannar och annonserar. Enheter i närheten visas endast om de också kör denna fork med alternativet aktiverat.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktiv: endast skanning. Den här enheten kan för tillfället inte upptäckas via Bluetooth (inget stöd för BLE-advertising på den här plattformen, eller ännu ingen användbar nätverksadress).';
+  @override
+  String get bleStatusPaused => 'Pausad. Återupptas när appen kommer tillbaka till förgrunden.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth-behörigheter nekades. Bevilja behörigheten ”Närliggande enheter” (eller ”Plats” på Android 11 och äldre) i systeminställningarna och stäng sedan av och slå på det här alternativet igen.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth är avstängt eller inte tillgängligt. Upptäckten startar automatiskt igen när Bluetooth blir tillgängligt igen.';
+  @override
+  String get bleStatusUnsupported => 'Stöds inte på den här enheten: BLE-upptäckt kräver Android 7 eller senare samt en Bluetooth LE-radio.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'På den här Android-versionen måste också systemets platstjänster vara påslagna för att hitta andra enheter (behörigheten efterfrågas automatiskt; den här enheten kan redan hittas av andra).';
+  @override
+  String get bleStatusError => 'BLE-upptäckten kunde inte startas. Se Felsökning > Loggar för detaljer.';
+  @override
+  String get bleOpenSystemSettings => 'Öppna systeminställningarna';
 }
 
 // Path: settingsTab.other
@@ -1161,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$sv extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Uppdaterad via ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$sv extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Kontrollsummor verifierade';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Kontrollsummor verifierade för ${curr} / ${n} filer';
+  @override
+  String get notVerifiable => 'Inga kontrollsummor angivna av avsändaren';
+  @override
+  String get disabled => 'Verifiering av kontrollsummor är inaktiverad';
+  @override
+  String attached({required Object curr, required Object n}) => 'Kontrollsummor bifogade (${curr} / ${n} filer)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$sv extends Translations$progressPage$total$en {
   _Translations$progressPage$total$sv._(TranslationsSv root) : this._root = root, super.internal(root);
@@ -1254,6 +1347,11 @@ class _Translations$dialogs$addressInput$sv extends Translations$dialogs$address
   String get ip => 'IP-adress';
   @override
   String get recentlyUsed => 'Senast använda: ';
+  @override
+  String get noHashtagCandidates =>
+      'Det aktuella nätverket har ingen IPv4-adress, så hashtaggen kan inte utökas till en kandidatadress. Ange hela adressen i stället (t.ex. 192.168.1.5 eller fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$sv validation = _Translations$dialogs$addressInput$validation$sv._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1267,6 +1365,42 @@ class _Translations$dialogs$cancelSession$sv extends Translations$dialogs$cancel
   String get title => 'Avbryt filöverföring';
   @override
   String get content => 'Vill du verkligen avbryta filöverföringen?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$sv extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Anslutningen misslyckades';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$sv timeout = _Translations$dialogs$connectionError$timeout$sv._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$sv refused = _Translations$dialogs$connectionError$refused$sv._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$sv forbidden = _Translations$dialogs$connectionError$forbidden$sv._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$sv other = _Translations$dialogs$connectionError$other$sv._(_root);
+  @override
+  String get retry => 'Försök igen';
+  @override
+  String get details => 'Feldetaljer:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$sv extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ta bort källfiler';
+  @override
+  String get content => 'Efter att filerna har skickats kommer de att tas bort från den här enheten. Det går inte att ångra.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1558,6 +1692,32 @@ class _Translations$dialogs$sendModeHelp$sv extends Translations$dialogs$sendMod
   String get link => 'Mottagare som inte har LocalSend installerat kan ladda ner de valda filerna genom att öppna länken i sin webbläsare.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$sv extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Kunde inte starta servern';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$sv windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$sv._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$sv addressInUse = _Translations$dialogs$startupError$addressInUse$sv._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$sv generic = _Translations$dialogs$startupError$generic$sv._(_root);
+  @override
+  String get details => 'Feldetaljer:';
+  @override
+  String get copyDetails => 'Kopiera detaljer';
+  @override
+  String get openSettings => 'Öppna inställningarna';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$sv extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$sv._(TranslationsSv root) : this._root = root, super.internal(root);
@@ -1567,6 +1727,68 @@ class _Translations$dialogs$zoom$sv extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$sv extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ingen nätverksanslutning';
+  @override
+  String get advice => 'Den här enheten är inte ansluten till något nätverk. Kontrollera enhetens Wi-Fi- eller kabelanslutning.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$sv extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast är inte tillgängligt';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend kan inte använda multicast för att hitta enheter på det här nätverket. Kontrollera att båda enheterna är anslutna till samma nätverk och att AP-isolering eller en brandvägg inte blockerar UDP-port ${port}.';
+  @override
+  String reason({required Object reason}) => 'Orsak: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$sv extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Inga enheter hittades';
+  @override
+  String get advice =>
+      'Enhetssökningen fungerar, men ingen enhet besvarade annonseringarna eller nätverkssökningen. Den andra enheten kan vara frånkopplad, i viloläge eller blockerad av en brandvägg. Kontrollera att LocalSend körs på den andra enheten.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Skickade ${announcements} annonseringar och ${scans} nätverkssökningar utan svar.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$sv extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP-adresser ändras ofta. Du kan fortfarande nå en enhet som inte listas: lägg till den i favoriterna eller ange dess adress manuellt.';
+  @override
+  String get openFavorites => 'Öppna favoriter';
+  @override
+  String get manualInput => 'Ange adress manuellt';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1653,4 +1875,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$sv extends Translations$whatsNe
     'Förfrågningar från favoriter accepteras nu automatiskt. Detta är påslaget som standard och kan inaktiveras i inställningarna.',
     'På Android fortsätter överföringar medan appen är i bakgrunden eller skärmen är avstängd. På iOS måste appen fortfarande vara i förgrunden.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$sv extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Ange en giltig IPv4-adress, IPv6-adress eller värdnamn.';
+  @override
+  String get scheme => 'Ange endast adressen, utan ”http://” eller ”https://”.';
+  @override
+  String get port => 'Ange endast adressen. Porten hämtas från inställningarna.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$sv extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Enheten svarade inte i tid.';
+  @override
+  String get advice =>
+      'Den är förmodligen frånkopplad, i viloläge eller så blockerar en brandvägg anslutningen. Kontrollera att LocalSend körs på den andra enheten och att båda enheterna är anslutna till samma nätverk.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$sv extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Enheten vägrade anslutningen.';
+  @override
+  String get advice =>
+      'LocalSend verkar inte köras på målenheten, eller så lyssnar den på en annan port. Starta LocalSend på den andra enheten eller kontrollera porten.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$sv extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Enheten avvisade begäran.';
+  @override
+  String get advice =>
+      'En PIN-kod kan krävas, eller så har ihopparningen med enheten ändrats. Kontrollera PIN-koden och inställningarna för snabbspara på målenheten.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$sv extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Anslutningen kunde inte upprättas.';
+  @override
+  String get advice =>
+      'Kontrollera adressen och porten, kontrollera att LocalSend körs på målenheten och att ingen brandvägg eller VPN blockerar anslutningen.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$sv extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows nekade åtkomst till porten (socketfel 10013).';
+  @override
+  String get advice =>
+      'Det beror vanligtvis på ett portintervall reserverat av Hyper-V, WSL eller Docker, eller på en skadad Winsock-katalog:\n• Ändra porten i inställningarna (Nätverk)\n• Kontrollera reserverade intervall med: netsh interface ipv4 show excludedportrange protocol=tcp\n• Reparera Winsock som administratör med: netsh winsock reset (starta om därefter)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$sv extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Porten används redan av ett annat program.';
+  @override
+  String get advice =>
+      'Ett annat program (eller en annan LocalSend-instans) lyssnar på porten:\n• Stäng det andra programmet, eller\n• Ändra porten i inställningarna (Nätverk)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$sv extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$sv._(TranslationsSv root) : this._root = root, super.internal(root);
+
+  final TranslationsSv _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Servern kunde inte startas.';
+  @override
+  String get advice => '• Kontrollera dina brandväggs- och nätverksinställningar\n• Försök ändra porten i inställningarna (Nätverk)';
 }

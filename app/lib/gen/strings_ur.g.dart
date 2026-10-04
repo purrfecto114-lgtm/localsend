@@ -231,6 +231,8 @@ class _Translations$sendTab$ur extends Translations$sendTab$en {
   String get help => 'براہ کرم یقینی بنائیں کہ مطلوبہ ہدف بھی اسی وائی فائی نیٹ ورک میں ہے۔';
   @override
   String get placeItems => 'شئیر کرنے کے لیے اشیاء رکھیں۔';
+  @override
+  late final _Translations$sendTab$diagnosis$ur diagnosis = _Translations$sendTab$diagnosis$ur._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$ur extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'تصاویر میں محفوظ کیا گیا';
   @override
+  late final _Translations$progressPage$checksum$ur checksum = _Translations$progressPage$checksum$ur._(_root);
+  @override
   late final _Translations$progressPage$total$ur total = _Translations$progressPage$total$ur._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ur remainingTime = _Translations$progressPage$remainingTime$ur._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$ur extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ur cancelSession = _Translations$dialogs$cancelSession$ur._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ur connectionError = _Translations$dialogs$connectionError$ur._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ur deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ur._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ur cannotOpenFile = _Translations$dialogs$cannotOpenFile$ur._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ur encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ur._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$ur extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ur pin = _Translations$dialogs$pin$ur._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ur sendModeHelp = _Translations$dialogs$sendModeHelp$ur._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ur startupError = _Translations$dialogs$startupError$ur._(_root);
   @override
   late final _Translations$dialogs$zoom$ur zoom = _Translations$dialogs$zoom$ur._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$ur extends Translations$sendTab$sendModes$
   String get link => 'لنک کے ذریعے شیئر کریں';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ur extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'قریبی ڈیوائسز کی تلاش جاری ہے…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ur noInterface = _Translations$sendTab$diagnosis$noInterface$ur._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ur multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ur._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ur scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ur._(_root);
+  @override
+  String get rescan => 'دوبارہ تلاش کریں';
+  @override
+  String get bleHint =>
+      'BLE دریافت فعال ہے: ڈیوائسز صرف اسی صورت بلوٹوتھ کے ذریعے ملتی ہیں جب وہ بھی فعال آپشن کے ساتھ یہی فورک (fork) چلا رہی ہوں؛ منتقلی خود اب بھی نیٹ ورک کے ذریعے ہوتی ہے۔';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ur manualFallback = _Translations$sendTab$diagnosis$manualFallback$ur._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ur extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ur._(TranslationsUr root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$ur extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"لنک کے ذریعے شیئر کریں" موڈ میں درخواستیں خود بخود قبول کریں';
   @override
   String get createChecksums => 'فائلیں بھیجتے وقت چیک سم بنائیں';
+  @override
+  String get deleteSourceAfterSend => 'کامیاب بھیجنے کے بعد سورس فائلیں حذف کریں';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$ur extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'نیٹورک پرڈھونڈنے کی مدت ختم ہوگئ ہے';
   @override
+  String get maxInterfaces => 'زیادہ سے زیادہ انٹرفیس (اسمارٹ سکین)';
+  @override
+  String get vpnInterfaces => 'VPN انٹرفیسز شامل کریں (اسمارٹ سکین)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN ٹنل انٹرفیسز (Tailscale، WireGuard وغیرہ) کے سب نیٹ ورکس بھی سکین ہوتے ہیں۔ VPN عموماً ملٹی کاسٹ کی حمایت نہیں کرتے، اس لیے ان کے سب نیٹ ورکس بجائے اس کے HTTP فال بیک سکین سے جانچے جاتے ہیں۔';
+  @override
   String get useSystemName => 'سسٹم کا نام استعمال کریں';
   @override
   String get generateRandomAlias => 'بے ترتیب عرف پیدا کریں';
@@ -962,6 +1008,33 @@ class _Translations$settingsTab$network$ur extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'ہو سکتا ہے آپ کو دوسرے آلات سے پتہ نہ لگے کیونکہ آپ حسب ضرورت ملٹی کاسٹ ایڈریس استعمال کر رہے ہیں۔ (پہلے سے طے شدہ: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE دریافت (تجرباتی)';
+  @override
+  String get bleDiscoveryHint =>
+      'نیٹ ورک کے ملٹی کاسٹ مسدود کرنے کے باوجود (AP آئسولیشن) بلوٹوتھ کے ذریعے قریبی ڈیوائسز تلاش کرتا ہے۔ اینڈرائیڈ، iOS، macOS اور ونڈوز پر کام کرتا ہے؛ لینکس پر یہ ڈیوائس دوسروں کو تلاش کر سکتی ہے لیکن خود دریافت نہیں ہو سکتی۔ دونوں ڈیوائسز کو فعال آپشن کے ساتھ یہی فورک (fork) درکار ہے؛ فائل کی منتقلی خود اب بھی نیٹ ورک سے ہوتی ہے۔';
+  @override
+  String get bleStatusActive =>
+      'فعال: سکیننگ اور advertising جاری ہے۔ قریبی ڈیوائسز صرف اس صورت نظر آتی ہیں جب وہ بھی فعال آپشن کے ساتھ یہی فورک (fork) چلا رہی ہوں۔';
+  @override
+  String get bleStatusScanOnly =>
+      'فعال: صرف سکیننگ۔ اس وقت اس ڈیوائس کو بلوٹوتھ کے ذریعے دریافت نہیں کیا جا سکتا (اس پلیٹ فارم پر BLE advertising کی حمایت نہیں، یا ابھی کوئی قابلِ استعمال نیٹ ورک ایڈریس موجود نہیں)۔';
+  @override
+  String get bleStatusPaused => 'موقوف۔ ایپ کے پیش منظر میں واپس آنے پر دوبارہ شروع ہو جاتی ہے۔';
+  @override
+  String get bleStatusPermissionDenied =>
+      'بلوٹوتھ کی اجازتیں مسترد کر دی گئی ہیں۔ سسٹم ترتیبات میں "قریبی آلات" (یا اینڈرائیڈ 11 اور پرانے ورژن پر "مقام") کی اجازت دیں، پھر یہ آپشن بند کر کے دوبارہ چالو کریں۔';
+  @override
+  String get bleStatusAdapterOff => 'بلوٹوتھ بند ہے یا دستیاب نہیں۔ بلوٹوتھ کے دوبارہ دستیاب ہوتے ہی دریافت خود بخود دوبارہ شروع ہو جاتی ہے۔';
+  @override
+  String get bleStatusUnsupported => 'اس ڈیوائس پر معاون نہیں: BLE دریافت کے لیے اینڈرائیڈ 7 یا نیا ورژن اور Bluetooth LE ریڈیو درکار ہے۔';
+  @override
+  String get bleStatusLegacyLocation =>
+      'اینڈرائیڈ کے اس ورژن پر دیگر ڈیوائسز کی تلاش کے لیے سسٹم کی لوکیشن سروسز کا چالو ہونا بھی ضروری ہے (اجازت خودکار طلب ہوتی ہے؛ اس ڈیوائس کو دیگر پہلے ہی تلاش کر سکتے ہیں)۔';
+  @override
+  String get bleStatusError => 'BLE دریافت شروع نہیں ہو سکی۔ تفصیلات کے لیے خرابی کا سراغ لگانا > لاگز دیکھیں۔';
+  @override
+  String get bleOpenSystemSettings => 'سسٹم ترتیبات کھولیں';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1151,25 @@ class _Translations$deviceDetailsPage$logs$ur extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} کے ذریعے اپ ڈیٹ ہوا (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ur extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'چیک سمز کی تصدیق ہو گئی';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} فائلوں کی چیک سم کی تصدیق ہو گئی';
+  @override
+  String get notVerifiable => 'بھیجنے والے نے چیک سم فراہم نہیں کیے';
+  @override
+  String get disabled => 'چیک سم کی تصدیق بند ہے';
+  @override
+  String attached({required Object curr, required Object n}) => 'چیک سم منسلک کر دیے گئے (${curr} / ${n} فائلیں)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ur extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ur._(TranslationsUr root) : this._root = root, super.internal(root);
@@ -1171,6 +1263,11 @@ class _Translations$dialogs$addressInput$ur extends Translations$dialogs$address
   String get ip => 'اپ ایڈریس';
   @override
   String get recentlyUsed => 'حال ہی میں استعمال ہوا:';
+  @override
+  String get noHashtagCandidates =>
+      'موجودہ نیٹ ورک کا کوئی IPv4 ایڈریس نہیں ہے، اس لیے ہیش ٹیگ کو امیدوار ایڈریس میں نہیں بدلا جا سکتا۔ براہ کرم مکمل ایڈریس درج کریں (مثلاً 192.168.1.5 یا fe80::1)۔';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ur validation = _Translations$dialogs$addressInput$validation$ur._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1281,42 @@ class _Translations$dialogs$cancelSession$ur extends Translations$dialogs$cancel
   String get title => 'فائل ٹرانسفر منسوخ کریں۔';
   @override
   String get content => 'کیا آپ واقعی فائل ٹرانسفر کو منسوخ کرنا چاہتے ہیں؟';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ur extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'کنکشن ناکام ہوا';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ur timeout = _Translations$dialogs$connectionError$timeout$ur._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ur refused = _Translations$dialogs$connectionError$refused$ur._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ur forbidden = _Translations$dialogs$connectionError$forbidden$ur._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ur other = _Translations$dialogs$connectionError$other$ur._(_root);
+  @override
+  String get retry => 'دوبارہ کوشش کریں';
+  @override
+  String get details => 'خرابی کی تفصیلات:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ur extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'سورس فائلیں حذف کریں';
+  @override
+  String get content => 'فائلوں کے کامیابی سے بھیجے جانے کے بعد وہ اس ڈیوائس سے حذف کر دی جائیں گی۔ یہ عمل واپس نہیں کیا جا سکتا۔';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1475,6 +1608,32 @@ class _Translations$dialogs$sendModeHelp$ur extends Translations$dialogs$sendMod
   String get link => 'LocalSend نصب نہیں ہونے والے رسیورز منتخب شدہ فائلز کو لنک اپنے براؤزر میں کھولنے سے ڈاؤن لوڈ کر سکتے ہیں۔';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ur extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'سرور شروع نہیں ہو سکا';
+  @override
+  String port({required Object port}) => 'پورٹ: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ur windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ur._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ur addressInUse = _Translations$dialogs$startupError$addressInUse$ur._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ur generic = _Translations$dialogs$startupError$generic$ur._(_root);
+  @override
+  String get details => 'خرابی کی تفصیلات:';
+  @override
+  String get copyDetails => 'تفصیلات کاپی کریں';
+  @override
+  String get openSettings => 'ترتیبات کھولیں';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ur extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ur._(TranslationsUr root) : this._root = root, super.internal(root);
@@ -1484,6 +1643,68 @@ class _Translations$dialogs$zoom$ur extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ur extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'نیٹ ورک کنکشن نہیں ہے';
+  @override
+  String get advice => 'یہ ڈیوائس کسی نیٹ ورک سے منسلک نہیں ہے۔ اس ڈیوائس کا وائی فائی یا کیبل کنکشن چیک کریں۔';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ur extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ملٹی کاسٹ دستیاب نہیں ہے';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend اس نیٹ ورک پر ملٹی کاسٹ دریافت استعمال نہیں کر سکتا۔ یقینی بنائیں کہ دونوں ڈیوائسز ایک ہی نیٹ ورک پر ہیں اور AP آئسولیشن یا فائر وال UDP پورٹ ${port} کو مسدود نہیں کر رہا۔';
+  @override
+  String reason({required Object reason}) => 'وجہ: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ur extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'کوئی ڈیوائس نہیں ملی';
+  @override
+  String get advice =>
+      'دریافت کام کر رہی ہے، لیکن کسی ڈیوائس نے اعلانات یا نیٹ ورک سکین کا جواب نہیں دیا۔ ہو سکتا ہے دوسری ڈیوائس آف لائن ہو، سلیپ موڈ میں ہو یا فائر وال کی وجہ سے مسدود ہو۔ یقینی بنائیں کہ LocalSend دوسری ڈیوائس پر چل رہا ہے۔';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      '${announcements} اعلانات اور ${scans} نیٹ ورک سکین جواب ملے بغیر بھیجے گئے۔';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ur extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP ایڈریسز اکثر تبدیل ہوتے رہتے ہیں۔ فہرست میں شامل نہ ہونے والی ڈیوائس تک آپ پھر بھی پہنچ سکتے ہیں: اسے پسندیدہ میں شامل کریں یا اس کا پتہ دستی طور پر درج کریں۔';
+  @override
+  String get openFavorites => 'پسندیدہ کھولیں';
+  @override
+  String get manualInput => 'پتہ دستی طور پر درج کریں';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1570,4 +1791,114 @@ class _Translations$whatsNewPage$changes$v1_18_0$ur extends Translations$whatsNe
     'پسندیدہ آلات کی درخواستیں اب خودکار طور پر قبول کی جاتی ہیں۔ یہ طے شدہ طور پر فعال ہے اور ترتیبات میں غیر فعال کیا جا سکتا ہے۔',
     'Android پر، منتقلی جاری رہتی ہے جب ایپ پس منظر میں ہو یا اسکرین بند ہو۔ iOS پر، ایپ کو اب بھی پیش منظر میں رہنا ہوگا۔',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ur extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'درست IPv4 ایڈریس، IPv6 ایڈریس یا ہوسٹ نام درج کریں۔';
+  @override
+  String get scheme => 'صرف ایڈریس درج کریں، "http://" یا "https://" کے بغیر۔';
+  @override
+  String get port => 'صرف ایڈریس درج کریں۔ پورٹ ترتیبات سے لی جاتی ہے۔';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ur extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ڈیوائس نے وقت میں جواب نہیں دیا۔';
+  @override
+  String get advice =>
+      'غالباً وہ آف لائن ہے، سلیپ موڈ میں ہے، یا فائر وال کنکشن روک رہا ہے۔ یقینی بنائیں کہ LocalSend دوسری ڈیوائس پر چل رہا ہے اور دونوں ڈیوائسز ایک ہی نیٹ ورک پر ہیں۔';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ur extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ڈیوائس نے کنکشن مسترد کر دیا۔';
+  @override
+  String get advice =>
+      'معلوم ہوتا ہے LocalSend ہدف ڈیوائس پر چل نہیں رہا، یا وہ کسی اور پورٹ پر سن رہا ہے۔ LocalSend کو دوسری ڈیوائس پر چالو کریں یا پورٹ چیک کریں۔';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ur extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ڈیوائس نے درخواست مسترد کر دی۔';
+  @override
+  String get advice => 'ہو سکتا ہے PIN درکار ہو، یا ڈیوائس کے ساتھ پیرنگ بدل گئی ہو۔ ہدف ڈیوائس پر PIN اور فوری محفوظ کرنے کی ترتیبات چیک کریں۔';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ur extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'کنکشن قائم نہیں ہو سکا۔';
+  @override
+  String get advice => 'ایڈریس اور پورٹ چیک کریں، یقینی بنائیں کہ LocalSend ہدف ڈیوائس پر چل رہا ہے، اور کوئی فائر وال یا VPN کنکشن روک نہیں رہا۔';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ur extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ونڈوز نے پورٹ تک رسائی سے انکار کر دیا (ساکٹ خرابی 10013)۔';
+  @override
+  String get advice =>
+      'یہ عموماً Hyper-V، WSL یا Docker کے ریزرو کردہ پورٹ رینج، یا خراب Winsock کیٹلاگ کی وجہ سے ہوتا ہے:\n• ترتیبات (نیٹ ورک) میں پورٹ تبدیل کریں\n• ریزرو شدہ رینجز اس کمانڈ سے چیک کریں: netsh interface ipv4 show excludedportrange protocol=tcp\n• بطور ایڈمنسٹریٹر Winsock اس کمانڈ سے مرمت کریں: netsh winsock reset (بعد میں کمپیوٹر دوبارہ چالو کریں)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ur extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'یہ پورٹ پہلے ہی کسی اور ایپلیکیشن کے زیرِ استعمال ہے۔';
+  @override
+  String get advice =>
+      'کوئی اور پروگرام (یا LocalSend کی دوسری کاپی) اس پورٹ پر سن رہا ہے:\n• دوسری ایپلیکیشن بند کریں، یا\n• ترتیبات (نیٹ ورک) میں پورٹ تبدیل کریں';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ur extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ur._(TranslationsUr root) : this._root = root, super.internal(root);
+
+  final TranslationsUr _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'سرور شروع نہیں ہو سکا۔';
+  @override
+  String get advice => '• اپنے فائر وال اور نیٹ ورک کی ترتیبات چیک کریں\n• ترتیبات (نیٹ ورک) میں پورٹ تبدیل کرنے کی کوشش کریں';
 }

@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicație",
     "help": "Verifică dacă destinația se află în aceeași rețea Wi-Fi.",
-    "placeItems": "Adaugă elemente pentru a partaja."
+    "placeItems": "Adaugă elemente pentru a partaja.",
+    "diagnosis": {
+      "scanning": "Se caută dispozitive în apropiere…",
+      "noInterface": {
+        "title": "Nicio conexiune la rețea",
+        "advice": "Acest dispozitiv nu este conectat la nicio rețea. Verifică conexiunea Wi-Fi sau prin cablu a acestui dispozitiv."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast indisponibil",
+        "advice": "LocalSend nu poate folosi descoperirea prin multicast în această rețea. Asigură-te că ambele dispozitive sunt în aceeași rețea și că izolarea AP sau un firewall nu blochează portul UDP {port}.",
+        "reason": "Motiv: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Niciun dispozitiv găsit",
+        "advice": "Descoperirea funcționează, dar niciun dispozitiv nu a răspuns nici la anunțuri, nici la scanarea rețelei. Celălalt dispozitiv poate fi offline, în repaus sau blocat de un firewall. Asigură-te că LocalSend rulează pe celălalt dispozitiv.",
+        "detail": "S-au trimis {announcements} anunțuri și {scans} scanări de rețea fără răspuns."
+      },
+      "rescan": "Caută din nou",
+      "bleHint": "Descoperirea BLE este activă: dispozitivele sunt găsite prin Bluetooth doar dacă rulează și ele acest fork cu opțiunea activată; transferul în sine se face tot prin rețea.",
+      "manualFallback": {
+        "message": "Adresele IP se schimbă des. Tot poți ajunge la un dispozitiv care nu apare în listă: adaugă-l la favorite sau introdu adresa lui manual.",
+        "openFavorites": "Deschide favoritele",
+        "manualInput": "Introdu adresa manual"
+      }
+    }
   },
   "settingsTab": {
     "title": "Setări",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Trimite",
       "shareViaLinkAutoAccept": "Acceptă automat cererile în modul „Partajare prin link”",
-      "createChecksums": "Creează sume de control la trimiterea fișierelor"
+      "createChecksums": "Creează sume de control la trimiterea fișierelor",
+      "deleteSourceAfterSend": "Șterge fișierele sursă după o trimitere reușită"
     },
     "network": {
       "title": "Rețea",
@@ -143,12 +168,26 @@
         "filtered": "Filtrat"
       },
       "discoveryTimeout": "Expirare descoperire",
+      "maxInterfaces": "Număr maxim de interfețe (scanare inteligentă)",
+      "vpnInterfaces": "Include interfețele VPN (scanare inteligentă)",
+      "vpnInterfacesHint": "Scanează și subrețelele interfețelor de tunel VPN (Tailscale, WireGuard, …). VPN-urile de obicei nu transportă multicast, deci subrețelele lor sunt sondate prin scanarea HTTP de rezervă.",
       "useSystemName": "Folosește numele sistemului",
       "generateRandomAlias": "Generează alias aleatoriu",
       "portWarning": "Este posibil să nu fii detectat de alte dispozitive pentru că folosești un port personalizat. (implicit: {defaultPort})",
       "encryption": "Criptare",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Este posibil să nu fii detectat de alte dispozitive pentru că folosești o adresă multicast personalizată. (implicit: {defaultMulticast})"
+      "multicastGroupWarning": "Este posibil să nu fii detectat de alte dispozitive pentru că folosești o adresă multicast personalizată. (implicit: {defaultMulticast})",
+      "bleDiscovery": "Descoperire BLE (experimental)",
+      "bleDiscoveryHint": "Descoperă dispozitivele din apropiere prin Bluetooth chiar și când rețeaua blochează multicastul (izolarea AP). Funcționează pe Android, iOS, macOS și Windows; pe Linux, acest dispozitiv îi poate găsi pe ceilalți, dar nu poate fi găsit el însuși. Ambele dispozitive au nevoie de acest fork cu opțiunea activată; transferul de fișiere în sine folosește în continuare rețeaua.",
+      "bleStatusActive": "Activă: scanare și difuzare. Dispozitivele din apropiere apar doar dacă rulează și ele acest fork cu opțiunea activată.",
+      "bleStatusScanOnly": "Activă: doar scanare. Acest dispozitiv nu poate fi găsit prin Bluetooth în acest moment (fără suport pentru difuzare BLE pe această platformă, sau încă fără o adresă de rețea utilizabilă).",
+      "bleStatusPaused": "În pauză. Se reia când aplicația revine în prim-plan.",
+      "bleStatusPermissionDenied": "Permisiunile de Bluetooth au fost refuzate. Acordă permisiunea „Dispozitive din apropiere” (sau „Locație” pe Android 11 și versiunile anterioare) din setările sistemului, apoi dezactivează și reactivează această opțiune.",
+      "bleStatusAdapterOff": "Bluetooth-ul este oprit sau indisponibil. Descoperirea se repornește singură când Bluetooth devine din nou disponibil.",
+      "bleStatusUnsupported": "Necompatibil pe acest dispozitiv: descoperirea BLE necesită Android 7 sau mai nou și un radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Pe această versiune de Android, găsirea altor dispozitive necesită în plus ca serviciile de locație ale sistemului să fie activate (permisiunea se solicită automat; acest dispozitiv poate fi deja găsit de ceilalți).",
+      "bleStatusError": "Descoperirea BLE nu a putut porni. Vezi Depanare > Jurnale pentru detalii.",
+      "bleOpenSystemSettings": "Deschide setările sistemului"
     },
     "other": {
       "title": "Altele",
@@ -256,6 +295,13 @@
     "titleSending": "Trimitere fișiere",
     "titleReceiving": "Primire fișiere",
     "savedToGallery": "Salvat în Galerie",
+    "checksum": {
+      "verified": "Sume de control verificate",
+      "partiallyVerified": "Sume de control verificate pentru {curr} / {n} fișiere",
+      "notVerifiable": "Expeditorul nu a furnizat sume de control",
+      "disabled": "Verificarea sumelor de control este dezactivată",
+      "attached": "Sume de control atașate ({curr} / {n} fișiere)"
+    },
     "total": {
       "title": {
         "sending": "Progres total ({time})",
@@ -416,11 +462,42 @@
       "title": "Introdu adresa",
       "hashtag": "Hashtag",
       "ip": "Adresă IP",
-      "recentlyUsed": "Folosit recent: "
+      "recentlyUsed": "Folosit recent: ",
+      "noHashtagCandidates": "Rețeaua actuală nu are adresă IPv4, deci hashtagul nu poate fi extins la o adresă candidată. Te rugăm să introduci adresa completă (de ex. 192.168.1.5 sau fe80::1).",
+      "validation": {
+        "invalid": "Introdu o adresă IPv4, o adresă IPv6 sau un nume de gazdă valid.",
+        "scheme": "Introdu doar adresa, fără \"http://\" sau \"https://\".",
+        "port": "Introdu doar adresa. Portul este preluat din setări."
+      }
     },
     "cancelSession": {
       "title": "Anulează trimiterea fișierelor",
       "content": "Chiar vrei să anulezi transferul fișierelor?"
+    },
+    "connectionError": {
+      "title": "Conectare eșuată",
+      "timeout": {
+        "message": "Dispozitivul nu a răspuns la timp.",
+        "advice": "Probabil este offline, în repaus sau un firewall blochează conexiunea. Asigură-te că LocalSend rulează pe celălalt dispozitiv și că ambele dispozitive sunt în aceeași rețea."
+      },
+      "refused": {
+        "message": "Dispozitivul a refuzat conexiunea.",
+        "advice": "Se pare că LocalSend nu rulează pe dispozitivul țintă sau că ascultă pe un alt port. Pornește LocalSend pe celălalt dispozitiv sau verifică portul."
+      },
+      "forbidden": {
+        "message": "Dispozitivul a respins cererea.",
+        "advice": "Poate fi necesar un PIN sau asocierea cu dispozitivul s-a schimbat. Verifică codul PIN și setările de salvare rapidă pe dispozitivul țintă."
+      },
+      "other": {
+        "message": "Conexiunea nu a putut fi stabilită.",
+        "advice": "Verifică adresa și portul, asigură-te că LocalSend rulează pe dispozitivul țintă și că niciun firewall sau VPN nu blochează conexiunea."
+      },
+      "retry": "Încearcă din nou",
+      "details": "Detalii despre eroare:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Ștergerea fișierelor sursă",
+      "content": "După ce fișierele sunt trimise cu succes, ele vor fi șterse de pe acest dispozitiv. Această acțiune nu poate fi anulată."
     },
     "cannotOpenFile": {
       "title": "Nu se poate deschide fișierul",
@@ -516,6 +593,25 @@
       "single": "Trimite fișiere unui singur destinatar. Selecția va fi golită după ce transferul este finalizat.",
       "multiple": "Trimite fișiere la mai mulți destinatari. Selecția nu va fi ștearsă după transferul de fișiere terminate.",
       "link": "Destinatarii care nu au LocalSend instalat pot descărca fișierele selectate prin deschiderea linkului în browserul lor."
+    },
+    "startupError": {
+      "title": "Serverul nu a putut porni",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows a refuzat accesul la port (eroare de socket 10013).",
+        "advice": "Aceasta este cauzată de obicei de un interval de porturi rezervat de Hyper-V, WSL sau Docker, sau de un catalog Winsock corupt:\n• Schimbă portul din Setări (Rețea)\n• Verifică intervalele rezervate cu: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repară Winsock ca administrator cu: netsh winsock reset (repornește după)"
+      },
+      "addressInUse": {
+        "hint": "Portul este deja folosit de altă aplicație.",
+        "advice": "Un alt program (sau a doua instanță de LocalSend) ascultă pe acest port:\n• Închide cealaltă aplicație, sau\n• Schimbă portul din Setări (Rețea)"
+      },
+      "generic": {
+        "hint": "Serverul nu a putut fi pornit.",
+        "advice": "• Verifică firewall-ul și setările de rețea\n• Încearcă să schimbi portul din Setări (Rețea)"
+      },
+      "details": "Detalii despre eroare:",
+      "copyDetails": "Copiază detaliile",
+      "openSettings": "Deschide setările"
     },
     "zoom": {
       "title": "URL"

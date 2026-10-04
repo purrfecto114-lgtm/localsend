@@ -231,6 +231,8 @@ class _Translations$sendTab$he extends Translations$sendTab$en {
   String get help => 'אנא ודא שאתה ומכשיר היעד נמצאים באותה רשת WiFi.';
   @override
   String get placeItems => 'הצב פריטים לשיתוף.';
+  @override
+  late final _Translations$sendTab$diagnosis$he diagnosis = _Translations$sendTab$diagnosis$he._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$he extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'נשמר בתמונות';
   @override
+  late final _Translations$progressPage$checksum$he checksum = _Translations$progressPage$checksum$he._(_root);
+  @override
   late final _Translations$progressPage$total$he total = _Translations$progressPage$total$he._(_root);
   @override
   late final _Translations$progressPage$remainingTime$he remainingTime = _Translations$progressPage$remainingTime$he._(_root);
@@ -593,6 +597,11 @@ class _Translations$dialogs$he extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$he cancelSession = _Translations$dialogs$cancelSession$he._(_root);
   @override
+  late final _Translations$dialogs$connectionError$he connectionError = _Translations$dialogs$connectionError$he._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$he deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$he._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$he cannotOpenFile = _Translations$dialogs$cannotOpenFile$he._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$he encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$he._(_root);
@@ -633,6 +642,8 @@ class _Translations$dialogs$he extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$he pin = _Translations$dialogs$pin$he._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$he sendModeHelp = _Translations$dialogs$sendModeHelp$he._(_root);
+  @override
+  late final _Translations$dialogs$startupError$he startupError = _Translations$dialogs$startupError$he._(_root);
   @override
   late final _Translations$dialogs$zoom$he zoom = _Translations$dialogs$zoom$he._(_root);
 }
@@ -836,6 +847,32 @@ class _Translations$sendTab$sendModes$he extends Translations$sendTab$sendModes$
   String get link => 'שיתוף באמצעות קישור';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$he extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'מחפש מכשירים בקרבת מקום…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$he noInterface = _Translations$sendTab$diagnosis$noInterface$he._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$he multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$he._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$he scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$he._(_root);
+  @override
+  String get rescan => 'חפש שוב';
+  @override
+  String get bleHint =>
+      'גילוי BLE פעיל: מכשירים נמצאים דרך Bluetooth רק אם גם הם מריצים את הגרסה הזו (fork) של LocalSend עם האפשרות הפעילה; העברת הקבצים עצמה עדיין מתבצעת דרך הרשת.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$he manualFallback = _Translations$sendTab$diagnosis$manualFallback$he._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$he extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$he._(TranslationsHe root) : this._root = root, super.internal(root);
@@ -921,6 +958,8 @@ class _Translations$settingsTab$send$he extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'שיתוף באמצעות קישור: אישור אוטומטי';
   @override
   String get createChecksums => 'צור סכומי שלמות קבצים בעת שליחה';
+  @override
+  String get deleteSourceAfterSend => 'מחק את קובצי המקור לאחר שליחה מוצלחת';
 }
 
 // Path: settingsTab.network
@@ -951,6 +990,13 @@ class _Translations$settingsTab$network$he extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'זמן קצוב לגילוי';
   @override
+  String get maxInterfaces => 'מספר ממשקים מקסימלי (סריקה חכמה)';
+  @override
+  String get vpnInterfaces => 'כלול ממשקי VPN (סריקה חכמה)';
+  @override
+  String get vpnInterfacesHint =>
+      'סורק גם את תתי-הרשתות של ממשקי מנהרות VPN (Tailscale, WireGuard וכו\'). רשתות VPN בדרך כלל אינן תומכות במולטיקאסט, ולכן תתי-הרשתות שלהן נסרקות באמצעות סריקת ה-HTTP החלופית.';
+  @override
   String get useSystemName => 'השתמש בשם מערכת';
   @override
   String get generateRandomAlias => 'צור כינוי אקראי';
@@ -964,6 +1010,32 @@ class _Translations$settingsTab$network$he extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'יתכן שלא יזוהו מכשירים אחרים בגלל שאתה משתמש בכתובת מולטיקאסט מותאמת אישית. (ברירת־מחדל: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'גילוי BLE (ניסיוני)';
+  @override
+  String get bleDiscoveryHint =>
+      'מגלה מכשירים בקרבת מקום דרך Bluetooth גם כשהרשת חוסמת מולטיקאסט (בידוד AP). עובד באנדרואיד, iOS, macOS ו-Windows; ב-Linux המכשיר הזה יכול למצוא מכשירים אחרים אך לא ניתן למצוא אותו בעצמו. שני המכשירים צריכים את הגרסה הזו (fork) של LocalSend עם האפשרות הפעילה; העברת הקבצים עצמה עדיין משתמשת ברשת.';
+  @override
+  String get bleStatusActive => 'פעיל: סורק ומכריז על עצמו. מכשירים בקרבת מקום מופיעים רק אם גם הם מריצים את הגרסה הזו (fork) עם האפשרות הפעילה.';
+  @override
+  String get bleStatusScanOnly =>
+      'פעיל: סריקה בלבד. לא ניתן לגלות את המכשיר הזה דרך Bluetooth כרגע (אין תמיכה בהכרזת BLE בפלטפורמה זו, או שאין עדיין כתובת רשת שמישה).';
+  @override
+  String get bleStatusPaused => 'מושהה. ממשיך אוטומטית כשהאפליקציה חוזרת לחזית.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'הרשאות Bluetooth נדחו. הענק את ההרשאה "מכשירים בקרבת מקום" (או "מיקום" באנדרואיד 11 ומטה) בהגדרות המערכת, ואז כבה והדלק את האפשרות הזו שוב.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth כבוי או לא זמין. הגילוי יופעל מחדש אוטומטית כש-Bluetooth יהיה זמין שוב.';
+  @override
+  String get bleStatusUnsupported => 'לא נתמך במכשיר זה: גילוי BLE דורש אנדרואיד 7 ומעלה ורדיו Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'בגרסת אנדרואיד זו, מציאת מכשירים אחרים דורשת גם ששירותי המיקום של המערכת יהיו דלוקים (ההרשאה מתבקשת אוטומטית; את המכשיר הזה כבר ניתן למצוא).';
+  @override
+  String get bleStatusError => 'גילוי BLE לא הצליח להתחיל. ראה פתרון תקלות > יומני רישום לפרטים.';
+  @override
+  String get bleOpenSystemSettings => 'פתח הגדרות מערכת';
 }
 
 // Path: settingsTab.other
@@ -1080,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$he extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'עודכן באמצעות ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$he extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'סכומי השלמות אומתו';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'סכומי שלמות אומתו עבור ${curr} / ${n} קבצים';
+  @override
+  String get notVerifiable => 'השולח לא סיפק סכומי שלמות';
+  @override
+  String get disabled => 'אימות סכומי שלמות מנוטרל';
+  @override
+  String attached({required Object curr, required Object n}) => 'סכומי שלמות צורפו (${curr} / ${n} קבצים)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$he extends Translations$progressPage$total$en {
   _Translations$progressPage$total$he._(TranslationsHe root) : this._root = root, super.internal(root);
@@ -1176,6 +1267,11 @@ class _Translations$dialogs$addressInput$he extends Translations$dialogs$address
   String get ip => 'כתובת ה-IP';
   @override
   String get recentlyUsed => 'בשימוש לאחרונה: ';
+  @override
+  String get noHashtagCandidates =>
+      'לרשת הנוכחית אין כתובת IPv4, ולכן לא ניתן להרחיב את הסולמית לכתובת מועמדת. אנא הזן את הכתובת המלאה במקום זאת (למשל 192.168.1.5 או fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$he validation = _Translations$dialogs$addressInput$validation$he._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1189,6 +1285,42 @@ class _Translations$dialogs$cancelSession$he extends Translations$dialogs$cancel
   String get title => 'בטל את העברת הקבצים';
   @override
   String get content => 'האם אתה באמת רוצה לבטל את העברת הקבצים?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$he extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'החיבור נכשל';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$he timeout = _Translations$dialogs$connectionError$timeout$he._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$he refused = _Translations$dialogs$connectionError$refused$he._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$he forbidden = _Translations$dialogs$connectionError$forbidden$he._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$he other = _Translations$dialogs$connectionError$other$he._(_root);
+  @override
+  String get retry => 'נסה שוב';
+  @override
+  String get details => 'פרטי השגיאה:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$he extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'מחיקת קובצי המקור';
+  @override
+  String get content => 'לאחר שהקבצים יישלחו בהצלחה, הם יימחקו מהמכשיר הזה. לא ניתן לבטל פעולה זו.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1479,6 +1611,32 @@ class _Translations$dialogs$sendModeHelp$he extends Translations$dialogs$sendMod
   String get link => 'מקבלים ש-LocalSend לא מותקן אצלם יוכלו להוריד את הקבצים שנבחרו על ידי פתיחת הקישור בדפדפן שלהם.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$he extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'לא ניתן להפעיל את השרת';
+  @override
+  String port({required Object port}) => 'יציאה: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$he windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$he._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$he addressInUse = _Translations$dialogs$startupError$addressInUse$he._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$he generic = _Translations$dialogs$startupError$generic$he._(_root);
+  @override
+  String get details => 'פרטי השגיאה:';
+  @override
+  String get copyDetails => 'העתק פרטים';
+  @override
+  String get openSettings => 'פתח הגדרות';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$he extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$he._(TranslationsHe root) : this._root = root, super.internal(root);
@@ -1488,6 +1646,66 @@ class _Translations$dialogs$zoom$he extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$he extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'אין חיבור לרשת';
+  @override
+  String get advice => 'המכשיר הזה אינו מחובר לאף רשת. בדוק את חיבור ה-Wi-Fi או הכבל של המכשיר הזה.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$he extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'מולטיקאסט לא זמין';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend אינו יכול להשתמש בגילוי מולטיקאסט ברשת זו. ודא ששני המכשירים נמצאים באותה רשת, ושבידוד נקודות גישה (AP Isolation) או חומת אש אינם חוסמים את יציאת ה-UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'סיבה: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$he extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'לא נמצאו מכשירים';
+  @override
+  String get advice =>
+      'הגילוי עובד, אך אף מכשיר לא השיב להכרזות או לסריקת הרשת. ייתכן שהמכשיר השני כבוי, במצב שינה או חסום על ידי חומת אש. ודא ש-LocalSend פועל במכשיר השני.';
+  @override
+  String detail({required Object announcements, required Object scans}) => 'נשלחו ${announcements} הכרזות וכן ${scans} סריקות רשת ללא מענה.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$he extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'כתובות IP משתנות לעיתים קרובות. עדיין ניתן להגיע למכשיר שאינו מופיע ברשימה: הוסף אותו למועדפים או הזן את כתובתו ידנית.';
+  @override
+  String get openFavorites => 'פתח מועדפים';
+  @override
+  String get manualInput => 'הזן כתובת ידנית';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1574,4 +1792,112 @@ class _Translations$whatsNewPage$changes$v1_18_0$he extends Translations$whatsNe
     'מהיום העברות ממכשירים מועדפים יתקבלו באופן אוטומטי. ניתן לבטל זאת בהגדרות האפליקציה',
     'באנדרואיד, ההעברות נמשכות גם כשהאפליקציה ברקע או שהמסך כבוי (ב-iOS כרגע האפליקציה עדיין חייבת להישאר פתוחה והמסך דולק)',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$he extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'הזן כתובת IPv4, כתובת IPv6 או שם מארח חוקיים.';
+  @override
+  String get scheme => 'הזן את הכתובת בלבד, בלי "http://" או "https://".';
+  @override
+  String get port => 'הזן את הכתובת בלבד. היציאה נלקחת מההגדרות.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$he extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'המכשיר לא הגיב בזמן.';
+  @override
+  String get advice =>
+      'סביר להניח שהוא כבוי, במצב שינה, או שחומת אש חוסמת את החיבור. ודא ש-LocalSend פועל במכשיר השני וששני המכשירים נמצאים באותה רשת.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$he extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'המכשיר סירב לחיבור.';
+  @override
+  String get advice => 'נראה ש-LocalSend אינו פועל במכשיר היעד, או שהוא מאזין ביציאה אחרת. הפעל את LocalSend במכשיר השני או בדוק את היציאה.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$he extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'המכשיר דחה את הבקשה.';
+  @override
+  String get advice => 'ייתכן שנדרשת סיסמה, או שהצימוד למכשיר השתנה. בדוק את הסיסמה ואת הגדרות השמירה המהירה במכשיר היעד.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$he extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'לא ניתן היה ליצור את החיבור.';
+  @override
+  String get advice => 'בדוק את הכתובת והיציאה, ודא ש-LocalSend פועל במכשיר היעד, ושאין חומת אש או VPN שחוסמים את החיבור.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$he extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows מנע גישה ליציאה (שגיאת socket 10013).';
+  @override
+  String get advice =>
+      'הדבר נגרם בדרך כלל מטווח יציאות שמור על ידי Hyper-V, WSL או Docker, או מקטלוג Winsock פגום:\n• שנה את היציאה בהגדרות (רשת)\n• בדוק את הטווחים השמורים עם הפקודה: netsh interface ipv4 show excludedportrange protocol=tcp\n• תקן את Winsock כמנהל עם הפקודה: netsh winsock reset (הפעל מחדש את המחשב לאחר מכן)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$he extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'היציאה כבר בשימוש על ידי אפליקציה אחרת.';
+  @override
+  String get advice => 'תוכנית אחרת (או עותק שני של LocalSend) מאזינה ביציאה זו:\n• סגור את האפליקציה האחרת, או\n• שנה את היציאה בהגדרות (רשת)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$he extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$he._(TranslationsHe root) : this._root = root, super.internal(root);
+
+  final TranslationsHe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'לא ניתן היה להפעיל את השרת.';
+  @override
+  String get advice => '• בדוק את הגדרות חומת האש והרשת\n• נסה לשנות את היציאה בהגדרות (רשת)';
 }

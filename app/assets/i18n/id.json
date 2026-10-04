@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Penjelasan",
     "help": "Pastikan perangkat tujuan juga terkoneksi pada jaringan Wi-Fi yang sama.",
-    "placeItems": "Letakkan item untuk dibagikan."
+    "placeItems": "Letakkan item untuk dibagikan.",
+    "diagnosis": {
+      "scanning": "Mencari perangkat terdekat…",
+      "noInterface": {
+        "title": "Tidak ada koneksi jaringan",
+        "advice": "Perangkat ini tidak terhubung ke jaringan apa pun. Periksa koneksi Wi-Fi atau kabel perangkat ini."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast tidak tersedia",
+        "advice": "LocalSend tidak dapat menggunakan penemuan multicast di jaringan ini. Pastikan kedua perangkat berada di jaringan yang sama, dan bahwa isolasi AP atau tembok api tidak memblokir porta UDP {port}.",
+        "reason": "Alasan: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Tidak ada perangkat yang ditemukan",
+        "advice": "Penemuan berfungsi, tetapi tidak ada perangkat yang menjawab pengumuman atau pemindaian jaringan. Perangkat lain mungkin sedang luring, tidur, atau diblokir oleh tembok api. Pastikan LocalSend berjalan di perangkat lain.",
+        "detail": "Telah mengirim {announcements} pengumuman dan {scans} pemindaian jaringan tanpa respons."
+      },
+      "rescan": "Cari lagi",
+      "bleHint": "Penemuan BLE aktif: perangkat hanya ditemukan melalui Bluetooth jika mereka juga menjalankan fork ini dengan opsi aktif; transfer itu sendiri tetap melalui jaringan.",
+      "manualFallback": {
+        "message": "Alamat IP sering berubah. Anda tetap dapat menjangkau perangkat yang tidak terdaftar: tambahkan ke favorit atau masukkan alamatnya secara manual.",
+        "openFavorites": "Buka favorit",
+        "manualInput": "Masukkan alamat secara manual"
+      }
+    }
   },
   "settingsTab": {
     "title": "Pengaturan",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Kirim",
       "shareViaLinkAutoAccept": "Bagikan melalui tautan: Terima otomatis",
-      "createChecksums": "Buat checksum saat mengirim berkas"
+      "createChecksums": "Buat checksum saat mengirim berkas",
+      "deleteSourceAfterSend": "Hapus berkas sumber setelah pengiriman berhasil"
     },
     "network": {
       "title": "Jaringan",
@@ -143,12 +168,26 @@
         "filtered": "Tersaring"
       },
       "discoveryTimeout": "Waktu penemuan habis",
+      "maxInterfaces": "Maks. antarmuka (Pindai Pintar)",
+      "vpnInterfaces": "Sertakan antarmuka VPN (Pindai Pintar)",
+      "vpnInterfacesHint": "Juga memindai subnet antarmuka terowongan VPN (Tailscale, WireGuard, ...). VPN biasanya tidak membawa multicast, sehingga subnetnya dijelajahi dengan pemindaian cadangan HTTP.",
       "useSystemName": "Gunakan nama sistem",
       "generateRandomAlias": "Hasilkan alias acak",
       "portWarning": "Anda mungkin tidak terdeteksi oleh perangkat lain karena menggunakan porta kustom. (bawaan: {defaultPort})",
       "encryption": "Enkripsi",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Anda mungkin tidak terdeteksi oleh perangkat lain karena menggunakan alamat multicast khusus. (bawaan: {defaultMulticast})"
+      "multicastGroupWarning": "Anda mungkin tidak terdeteksi oleh perangkat lain karena menggunakan alamat multicast khusus. (bawaan: {defaultMulticast})",
+      "bleDiscovery": "Penemuan BLE (eksperimental)",
+      "bleDiscoveryHint": "Menemukan perangkat terdekat melalui Bluetooth meskipun jaringan memblokir multicast (isolasi AP). Berfungsi di Android, iOS, macOS, dan Windows; di Linux perangkat ini dapat menemukan perangkat lain, tetapi tidak dapat ditemukan oleh perangkat lain. Kedua perangkat memerlukan fork ini dengan opsi aktif; transfer berkas itu sendiri tetap menggunakan jaringan.",
+      "bleStatusActive": "Aktif: memindai dan mengiklankan. Perangkat terdekat hanya muncul jika mereka juga menjalankan fork ini dengan opsi aktif.",
+      "bleStatusScanOnly": "Aktif: hanya memindai. Perangkat ini saat ini tidak dapat ditemukan melalui Bluetooth (tidak ada dukungan periklanan BLE di platform ini, atau belum ada alamat jaringan yang dapat digunakan).",
+      "bleStatusPaused": "Dijeda. Dilanjutkan saat aplikasi kembali ke latar depan.",
+      "bleStatusPermissionDenied": "Izin Bluetooth ditolak. Berikan izin \"Perangkat terdekat\" (atau \"Lokasi\" di Android 11 ke bawah) di pengaturan sistem, lalu matikan dan nyalakan kembali opsi ini.",
+      "bleStatusAdapterOff": "Bluetooth dimatikan atau tidak tersedia. Penemuan akan dimulai ulang sendiri saat Bluetooth tersedia kembali.",
+      "bleStatusUnsupported": "Tidak didukung di perangkat ini: penemuan BLE membutuhkan Android 7 atau lebih baru serta radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Pada versi Android ini, menemukan perangkat lain juga memerlukan layanan lokasi sistem yang aktif (izin diminta secara otomatis; perangkat ini sudah dapat ditemukan oleh yang lain).",
+      "bleStatusError": "Penemuan BLE tidak dapat dimulai. Lihat Perbaikan Masalah > Log untuk detailnya.",
+      "bleOpenSystemSettings": "Buka pengaturan sistem"
     },
     "other": {
       "title": "Lainnya",
@@ -256,6 +295,13 @@
     "titleSending": "Mengirim Berkas",
     "titleReceiving": "Menerima Berkas",
     "savedToGallery": "Simpan di galeri",
+    "checksum": {
+      "verified": "Checksum terverifikasi",
+      "partiallyVerified": "Checksum terverifikasi untuk {curr} / {n} berkas",
+      "notVerifiable": "Pengirim tidak menyertakan checksum",
+      "disabled": "Verifikasi checksum dinonaktifkan",
+      "attached": "Checksum dilampirkan ({curr} / {n} berkas)"
+    },
     "total": {
       "title": {
         "sending": "Total proses ({time})",
@@ -348,11 +394,42 @@
       "title": "Masukkan Alamat",
       "hashtag": "Tagar",
       "ip": "Alamat IP",
-      "recentlyUsed": "Baru saja digunakan: "
+      "recentlyUsed": "Baru saja digunakan: ",
+      "noHashtagCandidates": "Jaringan saat ini tidak memiliki alamat IPv4, sehingga tagar tidak dapat dikembangkan menjadi alamat kandidat. Silakan masukkan alamat lengkap (mis. 192.168.1.5 atau fe80::1).",
+      "validation": {
+        "invalid": "Masukkan alamat IPv4, alamat IPv6, atau nama host yang valid.",
+        "scheme": "Masukkan alamatnya saja, tanpa \"http://\" atau \"https://\".",
+        "port": "Masukkan alamatnya saja. Porta diambil dari pengaturan."
+      }
     },
     "cancelSession": {
       "title": "Batalkan pentransferan berkas",
       "content": "Anda yakin ingin membatalkan pengiriman berkas?"
+    },
+    "connectionError": {
+      "title": "Koneksi gagal",
+      "timeout": {
+        "message": "Perangkat tidak merespons tepat waktu.",
+        "advice": "Kemungkinan sedang luring, tidur, atau tembok api memblokir koneksi. Pastikan LocalSend berjalan di perangkat lain dan kedua perangkat berada di jaringan yang sama."
+      },
+      "refused": {
+        "message": "Perangkat menolak koneksi.",
+        "advice": "LocalSend tampaknya tidak berjalan di perangkat target, atau mendengarkan di porta yang berbeda. Mulai LocalSend di perangkat lain atau periksa porta yang digunakan."
+      },
+      "forbidden": {
+        "message": "Perangkat menolak permintaan.",
+        "advice": "Mungkin diperlukan PIN, atau penyandingan dengan perangkat telah berubah. Periksa PIN dan pengaturan simpan cepat di perangkat target."
+      },
+      "other": {
+        "message": "Koneksi tidak dapat dibuat.",
+        "advice": "Periksa alamat dan porta, pastikan LocalSend berjalan di perangkat target, dan tidak ada tembok api atau VPN yang memblokir koneksi."
+      },
+      "retry": "Coba lagi",
+      "details": "Detail galat:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Hapus berkas sumber",
+      "content": "Setelah berkas berhasil dikirim, berkas akan dihapus dari perangkat ini. Hal ini tidak dapat dibatalkan."
     },
     "cannotOpenFile": {
       "title": "Tidak dapat membuka berkas",
@@ -448,6 +525,25 @@
       "single": "Mengirim berkas ke satu penerima. Pilihan penerima akan dihapus setelah selesai membagikan berkas.",
       "multiple": "Mengirim berkas ke beberapa penerima. Pilihan penerima tidak akan dihapus.",
       "link": "Penerima yang tidak memiliki LocalSend dapat mengunduh berkas yang dipilih dengan membuka tautan di peramban."
+    },
+    "startupError": {
+      "title": "Tidak dapat memulai peladen",
+      "port": "Porta: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows menolak akses ke porta (kesalahan socket 10013).",
+        "advice": "Ini biasanya disebabkan oleh rentang porta yang dicadangkan oleh Hyper-V, WSL, atau Docker, atau oleh katalog Winsock yang rusak:\n• Ubah porta di Pengaturan (Jaringan)\n• Periksa rentang yang dicadangkan dengan: netsh interface ipv4 show excludedportrange protocol=tcp\n• Perbaiki Winsock sebagai administrator dengan: netsh winsock reset (mulai ulang setelahnya)"
+      },
+      "addressInUse": {
+        "hint": "Porta sudah digunakan oleh aplikasi lain.",
+        "advice": "Program lain (atau instansi LocalSend kedua) sedang mendengarkan di porta ini:\n• Tutup aplikasi lain, atau\n• Ubah porta di Pengaturan (Jaringan)"
+      },
+      "generic": {
+        "hint": "Peladen tidak dapat dimulai.",
+        "advice": "• Periksa tembok api dan pengaturan jaringan Anda\n• Coba ubah porta di Pengaturan (Jaringan)"
+      },
+      "details": "Detail galat:",
+      "copyDetails": "Salin detail",
+      "openSettings": "Buka pengaturan"
     },
     "zoom": {
       "title": "URL"

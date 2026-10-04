@@ -233,6 +233,8 @@ class _Translations$sendTab$ta extends Translations$sendTab$en {
   String get help => 'விரும்பிய இலக்கும் அதே வைஃபை நெட்வொர்க்கில் இருப்பதை உறுதிசெய்யவும்.';
   @override
   String get placeItems => 'பகிர்ந்து கொள்ள பொருட்களை வைக்கவும்.';
+  @override
+  late final _Translations$sendTab$diagnosis$ta diagnosis = _Translations$sendTab$diagnosis$ta._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$ta extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'புகைப்படங்களில் சேமிக்கப்பட்டது';
   @override
+  late final _Translations$progressPage$checksum$ta checksum = _Translations$progressPage$checksum$ta._(_root);
+  @override
   late final _Translations$progressPage$total$ta total = _Translations$progressPage$total$ta._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ta remainingTime = _Translations$progressPage$remainingTime$ta._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$ta extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ta cancelSession = _Translations$dialogs$cancelSession$ta._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ta connectionError = _Translations$dialogs$connectionError$ta._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ta deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ta._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ta cannotOpenFile = _Translations$dialogs$cannotOpenFile$ta._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ta encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ta._(_root);
@@ -719,6 +728,8 @@ class _Translations$dialogs$ta extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ta pin = _Translations$dialogs$pin$ta._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ta sendModeHelp = _Translations$dialogs$sendModeHelp$ta._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ta startupError = _Translations$dialogs$startupError$ta._(_root);
   @override
   late final _Translations$dialogs$zoom$ta zoom = _Translations$dialogs$zoom$ta._(_root);
 }
@@ -923,6 +934,32 @@ class _Translations$sendTab$sendModes$ta extends Translations$sendTab$sendModes$
   String get link => 'இணைப்பு மூலம் பகிரவும்';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ta extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'அருகிலுள்ள சாதனங்களைத் தேடுகிறது…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ta noInterface = _Translations$sendTab$diagnosis$noInterface$ta._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ta multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ta._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ta scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ta._(_root);
+  @override
+  String get rescan => 'மீண்டும் தேடுங்கள்';
+  @override
+  String get bleHint =>
+      'BLE கண்டறிதல் செயலில் உள்ளது: மற்ற சாதனமும் இந்த ஃபோர்க்கை (விருப்பம் இயக்கத்துடன்) இயக்கும்போது மட்டுமே சாதனங்கள் Bluetooth வழியாகக் கண்டறியப்படும்; கோப்பு பரிமாற்றம் இன்னும் நெட்வொர்க் வழியாகவே நடைபெறும்.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ta manualFallback = _Translations$sendTab$diagnosis$manualFallback$ta._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ta extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ta._(TranslationsTa root) : this._root = root, super.internal(root);
@@ -1004,6 +1041,8 @@ class _Translations$settingsTab$send$ta extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"இணைப்பு வழியாக பகிர்" பயன்முறையில் கோரிக்கைகளை தானாக ஏற்கவும்';
   @override
   String get createChecksums => 'கோப்புகளை அனுப்பும்போது checksum உருவாக்கவும்';
+  @override
+  String get deleteSourceAfterSend => 'வெற்றிகரமான அனுப்புதலுக்குப் பிறகு மூல கோப்புகளை நீக்கு';
 }
 
 // Path: settingsTab.network
@@ -1034,6 +1073,13 @@ class _Translations$settingsTab$network$ta extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'கண்டுபிடிப்பு நேரம் முடிந்தது';
   @override
+  String get maxInterfaces => 'அதிகபட்ச இடைமுகங்கள் (ஸ்மார்ட் ஸ்கேன்)';
+  @override
+  String get vpnInterfaces => 'VPN இடைமுகங்களைச் சேர்க்கவும் (ஸ்மார்ட் ஸ்கேன்)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN டன்னல் இடைமுகங்களின் சப்நெட்களையும் (Tailscale, WireGuard, ...) ஸ்கேன் செய்யுங்கள். VPNகள் பொதுவாக மல்டிகாஸ்ட்டை கொண்டு செல்லாது, எனவே அவற்றின் சப்நெட்கள் HTTP ஃபால்பேக் ஸ்கேன் மூலம் சோதிக்கப்படும்.';
+  @override
   String get useSystemName => 'அமைப்பின் பெயரைப் பயன்படுத்தவும்';
   @override
   String get generateRandomAlias => 'சீரற்ற மாற்றுப்பெயரை உருவாக்கவும்';
@@ -1047,6 +1093,35 @@ class _Translations$settingsTab$network$ta extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'நீங்கள் தனிப்பயன் மல்டிகாஸ்ட் முகவரியைப் பயன்படுத்துவதால் பிற சாதனங்களால் உங்களைக் கண்டறிய முடியாமல் போகலாம். (இயல்புநிலை: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE கண்டறிதல் (சோதனைமுறை)';
+  @override
+  String get bleDiscoveryHint =>
+      'நெட்வொர்க் மல்டிகாஸ்ட்டைத் தடுக்கும்போதும் (Access Point (AP) Isolation) அருகிலுள்ள சாதனங்களை Bluetooth வழியாகக் கண்டறியும். Android, iOS, macOS மற்றும் Windows-ல் வேலை செய்யும்; Linux-ல் இந்தச் சாதனம் மற்றவற்றைக் கண்டறியும், ஆனால் இது தானாகக் கண்டறியப்பட முடியாது. இரண்டு சாதனங்களுக்கும் இந்த ஃபோர்க் (விருப்பம் இயக்கத்துடன்) தேவை; கோப்பு பரிமாற்றம் இன்னும் நெட்வொர்க்கையே பயன்படுத்தும்.';
+  @override
+  String get bleStatusActive =>
+      'செயலில்: ஸ்கேன் செய்தல் மற்றும் அறிவிப்பு வெளியிடுதல். மற்ற சாதனங்களும் இந்த ஃபோர்க்கை (விருப்பம் இயக்கத்துடன்) இயக்கும்போது மட்டுமே அருகிலுள்ள சாதனங்கள் தோன்றும்.';
+  @override
+  String get bleStatusScanOnly =>
+      'செயலில்: ஸ்கேன் மட்டும். இந்தச் சாதனத்தை இப்போது Bluetooth வழியாகக் கண்டறிய முடியாது (இந்த தளத்தில் BLE அறிவிப்பு வெளியீட்டுக்கு ஆதரவு இல்லை, அல்லது இன்னும் பயன்படுத்தக்கூடிய நெட்வொர்க் முகவரி இல்லை).';
+  @override
+  String get bleStatusPaused => 'இடைநிறுத்தப்பட்டது. ஆப் முன்னணிக்குத் திரும்பும்போது மீண்டும் தொடங்கும்.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth அனுமதிகள் மறுக்கப்பட்டுள்ளன. கணினி அமைப்புகளில் "அருகிலுள்ள சாதனங்கள்" (அல்லது Android 11 மற்றும் அதற்குக் கீழ் உள்ள பதிப்புகளில் "இருப்பிடம்") அனுமதியை வழங்கி, இந்த விருப்பத்தை முடக்கி மீண்டும் இயக்கவும்.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth முடக்கப்பட்டுள்ளது அல்லது கிடைக்கவில்லை. Bluetooth மீண்டும் கிடைக்கும்போது கண்டறிதல் தானாகவே மீண்டும் தொடங்கும்.';
+  @override
+  String get bleStatusUnsupported =>
+      'இந்தச் சாதனத்தில் ஆதரவு இல்லை: BLE கண்டறிதலுக்கு Android 7 அல்லது அதற்குப் பிந்தைய பதிப்பும் Bluetooth LE ரேடியோவும் தேவை.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'இந்த Android பதிப்பில், மற்ற சாதனங்களைக் கண்டறிய கணினியின் இருப்பிட சேவைகளும் இயக்கத்தில் இருக்க வேண்டும் (அனுமதி தானாகக் கோரப்படும்; இந்தச் சாதனத்தை மற்றவர்கள் ஏற்கனவே கண்டறியலாம்).';
+  @override
+  String get bleStatusError => 'BLE கண்டறிதலைத் தொடங்க முடியவில்லை. விவரங்களுக்கு பிரச்சனைகளை தீர்க்கவும் > பதிவுகள் பார்க்கவும்.';
+  @override
+  String get bleOpenSystemSettings => 'கணினி அமைப்புகளைத் திறக்கவும்';
 }
 
 // Path: settingsTab.other
@@ -1163,6 +1238,25 @@ class _Translations$deviceDetailsPage$logs$ta extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} வழியாக புதுப்பிக்கப்பட்டது (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ta extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'அனைத்து checksumகளும் சரிபார்க்கப்பட்டன';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '${curr} / ${n} கோப்புகளுக்கு checksumகள் சரிபார்க்கப்பட்டன';
+  @override
+  String get notVerifiable => 'அனுப்புநர் checksumகளை வழங்கவில்லை';
+  @override
+  String get disabled => 'Checksum சரிபார்ப்பு முடக்கப்பட்டுள்ளது';
+  @override
+  String attached({required Object curr, required Object n}) => 'Checksumகள் இணைக்கப்பட்டன (கோப்புகள் ${curr} / ${n})';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ta extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ta._(TranslationsTa root) : this._root = root, super.internal(root);
@@ -1256,6 +1350,11 @@ class _Translations$dialogs$addressInput$ta extends Translations$dialogs$address
   String get ip => 'IP முகவரி';
   @override
   String get recentlyUsed => 'சமீபத்தில் பயன்படுத்தப்பட்டது: ';
+  @override
+  String get noHashtagCandidates =>
+      'தற்போதைய நெட்வொர்க்கில் IPv4 முகவரி இல்லாததால், ஹாஷ்டேக்கை வேட்பாளர் முகவரியாக விரிவாக்க முடியாது. முழு முகவரியை உள்ளிடவும் (உதா. 192.168.1.5 அல்லது fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ta validation = _Translations$dialogs$addressInput$validation$ta._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1269,6 +1368,42 @@ class _Translations$dialogs$cancelSession$ta extends Translations$dialogs$cancel
   String get title => 'கோப்புகள் பரிமாற்றத்தை ரத்து செய்யவும்';
   @override
   String get content => 'நீங்கள் உண்மையிலேயே கோப்புகள் பரிமாற்றத்தை ரத்து செய்ய விரும்புகிறீர்களா?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ta extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'இணைப்பு தோல்வியடைந்தது';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ta timeout = _Translations$dialogs$connectionError$timeout$ta._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ta refused = _Translations$dialogs$connectionError$refused$ta._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ta forbidden = _Translations$dialogs$connectionError$forbidden$ta._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ta other = _Translations$dialogs$connectionError$other$ta._(_root);
+  @override
+  String get retry => 'மீண்டும் முயற்சிக்கவும்';
+  @override
+  String get details => 'பிழை விவரங்கள்:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ta extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'மூல கோப்புகளை நீக்கு';
+  @override
+  String get content => 'கோப்புகள் வெற்றிகரமாக அனுப்பப்பட்ட பிறகு, அவை இந்தச் சாதனத்திலிருந்து நீக்கப்படும். இதை மீட்டெடுக்க முடியாது.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1563,6 +1698,32 @@ class _Translations$dialogs$sendModeHelp$ta extends Translations$dialogs$sendMod
       'LocalSend நிறுவப்படாத பெறுநர்கள் தங்கள் உலாவியில் இணைப்பைத் திறக்க மூலம் தேர்ந்தெடுக்கப்பட்ட கோப்புகளை பதிவிறக்கம் செய்ய முடியும்.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ta extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'சேவையகத்தைத் தொடங்க முடியவில்லை';
+  @override
+  String port({required Object port}) => 'போர்ட்: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ta windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ta._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ta addressInUse = _Translations$dialogs$startupError$addressInUse$ta._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ta generic = _Translations$dialogs$startupError$generic$ta._(_root);
+  @override
+  String get details => 'பிழை விவரங்கள்:';
+  @override
+  String get copyDetails => 'விவரங்களை நகலெடுக்கவும்';
+  @override
+  String get openSettings => 'அமைப்புகளைத் திறக்கவும்';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ta extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ta._(TranslationsTa root) : this._root = root, super.internal(root);
@@ -1572,6 +1733,68 @@ class _Translations$dialogs$zoom$ta extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'முகவரி';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ta extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'நெட்வொர்க் இணைப்பு இல்லை';
+  @override
+  String get advice => 'இந்தச் சாதனம் எந்த நெட்வொர்க்கிலும் இணைக்கப்படவில்லை. இந்தச் சாதனத்தின் Wi-Fi அல்லது கேபிள் இணைப்பைச் சரிபார்க்கவும்.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ta extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'மல்டிகாஸ்ட் கிடைக்கவில்லை';
+  @override
+  String advice({required Object port}) =>
+      'இந்த நெட்வொர்க்கில் LocalSend மல்டிகாஸ்ட் கண்டறிதலைப் பயன்படுத்த முடியவில்லை. இரண்டு சாதனங்களும் ஒரே நெட்வொர்க்கில் இருப்பதையும், Access Point (AP) Isolation அல்லது ஃபயர்வால் UDP ${port} போர்ட்டைத் தடுக்கவில்லை என்பதையும் உறுதிசெய்யவும்.';
+  @override
+  String reason({required Object reason}) => 'காரணம்: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ta extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'சாதனங்கள் எதுவும் கிடைக்கவில்லை';
+  @override
+  String get advice =>
+      'கண்டறிதல் வேலை செய்கிறது, ஆனால் அறிவிப்புகளுக்கோ நெட்வொர்க் ஸ்கேனுக்கோ எந்தச் சாதனமும் பதிலளிக்கவில்லை. மற்ற சாதனம் ஆஃப்லைனில் இருக்கலாம், தூங்கிக் கொண்டிருக்கலாம், அல்லது ஃபயர்வாலால் தடுக்கப்பட்டிருக்கலாம். மற்ற சாதனத்தில் LocalSend இயங்குவதை உறுதிசெய்யவும்.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'பதில் இன்றி ${announcements} அறிவிப்புகள் மற்றும் ${scans} நெட்வொர்க் ஸ்கேன்கள் அனுப்பப்பட்டன.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ta extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP முகவரிகள் அடிக்கடி மாறும். பட்டியலில் இல்லாத சாதனத்தையும் அணுகலாம்: அதை பிடித்தவையில் சேர்க்கவும் அல்லது அதன் முகவரியை கைமுறையாக உள்ளிடவும்.';
+  @override
+  String get openFavorites => 'பிடித்தவையைத் திறக்கவும்';
+  @override
+  String get manualInput => 'முகவரியை கைமுறையாக உள்ளிடவும்';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1658,4 +1881,117 @@ class _Translations$whatsNewPage$changes$v1_18_0$ta extends Translations$whatsNe
     'பிடித்தவைகளில் இருந்து வரும் கோரிக்கைகள் இப்போது தானாகவே ஏற்கப்படுகின்றன. இது இயல்பாக இயக்கத்தில் உள்ளது; அமைப்புகளில் முடக்கலாம்.',
     'Android இல், செயலி பின்னணியில் இருந்தாலும் அல்லது திரை அணைந்திருந்தாலும் பரிமாற்றங்கள் தொடரும். iOS இல், செயலி இன்னும் முன்னணியில் இருக்க வேண்டும்.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ta extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'சரியான IPv4 முகவரி, IPv6 முகவரி அல்லது ஹோஸ்ட் பெயரை உள்ளிடவும்.';
+  @override
+  String get scheme => 'முகவரியை மட்டும் உள்ளிடவும், "http://" அல்லது "https://" இல்லாமல்.';
+  @override
+  String get port => 'முகவரியை மட்டும் உள்ளிடவும். போர்ட் அமைப்புகளிலிருந்து எடுக்கப்படும்.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ta extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'சாதனம் நேரத்திற்குள் பதிலளிக்கவில்லை.';
+  @override
+  String get advice =>
+      'அது பெரும்பாலும் ஆஃப்லைனில் இருக்கலாம், தூங்கிக் கொண்டிருக்கலாம், அல்லது ஃபயர்வால் இணைப்பைத் தடுக்கிறது. மற்ற சாதனத்தில் LocalSend இயங்குவதையும், இரண்டு சாதனங்களும் ஒரே நெட்வொர்க்கில் இருப்பதையும் உறுதிசெய்யவும்.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ta extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'சாதனம் இணைப்பை நிராகரித்தது.';
+  @override
+  String get advice =>
+      'இலக்கு சாதனத்தில் LocalSend இயங்காததாகத் தெரிகிறது, அல்லது அது வேறு போர்ட்டில் கேட்கிறது. மற்ற சாதனத்தில் LocalSend-ஐத் தொடங்கவும் அல்லது போர்ட்டைச் சரிபார்க்கவும்.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ta extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'சாதனம் கோரிக்கையை நிராகரித்தது.';
+  @override
+  String get advice =>
+      'PIN தேவைப்படலாம், அல்லது சாதனத்துடனான இணைத்தல் (pairing) மாறியிருக்கலாம். இலக்கு சாதனத்தில் PIN மற்றும் விரைவு சேமிப்பு அமைப்புகளைச் சரிபார்க்கவும்.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ta extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'இணைப்பை ஏற்படுத்த முடியவில்லை.';
+  @override
+  String get advice =>
+      'முகவரி மற்றும் போர்ட்டைச் சரிபார்த்து, இலக்கு சாதனத்தில் LocalSend இயங்குவதையும், ஃபயர்வால் அல்லது VPN இணைப்பைத் தடுக்கவில்லை என்பதையும் உறுதிசெய்யவும்.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ta extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows போர்ட்டுக்கான அணுகலை மறுத்தது (சாக்கெட் பிழை 10013).';
+  @override
+  String get advice =>
+      'இது பொதுவாக Hyper-V, WSL அல்லது Docker ஒதுக்கியுள்ள போர்ட் வரம்பு அல்லது சேதமடைந்த Winsock கேடலாக் காரணமாக இருக்கலாம்:\n• அமைப்புகள் (நெட்வொர்க்) பகுதியில் போர்ட்டை மாற்றவும்\n• ஒதுக்கப்பட்ட வரம்புகளை இதனால் சரிபார்க்கவும்: netsh interface ipv4 show excludedportrange protocol=tcp\n• நிர்வாகியாக Winsock-ஐ பழுதுபார்க்கவும்: netsh winsock reset (பின்னர் மறுதொடக்கம் செய்யவும்)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ta extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'இந்த போர்ட் ஏற்கனவே மற்றொரு செயலியால் பயன்படுத்தப்படுகிறது.';
+  @override
+  String get advice =>
+      'மற்றொரு நிரல் (அல்லது இரண்டாவது LocalSend நிகழ்வு) இந்த போர்ட்டில் கேட்டுக்கொண்டிருக்கிறது:\n• மற்ற செயலியை மூடவும், அல்லது\n• அமைப்புகள் (நெட்வொர்க்) பகுதியில் போர்ட்டை மாற்றவும்';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ta extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ta._(TranslationsTa root) : this._root = root, super.internal(root);
+
+  final TranslationsTa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'சேவையகத்தைத் தொடங்க முடியவில்லை.';
+  @override
+  String get advice =>
+      '• ஃபயர்வால் மற்றும் நெட்வொர்க் அமைப்புகளைச் சரிபார்க்கவும்\n• அமைப்புகள் (நெட்வொர்க்) பகுதியில் போர்ட்டை மாற்றிப் பார்க்கவும்';
 }

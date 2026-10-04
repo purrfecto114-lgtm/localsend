@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Azalpena",
     "help": "Ziurtatu zaitez aukeratutako hartzailea zure Wi-Fi sare berean dagoela.",
-    "placeItems": "Aukeratu elkarbanatzeko elementuak."
+    "placeItems": "Aukeratu elkarbanatzeko elementuak.",
+    "diagnosis": {
+      "scanning": "Inguruko gailuak bilatzen…",
+      "noInterface": {
+        "title": "Sare-konexiorik ez",
+        "advice": "Gailu hau ez dago inolako sarera konektatuta. Egiaztatu gailu honen Wi-Fi edo kable konexioa."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast ez dago eskuragarri",
+        "advice": "LocalSend-ek ezin du multicast erabili gailuak aurkitzeko sare honetan. Ziurtatu bi gailuak sare berean daudela eta AP isolamenduak edo suhesiak ez duela {port} UDP portua blokeatzen.",
+        "reason": "Arrazoia: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Ez da gailurik aurkitu",
+        "advice": "Bilaketak funtzionatzen du, baina gailu bakar batek ere ez du iragarkiei edo sare-eskaneatuari erantzun. Beste gailua agian deskonektatuta dago, lotan edo suhesiak blokeatuta. Ziurtatu LocalSend martxan dagoela beste gailuan.",
+        "detail": "{announcements} iragarki eta {scans} sare-eskaneatze bidali dira erantzunik jaso gabe."
+      },
+      "rescan": "Bilatu berriro",
+      "bleHint": "BLE aurkikuntza aktibo dago: gailuak Bluetooth bidez aurkituko dira soilik baldin eta hauek fork hau ere badarabilte aukera gaituta; transferentzia bera sarearen bidez egiten da oraindik.",
+      "manualFallback": {
+        "message": "IP helbideak maiz aldatzen dira. Zerrendan agertzen ez den gailua ere atzi dezakezu: gehitu gogokoetara edo sartu bere helbidea eskuz.",
+        "openFavorites": "Ireki gogokoak",
+        "manualInput": "Sartu helbidea eskuz"
+      }
+    }
   },
   "settingsTab": {
     "title": "Ezarpenak",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Bidali",
       "shareViaLinkAutoAccept": "Eskaerak automatikoki onartu “URL bidez partekatu” moduan",
-      "createChecksums": "Sortu kontrol-baturak fitxategiak bidaltzean"
+      "createChecksums": "Sortu kontrol-baturak fitxategiak bidaltzean",
+      "deleteSourceAfterSend": "Ezabatu iturri-fitxategiak ondo bidali ondoren"
     },
     "network": {
       "title": "Gorria",
@@ -143,12 +168,26 @@
         "filtered": "Iragazita"
       },
       "discoveryTimeout": "Aurkikuntza denbora muga",
+      "maxInterfaces": "Gehienezko interfazeak (Eskaneatze adimenduna)",
+      "vpnInterfaces": "Sartu VPN interfazeak (Eskaneatze adimenduna)",
+      "vpnInterfacesHint": "VPN tunnel interfazeen azpisareak ere eskaneatzen ditu (Tailscale, WireGuard, ...). VPNek normalean ez dute multicast onartzen, beraz haien azpisareak HTTP ordezko eskaneatzearekin aztertzen dira.",
       "useSystemName": "Erabili sistemaren izena",
       "generateRandomAlias": "Ausazko \"alias\" sortu",
       "portWarning": "Portu berezi bat erabiltzen ari zarenez, agian ez zara beste gailuentzat ikusgarri izango (Lehenetsitako portua: {defaultPort})",
       "encryption": "Zifratzea",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Multicast helbide berezi bat erabiltzen ari zarenez, agian ez zara beste gailuentzat ikusgarri izango. (Lehenetsitako multicast helbidea: {defaultMulticast})"
+      "multicastGroupWarning": "Multicast helbide berezi bat erabiltzen ari zarenez, agian ez zara beste gailuentzat ikusgarri izango. (Lehenetsitako multicast helbidea: {defaultMulticast})",
+      "bleDiscovery": "BLE aurkikuntza (esperimentala)",
+      "bleDiscoveryHint": "Inguruko gailuak Bluetooth bidez aurkitzen ditu, sareak multicast blokeatzen duen kasuan ere (AP isolamendua). Android, iOS, macOS eta Windows-en funtzionatzen du; Linux-en gailu honek besteak aurki ditzake, baina bera ezin da aurkitu. Bi gailuek fork hau behar dute aukera gaituta izateko; fitxategi-transferentzia bera sarearen bidez egiten da oraindik.",
+      "bleStatusActive": "Aktibo: eskaneatzen eta iragarkitzen. Inguruko gailuak agertuko dira soilik baldin eta hauek fork hau ere badarabilte aukera gaituta.",
+      "bleStatusScanOnly": "Aktibo: soilik eskaneatzen. Gailu hau ezin da une honetan Bluetooth bidez aurkitu (plataforma honek ez du BLE iragarkirik onartzen, edo oraindik ez dago sare-helbide erabilgarririk).",
+      "bleStatusPaused": "Geldituta. Berrekingo da aplikazioa aurreko platura itzultzen denean.",
+      "bleStatusPermissionDenied": "Bluetooth baimenak ukatu dira. Eman \"Gertuko gailuak\" (edo \"Kokapena\" Android 11 eta beheragokoetan) baimena sistemako ezarpenetan, eta gero desgaitu eta gaitu berriro aukera hau.",
+      "bleStatusAdapterOff": "Bluetooth itzalita dago edo ez dago eskuragarri. Aurkikuntzak bere kabuz berrabiaraziko da Bluetooth berriro eskuragarri egiten denean.",
+      "bleStatusUnsupported": "Ez da gailu honetan onartzen: BLE aurkikuntzak Android 7 edo berriagoa eta Bluetooth LE irrati bat behar ditu.",
+      "bleStatusLegacyLocation": "Android bertsio honetan, beste gailu batzuk aurkitzeko sistemaren kokapen-zerbitzuak ere piztu behar dira (baimena automatikoki eskatzen da; gailu hau jada besteek aurki dezakete).",
+      "bleStatusError": "BLE aurkikuntza ezin izan da hasi. Ikusi Konpondu arazoak > Erregistroak xehetasunetarako.",
+      "bleOpenSystemSettings": "Ireki sistemako ezarpenak"
     },
     "other": {
       "title": "Besteak",
@@ -256,6 +295,13 @@
     "titleSending": "Fitxategiak bidaltzen",
     "titleReceiving": "Fitxategiak eskuratzen",
     "savedToGallery": "Galerian gordeta",
+    "checksum": {
+      "verified": "Kontrol-baturak egiaztatuta",
+      "partiallyVerified": "Kontrol-baturak egiaztatuta {curr} / {n} fitxategirentzat",
+      "notVerifiable": "Bidaltzaileak ez du kontrol-baturarik bidali",
+      "disabled": "Kontrol-baturen egiaztapena desgaituta dago",
+      "attached": "Kontrol-baturak erantsita ({curr} / {n} fitxategi)"
+    },
     "total": {
       "title": {
         "sending": "Aurrerapena ({time})",
@@ -348,11 +394,42 @@
       "title": "Sartu helbidea",
       "hashtag": "Hashtag",
       "ip": "IP Helbidea",
-      "recentlyUsed": "Duela gutxi erabilitakoak: "
+      "recentlyUsed": "Duela gutxi erabilitakoak: ",
+      "noHashtagCandidates": "Uneko sareak ez du IPv4 helbiderik, beraz hashtag-a ezin da helbide hautagai batera zabaldu. Sartu helbide osoa horren ordez (adib. 192.168.1.5 edo fe80::1).",
+      "validation": {
+        "invalid": "Sartu IPv4 helbide, IPv6 helbide edo ostalari-izen baliozko bat.",
+        "scheme": "Sartu helbidea soilik, \"http://\" edo \"https://\" gabe.",
+        "port": "Sartu helbidea soilik. Portua ezarpenetatik hartzen da."
+      }
     },
     "cancelSession": {
       "title": "Bertan behera utzi fitxategi bidalketa",
       "content": "¿Benetan nahi duzu bertan behera utzi fitxategi bidalketa?"
+    },
+    "connectionError": {
+      "title": "Konexioak huts egin du",
+      "timeout": {
+        "message": "Gailuak ez du denboran erantzun.",
+        "advice": "Baliteke deskonektatuta egotea, lotan egotea edo suhesiak konexioa blokeatzea. Ziurtatu LocalSend martxan dagoela beste gailuan eta bi gailuak sare berean daudela."
+      },
+      "refused": {
+        "message": "Gailuak konexioa ukatu du.",
+        "advice": "Badirudi LocalSend ez dagoela martxan helburuko gailuan, edo portu ezberdin batean entzuten ari da. Abiarazi LocalSend beste gailuan edo egiaztatu portua."
+      },
+      "forbidden": {
+        "message": "Gailuak eskaera baztertu du.",
+        "advice": "Baliteke PIN bat behar izatea, edo gailuarekiko parekatzea aldatu izana. Egiaztatu PINa eta gordetze azkarraren ezarpenak helburuko gailuan."
+      },
+      "other": {
+        "message": "Ezin izan da konexioa ezarri.",
+        "advice": "Egiaztatu helbidea eta portua, ziurtatu LocalSend martxan dagoela helburuko gailuan, eta suhesiak edo VPN batek ez duela konexioa blokeatzen."
+      },
+      "retry": "Saiatu berriro",
+      "details": "Errore-xehetasunak:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Ezabatu iturri-fitxategiak",
+      "content": "Fitxategiak ondo bidali ondoren, gailu honetatik ezabatuko dira. Hau ezin da desegin."
     },
     "cannotOpenFile": {
       "title": "Ezin da fitxategia ireki",
@@ -448,6 +525,25 @@
       "single": "Bidali fitxategiak hartzaile bakar bati. Bidalketa bukatutakoan aukeraketa garbituko da.",
       "multiple": "Bidali fitxategiak hartzaile anitzeri. Aukeraketa ez da garbituko.",
       "link": "LocalSend instalatuta ez duten hartzaileak fitxategiak eskuratu ahali zango dituzte lotura nabigatzailean zabalduz."
+    },
+    "startupError": {
+      "title": "Ezin izan da zerbitzaria abiarazi",
+      "port": "Portua: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows-ek portuaren atzipena ukatu du (socket errorea 10013).",
+        "advice": "Hau normalean Hyper-V, WSL edo Dockerrek erreserbatutako portu-tarte batek edo hondatutako Winsock katalogo batek eragiten du:\n• Aldatu portua ezarpenetan (Sarea)\n• Egiaztatu erreserbatutako tarteak honekin: netsh interface ipv4 show excludedportrange protocol=tcp\n• Konpondu Winsock administratzaile gisa honekin: netsh winsock reset (berrabiarazi gero)"
+      },
+      "addressInUse": {
+        "hint": "Portua dagoeneko beste aplikazio batek erabiltzen du.",
+        "advice": "Beste programa bat (edo bigarren LocalSend instantzia bat) portu honetan ari da entzuten:\n• Itxi beste aplikazioa, edo\n• Aldatu portua ezarpenetan (Sarea)"
+      },
+      "generic": {
+        "hint": "Ezin izan da zerbitzaria abiarazi.",
+        "advice": "• Egiaztatu zure suhesi eta sare ezarpenak\n• Saiatu portua aldatzen ezarpenetan (Sarea)"
+      },
+      "details": "Errore-xehetasunak:",
+      "copyDetails": "Kopiatu xehetasunak",
+      "openSettings": "Ireki ezarpenak"
     },
     "zoom": {
       "title": "URL"

@@ -233,6 +233,8 @@ class _Translations$sendTab$fil_PH extends Translations$sendTab$en {
   String get help => 'Mangyaring siguraduhin na ang target ay nasa parehas na wifi network.';
   @override
   String get placeItems => 'Maglagay ng mga bagay na i-share.';
+  @override
+  late final _Translations$sendTab$diagnosis$fil_PH diagnosis = _Translations$sendTab$diagnosis$fil_PH._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$fil_PH extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Naka-save sa Photos';
   @override
+  late final _Translations$progressPage$checksum$fil_PH checksum = _Translations$progressPage$checksum$fil_PH._(_root);
+  @override
   late final _Translations$progressPage$total$fil_PH total = _Translations$progressPage$total$fil_PH._(_root);
   @override
   late final _Translations$progressPage$remainingTime$fil_PH remainingTime = _Translations$progressPage$remainingTime$fil_PH._(_root);
@@ -679,6 +683,11 @@ class _Translations$dialogs$fil_PH extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$fil_PH cancelSession = _Translations$dialogs$cancelSession$fil_PH._(_root);
   @override
+  late final _Translations$dialogs$connectionError$fil_PH connectionError = _Translations$dialogs$connectionError$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$fil_PH deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$fil_PH._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$fil_PH cannotOpenFile = _Translations$dialogs$cannotOpenFile$fil_PH._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$fil_PH encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$fil_PH._(
@@ -725,6 +734,8 @@ class _Translations$dialogs$fil_PH extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$fil_PH pin = _Translations$dialogs$pin$fil_PH._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$fil_PH sendModeHelp = _Translations$dialogs$sendModeHelp$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$startupError$fil_PH startupError = _Translations$dialogs$startupError$fil_PH._(_root);
   @override
   late final _Translations$dialogs$zoom$fil_PH zoom = _Translations$dialogs$zoom$fil_PH._(_root);
 }
@@ -929,6 +940,31 @@ class _Translations$sendTab$sendModes$fil_PH extends Translations$sendTab$sendMo
   String get link => 'I-share gamit ang link';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$fil_PH extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Naghahanap ng mga malalapit na device...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$fil_PH noInterface = _Translations$sendTab$diagnosis$noInterface$fil_PH._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$fil_PH multicastUnavailable =
+      _Translations$sendTab$diagnosis$multicastUnavailable$fil_PH._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$fil_PH scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$fil_PH._(_root);
+  @override
+  String get rescan => 'Maghanap muli';
+  @override
+  String get bleHint =>
+      'Aktibo ang BLE discovery: matutuklasan ang mga device sa Bluetooth kung nakatakbo rin sa kanila ang fork na ito nang naka-enable ang opsyon; ang mismong paglilipat ng file ay ginagawa pa rin sa network.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$fil_PH manualFallback = _Translations$sendTab$diagnosis$manualFallback$fil_PH._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$fil_PH extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
@@ -1011,6 +1047,8 @@ class _Translations$settingsTab$send$fil_PH extends Translations$settingsTab$sen
   String get shareViaLinkAutoAccept => 'Kusang tanggapin ang request sa "Share via link" mode';
   @override
   String get createChecksums => 'Gumawa ng mga checksum kapag nagpapadala ng mga file';
+  @override
+  String get deleteSourceAfterSend => 'Burahin ang source files pagkatapos ng matagumpay na pagpapadala';
 }
 
 // Path: settingsTab.network
@@ -1043,6 +1081,13 @@ class _Translations$settingsTab$network$fil_PH extends Translations$settingsTab$
   @override
   String get discoveryTimeout => 'Nag Timeout ang Discovery';
   @override
+  String get maxInterfaces => 'Pinakamaraming interfaces (Smart Scan)';
+  @override
+  String get vpnInterfaces => 'Isama ang mga VPN interface (Smart Scan)';
+  @override
+  String get vpnInterfacesHint =>
+      'Isinasama rin sa scan ang mga subnet ng mga VPN tunnel interface (Tailscale, WireGuard, ...). Karaniwang hindi dinadala ng mga VPN ang multicast, kaya sinusuri ang mga subnet nito gamit ang HTTP fallback scan.';
+  @override
   String get useSystemName => 'Gamitin ang pangalan ng system';
   @override
   String get generateRandomAlias => 'Mag-generate ng random na alias';
@@ -1056,6 +1101,35 @@ class _Translations$settingsTab$network$fil_PH extends Translations$settingsTab$
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Maaaring hindi ka ma-detect ng ibang devices dahil ikaw ay gumagamit ng ibang multicast address. (default: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE discovery (eksperimental)';
+  @override
+  String get bleDiscoveryHint =>
+      'Natutuklasan ang mga kalapit na device sa pamamagitan ng Bluetooth kahit hinarang ng network ang multicast (AP isolation). Gumagana ito sa Android, iOS, macOS, at Windows; sa Linux, kayang hanapin ng device na ito ang iba ngunit hindi ito makikita ng iba. Kailangan ng dalawang device ang fork na ito nang naka-enable ang opsyon; ang mismong paglilipat ng file ay gumagamit pa rin ng network.';
+  @override
+  String get bleStatusActive =>
+      'Aktibo: nagse-scan at nag-a-advertise. Lalabas lang ang malalapit na device kung nakatakbo rin sa kanila ang fork na ito nang naka-enable ang opsyon.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktibo: scan lamang. Hindi matutuklasan ang device na ito sa Bluetooth sa ngayon (walang support sa BLE advertising sa platform na ito, o wala pang gagamiting network address).';
+  @override
+  String get bleStatusPaused => 'Naka-pause. Magpapatuloy kapag bumalik sa foreground ang app.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Tinanggihan ang mga pahintulot sa Bluetooth. Ibigay ang pahintulot na "Nearby devices" (o "Location" sa Android 11 at mas mababa) sa system settings, pagkatapos ay i-off at i-on muli ang opsyong ito.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Naka-off o hindi available ang Bluetooth. Magre-restart mag-isa ang discovery kapag naging available muli ang Bluetooth.';
+  @override
+  String get bleStatusUnsupported =>
+      'Hindi suportado sa device na ito: kailangan ng BLE discovery ng Android 7 o mas bago at isang Bluetooth LE radio.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Sa bersyon ng Android na ito, kailangan ding naka-on ang mga location service ng system para makahanap ng ibang device (awtomatikong hinihiling ang pahintulot; kayang matuklasan ng iba ang device na ito).';
+  @override
+  String get bleStatusError => 'Hindi masimulan ang BLE discovery. Tingnan ang Troubleshoot > Mga Log para sa mga detalye.';
+  @override
+  String get bleOpenSystemSettings => 'Buksan ang system settings';
 }
 
 // Path: settingsTab.other
@@ -1173,6 +1247,25 @@ class _Translations$deviceDetailsPage$logs$fil_PH extends Translations$deviceDet
   String updated({required Object protocol, required Object host}) => 'Na-update sa pamamagitan ng ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$fil_PH extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Na-verify ang mga checksum';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Na-verify ang mga checksum para sa ${curr} / ${n} na file';
+  @override
+  String get notVerifiable => 'Walang ibinigay na checksum ang sender';
+  @override
+  String get disabled => 'Naka-disable ang pag-verify ng checksum';
+  @override
+  String attached({required Object curr, required Object n}) => 'Nakalakip ang mga checksum (${curr} / ${n} na file)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$fil_PH extends Translations$progressPage$total$en {
   _Translations$progressPage$total$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
@@ -1266,6 +1359,11 @@ class _Translations$dialogs$addressInput$fil_PH extends Translations$dialogs$add
   String get ip => 'IP Address';
   @override
   String get recentlyUsed => 'Recently used: ';
+  @override
+  String get noHashtagCandidates =>
+      'Walang IPv4 address ang kasalukuyang network, kaya hindi ma-expand ang hashtag papunta sa isang candidate address. Mangyaring ilagay ang buong address (hal. 192.168.1.5 o fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$fil_PH validation = _Translations$dialogs$addressInput$validation$fil_PH._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1279,6 +1377,42 @@ class _Translations$dialogs$cancelSession$fil_PH extends Translations$dialogs$ca
   String get title => 'Kanselahin ang pagpapadala ng file';
   @override
   String get content => 'Gusto mo ba talagang kanselahin ang pagpapadala ng file?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$fil_PH extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nabigo ang koneksyon';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$fil_PH timeout = _Translations$dialogs$connectionError$timeout$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$fil_PH refused = _Translations$dialogs$connectionError$refused$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$fil_PH forbidden = _Translations$dialogs$connectionError$forbidden$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$fil_PH other = _Translations$dialogs$connectionError$other$fil_PH._(_root);
+  @override
+  String get retry => 'Subukan muli';
+  @override
+  String get details => 'Mga detalye ng error:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$fil_PH extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Burahin ang source files';
+  @override
+  String get content => 'Pagkatapos matagumpay na mapadala ang mga file, buburahin ang mga ito mula sa device na ito. Hindi na ito maibabalik.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1573,6 +1707,32 @@ class _Translations$dialogs$sendModeHelp$fil_PH extends Translations$dialogs$sen
       'Ang mga recipient o tatanggap na walang nakainstall na LocalSend ay maaaring mag download nang mga napiling file sa pamamagitan ng pagbukas ng link sa kanilang browser.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$fil_PH extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Hindi masimulan ang server';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$fil_PH windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$fil_PH addressInUse = _Translations$dialogs$startupError$addressInUse$fil_PH._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$fil_PH generic = _Translations$dialogs$startupError$generic$fil_PH._(_root);
+  @override
+  String get details => 'Mga detalye ng error:';
+  @override
+  String get copyDetails => 'Kopyahin ang mga detalye';
+  @override
+  String get openSettings => 'Buksan ang settings';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$fil_PH extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
@@ -1582,6 +1742,68 @@ class _Translations$dialogs$zoom$fil_PH extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$fil_PH extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Walang network connection';
+  @override
+  String get advice => 'Hindi nakakonekta ang device na ito sa anumang network. Suriin ang Wi-Fi o cable connection ng device na ito.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$fil_PH extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Hindi available ang multicast';
+  @override
+  String advice({required Object port}) =>
+      'Hindi magamit ng LocalSend ang discovery sa multicast sa network na ito. Siguraduhin na parehas ang network ng dalawang device at hindi hinaharang ng AP isolation o firewall ang UDP port ${port}.';
+  @override
+  String reason({required Object reason}) => 'Dahilan: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$fil_PH extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Walang nahanap na device';
+  @override
+  String get advice =>
+      'Gumagana ang discovery, ngunit walang device na sumagot sa mga announcement o sa network scan. Maaaring offline, tulog, o hinarang ng firewall ang kabilang device. Siguraduhin na tumatakbo ang LocalSend sa kabilang device.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Nagpadala ng ${announcements} na announcement at ${scans} na network scan nang walang sagot.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$fil_PH extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Madalas magbabago ang mga IP address. Maaari mo pa ring maabot ang device na hindi nakalista: idagdag ito sa favorites o ilagay ang address nito nang mano-mano.';
+  @override
+  String get openFavorites => 'Buksan ang favorites';
+  @override
+  String get manualInput => 'Ilagay ang address nang mano-mano';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1668,4 +1890,115 @@ class _Translations$whatsNewPage$changes$v1_18_0$fil_PH extends Translations$wha
     'Awtomatiko nang tinatanggap ang mga kahilingan mula sa mga paborito. Naka-on ito bilang default at maaaring i-disable sa mga setting.',
     'Sa Android, nagpapatuloy ang mga paglilipat habang nasa background ang app o naka-off ang screen. Sa iOS, kailangan pa ring manatili sa foreground ang app.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$fil_PH extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Maglagay ng wastong IPv4 address, IPv6 address, o host name.';
+  @override
+  String get scheme => 'Ilagay lamang ang address, walang "http://" o "https://".';
+  @override
+  String get port => 'Ilagay lamang ang address. Kinukuha ang port mula sa settings.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$fil_PH extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Hindi tumugon sa oras ang device.';
+  @override
+  String get advice =>
+      'Malamang ay offline ito, tulog, o hinarang ng firewall ang koneksyon. Siguraduhin na tumatakbo ang LocalSend sa kabilang device at nasa parehas na network ang dalawang device.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$fil_PH extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Tinanggihan ng device ang koneksyon.';
+  @override
+  String get advice =>
+      'Mukhang hindi tumatakbo ang LocalSend sa target device, o nakikinig ito sa ibang port. Simulan ang LocalSend sa kabilang device o tingnan ang port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$fil_PH extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Tinanggihan ng device ang request.';
+  @override
+  String get advice => 'Maaaring kailangan ng PIN, o nagbago ang pairing sa device. I-check ang PIN at quick save settings sa target device.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$fil_PH extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Hindi ma-establish ang koneksyon.';
+  @override
+  String get advice =>
+      'I-check ang address at port, siguraduhin na tumatakbo ang LocalSend sa target device, at walang firewall o VPN na humaharang sa koneksyon.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$fil_PH extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Tinanggihan ng Windows ang access sa port (socket error 10013).';
+  @override
+  String get advice =>
+      'Karaniwang sanhi nito ay port range na reserba ng Hyper-V, WSL, o Docker, o sirang Winsock catalog:\n• Palitan ang port sa Settings (Network)\n• Tingnan ang mga reserbang range gamit ang: netsh interface ipv4 show excludedportrange protocol=tcp\n• Ayusin ang Winsock bilang administrator gamit ang: netsh winsock reset (i-restart pagkatapos)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$fil_PH extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Ginagamit na ng ibang application ang port.';
+  @override
+  String get advice =>
+      'May ibang program (o pangalawang instance ng LocalSend) na nakikinig sa port na ito:\n• Isara ang ibang application, o\n• Palitan ang port sa Settings (Network)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$fil_PH extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$fil_PH._(TranslationsFilPh root) : this._root = root, super.internal(root);
+
+  final TranslationsFilPh _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Hindi masimulan ang server.';
+  @override
+  String get advice => '• I-check ang iyong firewall at mga network setting\n• Subukang palitan ang port sa Settings (Network)';
 }

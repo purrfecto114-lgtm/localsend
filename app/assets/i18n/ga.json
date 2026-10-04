@@ -81,7 +81,31 @@
     },
     "sendModeHelp": "Míniú",
     "help": "Cinntigh le do thoil go bhfuil an sprioc atá uait ar an líonra Wi-Fi céanna freisin.",
-    "placeItems": "Cuir míreanna le roinnt."
+    "placeItems": "Cuir míreanna le roinnt.",
+    "diagnosis": {
+      "scanning": "Gléasanna in aice láimhe á gcuardach…",
+      "noInterface": {
+        "title": "Gan nasc líonra",
+        "advice": "Níl an gléas seo ceangailte le líonra ar bith. Seiceáil nasc Wi-Fi nó cábla an ghléis seo."
+      },
+      "multicastUnavailable": {
+        "title": "Níl ilchraoladh ar fáil",
+        "advice": "Ní féidir le LocalSend fionnachtan ilchraolta a úsáid ar an líonra seo. Cinntigh go bhfuil an dá ghléas ar an líonra céanna, agus nach bhfuil Leithlisiú Pointe Rochtana (AP) ná balla dóiteáin ag cur port UDP {port} ar cosc.",
+        "reason": "Fáth: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Níor aimsíodh aon ghléasanna",
+        "advice": "Tá an fionnachtan ag obair, ach ní fhreagair aon ghléas na fógraí ná an scanadh líonra. B'fhéidir go bhfuil an gléas eile as líne, ina chodladh, nó curtha ar cosc ag balla dóiteáin. Cinntigh go bhfuil LocalSend ag rith ar an ngléas eile.",
+        "detail": "Seoladh {announcements} fhógra agus {scans} scanadh líonra gan freagra."
+      },
+      "rescan": "Cuardaigh arís",
+      "bleHint": "Tá fionnachtan BLE gníomhach: ní aimsítear gléasanna thar Bluetooth mura bhfuil an fork seo acu freisin leis an rogha cumasaithe; téann an t-aistriú féin thar an líonra fós.",
+      "manualFallback": {
+        "message": "Athraíonn seoltaí IP go minic. Is féidir gléas nach bhfuil ar an liosta a bhaint amach fós: cuir leis na ceanáin é, nó cuir a sheoladh isteach de láimh.",
+        "openFavorites": "Oscail ceanáin",
+        "manualInput": "Cuir an seoladh isteach de láimh"
+      }
+    }
   },
   "settingsTab": {
     "title": "Socruithe",
@@ -123,7 +147,8 @@
     },
     "send": {
       "title": "Seol",
-      "shareViaLinkAutoAccept": "Glac le hiarratais go huathoibríoch sa mhód \"Comhroinn trí nasc\""
+      "shareViaLinkAutoAccept": "Glac le hiarratais go huathoibríoch sa mhód \"Comhroinn trí nasc\"",
+      "deleteSourceAfterSend": "Scrios comhaid fhoinseacha tar éis seolta rathúil"
     },
     "network": {
       "title": "Líonra",
@@ -139,12 +164,26 @@
         "filtered": "Scagtha"
       },
       "discoveryTimeout": "Am Teorann Fionnachtana",
+      "maxInterfaces": "Uaschomhéadain (Scan Cliste)",
+      "vpnInterfaces": "Cuir comhéadain VPN san áireamh (Scan Cliste)",
+      "vpnInterfacesHint": "Scanadh fo-líonraí comhéadain tolláin VPN freisin (Tailscale, WireGuard, ...). Ní iompraíonn VPNanna ilchraoladh de ghnáth, mar sin úsáidtear an scanadh cúltaca HTTP chun a bhfo-líonraí a iniúchadh.",
       "useSystemName": "Úsáid ainm an chórais",
       "generateRandomAlias": "Gin leasainm randamach",
       "portWarning": "B’fhéidir nach mbraithfidh gléasanna eile thú mar go bhfuil port saincheaptha in úsáid agat. (réamhshocrú: {defaultPort})",
       "encryption": "Criptiú",
       "multicastGroup": "Seoladh ilchraolta",
-      "multicastGroupWarning": "B’fhéidir nach mbraithfidh gléasanna eile thú mar go bhfuil seoladh ilchraolta saincheaptha in úsáid agat. (réamhshocrú: {defaultMulticast})"
+      "multicastGroupWarning": "B’fhéidir nach mbraithfidh gléasanna eile thú mar go bhfuil seoladh ilchraolta saincheaptha in úsáid agat. (réamhshocrú: {defaultMulticast})",
+      "bleDiscovery": "Fionnachtan BLE (turgnamhach)",
+      "bleDiscoveryHint": "Aimsíonn sé gléasanna in aice láimhe trí Bluetooth fiú nuair a chuireann an líonra ilchraoladh ar cosc (Leithlisiú Pointe Rochtana (AP)). Oibríonn sé ar Android, iOS, macOS agus Windows; ar Linux is féidir leis an ngléas seo cinn eile a aimsiú ach ní féidir é féin a aimsiú. Teastaíonn an fork seo ón dá ghléas leis an rogha cumasaithe; úsáideann aistriú na gcomhad an líonra fós.",
+      "bleStatusActive": "Gníomhach: ag scanadh agus ag fógairt. Ní thaispeánfar gléasanna in aice láimhe mura bhfuil an fork seo acu freisin leis an rogha cumasaithe.",
+      "bleStatusScanOnly": "Gníomhach: scanadh amháin. Ní féidir an gléas seo a aimsiú thar Bluetooth faoi láthair (ní thacaítear le fógairt BLE ar an ardán seo, nó níl seoladh líonra inúsáidte ann go fóill).",
+      "bleStatusPaused": "Cuirtha ar sos. Atosóidh sé nuair a théann an aip ar ais chuig an tulra tosaigh.",
+      "bleStatusPermissionDenied": "Diúltaiodh do cheadanna Bluetooth. Deonaigh an cead \"Gléasanna in aice láimhe\" (nó \"Suíomh\" ar Android 11 agus níos sine) i socruithe an chórais, ansin múch agus cumasaigh an rogha seo arís.",
+      "bleStatusAdapterOff": "Tá Bluetooth múchta nó nach bhfuil ar fáil. Atosaíonn an fionnachtan é féin nuair a bheidh Bluetooth ar fáil arís.",
+      "bleStatusUnsupported": "Ní thacaítear leis ar an ngléas seo: teastaíonn Android 7 nó níos nuaí agus raidió Bluetooth LE le haghaidh fionnachtain BLE.",
+      "bleStatusLegacyLocation": "Ar an leagan Android seo, teastaíonn seirbhísí suímh an chórais a bheith curtha ar siúl freisin chun gléasanna eile a aimsiú (iarrtar an cead go huathoibríoch; is féidir le gléasanna eile an gléas seo a aimsiú cheana féin).",
+      "bleStatusError": "Níorbh fhéidir fionnachtan BLE a thosú. Féach Fabhtcheartú > Loganna chun sonraí a fháil.",
+      "bleOpenSystemSettings": "Oscail socruithe an chórais"
     },
     "other": {
       "title": "Eile",
@@ -228,6 +267,13 @@
     "titleSending": "Ag seoladh comhad",
     "titleReceiving": "Ag fáil comhad",
     "savedToGallery": "Sábháilte i nGrianghraif",
+    "checksum": {
+      "verified": "Suimeanna seiceála fíoraithe",
+      "partiallyVerified": "Suimeanna seiceála fíoraithe do {curr} / {n} comhad",
+      "notVerifiable": "Níor chuir an seoltóir aon suimeanna seiceála ar fáil",
+      "disabled": "Tá fíorú suimeanna seiceála díchumasaithe",
+      "attached": "Suimeanna seiceála ceangailte ({curr} / {n} comhad)"
+    },
     "total": {
       "title": {
         "sending": "Dul chun cinn iomlán ({time})",
@@ -363,11 +409,42 @@
     },
     "addressInput": {
       "title": "Iontráil seoladh",
-      "recentlyUsed": "Úsáidte le déanaí: "
+      "recentlyUsed": "Úsáidte le déanaí: ",
+      "noHashtagCandidates": "Níl aon seoladh IPv4 ag an líonra reatha, mar sin ní féidir an hashtag a leathnú go seoladh iarrthóra. Cuir isteach an seoladh iomlán ina ionad (m.sh. 192.168.1.5 nó fe80::1).",
+      "validation": {
+        "invalid": "Cuir isteach seoladh IPv4 bailí, seoladh IPv6 bailí nó ainm óstach.",
+        "scheme": "Cuir isteach an seoladh amháin, gan \"http://\" nó \"https://\".",
+        "port": "Cuir isteach an seoladh amháin. Glactar an port as na socruithe."
+      }
     },
     "cancelSession": {
       "title": "Cealaigh aistriú comhad",
       "content": "An bhfuil tú cinnte gur mhaith leat an t-aistriú comhad a chealú?"
+    },
+    "connectionError": {
+      "title": "Theip ar an nasc",
+      "timeout": {
+        "message": "Níor fhreagair an gléas in am.",
+        "advice": "Is dócha go bhfuil sé as líne, ina chodladh, nó go bhfuil balla dóiteáin ag cur bac ar an nasc. Cinntigh go bhfuil LocalSend ag rith ar an ngléas eile agus go bhfuil an dá ghléas ar an líonra céanna."
+      },
+      "refused": {
+        "message": "Dhiúltaigh an gléas don nasc.",
+        "advice": "Dealraíonn sé nach bhfuil LocalSend ag rith ar an ngléas sprice, nó go bhfuil sé ag éisteacht ar phort eile. Tosaigh LocalSend ar an ngléas eile nó seiceáil an port."
+      },
+      "forbidden": {
+        "message": "Dhiúltaigh an gléas don iarratas.",
+        "advice": "B'fhéidir go bhfuil UAP de dhíth, nó go bhfuil an phéireáil leis an ngléas athraithe. Seiceáil an UAP agus na socruithe sábhála thapa ar an ngléas sprice."
+      },
+      "other": {
+        "message": "Níorbh fhéidir an nasc a bhunú.",
+        "advice": "Seiceáil an seoladh agus an port, cinntigh go bhfuil LocalSend ag rith ar an ngléas sprice, agus nach bhfuil balla dóiteáin ná VPN ag cur bac ar an nasc."
+      },
+      "retry": "Bain triail eile as",
+      "details": "Sonraí na hearráide:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Scrios comhaid fhoinseacha",
+      "content": "Tar éis comhaid a sheoladh go rathúil, scriosfar ón ngléas seo iad. Ní féidir é seo a chealú."
     },
     "cannotOpenFile": {
       "title": "Ní féidir an comhad a oscailt",
@@ -465,6 +542,25 @@
       "single": "Seolann sé comhaid chuig faighteoir amháin. Glanfar an rogha tar éis aistriú comhad a bheith críochnaithe.",
       "multiple": "Seolann sé comhaid chuig ilfhaighteoirí. Ní ghlanfar an rogha tar éis aistriú comhad a bheith críochnaithe.",
       "link": "Is féidir le faighteoirí nach bhfuil LocalSend suiteáilte acu na comhaid roghnaithe a íoslódáil tríd an nasc a oscailt ina mbrabhsálaí."
+    },
+    "startupError": {
+      "title": "Níorbh fhéidir an freastalaí a thosú",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Dhiúltaigh Windows rochtain ar an bport (earráid soicéad 10013).",
+        "advice": "Is gnách gurb é is cúis leis seo raon port in áirithe ag Hyper-V, WSL nó Docker, nó catalóg Winsock lofa:\n• Athraigh an port sna Socruithe (Líonra)\n• Seiceáil na raonta in áirithe le: netsh interface ipv4 show excludedportrange protocol=tcp\n• Deisigh Winsock mar riarthóir le: netsh winsock reset (atosú ina dhiaidh sin)"
+      },
+      "addressInUse": {
+        "hint": "Tá an port in úsáid ag feidhmchlár eile cheana.",
+        "advice": "Tá clár eile (nó dara hásc LocalSend) ag éisteacht ar an bport seo:\n• Dún an feidhmchlár eile, nó\n• Athraigh an port sna Socruithe (Líonra)"
+      },
+      "generic": {
+        "hint": "Níorbh fhéidir an freastalaí a thosú.",
+        "advice": "• Seiceáil do bhalla dóiteáin agus do shocruithe líonra\n• Bain triail as an bport a athrú sna Socruithe (Líonra)"
+      },
+      "details": "Sonraí na hearráide:",
+      "copyDetails": "Cóipeáil na sonraí",
+      "openSettings": "Oscail na socruithe"
     },
     "zoom": {
       "title": "URL"

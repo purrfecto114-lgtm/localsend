@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "説明",
     "help": "請確保目標裝置駁緊同一個 Wi‑Fi 網絡。",
-    "placeItems": "將要分享嘅檔案拉過嚟呢度。"
+    "placeItems": "將要分享嘅檔案拉過嚟呢度。",
+    "diagnosis": {
+      "scanning": "掃描緊附近嘅裝置……",
+      "noInterface": {
+        "title": "冇連上網絡",
+        "advice": "呢部機冇連接任何網絡。請檢查呢部機嘅 Wi‑Fi 或者網線連線。"
+      },
+      "multicastUnavailable": {
+        "title": "用唔到多播",
+        "advice": "LocalSend 喺呢個網絡用唔到多播嚟偵測裝置。請確保兩部裝置喺同一個網絡，而且「接入點 (AP) 隔離」或者防火牆冇封鎖 UDP port {port}。",
+        "reason": "原因：{reason}"
+      },
+      "scanNoResult": {
+        "title": "搵唔到裝置",
+        "advice": "偵測功能正常，但冇裝置回應通告或者網絡掃描。對方部機可能離咗線、瞓著咗，或者畀防火牆擋咗。請確保對方部機開住 LocalSend。",
+        "detail": "出咗 {announcements} 次通告同 {scans} 次網絡掃描，都冇回應。"
+      },
+      "rescan": "再掃描一次",
+      "bleHint": "BLE 偵測已開啟：只有對方都用呢個修改版（fork 版）而且開咗呢個選項，先至可以透過藍牙搵到對方；傳送檔案本身照舊行網絡。",
+      "manualFallback": {
+        "message": "IP 地址成日都變。唔喺列表入面嘅裝置你一樣搵得到：收藏佢，或者人手輸入佢個地址。",
+        "openFavorites": "開啟收藏",
+        "manualInput": "人手輸入地址"
+      }
+    }
   },
   "settingsTab": {
     "title": "@:general.settings",
@@ -128,7 +152,8 @@
       "title": "傳送",
       "shareViaLinkAutoAccept": "用 link 分享檔案嗰陣自動接收",
       "createChecksums": "傳送檔案嗰陣建立 checksum",
-      "@info": "Translating to 接收 rather than 接受 is intentional to reflect the actual usage."
+      "@info": "Translating to 接收 rather than 接受 is intentional to reflect the actual usage.",
+      "deleteSourceAfterSend": "傳送成功之後刪除來源檔案"
     },
     "network": {
       "title": "網絡",
@@ -144,12 +169,26 @@
         "filtered": "已篩選"
       },
       "discoveryTimeout": "裝置搜尋逾時",
+      "maxInterfaces": "最多介面數（智能掃描）",
+      "vpnInterfaces": "包埋 VPN 介面（智能掃描）",
+      "vpnInterfacesHint": "仲會掃埋 VPN 隧道介面嘅子網絡（Tailscale、WireGuard 等）。VPN 通常行唔到多播，所以佢哋嘅子網絡會改用 HTTP 後備掃描嚟探測。",
       "useSystemName": "用系統名稱",
       "generateRandomAlias": "求其改個名",
       "portWarning": "改 port 嘅話其他裝置有機會偵測唔到你。（預設：{defaultPort}）",
       "encryption": "加密傳送",
       "multicastGroup": "多播 IP 地址",
-      "multicastGroupWarning": "用自訂多播地址嘅話其他裝置有機會偵測唔到你。（預設：{defaultMulticast}）"
+      "multicastGroupWarning": "用自訂多播地址嘅話其他裝置有機會偵測唔到你。（預設：{defaultMulticast}）",
+      "bleDiscovery": "BLE 偵測（實驗性）",
+      "bleDiscoveryHint": "就算個網絡封鎖咗多播（接入點 (AP) 隔離），都可以透過藍牙偵測附近嘅裝置。Android、iOS、macOS 同 Windows 用得；喺 Linux 上面呢部機搵到人，但係唔可以畀人搵。兩邊裝置都要用呢個修改版（fork 版）同時開咗呢個選項；傳送檔案本身照舊行網絡。",
+      "bleStatusActive": "已啟用：掃描緊同廣播緊。只有對方都用呢個修改版（fork 版）而且開咗呢個選項，附近嘅裝置先會出現。",
+      "bleStatusScanOnly": "已啟用：淨係掃描。呢部機而家透過藍牙係畀人偵測唔到（呢個平台唔支援 BLE 廣播，或者仲未有可用嘅網絡地址）。",
+      "bleStatusPaused": "暫停咗。個 app 返返前景就會自動恢復。",
+      "bleStatusPermissionDenied": "藍牙權限被拒。請喺系統設定開返「附近裝置」權限（Android 11 或者更舊版本係「位置」權限），然後將呢個選項閂咗再開過。",
+      "bleStatusAdapterOff": "藍牙閂咗或者用唔到。等藍牙返返嚟，偵測會自動重新開始。",
+      "bleStatusUnsupported": "呢部機唔支援：BLE 偵測要 Android 7 或者更新，仲要有藍牙 LE 無線電。",
+      "bleStatusLegacyLocation": "喺呢個 Android 版本，要搵到其他裝置仲要開住系統定位服務（權限會自動請求；呢部機已經可以畀人搵到）。",
+      "bleStatusError": "BLE 偵測開唔到。詳情請睇 疑難排解 > 記錄。",
+      "bleOpenSystemSettings": "開啟系統設定"
     },
     "other": {
       "title": "其他",
@@ -257,6 +296,13 @@
     "titleSending": "Send 緊……",
     "titleReceiving": "接收緊……",
     "savedToGallery": "成功 save 咗落相簿",
+    "checksum": {
+      "verified": "checksum 驗證咗",
+      "partiallyVerified": "已驗證 {curr} / {n} 個檔案嘅 checksum",
+      "notVerifiable": "對方冇提供 checksum",
+      "disabled": "checksum 驗證已停用",
+      "attached": "已附加 checksum（{curr} / {n} 個檔案）"
+    },
     "total": {
       "title": {
         "sending": "進度：{time}",
@@ -349,11 +395,42 @@
       "title": "輸入地址",
       "hashtag": "Hashtag",
       "ip": "IP 地址",
-      "recentlyUsed": "輸入記錄："
+      "recentlyUsed": "輸入記錄：",
+      "noHashtagCandidates": "而家個網絡冇 IPv4 地址，所以個 hashtag 展開唔到做候選地址。請直接輸入完整地址（例如 192.168.1.5 或者 fe80::1）。",
+      "validation": {
+        "invalid": "請輸入有效嘅 IPv4 地址、IPv6 地址或者主機名稱。",
+        "scheme": "淨係輸入地址就得，唔使包含「http://」或者「https://」。",
+        "port": "淨係輸入地址就得。Port 會用設定入面嗰個。"
+      }
     },
     "cancelSession": {
       "title": "取消檔案傳輸",
       "content": "你係咪要放棄傳輸檔案？"
+    },
+    "connectionError": {
+      "title": "連線失敗",
+      "timeout": {
+        "message": "對方部機冇及時回應。",
+        "advice": "佢可能離咗線、瞓著咗，或者畀防火牆擋住連線。請確保對方部機開住 LocalSend，同埋兩邊都喺同一個網絡。"
+      },
+      "refused": {
+        "message": "對方部機拒絕咗個連線。",
+        "advice": "目標裝置嗰邊似乎冇開住 LocalSend，或者佢聽緊第二個 port。請喺對方部機開返 LocalSend，或者 check 下個 port。"
+      },
+      "forbidden": {
+        "message": "對方部機拒絕咗個請求。",
+        "advice": "可能需要密碼（PIN），或者同嗰部裝置嘅配對已經變咗。請檢查目標裝置嘅 PIN 同自動儲存設定。"
+      },
+      "other": {
+        "message": "連線建立唔到。",
+        "advice": "請檢查個地址同 port，確保目標裝置開住 LocalSend，仲要確認冇防火牆或者 VPN 擋住條連線。"
+      },
+      "retry": "重試",
+      "details": "錯誤詳情："
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "刪除來源檔案",
+      "content": "檔案傳送成功之後，呢啲檔案就會喺呢部機度剷走。做咗就冇得返轉頭。"
     },
     "cannotOpenFile": {
       "title": "無法開啟檔案",
@@ -451,6 +528,25 @@
       "single": "淨係 send 畀一部裝置，傳輸完成後會清除揀選項目。",
       "multiple": "一次過 send 畀多部裝置，揀選項目會一路保留。",
       "link": "冇裝 LocalSend 嘅裝置可以透過條 link 嚟 download 返揀選嘅項目。"
+    },
+    "startupError": {
+      "title": "開唔到個 server",
+      "port": "Port：{port}",
+      "windowsAccessDenied": {
+        "hint": "Windows 拒絕存取個 port（socket 錯誤 10013）。",
+        "advice": "咁通常係因為個 port 範圍畀 Hyper-V、WSL 或者 Docker 保留咗，或者 Winsock 目錄壞咗：\n• 喺設定（網絡）度改個 port\n• 用呢條命令 check 下保留範圍：netsh interface ipv4 show excludedportrange protocol=tcp\n• 用管理員身份修復 Winsock：netsh winsock reset（之後重開機）"
+      },
+      "addressInUse": {
+        "hint": "個 port 已經畀第二個應用程式用緊。",
+        "advice": "另一個程式（或者第二個 LocalSend）正在呢個 port 上面聽緊：\n• 閂咗嗰個應用程式，或者\n• 喺設定（網絡）度改個 port"
+      },
+      "generic": {
+        "hint": "個 server 開唔到。",
+        "advice": "• 檢查你嘅防火牆同網絡設定\n• 試下喺設定（網絡）度改個 port"
+      },
+      "details": "錯誤詳情：",
+      "copyDetails": "複製詳情",
+      "openSettings": "開啟設定"
     },
     "zoom": {
       "title": "網址"

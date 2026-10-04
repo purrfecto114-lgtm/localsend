@@ -233,6 +233,8 @@ class _Translations$sendTab$ms extends Translations$sendTab$en {
   String get help => 'Sila pastikan sasaran yang diingini juga berada dalam rangkaian Wi-Fi yang sama.';
   @override
   String get placeItems => 'Letakkan item untuk dikongsi.';
+  @override
+  late final _Translations$sendTab$diagnosis$ms diagnosis = _Translations$sendTab$diagnosis$ms._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$ms extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Disimpan dalam Foto';
   @override
+  late final _Translations$progressPage$checksum$ms checksum = _Translations$progressPage$checksum$ms._(_root);
+  @override
   late final _Translations$progressPage$total$ms total = _Translations$progressPage$total$ms._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ms remainingTime = _Translations$progressPage$remainingTime$ms._(_root);
@@ -676,6 +680,11 @@ class _Translations$dialogs$ms extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ms cancelSession = _Translations$dialogs$cancelSession$ms._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ms connectionError = _Translations$dialogs$connectionError$ms._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ms deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ms._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ms cannotOpenFile = _Translations$dialogs$cannotOpenFile$ms._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ms encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ms._(_root);
@@ -716,6 +725,8 @@ class _Translations$dialogs$ms extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ms pin = _Translations$dialogs$pin$ms._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ms sendModeHelp = _Translations$dialogs$sendModeHelp$ms._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ms startupError = _Translations$dialogs$startupError$ms._(_root);
   @override
   late final _Translations$dialogs$zoom$ms zoom = _Translations$dialogs$zoom$ms._(_root);
 }
@@ -920,6 +931,32 @@ class _Translations$sendTab$sendModes$ms extends Translations$sendTab$sendModes$
   String get link => 'Kongsi melalui pautan';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ms extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Mencari peranti berdekatan…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ms noInterface = _Translations$sendTab$diagnosis$noInterface$ms._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ms multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ms._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ms scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ms._(_root);
+  @override
+  String get rescan => 'Cari semula';
+  @override
+  String get bleHint =>
+      'Penemuan BLE aktif: peranti hanya ditemui melalui Bluetooth jika peranti itu juga menjalankan versi terbitan ini (fork) dengan pilihan ini diaktifkan; pemindahan itu sendiri masih berjalan melalui rangkaian.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ms manualFallback = _Translations$sendTab$diagnosis$manualFallback$ms._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ms extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ms._(TranslationsMs root) : this._root = root, super.internal(root);
@@ -1001,6 +1038,8 @@ class _Translations$settingsTab$send$ms extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Terima permintaan secara automatik dalam mod "Kongsi melalui pautan"';
   @override
   String get createChecksums => 'Cipta checksum semasa menghantar fail';
+  @override
+  String get deleteSourceAfterSend => 'Padam fail sumber selepas penghantaran berjaya';
 }
 
 // Path: settingsTab.network
@@ -1031,6 +1070,13 @@ class _Translations$settingsTab$network$ms extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Tamat Masa Penemuan';
   @override
+  String get maxInterfaces => 'Antara Muka Maksimum (Imbasan Pintar)';
+  @override
+  String get vpnInterfaces => 'Sertakan antara muka VPN (Imbasan Pintar)';
+  @override
+  String get vpnInterfacesHint =>
+      'Turut mengimbas subnet antara muka terowong VPN (Tailscale, WireGuard, ...). VPN biasanya tidak membawa multicast, jadi subnetnya diperiksa oleh imbasan sandaran HTTP sebagai gantinya.';
+  @override
   String get useSystemName => 'Gunakan nama sistem';
   @override
   String get generateRandomAlias => 'Jana alias rawak';
@@ -1044,6 +1090,34 @@ class _Translations$settingsTab$network$ms extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Anda mungkin tidak dapat dikesan oleh peranti lain kerana anda menggunakan alamat multicast tersuai. (lalai: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Penemuan BLE (eksperimen)';
+  @override
+  String get bleDiscoveryHint =>
+      'Menemui peranti berdekatan melalui Bluetooth walaupun rangkaian menyekat multicast (pengasingan AP). Berfungsi pada Android, iOS, macOS dan Windows; pada Linux peranti ini boleh menemui yang lain tetapi tidak boleh ditemui. Kedua-dua peranti memerlukan versi terbitan ini (fork) dengan pilihan ini diaktifkan; pemindahan fail itu sendiri masih menggunakan rangkaian.';
+  @override
+  String get bleStatusActive =>
+      'Aktif: mengimbas dan mengiklankan. Peranti berdekatan hanya muncul jika ia juga menjalankan versi terbitan ini (fork) dengan pilihan ini diaktifkan.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktif: imbasan sahaja. Peranti ini tidak dapat ditemui melalui Bluetooth buat masa ini (tiada sokongan pengiklanan BLE pada platform ini, atau belum ada alamat rangkaian yang boleh digunakan).';
+  @override
+  String get bleStatusPaused => 'Dijeda. Akan disambung semula apabila aplikasi kembali ke latar depan.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Kebenaran Bluetooth ditolak. Berikan kebenaran "Peranti berdekatan" (atau "Lokasi" pada Android 11 dan ke bawah) dalam tetapan sistem, kemudian matikan dan hidupkan semula pilihan ini.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth dimatikan atau tidak tersedia. Penemuan akan dimulakan semula secara automatik apabila Bluetooth tersedia semula.';
+  @override
+  String get bleStatusUnsupported => 'Tidak disokong pada peranti ini: penemuan BLE memerlukan Android 7 atau lebih baharu serta radio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Pada versi Android ini, mencari peranti lain juga memerlukan perkhidmatan lokasi sistem diaktifkan (kebenaran diminta secara automatik; peranti ini sudah boleh ditemui oleh orang lain).';
+  @override
+  String get bleStatusError => 'Penemuan BLE tidak dapat dimulakan. Sila lihat Penyelesaian masalah > Log untuk butiran.';
+  @override
+  String get bleOpenSystemSettings => 'Buka tetapan sistem';
 }
 
 // Path: settingsTab.other
@@ -1160,6 +1234,25 @@ class _Translations$deviceDetailsPage$logs$ms extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Dikemas kini melalui ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ms extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Checksum disahkan';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Checksum disahkan untuk ${curr} / ${n} fail';
+  @override
+  String get notVerifiable => 'Penghantar tidak menyediakan checksum';
+  @override
+  String get disabled => 'Pengesahan checksum dilumpuhkan';
+  @override
+  String attached({required Object curr, required Object n}) => 'Checksum dilampirkan (${curr} / ${n} fail)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ms extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ms._(TranslationsMs root) : this._root = root, super.internal(root);
@@ -1253,6 +1346,11 @@ class _Translations$dialogs$addressInput$ms extends Translations$dialogs$address
   String get ip => 'Alamat IP';
   @override
   String get recentlyUsed => 'Digunakan baru-baru ini: ';
+  @override
+  String get noHashtagCandidates =>
+      'Rangkaian semasa tiada alamat IPv4, jadi tanda pagar tidak dapat dikembangkan menjadi alamat calon. Sila masukkan alamat penuh sebaliknya (cth. 192.168.1.5 atau fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ms validation = _Translations$dialogs$addressInput$validation$ms._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1266,6 +1364,42 @@ class _Translations$dialogs$cancelSession$ms extends Translations$dialogs$cancel
   String get title => 'Batalkan pemindahan fail';
   @override
   String get content => 'Adakah anda benar-benar mahu membatalkan pemindahan fail?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ms extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Sambungan gagal';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ms timeout = _Translations$dialogs$connectionError$timeout$ms._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ms refused = _Translations$dialogs$connectionError$refused$ms._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ms forbidden = _Translations$dialogs$connectionError$forbidden$ms._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ms other = _Translations$dialogs$connectionError$other$ms._(_root);
+  @override
+  String get retry => 'Cuba semula';
+  @override
+  String get details => 'Butiran ralat:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ms extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Padam fail sumber';
+  @override
+  String get content => 'Selepas fail berjaya dihantar, fail tersebut akan dipadamkan daripada peranti ini. Tindakan ini tidak boleh dibuat asal.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1560,6 +1694,32 @@ class _Translations$dialogs$sendModeHelp$ms extends Translations$dialogs$sendMod
       'Penerima yang tidak mempunyai LocalSend dipasang boleh memuat turun fail yang dipilih dengan membuka pautan dalam pelayar mereka.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ms extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Pelayan tidak dapat dimulakan';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ms windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ms._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ms addressInUse = _Translations$dialogs$startupError$addressInUse$ms._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ms generic = _Translations$dialogs$startupError$generic$ms._(_root);
+  @override
+  String get details => 'Butiran ralat:';
+  @override
+  String get copyDetails => 'Salin butiran';
+  @override
+  String get openSettings => 'Buka tetapan';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ms extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ms._(TranslationsMs root) : this._root = root, super.internal(root);
@@ -1569,6 +1729,68 @@ class _Translations$dialogs$zoom$ms extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ms extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Tiada sambungan rangkaian';
+  @override
+  String get advice => 'Peranti ini tidak disambungkan ke sebarang rangkaian. Sila semak sambungan Wi-Fi atau kabel peranti ini.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ms extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast tidak tersedia';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend tidak dapat menggunakan penemuan multicast pada rangkaian ini. Sila pastikan kedua-dua peranti berada dalam rangkaian yang sama, dan pengasingan AP atau firewall tidak menyekat port UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Sebab: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ms extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Tiada peranti ditemui';
+  @override
+  String get advice =>
+      'Penemuan berfungsi dengan baik, tetapi tiada peranti yang membalas pengumuman atau imbasan rangkaian. Peranti yang satu lagi mungkin luar talian, dalam mod tidur, atau disekat oleh firewall. Sila pastikan LocalSend sedang berjalan pada peranti yang satu lagi.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Telah menghantar ${announcements} pengumuman dan ${scans} imbasan rangkaian tanpa balasan.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ms extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Alamat IP sering berubah. Anda tetap boleh menghubungi peranti yang tidak disenaraikan: tambahkannya ke kegemaran atau masukkan alamatnya secara manual.';
+  @override
+  String get openFavorites => 'Buka kegemaran';
+  @override
+  String get manualInput => 'Masukkan alamat secara manual';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1655,4 +1877,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$ms extends Translations$whatsNe
     'Permintaan daripada kegemaran kini diterima secara automatik. Ini diaktifkan secara lalai dan boleh dimatikan dalam tetapan.',
     'Pada Android, pemindahan diteruskan semasa aplikasi berada di latar belakang atau skrin dimatikan. Pada iOS, aplikasi masih perlu kekal di latar depan.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ms extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Masukkan alamat IPv4, alamat IPv6 atau nama hos yang sah.';
+  @override
+  String get scheme => 'Masukkan alamat sahaja, tanpa "http://" atau "https://".';
+  @override
+  String get port => 'Masukkan alamat sahaja. Port diambil daripada tetapan.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ms extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Peranti tidak membalas dalam masa yang ditetapkan.';
+  @override
+  String get advice =>
+      'Ia berkemungkinan luar talian, dalam mod tidur, atau firewall menyekat sambungan. Sila pastikan LocalSend sedang berjalan pada peranti yang satu lagi dan kedua-dua peranti berada dalam rangkaian yang sama.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ms extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Peranti menolak sambungan.';
+  @override
+  String get advice =>
+      'LocalSend nampaknya tidak berjalan pada peranti sasaran, atau ia mendengar pada port yang berbeza. Mulakan LocalSend pada peranti yang satu lagi atau semak port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ms extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Peranti menolak permintaan.';
+  @override
+  String get advice =>
+      'PIN mungkin diperlukan, atau penggandingan dengan peranti telah berubah. Semak PIN dan tetapan simpan pantas pada peranti sasaran.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ms extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Sambungan tidak dapat dibuat.';
+  @override
+  String get advice =>
+      'Semak alamat dan port, pastikan LocalSend sedang berjalan pada peranti sasaran, dan tiada firewall atau VPN yang menyekat sambungan.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ms extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows menafikan akses kepada port tersebut (ralat soket 10013).';
+  @override
+  String get advice =>
+      'Ini biasanya disebabkan oleh julat port yang dikhaskan oleh Hyper-V, WSL atau Docker, atau katalog Winsock yang rosak:\n• Tukar port dalam Tetapan (Rangkaian)\n• Semak julat dikhaskan dengan: netsh interface ipv4 show excludedportrange protocol=tcp\n• Baiki Winsock sebagai pentadbir dengan: netsh winsock reset (but semula selepas itu)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ms extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port tersebut sudah digunakan oleh aplikasi lain.';
+  @override
+  String get advice =>
+      'Program lain (atau contoh LocalSend kedua) sedang mendengar pada port ini:\n• Tutup aplikasi tersebut, atau\n• Tukar port dalam Tetapan (Rangkaian)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ms extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ms._(TranslationsMs root) : this._root = root, super.internal(root);
+
+  final TranslationsMs _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Pelayan tidak dapat dimulakan.';
+  @override
+  String get advice => '• Semak tetapan firewall dan rangkaian anda\n• Cuba tukar port dalam Tetapan (Rangkaian)';
 }

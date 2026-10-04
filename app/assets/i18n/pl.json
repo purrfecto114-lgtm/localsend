@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Wyjaśnienie",
     "help": "Upewnij się, że żądany cel również znajduje się w tej samej sieci Wi-Fi.",
-    "placeItems": "Umieść elementy do udostępnienia."
+    "placeItems": "Umieść elementy do udostępnienia.",
+    "diagnosis": {
+      "scanning": "Wyszukiwanie urządzeń w pobliżu…",
+      "noInterface": {
+        "title": "Brak połączenia z siecią",
+        "advice": "To urządzenie nie jest połączone z żadną siecią. Sprawdź połączenie Wi-Fi lub za pomocą kabla tego urządzenia."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast niedostępny",
+        "advice": "LocalSend nie może użyć wykrywania przez multicast w tej sieci. Upewnij się, że oba urządzenia są w tej samej sieci oraz że izolacja AP lub zapora nie blokują portu UDP {port}.",
+        "reason": "Przyczyna: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nie znaleziono urządzeń",
+        "advice": "Wyszukiwanie działa, ale żadne urządzenie nie odpowiedziało na ogłoszenia ani na skanowanie sieci. Drugie urządzenie może być offline, uśpione lub blokowane przez zaporę. Upewnij się, że na drugim urządzeniu działa LocalSend.",
+        "detail": "Wysłano {announcements} ogłoszeń i wykonano {scans} skanowań sieci — bez odpowiedzi."
+      },
+      "rescan": "Szukaj ponownie",
+      "bleHint": "Wykrywanie BLE jest aktywne: urządzenia są znajdowane przez Bluetooth tylko wtedy, gdy również uruchamiają ten fork z włączoną opcją; sam transfer plików nadal odbywa się przez sieć.",
+      "manualFallback": {
+        "message": "Adresy IP często się zmieniają. Nadal możesz dotrzeć do urządzenia, którego nie ma na liście: dodaj je do ulubionych lub wpisz jego adres ręcznie.",
+        "openFavorites": "Otwórz ulubione",
+        "manualInput": "Wpisz adres ręcznie"
+      }
+    }
   },
   "settingsTab": {
     "title": "Ustawienia",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Wyślij",
       "shareViaLinkAutoAccept": "Udostępnij przez link: akceptuj automatycznie",
-      "createChecksums": "Twórz sumy kontrolne podczas wysyłania plików"
+      "createChecksums": "Twórz sumy kontrolne podczas wysyłania plików",
+      "deleteSourceAfterSend": "Usuwaj pliki źródłowe po pomyślnym wysłaniu"
     },
     "network": {
       "title": "Sieć",
@@ -143,12 +168,26 @@
         "filtered": "Przefiltrowane"
       },
       "discoveryTimeout": "Limit czasu wykrywania",
+      "maxInterfaces": "Maksymalna liczba interfejsów (inteligentne skanowanie)",
+      "vpnInterfaces": "Uwzględniaj interfejsy VPN (inteligentne skanowanie)",
+      "vpnInterfacesHint": "Skanuj także podsieci interfejsów tuneli VPN (Tailscale, WireGuard, ...). Sieci VPN zazwyczaj nie przenoszą multicastu, więc ich podsieci są sprawdzane za pomocą rezerwowego skanowania HTTP.",
       "useSystemName": "Użyj nazwy systemu",
       "generateRandomAlias": "Wygeneruj losowy alias",
       "portWarning": "Inne urządzenia mogą nie wykryć Twojego urządzenia, ponieważ używasz niestandardowego portu. (domyślnie: {defaultPort})",
       "encryption": "Szyfrowanie",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Inne urządzenia mogą nie wykryć Twojego urządzenia, ponieważ używasz niestandardowego adresu multicast. (domyślnie: {defaultMulticast})"
+      "multicastGroupWarning": "Inne urządzenia mogą nie wykryć Twojego urządzenia, ponieważ używasz niestandardowego adresu multicast. (domyślnie: {defaultMulticast})",
+      "bleDiscovery": "Wykrywanie BLE (eksperymentalne)",
+      "bleDiscoveryHint": "Wykrywa urządzenia w pobliżu przez Bluetooth nawet wtedy, gdy sieć blokuje multicast (izolacja AP). Działa na Androidzie, iOS, macOS i Windows; na Linuxie to urządzenie może znajdować inne, ale samo nie może zostać znalezione. Oba urządzenia muszą używać tego forka z włączoną opcją; sam transfer plików nadal odbywa się przez sieć.",
+      "bleStatusActive": "Aktywne: skanowanie i rozgłaszanie. Urządzenia w pobliżu pojawiają się tylko wtedy, gdy również uruchamiają ten fork z włączoną opcją.",
+      "bleStatusScanOnly": "Aktywne: tylko skanowanie. To urządzenie nie może teraz zostać wykryte przez Bluetooth (brak obsługi rozgłaszania BLE na tej platformie lub brak jeszcze użytecznego adresu sieciowego).",
+      "bleStatusPaused": "Wstrzymane. Wznawia się, gdy aplikacja wróci na pierwszy plan.",
+      "bleStatusPermissionDenied": "Odmówiono uprawnień do Bluetooth. Nadaj uprawnienie „Urządzenia w pobliżu” (lub „Lokalizacja” na Androidzie 11 i starszym) w ustawieniach systemowych, a następnie wyłącz i włącz ponownie tę opcję.",
+      "bleStatusAdapterOff": "Bluetooth jest wyłączony lub niedostępny. Wyszukiwanie uruchomi się ponownie automatycznie, gdy Bluetooth znów będzie dostępny.",
+      "bleStatusUnsupported": "Nieobsługiwane na tym urządzeniu: wykrywanie BLE wymaga Androida 7 lub nowszego oraz radia Bluetooth LE.",
+      "bleStatusLegacyLocation": "W tej wersji Androida znajdowanie innych urządzeń wymaga również włączenia systemowych usług lokalizacji (uprawnienie jest wymagane automatycznie; to urządzenie może już być znajdowane przez innych).",
+      "bleStatusError": "Nie udało się uruchomić wykrywania BLE. Szczegóły znajdziesz w sekcji „Rozwiązywanie problemów” > „Dzienniki”.",
+      "bleOpenSystemSettings": "Otwórz ustawienia systemowe"
     },
     "other": {
       "title": "Inne",
@@ -256,6 +295,13 @@
     "titleSending": "Wysyłanie plików",
     "titleReceiving": "Odbieranie plików",
     "savedToGallery": "Zapisane w galerii",
+    "checksum": {
+      "verified": "Sprawdzono sumy kontrolne",
+      "partiallyVerified": "Sprawdzono sumy kontrolne dla {curr} / {n} plików",
+      "notVerifiable": "Nadawca nie podał sum kontrolnych",
+      "disabled": "Sprawdzanie sum kontrolnych jest wyłączone",
+      "attached": "Dołączono sumy kontrolne ({curr} / {n} plików)"
+    },
     "total": {
       "title": {
         "sending": "Całkowity postęp ({time})",
@@ -348,11 +394,42 @@
       "title": "Wpisz adres",
       "hashtag": "Hashtag",
       "ip": "Adres IP",
-      "recentlyUsed": "Ostatnio używane: "
+      "recentlyUsed": "Ostatnio używane: ",
+      "noHashtagCandidates": "Bieżąca sieć nie ma adresu IPv4, więc hashtag nie może zostać rozwinięty do adresu kandydata. Wpisz zamiast tego pełny adres (np. 192.168.1.5 lub fe80::1).",
+      "validation": {
+        "invalid": "Wpisz prawidłowy adres IPv4, adres IPv6 lub nazwę hosta.",
+        "scheme": "Wpisz sam adres, bez „http://” lub „https://”.",
+        "port": "Wpisz sam adres. Port jest pobierany z ustawień."
+      }
     },
     "cancelSession": {
       "title": "Anuluj transfer plików",
       "content": "Czy na pewno chcesz anulować transfer plików?"
+    },
+    "connectionError": {
+      "title": "Połączenie nieudane",
+      "timeout": {
+        "message": "Urządzenie nie odpowiedziało na czas.",
+        "advice": "Prawdopodobnie jest offline, uśpione lub zapora blokuje połączenie. Upewnij się, że na drugim urządzeniu działa LocalSend i że oba urządzenia są w tej samej sieci."
+      },
+      "refused": {
+        "message": "Urządzenie odmówiło połączenia.",
+        "advice": "Wygląda na to, że na urządzeniu docelowym nie działa LocalSend albo nasłuchuje na innym porcie. Uruchom LocalSend na drugim urządzeniu lub sprawdź port."
+      },
+      "forbidden": {
+        "message": "Urządzenie odrzuciło żądanie.",
+        "advice": "Może być wymagany kod PIN albo parowanie z urządzeniem uległo zmianie. Sprawdź kod PIN i ustawienia szybkiego zapisu na urządzeniu docelowym."
+      },
+      "other": {
+        "message": "Nie udało się nawiązać połączenia.",
+        "advice": "Sprawdź adres i port, upewnij się, że na urządzeniu docelowym działa LocalSend oraz że połączenia nie blokuje zapora ani VPN."
+      },
+      "retry": "Ponów",
+      "details": "Szczegóły błędu:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Usuń pliki źródłowe",
+      "content": "Po pomyślnym wysłaniu pliki zostaną usunięte z tego urządzenia. Tego nie można cofnąć."
     },
     "cannotOpenFile": {
       "title": "Nie można otworzyć pliku",
@@ -448,6 +525,25 @@
       "single": "Wysyła pliki do jednego odbiorcy. Wybór zostanie wyczyszczony po zakończonym transferze pliku.",
       "multiple": "Wysyła pliki do wielu odbiorców. Wybór nie zostanie wyczyszczony.",
       "link": "Odbiorcy, którzy nie mają zainstalowanego LocalSend, mogą pobrać wybrane pliki, otwierając link w swojej przeglądarce."
+    },
+    "startupError": {
+      "title": "Nie udało się uruchomić serwera",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows odmówił dostępu do portu (błąd gniazda 10013).",
+        "advice": "Zwykle jest to spowodowane zakresem portów zarezerwowanym przez Hyper-V, WSL lub Docker albo uszkodzonym katalogiem Winsock:\n• Zmień port w ustawieniach (Sieć)\n• Sprawdź zarezerwowane zakresy poleceniem: netsh interface ipv4 show excludedportrange protocol=tcp\n• Napraw Winsock jako administrator poleceniem: netsh winsock reset (następnie uruchom komputer ponownie)"
+      },
+      "addressInUse": {
+        "hint": "Port jest już używany przez inną aplikację.",
+        "advice": "Inny program (lub druga instancja LocalSend) nasłuchuje na tym porcie:\n• Zamknij tę inną aplikację lub\n• Zmień port w ustawieniach (Sieć)"
+      },
+      "generic": {
+        "hint": "Nie udało się uruchomić serwera.",
+        "advice": "• Sprawdź zaporę i ustawienia sieci\n• Spróbuj zmienić port w ustawieniach (Sieć)"
+      },
+      "details": "Szczegóły błędu:",
+      "copyDetails": "Skopiuj szczegóły",
+      "openSettings": "Otwórz ustawienia"
     },
     "zoom": {
       "title": "Adres URL"

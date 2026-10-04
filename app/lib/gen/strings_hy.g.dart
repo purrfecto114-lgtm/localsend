@@ -233,6 +233,8 @@ class _Translations$sendTab$hy extends Translations$sendTab$en {
   String get help => 'Համոզվեք, որ ստացողը և Դուք միացած եք նույն Wi-Fi-ին։';
   @override
   String get placeItems => 'Ընտրեք իրերը կիսվելու համար։';
+  @override
+  late final _Translations$sendTab$diagnosis$hy diagnosis = _Translations$sendTab$diagnosis$hy._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$hy extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Պահված է սարքում';
   @override
+  late final _Translations$progressPage$checksum$hy checksum = _Translations$progressPage$checksum$hy._(_root);
+  @override
   late final _Translations$progressPage$total$hy total = _Translations$progressPage$total$hy._(_root);
   @override
   late final _Translations$progressPage$remainingTime$hy remainingTime = _Translations$progressPage$remainingTime$hy._(_root);
@@ -677,6 +681,11 @@ class _Translations$dialogs$hy extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$hy cancelSession = _Translations$dialogs$cancelSession$hy._(_root);
   @override
+  late final _Translations$dialogs$connectionError$hy connectionError = _Translations$dialogs$connectionError$hy._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$hy deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$hy._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$hy cannotOpenFile = _Translations$dialogs$cannotOpenFile$hy._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$hy encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$hy._(_root);
@@ -717,6 +726,8 @@ class _Translations$dialogs$hy extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$hy pin = _Translations$dialogs$pin$hy._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$hy sendModeHelp = _Translations$dialogs$sendModeHelp$hy._(_root);
+  @override
+  late final _Translations$dialogs$startupError$hy startupError = _Translations$dialogs$startupError$hy._(_root);
   @override
   late final _Translations$dialogs$zoom$hy zoom = _Translations$dialogs$zoom$hy._(_root);
 }
@@ -921,6 +932,32 @@ class _Translations$sendTab$sendModes$hy extends Translations$sendTab$sendModes$
   String get link => 'Կիսվել հղման միջոցով';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$hy extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Մոտակա սարքերի որոնում․․․';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$hy noInterface = _Translations$sendTab$diagnosis$noInterface$hy._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$hy multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$hy._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$hy scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$hy._(_root);
+  @override
+  String get rescan => 'Որոնել նորից';
+  @override
+  String get bleHint =>
+      'BLE որոնումը միացված է՝ սարքերը Bluetooth-ով կգտնվեն միայն այն դեպքում, եթե դրանք նույնպես աշխատեցնեն այս fork-ը՝ միացված տարբերակով, իսկ փոխանցումն ինքը դեռ կատարվում է ցանցով:';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$hy manualFallback = _Translations$sendTab$diagnosis$manualFallback$hy._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$hy extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$hy._(TranslationsHy root) : this._root = root, super.internal(root);
@@ -1002,6 +1039,8 @@ class _Translations$settingsTab$send$hy extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Ավտոմատ ընդունել հարցումները «Կիսվել հղումի միջոցով» ռեժիմում';
   @override
   String get createChecksums => 'Ստեղծել ստուգվող գումարներ ֆայլեր ուղարկելիս';
+  @override
+  String get deleteSourceAfterSend => 'Ջնջել սկզբնական ֆայլերը հաջող ուղարկումից հետո';
 }
 
 // Path: settingsTab.network
@@ -1032,6 +1071,13 @@ class _Translations$settingsTab$network$hy extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Որոնման ժամանակի սպառում';
   @override
+  String get maxInterfaces => 'Ինտերֆեյսների առավելագույն քանակը (խելացի որոնում)';
+  @override
+  String get vpnInterfaces => 'Ներառել VPN ինտերֆեյսները (խելացի որոնում)';
+  @override
+  String get vpnInterfacesHint =>
+      'Ստուգել նաև VPN թունելային ինտերֆեյսների ենթացանցերը (Tailscale, WireGuard, ...): VPN-երը սովորաբար բազմահեռարձակում չեն փոխանցում, ուստի դրանց ենթացանցերը ստուգվում են HTTP պահուստային որոնմամբ:';
+  @override
   String get useSystemName => 'Օգտագործել համակարգի անունը';
   @override
   String get generateRandomAlias => 'Ստեղծել պատահական կեղծանուններ';
@@ -1045,6 +1091,34 @@ class _Translations$settingsTab$network$hy extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Հնարավոր է՝ ձեզ չհայտնաբերեն այլ սարքերը, քանի որ օգտագործում եք հատուկ բազմահեռարձակման հասցե: (լռելյայն՝ ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE որոնում (փորձնական)';
+  @override
+  String get bleDiscoveryHint =>
+      'Գտնում է մոտակա սարքերը Bluetooth-ով նույնիսկ այն դեպքում, երբ ցանցն արգելափակում է բազմահեռարձակումը (մուտքի կետի (AP) մեկուսացում): Աշխատում է Android-ում, iOS-ում, macOS-ում և Windows-ում, Linux-ում այս սարքը կարող է գտնել մյուսներին, բայց ինքը չի կարող գտնվել: Երկու սարքին էլ անհրաժեշտ է այս fork-ը՝ միացված տարբերակով, իսկ ֆայլերի փոխանցումն ինքը դեռ օգտագործում է ցանցը:';
+  @override
+  String get bleStatusActive =>
+      'Ակտիվ է՝ որոնում և հայտարարում: Մոտակա սարքերը կհայտնվեն միայն այն դեպքում, եթե դրանք նույնպես աշխատեցնեն այս fork-ը՝ միացված տարբերակով:';
+  @override
+  String get bleStatusScanOnly =>
+      'Ակտիվ է՝ միայն որոնում: Այս սարքը հիմա չի կարող գտնվել Bluetooth-ով (այս հարթակում BLE հայտարարումը չի աջակցվում, կամ դեռ չկա օգտագործելի ցանցային հասցե):';
+  @override
+  String get bleStatusPaused => 'Դադարեցված է: Կվերսկսվի, երբ ծրագիրը վերադառնա առաջին պլան:';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth-ի թույլտվությունները մերժված են: Տրամադրեք «Մոտակա սարքեր» (կամ Android 11-ում և ավելի վաղ՝ «Գտնվելու վայր») թույլտվությունը համակարգի կարգավորումներում, այնուհետև անջատեք և նորից միացրեք այս տարբերակը:';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth-ն անջատված է կամ հասանելի չէ: Որոնումն ինքնուրույն կվերսկսվի, երբ Bluetooth-ը նորից հասանելի լինի:';
+  @override
+  String get bleStatusUnsupported =>
+      'Այս սարքում չի աջակցվում. BLE որոնման համար անհրաժեշտ է Android 7 կամ ավելի նոր տարբերակ և Bluetooth LE ռադիոմոդուլ:';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Այս Android տարբերակում այլ սարքեր գտնելու համար անհրաժեշտ է նաև միացնել համակարգի գտնվելու վայրի ծառայությունները (թույլտվությունը պահանջվում է ավտոմատ, իսկ այս սարքն արդեն կարող են գտնել մյուսները):';
+  @override
+  String get bleStatusError => 'BLE որոնումը չհաջողվեց մեկնարկել: Մանրամասների համար տեսեք Խնդիրների լուծում > Լոգեր բաժնում:';
+  @override
+  String get bleOpenSystemSettings => 'Բացել համակարգի կարգավորումները';
 }
 
 // Path: settingsTab.other
@@ -1161,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$hy extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Թարմացվել է ${protocol} (${host}) միջոցով';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$hy extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Ստուգվող գումարները ստուգված են';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Ստուգվող գումարները ստուգված են ${curr} / ${n} ֆայլի համար';
+  @override
+  String get notVerifiable => 'Ուղարկողը ստուգվող գումարներ չի տրամադրել';
+  @override
+  String get disabled => 'Ստուգվող գումարների ստուգումն անջատված է';
+  @override
+  String attached({required Object curr, required Object n}) => 'Ստուգվող գումարները կցված են (${curr} / ${n} ֆայլ)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$hy extends Translations$progressPage$total$en {
   _Translations$progressPage$total$hy._(TranslationsHy root) : this._root = root, super.internal(root);
@@ -1252,6 +1345,11 @@ class _Translations$dialogs$addressInput$hy extends Translations$dialogs$address
   String get title => 'Գրեք հասցեն';
   @override
   String get recentlyUsed => 'Վերջերս օգտագործված՝ ';
+  @override
+  String get noHashtagCandidates =>
+      'Ընթացիկ ցանցը IPv4 հասցե չունի, հետևաբար հեշթեգը հնարավոր չէ ընդլայնել մինչև թեկնածու հասցե: Խնդրում ենք մուտքագրել ամբողջական հասցեն (օրինակ՝ 192.168.1.5 կամ fe80::1):';
+  @override
+  late final _Translations$dialogs$addressInput$validation$hy validation = _Translations$dialogs$addressInput$validation$hy._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1265,6 +1363,42 @@ class _Translations$dialogs$cancelSession$hy extends Translations$dialogs$cancel
   String get title => 'Չեղարկել ֆայլերի փոխանցումը';
   @override
   String get content => 'Հաստա՞տ ուզում եք չեղարկել ֆայլերի փոխանցումը';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$hy extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Միացումը չհաջողվեց';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$hy timeout = _Translations$dialogs$connectionError$timeout$hy._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$hy refused = _Translations$dialogs$connectionError$refused$hy._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$hy forbidden = _Translations$dialogs$connectionError$forbidden$hy._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$hy other = _Translations$dialogs$connectionError$other$hy._(_root);
+  @override
+  String get retry => 'Փորձել նորից';
+  @override
+  String get details => 'Սխալի մանրամասներ՝';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$hy extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ջնջել սկզբնական ֆայլերը';
+  @override
+  String get content => 'Ֆայլերի հաջող ուղարկումից հետո դրանք կջնջվեն այս սարքից: Դա հնարավոր չէ հետարկել:';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1557,6 +1691,32 @@ class _Translations$dialogs$sendModeHelp$hy extends Translations$dialogs$sendMod
   String get link => 'Ստացողները, որոնք չունեն LocalSend տեղադրված, կարող են ներբեռնել ընտրված ֆայլերը՝ բացելով հղումը իրենց բրաուզերում։';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$hy extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Սերվերը չհաջողվեց մեկնարկել';
+  @override
+  String port({required Object port}) => 'Պորտ՝ ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$hy windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$hy._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$hy addressInUse = _Translations$dialogs$startupError$addressInUse$hy._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$hy generic = _Translations$dialogs$startupError$generic$hy._(_root);
+  @override
+  String get details => 'Սխալի մանրամասներ՝';
+  @override
+  String get copyDetails => 'Պատճենել մանրամասները';
+  @override
+  String get openSettings => 'Բացել կարգավորումները';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$hy extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$hy._(TranslationsHy root) : this._root = root, super.internal(root);
@@ -1566,6 +1726,68 @@ class _Translations$dialogs$zoom$hy extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$hy extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ցանցային միացում չկա';
+  @override
+  String get advice => 'Այս սարքը միացված չէ որևէ ցանցի: Ստուգեք այս սարքի Wi-Fi կամ մալուխային միացումը:';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$hy extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Բազմահեռարձակումը հասանելի չէ';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend-ը չի կարող օգտագործել բազմահեռարձակման որոնումը այս ցանցում: Համոզվեք, որ երկու սարքերն էլ միացված են նույն ցանցին, և որ մուտքի կետի (AP) մեկուսացումը կամ firewall-ը չեն արգելափակում UDP ${port} պորտը:';
+  @override
+  String reason({required Object reason}) => 'Պատճառը՝ ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$hy extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Սարքեր չեն գտնվել';
+  @override
+  String get advice =>
+      'Որոնումն աշխատում է, բայց ոչ մի սարք պատասխան չտվեց հայտարարություններին կամ ցանցի ստուգմանը: Մյուս սարքը կարող է անջատված լինել, քնած լինել կամ արգելափակված լինել firewall-ի կողմից: Համոզվեք, որ LocalSend-ը աշխատում է մյուս սարքում:';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Ուղարկվել է ${announcements} հայտարարություն և ${scans} ցանցային ստուգում՝ առանց պատասխանի:';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$hy extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP հասցեները հաճախ փոխվում են, բայց ցուցակում նշված չեղած սարքին էլ կարող եք հասնել՝ ավելացրեք այն սիրվածների ցանկում կամ մուտքագրեք դրա հասցեն ձեռքով:';
+  @override
+  String get openFavorites => 'Բացել սիրվածները';
+  @override
+  String get manualInput => 'Մուտքագրել հասցեն ձեռքով';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1652,4 +1874,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$hy extends Translations$whatsNe
     'Սիրվածներից ստացված հարցումները այժմ ընդունվում են ավտոմատ: Սա միացված է լռելյայնորեն և կարող է անջատվել կարգավորումներում:',
     'Android-ում տվյալների փոխանցումը շարունակվում է, երբ ծրագիրը ֆոնային ռեժիմում է կամ էկրանը անջատված է։ iOS-ում հավելվածը պետք է մնա առաջին պլանում։',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$hy extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Մուտքագրեք վավեր IPv4 հասցե, IPv6 հասցե կամ հոստի անուն:';
+  @override
+  String get scheme => 'Մուտքագրեք միայն հասցեն, առանց «http://» կամ «https://»:';
+  @override
+  String get port => 'Մուտքագրեք միայն հասցեն: Պորտը վերցվում է կարգավորումներից:';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$hy extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Սարքը ժամանակին չպատասխանեց:';
+  @override
+  String get advice =>
+      'Ամենայն հավանականությամբ այն անջատված է, քնած է կամ արգելափակված է firewall-ի կողմից: Համոզվեք, որ LocalSend-ը աշխատում է մյուս սարքում և որ երկու սարքերն էլ նույն ցանցում են:';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$hy extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Սարքը մերժեց միացումը:';
+  @override
+  String get advice =>
+      'Կարծես թե LocalSend-ը չի աշխատում նպատակային սարքում, կամ այն լսում է մեկ այլ պորտով: Գործարկեք LocalSend-ը մյուս սարքում կամ ստուգեք պորտը:';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$hy extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Սարքը մերժեց հարցումը:';
+  @override
+  String get advice =>
+      'Հնարավոր է՝ անհրաժեշտ է PIN կոդ, կամ փոխվել է սարքի հետ զուգավորումը: Ստուգեք PIN կոդը և արագ պահպանման կարգավորումները նպատակային սարքում:';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$hy extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Միացումը չստացվեց հաստատել:';
+  @override
+  String get advice =>
+      'Ստուգեք հասցեն և պորտը, համոզվեք, որ LocalSend-ը աշխատում է նպատակային սարքում, և որ firewall-ը կամ VPN-ը չեն արգելափակում միացումը:';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$hy extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows-ը մերժեց մուտքը դեպի պորտ (socket սխալ 10013):';
+  @override
+  String get advice =>
+      'Սա սովորաբար պայմանավորված է Hyper-V-ի, WSL-ի կամ Docker-ի կողմից ռեզերվացված պորտերի միջակայքով, կամ վնասված Winsock կատալոգով՝\n• Փոխեք պորտը Կարգավորումներում (Ցանց)\n• Ստուգեք ռեզերվացված միջակայքերը հրամանով՝ netsh interface ipv4 show excludedportrange protocol=tcp\n• Վերականգնեք Winsock-ը որպես ադմինիստրատոր՝ netsh winsock reset (հետո վերագործարկեք)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$hy extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Պորտն արդեն օգտագործվում է մեկ այլ ծրագրի կողմից:';
+  @override
+  String get advice =>
+      'Մեկ այլ ծրագիր (կամ LocalSend-ի երկրորդ օրինակ) լսում է այս պորտով՝\n• Փակեք մյուս ծրագիրը, կամ\n• Փոխեք պորտը Կարգավորումներում (Ցանց)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$hy extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$hy._(TranslationsHy root) : this._root = root, super.internal(root);
+
+  final TranslationsHy _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Սերվերը չհաջողվեց մեկնարկել:';
+  @override
+  String get advice => '• Ստուգեք firewall-ը և ցանցային կարգավորումները\n• Փորձեք փոխել պորտը Կարգավորումներում (Ցանց)';
 }

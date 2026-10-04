@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Informatie",
     "help": "Zorg ervoor dat de ontvanger is verbonden met hetzelfde wifi-netwerk.",
-    "placeItems": "Zet items neer om te delen."
+    "placeItems": "Zet items neer om te delen.",
+    "diagnosis": {
+      "scanning": "Zoeken naar apparaten in de buurt…",
+      "noInterface": {
+        "title": "Geen netwerkverbinding",
+        "advice": "Dit apparaat is met geen enkel netwerk verbonden. Controleer de wifi- of kabelverbinding van dit apparaat."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast niet beschikbaar",
+        "advice": "LocalSend kan op dit netwerk geen multicast gebruiken om apparaten te vinden. Zorg ervoor dat beide apparaten op hetzelfde netwerk zitten en dat AP-isolatie of een firewall UDP-poort {port} niet blokkeert.",
+        "reason": "Reden: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Geen apparaten gevonden",
+        "advice": "Het zoeken werkt, maar er heeft geen enkel apparaat gereageerd op de aankondigingen of de netwerkscan. Het andere apparaat is mogelijk offline, in slaapstand of geblokkeerd door een firewall. Zorg ervoor dat LocalSend op het andere apparaat wordt uitgevoerd.",
+        "detail": "{announcements} aankondigingen en {scans} netwerkscans verstuurd, zonder reactie."
+      },
+      "rescan": "Opnieuw zoeken",
+      "bleHint": "BLE-ontdekking is actief: apparaten worden via Bluetooth alleen gevonden als ze deze fork met de optie ingeschakeld ook draaien; de overdracht zelf gaat nog steeds via het netwerk.",
+      "manualFallback": {
+        "message": "IP-adressen veranderen vaak. Je kunt een apparaat dat niet in de lijst staat nog steeds bereiken: voeg het toe aan je favorieten of voer het adres handmatig in.",
+        "openFavorites": "Favorieten openen",
+        "manualInput": "Adres handmatig invoeren"
+      }
+    }
   },
   "settingsTab": {
     "title": "Instellingen",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Verzenden",
       "shareViaLinkAutoAccept": "Automatisch verzoeken goedkeuren in modus 'Delen via link'",
-      "createChecksums": "Controlesommen aanmaken bij het verzenden van bestanden"
+      "createChecksums": "Controlesommen aanmaken bij het verzenden van bestanden",
+      "deleteSourceAfterSend": "Bronbestanden verwijderen na succesvolle verzending"
     },
     "network": {
       "title": "Netwerk",
@@ -143,12 +168,26 @@
         "filtered": "Gefilterd"
       },
       "discoveryTimeout": "Time-out voor scannen",
+      "maxInterfaces": "Max. interfaces (Slim scannen)",
+      "vpnInterfaces": "VPN-interfaces opnemen (Slim scannen)",
+      "vpnInterfacesHint": "Scan ook de subnetten van VPN-tunnelinterfaces (Tailscale, WireGuard, ...). VPN's ondersteunen doorgaans geen multicast, dus deze subnetten worden in plaats daarvan gecontroleerd met de HTTP-fallbackscan.",
       "useSystemName": "Systeemnaam gebruiken",
       "generateRandomAlias": "Willekeurige naam genereren",
       "portWarning": "Je apparaat kan mogelijk niet worden gevonden omdat je een aangepaste poort gebruikt. (Standaard: {defaultPort})",
       "encryption": "Versleuteling",
       "multicastGroup": "Multicast-adres",
-      "multicastGroupWarning": "Je apparaat kan mogelijk niet worden gevonden omdat je een aangepast multicast-adres gebruikt. (Standaard: {defaultMulticast})"
+      "multicastGroupWarning": "Je apparaat kan mogelijk niet worden gevonden omdat je een aangepast multicast-adres gebruikt. (Standaard: {defaultMulticast})",
+      "bleDiscovery": "BLE-ontdekking (experimenteel)",
+      "bleDiscoveryHint": "Ontdekt apparaten in de buurt via Bluetooth, ook als het netwerk multicast blokkeert (AP-isolatie). Werkt op Android, iOS, macOS en Windows; op Linux kan dit apparaat anderen vinden, maar zelf niet worden gevonden. Beide apparaten hebben deze fork nodig met de optie ingeschakeld; de bestandsoverdracht zelf verloopt via het netwerk.",
+      "bleStatusActive": "Actief: scannen en zichtbaar zijn (advertising). Apparaten in de buurt verschijnen alleen als ze deze fork met de optie ingeschakeld ook draaien.",
+      "bleStatusScanOnly": "Actief: alleen scannen. Dit apparaat kan op dit moment niet via Bluetooth worden ontdekt (geen ondersteuning voor BLE-advertising op dit platform, of nog geen bruikbaar netwerkadres).",
+      "bleStatusPaused": "Gepauzeerd. Wordt hervat zodra de app terug naar de voorgrond komt.",
+      "bleStatusPermissionDenied": "Bluetooth-rechten geweigerd. Verleen de rechten \"Apparaten in de buurt\" (of \"Locatie\" op Android 11 en lager) in de systeeminstellingen en zet deze optie daarna uit en weer aan.",
+      "bleStatusAdapterOff": "Bluetooth staat uit of is niet beschikbaar. De ontdekking start automatisch opnieuw zodra Bluetooth weer beschikbaar is.",
+      "bleStatusUnsupported": "Niet ondersteund op dit apparaat: BLE-ontdekking vereist Android 7 of nieuwer en een Bluetooth LE-radio.",
+      "bleStatusLegacyLocation": "Op deze Android-versie moet de locatieservice van het systeem ook aanstaan om andere apparaten te vinden (de rechten worden automatisch gevraagd; dit apparaat kan al door anderen worden gevonden).",
+      "bleStatusError": "BLE-ontdekking kon niet worden gestart. Zie Problemen oplossen > Logboeken voor details.",
+      "bleOpenSystemSettings": "Systeeminstellingen openen"
     },
     "other": {
       "title": "Overig",
@@ -256,6 +295,13 @@
     "titleSending": "Bestanden verzenden",
     "titleReceiving": "Bestanden ontvangen",
     "savedToGallery": "Opgeslagen in galerij",
+    "checksum": {
+      "verified": "Controlesommen geverifieerd",
+      "partiallyVerified": "Controlesommen geverifieerd voor {curr} / {n} bestanden",
+      "notVerifiable": "Geen controlesommen meegezonden door de afzender",
+      "disabled": "Verifiëren van controlesommen is uitgeschakeld",
+      "attached": "Controlesommen toegevoegd ({curr} / {n} bestanden)"
+    },
     "total": {
       "title": {
         "sending": "Totale voortgang ({time})",
@@ -348,11 +394,42 @@
       "title": "Vul een adres in",
       "hashtag": "Hashtag",
       "ip": "IP-adres",
-      "recentlyUsed": "Onlangs gebruikt: "
+      "recentlyUsed": "Onlangs gebruikt: ",
+      "noHashtagCandidates": "Het huidige netwerk heeft geen IPv4-adres, waardoor de hashtag niet kan worden omgezet naar een kandidaatadres. Voer in plaats daarvan het volledige adres in (bijv. 192.168.1.5 of fe80::1).",
+      "validation": {
+        "invalid": "Voer een geldig IPv4-adres, IPv6-adres of een geldige hostnaam in.",
+        "scheme": "Voer alleen het adres in, zonder \"http://\" of \"https://\".",
+        "port": "Voer alleen het adres in. De poort komt uit de instellingen."
+      }
     },
     "cancelSession": {
       "title": "Bestandsoverdracht annuleren",
       "content": "Wil je de bestandsoverdracht annuleren?"
+    },
+    "connectionError": {
+      "title": "Verbinding mislukt",
+      "timeout": {
+        "message": "Het apparaat heeft niet tijdig gereageerd.",
+        "advice": "Het is waarschijnlijk offline, in slaapstand of een firewall blokkeert de verbinding. Zorg ervoor dat LocalSend op het andere apparaat wordt uitgevoerd en dat beide apparaten op hetzelfde netwerk zitten."
+      },
+      "refused": {
+        "message": "Het apparaat heeft de verbinding geweigerd.",
+        "advice": "LocalSend lijkt niet te draaien op het doelapparaat, of het luistert op een andere poort. Start LocalSend op het andere apparaat of controleer de poort."
+      },
+      "forbidden": {
+        "message": "Het apparaat heeft het verzoek afgewezen.",
+        "advice": "Mogelijk is een code vereist of is de koppeling met het apparaat gewijzigd. Controleer de code en de instellingen voor snel opslaan op het doelapparaat."
+      },
+      "other": {
+        "message": "De verbinding kon niet tot stand worden gebracht.",
+        "advice": "Controleer het adres en de poort, zorg ervoor dat LocalSend op het doelapparaat draait en dat geen firewall of VPN de verbinding blokkeert."
+      },
+      "retry": "Opnieuw proberen",
+      "details": "Foutdetails:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Bronbestanden verwijderen",
+      "content": "Nadat de bestanden succesvol zijn verzonden, worden ze van dit apparaat verwijderd. Dit kan niet ongedaan worden gemaakt."
     },
     "cannotOpenFile": {
       "title": "Kan bestand niet openen",
@@ -448,6 +525,25 @@
       "single": "Bestanden naar één ontvanger verzenden. De selectie wordt na de bestandsoverdracht gewist.",
       "multiple": "Bestanden naar meerdere ontvangers verzenden. De selectie blijft na de bestandsoverdracht behouden.",
       "link": "Ontvangers die LocalSend niet hebben geïnstalleerd kunnen de bestanden downloaden door de link in hun browser te openen."
+    },
+    "startupError": {
+      "title": "Kan de server niet starten",
+      "port": "Poort: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows heeft de toegang tot de poort geweigerd (socketfout 10013).",
+        "advice": "Dit wordt meestal veroorzaakt door een poortbereik dat is gereserveerd door Hyper-V, WSL of Docker, of door een beschadigde Winsock-catalogus:\n• Wijzig de poort in de instellingen (Netwerk)\n• Controleer de gereserveerde bereiken met: netsh interface ipv4 show excludedportrange protocol=tcp\n• Herstel Winsock als administrator met: netsh winsock reset (herstart daarna)"
+      },
+      "addressInUse": {
+        "hint": "De poort wordt al gebruikt door een andere applicatie.",
+        "advice": "Een ander programma (of een tweede instantie van LocalSend) luistert op deze poort:\n• Sluit de andere applicatie, of\n• Wijzig de poort in de instellingen (Netwerk)"
+      },
+      "generic": {
+        "hint": "De server kon niet worden gestart.",
+        "advice": "• Controleer je firewall- en netwerkinstellingen\n• Probeer de poort te wijzigen in de instellingen (Netwerk)"
+      },
+      "details": "Foutdetails:",
+      "copyDetails": "Details kopiëren",
+      "openSettings": "Instellingen openen"
     },
     "zoom": {
       "title": "URL"

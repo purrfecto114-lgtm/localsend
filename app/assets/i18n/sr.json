@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Objašnjenje",
     "help": "Uverite se da je primalac takođe na istoj Wi-Fi mreži.",
-    "placeItems": "Postavite predmete za deljenje."
+    "placeItems": "Postavite predmete za deljenje.",
+    "diagnosis": {
+      "scanning": "Pretraga uređaja u blizini…",
+      "noInterface": {
+        "title": "Nema mrežne veze",
+        "advice": "Ovaj uređaj nije povezan ni sa jednom mrežom. Proverite Wi-Fi ili kablovsku vezu ovog uređaja."
+      },
+      "multicastUnavailable": {
+        "title": "Višesmerno emitovanje nije dostupno",
+        "advice": "LocalSend ne može da koristi otkrivanje putem višesmernog emitovanja na ovoj mreži. Uverite se da su oba uređaja na istoj mreži i da izolacija pristupne tačke (AP) ili zaštitni zid ne blokiraju UDP port {port}.",
+        "reason": "Razlog: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nema pronađenih uređaja",
+        "advice": "Pretraga radi, ali nijedan uređaj nije odgovorio na najave ni na skeniranje mreže. Drugi uređaj je možda oflajn, u režimu spavanja ili ga blokira zaštitni zid. Uverite se da na drugom uređaju radi LocalSend.",
+        "detail": "Poslato je {announcements} najava i izvršeno {scans} skeniranja mreže — bez odgovora."
+      },
+      "rescan": "Pretraži ponovo",
+      "bleHint": "BLE otkrivanje je aktivno: uređaji se pronalaze putem Bluetooth-a samo ako i oni koriste ovaj fork sa uključenom opcijom; sam prenos fajlova i dalje ide preko mreže.",
+      "manualFallback": {
+        "message": "IP adrese se često menjaju. I dalje možete dostići uređaj koji nije na listi: dodajte ga u omiljene ili ručno unesite njegovu adresu.",
+        "openFavorites": "Otvori omiljeno",
+        "manualInput": "Ručno unesi adresu"
+      }
+    }
   },
   "settingsTab": {
     "title": "Podešavanja",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Slanje",
       "shareViaLinkAutoAccept": "Automatski prihvati zahteve u režimu „Deljenje putem linka“",
-      "createChecksums": "Napravi kontrolne sume pri slanju fajlova"
+      "createChecksums": "Napravi kontrolne sume pri slanju fajlova",
+      "deleteSourceAfterSend": "Izbriši izvorne fajlove nakon uspešnog slanja"
     },
     "network": {
       "title": "Mreža",
@@ -143,12 +168,26 @@
         "filtered": "Filtrirana"
       },
       "discoveryTimeout": "Otkrivanje je isteklo",
+      "maxInterfaces": "Maksimalan broj interfejsa (pametno skeniranje)",
+      "vpnInterfaces": "Uključi VPN interfejse (pametno skeniranje)",
+      "vpnInterfacesHint": "Skeniraj i podmreže interfejsa VPN tunela (Tailscale, WireGuard, ...). VPN obično ne prenosi višesmerno emitovanje, pa se njihove podmreže proveravaju rezervnim HTTP skeniranjem.",
       "useSystemName": "Koristi sistemski naziv",
       "generateRandomAlias": "Generiši nasumični pseudonim",
       "portWarning": "Drugi uređaji vas možda neće otkriti, jer koristite prilagođeni port. (podrazumevani: {defaultPort})",
       "encryption": "Šifrovanje",
       "multicastGroup": "Adresa višesmernog emitovanja",
-      "multicastGroupWarning": "Drugi uređaji vas možda neće otkriti, jer koristite prilagođenu adresu višesmernog emitovanja. (podrazumevana: {defaultMulticast})"
+      "multicastGroupWarning": "Drugi uređaji vas možda neće otkriti, jer koristite prilagođenu adresu višesmernog emitovanja. (podrazumevana: {defaultMulticast})",
+      "bleDiscovery": "BLE otkrivanje (eksperimentalno)",
+      "bleDiscoveryHint": "Pronalazi uređaje u blizini putem Bluetooth-a čak i kada mreža blokira višesmerno emitovanje (izolacija pristupne tačke). Radi na Android-u, iOS-u, macOS-u i Windows-u; na Linux-u ovaj uređaj može da pronalazi druge, ali sam ne može biti pronađen. Oba uređaja moraju da koriste ovaj fork sa uključenom opcijom; sam prenos fajlova i dalje ide preko mreže.",
+      "bleStatusActive": "Aktivno: skeniranje i najavljivanje. Uređaji u blizini se pojavljuju samo ako i oni koriste ovaj fork sa uključenom opcijom.",
+      "bleStatusScanOnly": "Aktivno: samo skeniranje. Ovaj uređaj trenutno ne može biti otkriven putem Bluetooth-a (ova platforma ne podržava BLE najavljivanje ili još nema upotrebljivu mrežnu adresu).",
+      "bleStatusPaused": "Pauzirano. Nastavlja se kada se aplikacija vrati u prvi plan.",
+      "bleStatusPermissionDenied": "Dozvole za Bluetooth su odbijene. Dajte dozvolu „Uređaji u blizini“ (ili „Lokacija“ na Android-u 11 i starijim) u sistemskim podešavanjima, a zatim isključite i ponovo uključite ovu opciju.",
+      "bleStatusAdapterOff": "Bluetooth je isključen ili nedostupan. Otkrivanje se samo ponovo pokreće kada Bluetooth ponovo postane dostupan.",
+      "bleStatusUnsupported": "Nije podržano na ovom uređaju: BLE otkrivanje zahteva Android 7 ili noviji i Bluetooth LE radio.",
+      "bleStatusLegacyLocation": "Na ovoj verziji Android-a, pronalaženje drugih uređaja zahteva i da sistemske usluge lokacije budu uključene (dozvola se traži automatski; ovaj uređaj već mogu da pronađu drugi).",
+      "bleStatusError": "BLE otkrivanje nije moglo da se pokrene. Detalje pogledajte u Otklanjanje grešaka > Evidencija.",
+      "bleOpenSystemSettings": "Otvori sistemska podešavanja"
     },
     "other": {
       "title": "Ostalo",
@@ -256,6 +295,13 @@
     "titleSending": "Slanje fajlova",
     "titleReceiving": "Primanje fajlova",
     "savedToGallery": "Sačuvano u galeriji",
+    "checksum": {
+      "verified": "Kontrolne sume su proverene",
+      "partiallyVerified": "Kontrolne sume su proverene za {curr} / {n} fajlova",
+      "notVerifiable": "Pošiljalac nije obezbedio kontrolne sume",
+      "disabled": "Provera kontrolnih suma je isključena",
+      "attached": "Kontrolne sume su priložene ({curr} / {n} fajlova)"
+    },
     "total": {
       "title": {
         "sending": "Ukupan napredak ({time})",
@@ -418,11 +464,42 @@
       "title": "Unesite adresu",
       "hashtag": "Heš-oznaka",
       "ip": "IP adresa",
-      "recentlyUsed": "Nedavno korišćeno: "
+      "recentlyUsed": "Nedavno korišćeno: ",
+      "noHashtagCandidates": "Trenutna mreža nema IPv4 adresu, pa se heš-oznaka ne može razviti u adresu kandidata. Unesite kompletnu adresu (npr. 192.168.1.5 ili fe80::1).",
+      "validation": {
+        "invalid": "Unesite ispravnu IPv4 adresu, IPv6 adresu ili ime hosta.",
+        "scheme": "Unesite samo adresu, bez „http://“ ili „https://“.",
+        "port": "Unesite samo adresu. Port se uzima iz podešavanja."
+      }
     },
     "cancelSession": {
       "title": "Otkažite prenos fajlova",
       "content": "Želite li zaista da otkažete prenos fajlova?"
+    },
+    "connectionError": {
+      "title": "Veza nije uspela",
+      "timeout": {
+        "message": "Uređaj nije odgovorio na vreme.",
+        "advice": "Verovatno je oflajn, u režimu spavanja ili zaštitni zid blokira vezu. Uverite se da na drugom uređaju radi LocalSend i da su oba uređaja na istoj mreži."
+      },
+      "refused": {
+        "message": "Uređaj je odbio vezu.",
+        "advice": "Izgleda da na ciljnom uređaju ne radi LocalSend ili da sluša na drugom portu. Pokrenite LocalSend na drugom uređaju ili proverite port."
+      },
+      "forbidden": {
+        "message": "Uređaj je odbio zahtev.",
+        "advice": "Možda je potreban PIN ili se promenilo uparivanje sa uređajem. Proverite PIN i podešavanja brzog čuvanja na ciljnom uređaju."
+      },
+      "other": {
+        "message": "Nije bilo moguće uspostaviti vezu.",
+        "advice": "Proverite adresu i port, uverite se da na ciljnom uređaju radi LocalSend i da vezu ne blokira zaštitni zid ili VPN."
+      },
+      "retry": "Pokušaj ponovo",
+      "details": "Detalji greške:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Izbriši izvorne fajlove",
+      "content": "Nakon uspešnog slanja, fajlovi će biti izbrisani sa ovog uređaja. Ovo nije moguće opozvati."
     },
     "cannotOpenFile": {
       "title": "Nije moguće otvoriti fajl",
@@ -518,6 +595,25 @@
       "single": "Slanje fajlova jednom primaocu. Izbor će biti očišćen nakon završenog prenosa fajlova.",
       "multiple": "Slanje fajlova više primalaca. Izbor neće biti očišćen nakon završenog prenosa fajlova.",
       "link": "Primaoci koji nemaju instaliran LocalSend mogu preuzeti izabrane fajlove otvaranjem linka u svom pregledaču."
+    },
+    "startupError": {
+      "title": "Nije moguće pokrenuti server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows je odbio pristup portu (greška soketa 10013).",
+        "advice": "Ovo je obično uzrokovano opsegom portova koje su rezervisali Hyper-V, WSL ili Docker, ili oštećenim Winsock katalogom:\n• Promenite port u podešavanjima (Mreža)\n• Proverite rezervisane opsege komandom: netsh interface ipv4 show excludedportrange protocol=tcp\n• Popravite Winsock kao administrator komandom: netsh winsock reset (zatim restartujte računar)"
+      },
+      "addressInUse": {
+        "hint": "Port već koristi druga aplikacija.",
+        "advice": "Drugi program (ili druga instanca LocalSend-a) sluša na ovom portu:\n• Zatvorite drugu aplikaciju ili\n• Promenite port u podešavanjima (Mreža)"
+      },
+      "generic": {
+        "hint": "Nije bilo moguće pokrenuti server.",
+        "advice": "• Proverite zaštitni zid i mrežna podešavanja\n• Pokušajte da promenite port u podešavanjima (Mreža)"
+      },
+      "details": "Detalji greške:",
+      "copyDetails": "Kopiraj detalje",
+      "openSettings": "Otvori podešavanja"
     },
     "zoom": {
       "title": "URL"

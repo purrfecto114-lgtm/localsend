@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicación",
     "help": "Por favor asegúrese que el dispositivo de destino esté en la misma red Wi-Fi.",
-    "placeItems": "Selecciona elementos para compartir."
+    "placeItems": "Selecciona elementos para compartir.",
+    "diagnosis": {
+      "scanning": "Buscando dispositivos cercanos…",
+      "noInterface": {
+        "title": "Sin conexión de red",
+        "advice": "Este dispositivo no está conectado a ninguna red. Comprueba la conexión Wi-Fi o por cable de este dispositivo."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast no disponible",
+        "advice": "LocalSend no puede usar la detección por multicast en esta red. Asegúrate de que ambos dispositivos estén en la misma red y de que el aislamiento AP o un firewall no esté bloqueando el puerto UDP {port}.",
+        "reason": "Motivo: {reason}"
+      },
+      "scanNoResult": {
+        "title": "No se encontraron dispositivos",
+        "advice": "La detección funciona, pero ningún dispositivo respondió a los anuncios ni al escaneo de red. Es posible que el otro dispositivo esté apagado, en reposo o bloqueado por un firewall. Asegúrate de que LocalSend esté en ejecución en el otro dispositivo.",
+        "detail": "Se enviaron {announcements} anuncios y {scans} escaneos de red sin recibir respuesta."
+      },
+      "rescan": "Buscar de nuevo",
+      "bleHint": "La detección BLE está activa: los dispositivos se encuentran por Bluetooth solo si también usan este fork con la opción activada; la transferencia en sí sigue realizándose por la red.",
+      "manualFallback": {
+        "message": "Las direcciones IP cambian con frecuencia. Aun puedes acceder a un dispositivo que no aparece en la lista: agrégalo a tus favoritos o introduce su dirección manualmente.",
+        "openFavorites": "Abrir favoritos",
+        "manualInput": "Introducir la dirección manualmente"
+      }
+    }
   },
   "settingsTab": {
     "title": "Ajustes",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Enviar",
       "shareViaLinkAutoAccept": "Aceptar automáticamente solicitudes en el modo \"Compartir mediante enlace\"",
-      "createChecksums": "Crear sumas de comprobación al enviar archivos"
+      "createChecksums": "Crear sumas de comprobación al enviar archivos",
+      "deleteSourceAfterSend": "Eliminar los archivos de origen después de un envío correcto"
     },
     "network": {
       "title": "Red",
@@ -143,12 +168,26 @@
         "filtered": "Filtrado"
       },
       "discoveryTimeout": "Tiempo de espera para Detección",
+      "maxInterfaces": "N.º máximo de interfaces (búsqueda inteligente)",
+      "vpnInterfaces": "Incluir interfaces VPN (búsqueda inteligente)",
+      "vpnInterfacesHint": "Escanea también las subredes de las interfaces de túnel VPN (Tailscale, WireGuard, …). Las VPN normalmente no transmiten multicast, por lo que sus subredes se sondean mediante el escaneo HTTP de respaldo.",
       "useSystemName": "Usar el nombre del sistema",
       "generateRandomAlias": "Generar alias aleatorio",
       "portWarning": "Es posible que no seas visible para otros dispositivos porque estás utilizando un puerto personalizado. (Puerto por defecto: {defaultPort})",
       "encryption": "Encriptación",
       "multicastGroup": "Direccion Multicast",
-      "multicastGroupWarning": "Es posible que no seas visible para otros dispositivos porque estás utilizando una dirección multicast personalizada. (Dirección multicast por defecto: {defaultMulticast})"
+      "multicastGroupWarning": "Es posible que no seas visible para otros dispositivos porque estás utilizando una dirección multicast personalizada. (Dirección multicast por defecto: {defaultMulticast})",
+      "bleDiscovery": "Detección BLE (experimental)",
+      "bleDiscoveryHint": "Detecta dispositivos cercanos por Bluetooth incluso cuando la red bloquea el multicast (aislamiento AP). Funciona en Android, iOS, macOS y Windows; en Linux, este dispositivo puede encontrar a otros pero no puede ser encontrado. Ambos dispositivos deben usar este fork con la opción activada; la transferencia de archivos se sigue realizando por la red.",
+      "bleStatusActive": "Activa: escaneo y difusión. Los dispositivos cercanos solo aparecen si también usan este fork con la opción activada.",
+      "bleStatusScanOnly": "Activa: solo escaneo. Este dispositivo no puede ser detectado por Bluetooth en este momento (no hay soporte de difusión BLE en esta plataforma, o todavía no hay una dirección de red utilizable).",
+      "bleStatusPaused": "En pausa. Se reanuda cuando la aplicación vuelva al primer plano.",
+      "bleStatusPermissionDenied": "Permisos de Bluetooth denegados. Concede el permiso \"Dispositivos cercanos\" (o \"Ubicación\" en Android 11 y anterior) en los ajustes del sistema y, a continuación, desactiva y activa de nuevo esta opción.",
+      "bleStatusAdapterOff": "El Bluetooth está apagado o no disponible. La detección se reinicia automáticamente cuando el Bluetooth vuelva a estar disponible.",
+      "bleStatusUnsupported": "No compatible con este dispositivo: la detección BLE necesita Android 7 o posterior y una radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "En esta versión de Android, encontrar otros dispositivos también requiere que los servicios de ubicación del sistema estén activados (el permiso se solicita automáticamente; este dispositivo ya puede ser encontrado por otros).",
+      "bleStatusError": "No se pudo iniciar la detección BLE. Consulta Solucionar problemas > Registros para más detalles.",
+      "bleOpenSystemSettings": "Abrir ajustes del sistema"
     },
     "other": {
       "title": "Otros",
@@ -256,6 +295,13 @@
     "titleSending": "Enviando archivos",
     "titleReceiving": "Recibiendo archivos",
     "savedToGallery": "Guardado en fotos",
+    "checksum": {
+      "verified": "Sumas de comprobación verificadas",
+      "partiallyVerified": "Sumas de comprobación verificadas para {curr} / {n} archivos",
+      "notVerifiable": "El remitente no proporcionó sumas de comprobación",
+      "disabled": "La verificación de sumas de comprobación está deshabilitada",
+      "attached": "Sumas de comprobación adjuntas ({curr} / {n} archivos)"
+    },
     "total": {
       "title": {
         "sending": "Progreso total ({time})",
@@ -348,11 +394,42 @@
       "title": "Introducir dirección",
       "hashtag": "Etiqueta",
       "ip": "Dirección IP",
-      "recentlyUsed": "Usados recientemente: "
+      "recentlyUsed": "Usados recientemente: ",
+      "noHashtagCandidates": "La red actual no tiene dirección IPv4, por lo que la etiqueta no se puede expandir a una dirección candidata. Introduce la dirección completa (p. ej. 192.168.1.5 o fe80::1).",
+      "validation": {
+        "invalid": "Introduce una dirección IPv4, una dirección IPv6 o un nombre de host válidos.",
+        "scheme": "Introduce solo la dirección, sin \"http://\" ni \"https://\".",
+        "port": "Introduce solo la dirección. El puerto se toma de los ajustes."
+      }
     },
     "cancelSession": {
       "title": "Cancelar transferencia de archivos",
       "content": "¿Realmente quieres cancelar la transferencia de archivos?"
+    },
+    "connectionError": {
+      "title": "Error de conexión",
+      "timeout": {
+        "message": "El dispositivo no respondió a tiempo.",
+        "advice": "Probablemente esté apagado, en reposo o un firewall esté bloqueando la conexión. Asegúrate de que LocalSend esté en ejecución en el otro dispositivo y de que ambos dispositivos estén en la misma red."
+      },
+      "refused": {
+        "message": "El dispositivo rechazó la conexión.",
+        "advice": "Parece que LocalSend no se está ejecutando en el dispositivo de destino, o que está escuchando en un puerto diferente. Inicia LocalSend en el otro dispositivo o comprueba el puerto."
+      },
+      "forbidden": {
+        "message": "El dispositivo rechazó la petición.",
+        "advice": "Es posible que se requiera un PIN o que el emparejamiento con el dispositivo haya cambiado. Comprueba el PIN y los ajustes de guardado rápido en el dispositivo de destino."
+      },
+      "other": {
+        "message": "No se pudo establecer la conexión.",
+        "advice": "Comprueba la dirección y el puerto, asegúrate de que LocalSend esté en ejecución en el dispositivo de destino y de que ningún firewall o VPN esté bloqueando la conexión."
+      },
+      "retry": "Reintentar",
+      "details": "Detalles del error:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Eliminar archivos de origen",
+      "content": "Cuando los archivos se hayan enviado correctamente, se eliminarán de este dispositivo. Esta acción no se puede deshacer."
     },
     "cannotOpenFile": {
       "title": "No se puede abrir el archivo",
@@ -448,6 +525,25 @@
       "single": "Enviar archivos a un solo destino. La selección se borrará una vez finalizada la transferencia.",
       "multiple": "Enviar archivos a múltiples destinos. La selección no se borrará.",
       "link": "Los destinatarios que no tengan LocalSend instalado pueden descargar los archivos seleccionados abriendo el enlace en su navegador."
+    },
+    "startupError": {
+      "title": "No se pudo iniciar el servidor",
+      "port": "Puerto: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows denegó el acceso al puerto (error de socket 10013).",
+        "advice": "Esto suele deberse a un rango de puertos reservado por Hyper-V, WSL o Docker, o a un catálogo Winsock dañado:\n• Cambia el puerto en Ajustes (Red)\n• Comprueba los rangos reservados con: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repara Winsock como administrador con: netsh winsock reset (reinicia después)"
+      },
+      "addressInUse": {
+        "hint": "El puerto ya está siendo utilizado por otra aplicación.",
+        "advice": "Otro programa (o una segunda instancia de LocalSend) está escuchando en este puerto:\n• Cierra la otra aplicación, o\n• Cambia el puerto en Ajustes (Red)"
+      },
+      "generic": {
+        "hint": "No se pudo iniciar el servidor.",
+        "advice": "• Comprueba tu firewall y la configuración de red\n• Prueba a cambiar el puerto en Ajustes (Red)"
+      },
+      "details": "Detalles del error:",
+      "copyDetails": "Copiar detalles",
+      "openSettings": "Abrir ajustes"
     },
     "zoom": {
       "title": "URL"

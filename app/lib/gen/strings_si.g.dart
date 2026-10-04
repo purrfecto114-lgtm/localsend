@@ -231,6 +231,8 @@ class _Translations$sendTab$si extends Translations$sendTab$en {
   String get help => 'කරුණාකර ලබන්නාගේ උපාංගය හා ඔබේ උපාංගය එකම Wi-Fi ජාලයේ ඇති බව සහතික කර ගන්න.';
   @override
   String get placeItems => 'බෙදා (Share) ගැනීමට අවශ්‍ය දේ තබන්න.';
+  @override
+  late final _Translations$sendTab$diagnosis$si diagnosis = _Translations$sendTab$diagnosis$si._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$si extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Photos තුළ සේව් කරන ලදි';
   @override
+  late final _Translations$progressPage$checksum$si checksum = _Translations$progressPage$checksum$si._(_root);
+  @override
   late final _Translations$progressPage$total$si total = _Translations$progressPage$total$si._(_root);
   @override
   late final _Translations$progressPage$remainingTime$si remainingTime = _Translations$progressPage$remainingTime$si._(_root);
@@ -595,6 +599,11 @@ class _Translations$dialogs$si extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$si cancelSession = _Translations$dialogs$cancelSession$si._(_root);
   @override
+  late final _Translations$dialogs$connectionError$si connectionError = _Translations$dialogs$connectionError$si._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$si deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$si._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$si cannotOpenFile = _Translations$dialogs$cannotOpenFile$si._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$si encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$si._(_root);
@@ -635,6 +644,8 @@ class _Translations$dialogs$si extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$si pin = _Translations$dialogs$pin$si._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$si sendModeHelp = _Translations$dialogs$sendModeHelp$si._(_root);
+  @override
+  late final _Translations$dialogs$startupError$si startupError = _Translations$dialogs$startupError$si._(_root);
   @override
   late final _Translations$dialogs$zoom$si zoom = _Translations$dialogs$zoom$si._(_root);
 }
@@ -839,6 +850,32 @@ class _Translations$sendTab$sendModes$si extends Translations$sendTab$sendModes$
   String get link => 'ලින්ක් (Link) ඔස්සේ බෙදාගන්න (Share)';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$si extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'ආසන්න උපාංග සොයමින්…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$si noInterface = _Translations$sendTab$diagnosis$noInterface$si._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$si multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$si._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$si scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$si._(_root);
+  @override
+  String get rescan => 'නැවත සොයන්න';
+  @override
+  String get bleHint =>
+      'BLE සොයාගැනීම ක්‍රියාත්මකයි: උපාංගද මෙම fork එක (විකල්පය සක්‍රීයව) ධාවනය කරන්නේ නම් පමණක් ඒවා Bluetooth හරහා සොයාගත හැක; හුවමාරුවම තවමත් ජාලය හරහා සිදු වේ.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$si manualFallback = _Translations$sendTab$diagnosis$manualFallback$si._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$si extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$si._(TranslationsSi root) : this._root = root, super.internal(root);
@@ -920,6 +957,8 @@ class _Translations$settingsTab$send$si extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => '"ලින්ක් (Link) ඔස්සේ බෙදාගන්න (Share)" මාදිලියේ ඉල්ලීම් ස්වයංක්‍රීයව පිළිගන්න';
   @override
   String get createChecksums => 'ගොනු යවන විට checksum සාදන්න';
+  @override
+  String get deleteSourceAfterSend => 'සාර්ථකව යැවීමෙන් පසු මූල ගොනු මකන්න';
 }
 
 // Path: settingsTab.network
@@ -950,6 +989,13 @@ class _Translations$settingsTab$network$si extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'සොයා ගැනීමේ කාලසීමාව';
   @override
+  String get maxInterfaces => 'උපරිම අතුරුමුහුණත් (Smart Scan)';
+  @override
+  String get vpnInterfaces => 'VPN අතුරුමුහුණත් ඇතුළත් කරන්න (Smart Scan)';
+  @override
+  String get vpnInterfacesHint =>
+      'VPN tunnel අතුරුමුහුණත්වල subnet ද (Tailscale, WireGuard, ...) ස්කෑන් කරන්න. VPN සාමාන්‍යයෙන් multicast රැගෙන යන්නේ නැති බැවින්, ඒවායේ subnet HTTP fallback ස්කෑනයෙන් පරීක්ෂා වේ.';
+  @override
   String get useSystemName => 'පද්ධති නම භාවිතා කරන්න';
   @override
   String get generateRandomAlias => 'අහඹු නමක් ජනනය කරන්න';
@@ -963,6 +1009,33 @@ class _Translations$settingsTab$network$si extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'ඔබ custom multicast ලිපිනයක් භාවිතා කරන්නේ නම්, වෙනත් උපාංග වලට ඔබව හඳුනා ගත නොහැක. (default: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'BLE සොයාගැනීම (පරීක්ෂණාත්මක)';
+  @override
+  String get bleDiscoveryHint =>
+      'ජාලය multicast අවහිර කරන විටද (Access Point (AP) Isolation) ආසන්න උපාංග Bluetooth හරහා සොයාගනී. Android, iOS, macOS සහ Windows මත ක්‍රියා කරයි; Linux මත මෙම උපාංගයට වෙනත් උපාංග සොයාගත හැකි නමුත් මෙම උපාංගයම සොයාගැනීමට ලක් නොවේ. උපාංග දෙකටම මෙම fork එක (විකල්පය සක්‍රීයව) ධාවනය කළ යුතුය; ගොනු හුවමාරුව තවමත් ජාලය භාවිතා කරයි.';
+  @override
+  String get bleStatusActive =>
+      'සක්‍රීයයි: ස්කෑන් කරමින් සහ advertise කරමින්. අනෙක් උපාංගද මෙම fork එක (විකල්පය සක්‍රීයව) ක්‍රියාත්මක කරන්නේ නම් පමණක් ආසන්න උපාංග දිස්වේ.';
+  @override
+  String get bleStatusScanOnly =>
+      'සක්‍රීයයි: ස්කෑන් කිරීම පමණි. මෙම උපාංගයට දැනට Bluetooth හරහා සොයාගත නොහැක (මෙම platform එකේ BLE advertising සහාය නොමැති නිසා, හෝ තවම භාවිත කළ හැකි ජාල ලිපිනයක් නොමැති නිසා).';
+  @override
+  String get bleStatusPaused => 'විරාමයි. ඇප් එක නැවත foreground එකට පැමිණි විට නැවත අරඹයි.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Bluetooth අවසර ප්‍රතික්ෂේප වී ඇත. පද්ධති සැකසුම් තුළ "ආසන්න උපාංග" (හෝ Android 11 සහ ඊට පහළ වල "ස්ථානය") අවසරය ලබා දී, මෙම විකල්පය off කර නැවත on කරන්න.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth off වී ඇත හෝ ලබා ගත නොහැක. Bluetooth නැවත ලබා ගත හැකි වූ විට සොයාගැනීම ස්වයංක්‍රීයව නැවත අරඹයි.';
+  @override
+  String get bleStatusUnsupported => 'මෙම උපාංගයේ සහාය නොදක්වයි: BLE සොයාගැනීමට Android 7 හෝ ඊට නව අනුවාදයක් සහ Bluetooth LE radio එකක් අවශ්‍ය වේ.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'මෙම Android අනුවාදයේදී වෙනත් උපාංග සොයාගැනීමට පද්ධතියේ ස්ථාන සේවාදායකයන්ද on කර තිබිය යුතුය (අවසරය ස්වයංක්‍රීයව ඉල්ලේ; මෙම උපාංගය දැනටමත් වෙනත් උපාංග වලට සොයාගත හැක).';
+  @override
+  String get bleStatusError => 'BLE සොයාගැනීම ආරම්භ කළ නොහැක. විස්තර සඳහා ගැටලු විසඳන්න > ලොග බලන්න.';
+  @override
+  String get bleOpenSystemSettings => 'පද්ධති සැකසුම් විවෘත කරන්න';
 }
 
 // Path: settingsTab.other
@@ -1079,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$si extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => '${protocol} හරහා යාවත්කාල කරන ලදී (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$si extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Checksum සත්‍යාපනය කරන ලදි';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'ගොනු ${curr} / ${n} සඳහා checksum සත්‍යාපනය කරන ලදි';
+  @override
+  String get notVerifiable => 'යවන්නාගෙන් checksum ලබා නොදී ඇත';
+  @override
+  String get disabled => 'Checksum සත්‍යාපනය අක්‍රීයයි';
+  @override
+  String attached({required Object curr, required Object n}) => 'Checksum අමුණා ඇත (ගොනු ${curr} / ${n})';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$si extends Translations$progressPage$total$en {
   _Translations$progressPage$total$si._(TranslationsSi root) : this._root = root, super.internal(root);
@@ -1172,6 +1264,11 @@ class _Translations$dialogs$addressInput$si extends Translations$dialogs$address
   String get ip => 'IP ලිපිනය';
   @override
   String get recentlyUsed => 'පෙර භාවිතා කළ: ';
+  @override
+  String get noHashtagCandidates =>
+      'වත්මන් ජාලයට IPv4 ලිපිනයක් නොමැති නිසා, හැශ්ටැග් එක අපේක්ෂක ලිපිනයකට දිගු කළ නොහැක. කරුණාකර සම්පූර්ණ ලිපිනය ඇතුල් කරන්න (උදා. 192.168.1.5 හෝ fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$si validation = _Translations$dialogs$addressInput$validation$si._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1185,6 +1282,42 @@ class _Translations$dialogs$cancelSession$si extends Translations$dialogs$cancel
   String get title => 'ගොනු මාරු අවලංගු කරන්න';
   @override
   String get content => 'ඔබට ඇත්තටම ගොනු හුවමාරුව අවලංගු කිරීමට අවශ්‍යද?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$si extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'සම්බන්ධතාව අසාර්ථක විය';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$si timeout = _Translations$dialogs$connectionError$timeout$si._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$si refused = _Translations$dialogs$connectionError$refused$si._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$si forbidden = _Translations$dialogs$connectionError$forbidden$si._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$si other = _Translations$dialogs$connectionError$other$si._(_root);
+  @override
+  String get retry => 'නැවත උත්සාහ කරන්න';
+  @override
+  String get details => 'දෝෂ විස්තර:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$si extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'මූල ගොනු මකන්න';
+  @override
+  String get content => 'ගොනු සාර්ථකව යැවූ පසු, ඒවා මෙම උපාංගයෙන් මකා දමනු ලැබේ. මෙය ආපසු හැරවිය නොහැක.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1478,6 +1611,32 @@ class _Translations$dialogs$sendModeHelp$si extends Translations$dialogs$sendMod
       'ලබන්නන් LocalSend ස්ථාපනය කර නොමැති නම්, ඔව්න්ගේ බ්‍රවුසර් (Browser) තුළ අදාල ලින්ක් (Link) එක විවෘත කර, ගොනු බාගත (Download) කළ හැක.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$si extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'සේවාදායකය ආරම්භ කළ නොහැක';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$si windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$si._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$si addressInUse = _Translations$dialogs$startupError$addressInUse$si._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$si generic = _Translations$dialogs$startupError$generic$si._(_root);
+  @override
+  String get details => 'දෝෂ විස්තර:';
+  @override
+  String get copyDetails => 'විස්තර කොපි කරන්න';
+  @override
+  String get openSettings => 'සැකසුම් විවෘත කරන්න';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$si extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$si._(TranslationsSi root) : this._root = root, super.internal(root);
@@ -1487,6 +1646,68 @@ class _Translations$dialogs$zoom$si extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$si extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ජාල සම්බන්ධතාවක් නැත';
+  @override
+  String get advice => 'මෙම උපාංගය කිසිදු ජාලයකට සම්බන්ධ වී නැත. මෙම උපාංගයේ Wi-Fi හෝ කේබල් සම්බන්ධතාව පරීක්ෂා කරන්න.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$si extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast ලබා ගත නොහැක';
+  @override
+  String advice({required Object port}) =>
+      'මෙම ජාලය තුළ LocalSend හට multicast සොයාගැනීම භාවිත කළ නොහැක. උපාංග දෙකම එකම ජාලයේ ඇති බවත්, Access Point (AP) Isolation හෝ firewall එකක් UDP ${port} port එක අවහිර නොකරන බවත් සහතික කරගන්න.';
+  @override
+  String reason({required Object reason}) => 'හේතුව: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$si extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'උපාංග හමු නොවීය';
+  @override
+  String get advice =>
+      'සොයාගැනීම ක්‍රියාත්මක වුවද, නිවේදන හෝ ජාල ස්කෑනට කිසිදු උපාංගයක් පිළිතුරු නොදුන්නේය. අනෙක් උපාංගය offline වී, නිදන්නට ගොස්, හෝ firewall එකකින් අවහිර වී තිබිය හැක. අනෙක් උපාංගයේ LocalSend ක්‍රියාත්මක බව සහතික කරගන්න.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'පිළිතුරු නොමැතිව නිවේදන ${announcements}ක් සහ ජාල ස්කෑන් ${scans}ක් යවන ලදි.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$si extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP ලිපින නිතර වෙනස් වේ. ලැයිස්තුගත නොකළ උපාංගයකටද ඔබට ළඟා විය හැක: එය ප්‍රියතම වලට එක් කරන්න, නැතහොත් එහි ලිපිනය අතින් ඇතුල් කරන්න.';
+  @override
+  String get openFavorites => 'ප්‍රියතම විවෘත කරන්න';
+  @override
+  String get manualInput => 'ලිපිනය අතින් ඇතුල් කරන්න';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1573,4 +1794,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$si extends Translations$whatsNe
     'ප්‍රියතමවලින් එන ඉල්ලීම් දැන් ස්වයංක්‍රීයව පිළිගනු ලැබේ. මෙය පෙරනිමියෙන් සක්‍රිය අතර සැකසුම් හරහා අක්‍රිය කළ හැක.',
     'Android හි, යෙදුම පසුබිමේ ඇති විට හෝ තිරය නිවා ඇති විට හුවමාරු දිගටම සිදුවේ. iOS හි, යෙදුම තවමත් පෙරබිමේ තිබිය යුතුය.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$si extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'වලංගු IPv4 ලිපිනයක්, IPv6 ලිපිනයක් හෝ host නමක් ඇතුල් කරන්න.';
+  @override
+  String get scheme => 'ලිපිනය පමණක් ඇතුල් කරන්න, "http://" හෝ "https://" රහිතව.';
+  @override
+  String get port => 'ලිපිනය පමණක් ඇතුල් කරන්න. Port එක සැකසුම් වලින් ලබා ගැනේ.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$si extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'උපාංගය නියමිත වේලාවට පිළිතුරු නොදුන්නේය.';
+  @override
+  String get advice =>
+      'එය බොහෝවිට offline, නිදන්නට ගොස්, හෝ firewall එකකින් අවහිර වී තිබිය හැක. අනෙක් උපාංගයේ LocalSend ක්‍රියාත්මක බවත් උපාංග දෙකම එකම ජාලයේ ඇති බවත් සහතික කරගන්න.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$si extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'උපාංගය සම්බන්ධතාව ප්‍රතික්ෂේප කළේය.';
+  @override
+  String get advice =>
+      'ඉලක්ක උපාංගයේ LocalSend ක්‍රියාත්මක නොවන බව පෙනේ, නැතහොත් වෙනත් port එකකින් සවන් දෙයි. අනෙක් උපාංගයේ LocalSend ආරම්භ කරන්න, නැතහොත් port එක පරීක්ෂා කරන්න.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$si extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'උපාංගය ඉල්ලීම ප්‍රතික්ෂේප කළේය.';
+  @override
+  String get advice =>
+      'PIN එකක් අවශ්‍ය විය හැකි අතර, නැතහොත් උපාංගයේ යුගල වීම (pairing) වෙනස් වී ඇත. ඉලක්ක උපාංගයේ PIN සහ Quick සේව් සැකසුම් පරීක්ෂා කරන්න.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$si extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'සම්බන්ධතාව ඇති කළ නොහැක.';
+  @override
+  String get advice =>
+      'ලිපිනය සහ port එක පරීක්ෂා කර, ඉලක්ක උපාංගයේ LocalSend ක්‍රියාත්මක බවත්, firewall හෝ VPN එකක් සම්බන්ධතාව අවහිර නොකරන බවත් සහතික කරගන්න.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$si extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows විසින් port එකට ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී (socket error 10013).';
+  @override
+  String get advice =>
+      'මෙය බොහෝවිට Hyper-V, WSL හෝ Docker විසින් වෙන් කරන ලද port පරාසයක් නිසා, හෝ හානි වූ Winsock catalog එකක් නිසා සිදු වේ:\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කරන්න\n• වෙන් කළ පරාස පරීක්ෂා කරන්න: netsh interface ipv4 show excludedportrange protocol=tcp\n• පරිපාලක (administrator) ලෙස Winsock අලුත්වැඩියා කරන්න: netsh winsock reset (පසුව restart කරන්න)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$si extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'මෙම port එක දැනටමත් වෙනත් යෙදුමක් විසින් භාවිතා වේ.';
+  @override
+  String get advice =>
+      'වෙනත් වැඩසටහනක් (හෝ දෙවන LocalSend අවස්ථාවක්) මෙම port එකෙන් සවන් දෙයි:\n• එම යෙදුම වසා දමන්න, නැතහොත්\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කරන්න';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$si extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$si._(TranslationsSi root) : this._root = root, super.internal(root);
+
+  final TranslationsSi _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'සේවාදායකය ආරම්භ කළ නොහැකි විය.';
+  @override
+  String get advice => '• Firewall සහ ජාල සැකසුම් පරීක්ෂා කරන්න\n• සැකසුම් (ජාලය) තුළ port එක වෙනස් කර බලන්න';
 }

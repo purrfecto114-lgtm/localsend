@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Tushuntirish",
     "help": "Kerakli qurilma ham bir xil Wi-Fi tarmogʻida ekanligiga ishonch hosil qiling.",
-    "placeItems": "Ulashish uchun elementlarni joylashtiring."
+    "placeItems": "Ulashish uchun elementlarni joylashtiring.",
+    "diagnosis": {
+      "scanning": "Yaqin atrofdagi qurilmalar qidirilmoqda…",
+      "noInterface": {
+        "title": "Tarmoq ulanishi yoʻq",
+        "advice": "Bu qurilma hech qanday tarmoqqa ulanmagan. Bu qurilmaning Wi-Fi yoki kabel ulanishini tekshiring."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast mavjud emas",
+        "advice": "LocalSend bu tarmoqda multicast orqali aniqlashdan foydalana olmaydi. Ikkala qurilma ham bir xil tarmoqda ekanligiga va AP izolyatsiyasi yoki xavfsizlik devori {port} UDP portini bloklamayotganiga ishonch hosil qiling.",
+        "reason": "Sabab: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Qurilmalar topilmadi",
+        "advice": "Aniqlash ishlayapti, lekin hech qanday qurilma eʼlonlarga yoki tarmoq skaniga javob bermadi. Boshqa qurilma oflayn, uyku rejimida boʻlishi yoki xavfsizlik devori tomonidan bloklangan boʻlishi mumkin. LocalSend boshqa qurilmada ishlab turganiga ishonch hosil qiling.",
+        "detail": "{announcements} ta eʼlon va {scans} ta tarmoq skani yuborildi, ammo javob olinmadi."
+      },
+      "rescan": "Qayta qidirish",
+      "bleHint": "BLE orqali aniqlash faol: qurilmalar faqat ular ham bu opsiya yoqilgan shu forkni ishlatgan holda Bluetooth orqali topiladi; uzatishning oʻzi baribir tarmoq orqali amalga oshadi.",
+      "manualFallback": {
+        "message": "IP manzillar tez-tez oʻzgaradi. Roʻyxatda yoʻq qurilmaga ham murojaat qilish mumkin: uni sevimlilarga qoʻshing yoki manzilini qoʻlda kiriting.",
+        "openFavorites": "Sevimlilarni ochish",
+        "manualInput": "Manzilni qoʻlda kiriting"
+      }
+    }
   },
   "settingsTab": {
     "title": "Sozlamalar",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Yuborish",
       "shareViaLinkAutoAccept": "\"Havola orqali ulashish\" rejimida soʻrovlarni avtomatik qabul qilish",
-      "createChecksums": "Fayllarni yuborishda nazorat summalarini yaratish"
+      "createChecksums": "Fayllarni yuborishda nazorat summalarini yaratish",
+      "deleteSourceAfterSend": "Muvaffaqiyatli yuborilgandan soʻng manba fayllarini oʻchirish"
     },
     "network": {
       "title": "Tarmoq",
@@ -143,12 +168,26 @@
         "filtered": "Filtrlangan"
       },
       "discoveryTimeout": "Aniqlash vaqti tugashi",
+      "maxInterfaces": "Interfeyslarning maksimal soni (Aqlli skan)",
+      "vpnInterfaces": "VPN interfeyslarini qoʻshish (Aqlli skan)",
+      "vpnInterfacesHint": "VPN tunnel interfeyslarining subnetlarini ham skan qilish (Tailscale, WireGuard, ...). VPNlar odatda multicast uzatmaydi, shuning uchun ularning subnetlari HTTP zaxira skani orqali tekshiriladi.",
       "useSystemName": "Tizim nomidan foydalanish",
       "generateRandomAlias": "Tasodifiy nom yaratish",
       "portWarning": "Maxsus portdan foydalanayotganingiz uchun boshqa qurilmalar sizni aniqlay olmasligi mumkin. (standart: {defaultPort})",
       "encryption": "Shifrlash",
       "multicastGroup": "Multicast manzili",
-      "multicastGroupWarning": "Maxsus multicast manzilidan foydalanayotganingiz uchun boshqa qurilmalar sizni aniqlay olmasligi mumkin. (standart: {defaultMulticast})"
+      "multicastGroupWarning": "Maxsus multicast manzilidan foydalanayotganingiz uchun boshqa qurilmalar sizni aniqlay olmasligi mumkin. (standart: {defaultMulticast})",
+      "bleDiscovery": "BLE orqali aniqlash (eksperimental)",
+      "bleDiscoveryHint": "Tarmoq multicastni bloklaganda ham (AP izolyatsiyasi) yaqin atrofdagi qurilmalarni Bluetooth orqali topadi. Android, iOS, macOS va Windowsda ishlaydi; Linuxda esa bu qurilma boshqalarni topa oladi, lekin oʻzi topilmaydi. Ikkala qurilmada ham bu opsiya yoqilgan shu fork boʻlishi kerak; fayl uzatishning oʻzi baribir tarmoqdan foydalanadi.",
+      "bleStatusActive": "Faol: skan qilinmoqda va eʼlon berilmoqda. Yaqin atrofdagi qurilmalar faqat ular ham bu opsiya yoqilgan shu forkni ishlatganda koʻrinadi.",
+      "bleStatusScanOnly": "Faol: faqat skan qilinmoqda. Bu qurilma hozircha Bluetooth orqali aniqlanmaydi (bu platformada BLE eʼlon berish qoʻllab-quvvatlanmaydi yoki hozircha ishlatish mumkin boʻlgan tarmoq manzili yoʻq).",
+      "bleStatusPaused": "Toʻxtatilgan. Ilova old fonga qaytganda davom etadi.",
+      "bleStatusPermissionDenied": "Bluetooth ruxsatlari rad etildi. Tizim sozlamalarida \"Yaqin atrofdagi qurilmalar\" (yoki Android 11 va undan past versiyalarda \"Joylashuv\") ruxsatini bering, soʻng bu opsiyani oʻchirib qayta yoqing.",
+      "bleStatusAdapterOff": "Bluetooth oʻchiq yoki mavjud emas. Bluetooth qayta mavjud boʻlganda aniqlash oʻzi qayta boshlanadi.",
+      "bleStatusUnsupported": "Bu qurilmada qoʻllab-quvvatlanmaydi: BLE orqali aniqlash Android 7 yoki undan yangi versiyani hamda Bluetooth LE radiotasini talab qiladi.",
+      "bleStatusLegacyLocation": "Bu Android versiyasida boshqa qurilmalarni topish uchun tizimning joylashuv xizmatlari ham yoqilgan boʻlishi kerak (ruxsat avtomatik soʻraladi; bu qurilmani boshqalar allaqachon topa oladi).",
+      "bleStatusError": "BLE orqali aniqlashni boshlab boʻlmadi. Tafsilotlar uchun Muammolarni bartaraf etish > Jurnallar boʻlimiga qarang.",
+      "bleOpenSystemSettings": "Tizim sozlamalariga oʻtish"
     },
     "other": {
       "title": "Boshqa",
@@ -256,6 +295,13 @@
     "titleSending": "Fayllar yuborilmoqda",
     "titleReceiving": "Fayllar qabul qilinmoqda",
     "savedToGallery": "Suratlarga saqlandi",
+    "checksum": {
+      "verified": "Nazorat summalari tekshirildi",
+      "partiallyVerified": "{curr} / {n} ta fayl uchun nazorat summalari tekshirildi",
+      "notVerifiable": "Yuboruvchi nazorat summalari bermagan",
+      "disabled": "Nazorat summalarini tekshirish oʻchirilgan",
+      "attached": "Nazorat summalari qoʻshildi ({curr} / {n} ta fayl)"
+    },
     "total": {
       "title": {
         "sending": "Umumiy jarayon ({time})",
@@ -345,11 +391,42 @@
       "title": "Manzilni kiriting",
       "hashtag": "Hashtag",
       "ip": "IP manzil",
-      "recentlyUsed": "Yaqinda ishlatilgan: "
+      "recentlyUsed": "Yaqinda ishlatilgan: ",
+      "noHashtagCandidates": "Joriy tarmoqda IPv4 manzili yoʻqligi uchun hashtag nomzod manzilga kengaytirilmaydi. Iltimos, toʻliq manzilni kiriting (masalan, 192.168.1.5 yoki fe80::1).",
+      "validation": {
+        "invalid": "Yaroqli IPv4 manzili, IPv6 manzili yoki host nomini kiriting.",
+        "scheme": "Faqat manzilning oʻzini kiriting, \"http://\" yoki \"https://\" qoʻshmagan holda.",
+        "port": "Faqat manzilni kiriting. Port sozlamalardan olinadi."
+      }
     },
     "cancelSession": {
       "title": "Fayl uzatishni bekor qilish",
       "content": "Fayl uzatishni haqiqatan ham bekor qilmoqchimisiz?"
+    },
+    "connectionError": {
+      "title": "Ulanish amalga oshmadi",
+      "timeout": {
+        "message": "Qurilma belgilangan vaqtda javob bermadi.",
+        "advice": "U oflayn boʻlishi, uyku rejimida boʻlishi yoki ulanishni xavfsizlik devori bloklashi mumkin. LocalSend boshqa qurilmada ishlab turganiga va ikkala qurilma ham bir xil tarmoqda ekanligiga ishonch hosil qiling."
+      },
+      "refused": {
+        "message": "Qurilma ulanishni rad etdi.",
+        "advice": "LocalSend maqsadli qurilmada ishlamayotgan boʻlishi yoki boshqa portda tinglayotgan boʻlishi mumkin. LocalSendni boshqa qurilmada ishga tushiring yoki portni tekshiring."
+      },
+      "forbidden": {
+        "message": "Qurilma soʻrovni rad etdi.",
+        "advice": "PIN talab qilinishi yoki qurilma bilan juftlashuv oʻzgargan boʻlishi mumkin. Maqsadli qurilmadagi PIN va tez saqlash sozlamalarini tekshiring."
+      },
+      "other": {
+        "message": "Ulanishni oʻrnatib boʻlmadi.",
+        "advice": "Manzil va portni tekshiring, LocalSend maqsadli qurilmada ishlayotganiga va ulanishni xavfsizlik devori yoki VPN bloklamayotganiga ishonch hosil qiling."
+      },
+      "retry": "Qayta urinish",
+      "details": "Xato tafsilotlari:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Manba fayllarini oʻchirish",
+      "content": "Fayllar muvaffaqiyatli yuborilgandan soʻng bu qurilmadan oʻchiriladi. Buni qaytarib boʻlmaydi."
     },
     "cannotOpenFile": {
       "title": "Faylni ochib boʻlmadi",
@@ -445,6 +522,25 @@
       "single": "Fayllarni bitta qabul qiluvchiga yuboradi. Fayl uzatish tugagandan soʻng tanlov tozalanadi.",
       "multiple": "Fayllarni bir nechta qabul qiluvchiga yuboradi. Fayl uzatish tugagandan soʻng tanlov tozalanmaydi.",
       "link": "LocalSend oʻrnatilmagan qabul qiluvchilar havolani brauzerlarida ochish orqali tanlangan fayllarni yuklab olishlari mumkin."
+    },
+    "startupError": {
+      "title": "Serverni ishga tushirib boʻlmadi",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows portga kirishga ruxsat bermadi (socket xatosi 10013).",
+        "advice": "Bunga odatda Hyper-V, WSL yoki Docker tomonidan zaxiralangan portlar oraligʻi yoki buzilgan Winsock katalogi sabab boʻladi:\n• Portni Sozlamalarda (Tarmoq) oʻzgartiring\n• Zaxiralangan oraligʻlarni tekshiring: netsh interface ipv4 show excludedportrange protocol=tcp\n• Winsockni administrator sifatida tuzating: netsh winsock reset (soʻng qayta ishga tushiring)"
+      },
+      "addressInUse": {
+        "hint": "Portni allaqachon boshqa ilova ishlatmoqda.",
+        "advice": "Boshqa dastur (yoki ikkinchi LocalSend nusxasi) bu portni tinglamoqda:\n• Oʻsha ilovani yoping, yoki\n• Portni Sozlamalarda (Tarmoq) oʻzgartiring"
+      },
+      "generic": {
+        "hint": "Serverni ishga tushirish mumkin boʻlmadi.",
+        "advice": "• Xavfsizlik devori va tarmoq sozlamalarini tekshiring\n• Portni Sozlamalarda (Tarmoq) oʻzgartirib koʻring"
+      },
+      "details": "Xato tafsilotlari:",
+      "copyDetails": "Tafsilotlarni nusxalash",
+      "openSettings": "Sozlamalarni ochish"
     },
     "zoom": {
       "title": "URL"

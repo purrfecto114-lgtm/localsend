@@ -231,6 +231,8 @@ class Translations$sendTab$zh_HK extends Translations$sendTab$en {
   String get help => '請確保目標裝置駁緊同一個 Wi‑Fi 網絡。';
   @override
   String get placeItems => '將要分享嘅檔案拉過嚟呢度。';
+  @override
+  late final Translations$sendTab$diagnosis$zh_HK diagnosis = Translations$sendTab$diagnosis$zh_HK.internal(_root);
 }
 
 // Path: settingsTab
@@ -454,6 +456,8 @@ class Translations$progressPage$zh_HK extends Translations$progressPage$en {
   @override
   String get savedToGallery => '成功 save 咗落相簿';
   @override
+  late final Translations$progressPage$checksum$zh_HK checksum = Translations$progressPage$checksum$zh_HK.internal(_root);
+  @override
   late final Translations$progressPage$total$zh_HK total = Translations$progressPage$total$zh_HK.internal(_root);
   @override
   late final Translations$progressPage$remainingTime$zh_HK remainingTime = Translations$progressPage$remainingTime$zh_HK.internal(_root);
@@ -592,6 +596,11 @@ class Translations$dialogs$zh_HK extends Translations$dialogs$en {
   @override
   late final Translations$dialogs$cancelSession$zh_HK cancelSession = Translations$dialogs$cancelSession$zh_HK.internal(_root);
   @override
+  late final Translations$dialogs$connectionError$zh_HK connectionError = Translations$dialogs$connectionError$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$deleteSourceAfterSendDialog$zh_HK deleteSourceAfterSendDialog =
+      Translations$dialogs$deleteSourceAfterSendDialog$zh_HK.internal(_root);
+  @override
   late final Translations$dialogs$cannotOpenFile$zh_HK cannotOpenFile = Translations$dialogs$cannotOpenFile$zh_HK.internal(_root);
   @override
   late final Translations$dialogs$encryptionDisabledNotice$zh_HK encryptionDisabledNotice =
@@ -636,6 +645,8 @@ class Translations$dialogs$zh_HK extends Translations$dialogs$en {
   late final Translations$dialogs$pin$zh_HK pin = Translations$dialogs$pin$zh_HK.internal(_root);
   @override
   late final Translations$dialogs$sendModeHelp$zh_HK sendModeHelp = Translations$dialogs$sendModeHelp$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$zh_HK startupError = Translations$dialogs$startupError$zh_HK.internal(_root);
   @override
   late final Translations$dialogs$zoom$zh_HK zoom = Translations$dialogs$zoom$zh_HK.internal(_root);
 }
@@ -839,6 +850,30 @@ class Translations$sendTab$sendModes$zh_HK extends Translations$sendTab$sendMode
   String get link => '用 link 分享';
 }
 
+// Path: sendTab.diagnosis
+class Translations$sendTab$diagnosis$zh_HK extends Translations$sendTab$diagnosis$en {
+  Translations$sendTab$diagnosis$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => '掃描緊附近嘅裝置……';
+  @override
+  late final Translations$sendTab$diagnosis$noInterface$zh_HK noInterface = Translations$sendTab$diagnosis$noInterface$zh_HK.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$multicastUnavailable$zh_HK multicastUnavailable =
+      Translations$sendTab$diagnosis$multicastUnavailable$zh_HK.internal(_root);
+  @override
+  late final Translations$sendTab$diagnosis$scanNoResult$zh_HK scanNoResult = Translations$sendTab$diagnosis$scanNoResult$zh_HK.internal(_root);
+  @override
+  String get rescan => '再掃描一次';
+  @override
+  String get bleHint => 'BLE 偵測已開啟：只有對方都用呢個修改版（fork 版）而且開咗呢個選項，先至可以透過藍牙搵到對方；傳送檔案本身照舊行網絡。';
+  @override
+  late final Translations$sendTab$diagnosis$manualFallback$zh_HK manualFallback = Translations$sendTab$diagnosis$manualFallback$zh_HK.internal(_root);
+}
+
 // Path: settingsTab.general
 class Translations$settingsTab$general$zh_HK extends Translations$settingsTab$general$en {
   Translations$settingsTab$general$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
@@ -921,6 +956,8 @@ class Translations$settingsTab$send$zh_HK extends Translations$settingsTab$send$
   String get shareViaLinkAutoAccept => '用 link 分享檔案嗰陣自動接收';
   @override
   String get createChecksums => '傳送檔案嗰陣建立 checksum';
+  @override
+  String get deleteSourceAfterSend => '傳送成功之後刪除來源檔案';
 }
 
 // Path: settingsTab.network
@@ -953,6 +990,12 @@ class Translations$settingsTab$network$zh_HK extends Translations$settingsTab$ne
   @override
   String get discoveryTimeout => '裝置搜尋逾時';
   @override
+  String get maxInterfaces => '最多介面數（智能掃描）';
+  @override
+  String get vpnInterfaces => '包埋 VPN 介面（智能掃描）';
+  @override
+  String get vpnInterfacesHint => '仲會掃埋 VPN 隧道介面嘅子網絡（Tailscale、WireGuard 等）。VPN 通常行唔到多播，所以佢哋嘅子網絡會改用 HTTP 後備掃描嚟探測。';
+  @override
   String get useSystemName => '用系統名稱';
   @override
   String get generateRandomAlias => '求其改個名';
@@ -964,6 +1007,29 @@ class Translations$settingsTab$network$zh_HK extends Translations$settingsTab$ne
   String get multicastGroup => '多播 IP 地址';
   @override
   String multicastGroupWarning({required Object defaultMulticast}) => '用自訂多播地址嘅話其他裝置有機會偵測唔到你。（預設：${defaultMulticast}）';
+  @override
+  String get bleDiscovery => 'BLE 偵測（實驗性）';
+  @override
+  String get bleDiscoveryHint =>
+      '就算個網絡封鎖咗多播（接入點 (AP) 隔離），都可以透過藍牙偵測附近嘅裝置。Android、iOS、macOS 同 Windows 用得；喺 Linux 上面呢部機搵到人，但係唔可以畀人搵。兩邊裝置都要用呢個修改版（fork 版）同時開咗呢個選項；傳送檔案本身照舊行網絡。';
+  @override
+  String get bleStatusActive => '已啟用：掃描緊同廣播緊。只有對方都用呢個修改版（fork 版）而且開咗呢個選項，附近嘅裝置先會出現。';
+  @override
+  String get bleStatusScanOnly => '已啟用：淨係掃描。呢部機而家透過藍牙係畀人偵測唔到（呢個平台唔支援 BLE 廣播，或者仲未有可用嘅網絡地址）。';
+  @override
+  String get bleStatusPaused => '暫停咗。個 app 返返前景就會自動恢復。';
+  @override
+  String get bleStatusPermissionDenied => '藍牙權限被拒。請喺系統設定開返「附近裝置」權限（Android 11 或者更舊版本係「位置」權限），然後將呢個選項閂咗再開過。';
+  @override
+  String get bleStatusAdapterOff => '藍牙閂咗或者用唔到。等藍牙返返嚟，偵測會自動重新開始。';
+  @override
+  String get bleStatusUnsupported => '呢部機唔支援：BLE 偵測要 Android 7 或者更新，仲要有藍牙 LE 無線電。';
+  @override
+  String get bleStatusLegacyLocation => '喺呢個 Android 版本，要搵到其他裝置仲要開住系統定位服務（權限會自動請求；呢部機已經可以畀人搵到）。';
+  @override
+  String get bleStatusError => 'BLE 偵測開唔到。詳情請睇 疑難排解 > 記錄。';
+  @override
+  String get bleOpenSystemSettings => '開啟系統設定';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1144,25 @@ class Translations$deviceDetailsPage$logs$zh_HK extends Translations$deviceDetai
   String updated({required Object protocol, required Object host}) => '透過 ${protocol} (${host}) 更新';
 }
 
+// Path: progressPage.checksum
+class Translations$progressPage$checksum$zh_HK extends Translations$progressPage$checksum$en {
+  Translations$progressPage$checksum$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'checksum 驗證咗';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => '已驗證 ${curr} / ${n} 個檔案嘅 checksum';
+  @override
+  String get notVerifiable => '對方冇提供 checksum';
+  @override
+  String get disabled => 'checksum 驗證已停用';
+  @override
+  String attached({required Object curr, required Object n}) => '已附加 checksum（${curr} / ${n} 個檔案）';
+}
+
 // Path: progressPage.total
 class Translations$progressPage$total$zh_HK extends Translations$progressPage$total$en {
   Translations$progressPage$total$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
@@ -1171,6 +1256,10 @@ class Translations$dialogs$addressInput$zh_HK extends Translations$dialogs$addre
   String get ip => 'IP 地址';
   @override
   String get recentlyUsed => '輸入記錄：';
+  @override
+  String get noHashtagCandidates => '而家個網絡冇 IPv4 地址，所以個 hashtag 展開唔到做候選地址。請直接輸入完整地址（例如 192.168.1.5 或者 fe80::1）。';
+  @override
+  late final Translations$dialogs$addressInput$validation$zh_HK validation = Translations$dialogs$addressInput$validation$zh_HK.internal(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1184,6 +1273,42 @@ class Translations$dialogs$cancelSession$zh_HK extends Translations$dialogs$canc
   String get title => '取消檔案傳輸';
   @override
   String get content => '你係咪要放棄傳輸檔案？';
+}
+
+// Path: dialogs.connectionError
+class Translations$dialogs$connectionError$zh_HK extends Translations$dialogs$connectionError$en {
+  Translations$dialogs$connectionError$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '連線失敗';
+  @override
+  late final Translations$dialogs$connectionError$timeout$zh_HK timeout = Translations$dialogs$connectionError$timeout$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$refused$zh_HK refused = Translations$dialogs$connectionError$refused$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$forbidden$zh_HK forbidden = Translations$dialogs$connectionError$forbidden$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$connectionError$other$zh_HK other = Translations$dialogs$connectionError$other$zh_HK.internal(_root);
+  @override
+  String get retry => '重試';
+  @override
+  String get details => '錯誤詳情：';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class Translations$dialogs$deleteSourceAfterSendDialog$zh_HK extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  Translations$dialogs$deleteSourceAfterSendDialog$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '刪除來源檔案';
+  @override
+  String get content => '檔案傳送成功之後，呢啲檔案就會喺呢部機度剷走。做咗就冇得返轉頭。';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1476,6 +1601,32 @@ class Translations$dialogs$sendModeHelp$zh_HK extends Translations$dialogs$sendM
   String get link => '冇裝 LocalSend 嘅裝置可以透過條 link 嚟 download 返揀選嘅項目。';
 }
 
+// Path: dialogs.startupError
+class Translations$dialogs$startupError$zh_HK extends Translations$dialogs$startupError$en {
+  Translations$dialogs$startupError$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '開唔到個 server';
+  @override
+  String port({required Object port}) => 'Port：${port}';
+  @override
+  late final Translations$dialogs$startupError$windowsAccessDenied$zh_HK windowsAccessDenied =
+      Translations$dialogs$startupError$windowsAccessDenied$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$addressInUse$zh_HK addressInUse = Translations$dialogs$startupError$addressInUse$zh_HK.internal(_root);
+  @override
+  late final Translations$dialogs$startupError$generic$zh_HK generic = Translations$dialogs$startupError$generic$zh_HK.internal(_root);
+  @override
+  String get details => '錯誤詳情：';
+  @override
+  String get copyDetails => '複製詳情';
+  @override
+  String get openSettings => '開啟設定';
+}
+
 // Path: dialogs.zoom
 class Translations$dialogs$zoom$zh_HK extends Translations$dialogs$zoom$en {
   Translations$dialogs$zoom$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
@@ -1485,6 +1636,64 @@ class Translations$dialogs$zoom$zh_HK extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => '網址';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class Translations$sendTab$diagnosis$noInterface$zh_HK extends Translations$sendTab$diagnosis$noInterface$en {
+  Translations$sendTab$diagnosis$noInterface$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '冇連上網絡';
+  @override
+  String get advice => '呢部機冇連接任何網絡。請檢查呢部機嘅 Wi‑Fi 或者網線連線。';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class Translations$sendTab$diagnosis$multicastUnavailable$zh_HK extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  Translations$sendTab$diagnosis$multicastUnavailable$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '用唔到多播';
+  @override
+  String advice({required Object port}) => 'LocalSend 喺呢個網絡用唔到多播嚟偵測裝置。請確保兩部裝置喺同一個網絡，而且「接入點 (AP) 隔離」或者防火牆冇封鎖 UDP port ${port}。';
+  @override
+  String reason({required Object reason}) => '原因：${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class Translations$sendTab$diagnosis$scanNoResult$zh_HK extends Translations$sendTab$diagnosis$scanNoResult$en {
+  Translations$sendTab$diagnosis$scanNoResult$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => '搵唔到裝置';
+  @override
+  String get advice => '偵測功能正常，但冇裝置回應通告或者網絡掃描。對方部機可能離咗線、瞓著咗，或者畀防火牆擋咗。請確保對方部機開住 LocalSend。';
+  @override
+  String detail({required Object announcements, required Object scans}) => '出咗 ${announcements} 次通告同 ${scans} 次網絡掃描，都冇回應。';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class Translations$sendTab$diagnosis$manualFallback$zh_HK extends Translations$sendTab$diagnosis$manualFallback$en {
+  Translations$sendTab$diagnosis$manualFallback$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'IP 地址成日都變。唔喺列表入面嘅裝置你一樣搵得到：收藏佢，或者人手輸入佢個地址。';
+  @override
+  String get openFavorites => '開啟收藏';
+  @override
+  String get manualInput => '人手輸入地址';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1571,4 +1780,111 @@ class Translations$whatsNewPage$changes$v1_18_0$zh_HK extends Translations$whats
     '而家已收藏裝置嘅請求會自動接受。呢個功能預設開啟，可以喺設定入面閂咗佢。',
     'Android 而家就算個 app 喺背景運行或者熄咗畫面，傳輸都會繼續。iOS 就仲係要保持個 app 喺前景。',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class Translations$dialogs$addressInput$validation$zh_HK extends Translations$dialogs$addressInput$validation$en {
+  Translations$dialogs$addressInput$validation$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => '請輸入有效嘅 IPv4 地址、IPv6 地址或者主機名稱。';
+  @override
+  String get scheme => '淨係輸入地址就得，唔使包含「http://」或者「https://」。';
+  @override
+  String get port => '淨係輸入地址就得。Port 會用設定入面嗰個。';
+}
+
+// Path: dialogs.connectionError.timeout
+class Translations$dialogs$connectionError$timeout$zh_HK extends Translations$dialogs$connectionError$timeout$en {
+  Translations$dialogs$connectionError$timeout$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '對方部機冇及時回應。';
+  @override
+  String get advice => '佢可能離咗線、瞓著咗，或者畀防火牆擋住連線。請確保對方部機開住 LocalSend，同埋兩邊都喺同一個網絡。';
+}
+
+// Path: dialogs.connectionError.refused
+class Translations$dialogs$connectionError$refused$zh_HK extends Translations$dialogs$connectionError$refused$en {
+  Translations$dialogs$connectionError$refused$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '對方部機拒絕咗個連線。';
+  @override
+  String get advice => '目標裝置嗰邊似乎冇開住 LocalSend，或者佢聽緊第二個 port。請喺對方部機開返 LocalSend，或者 check 下個 port。';
+}
+
+// Path: dialogs.connectionError.forbidden
+class Translations$dialogs$connectionError$forbidden$zh_HK extends Translations$dialogs$connectionError$forbidden$en {
+  Translations$dialogs$connectionError$forbidden$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '對方部機拒絕咗個請求。';
+  @override
+  String get advice => '可能需要密碼（PIN），或者同嗰部裝置嘅配對已經變咗。請檢查目標裝置嘅 PIN 同自動儲存設定。';
+}
+
+// Path: dialogs.connectionError.other
+class Translations$dialogs$connectionError$other$zh_HK extends Translations$dialogs$connectionError$other$en {
+  Translations$dialogs$connectionError$other$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => '連線建立唔到。';
+  @override
+  String get advice => '請檢查個地址同 port，確保目標裝置開住 LocalSend，仲要確認冇防火牆或者 VPN 擋住條連線。';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class Translations$dialogs$startupError$windowsAccessDenied$zh_HK extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  Translations$dialogs$startupError$windowsAccessDenied$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows 拒絕存取個 port（socket 錯誤 10013）。';
+  @override
+  String get advice =>
+      '咁通常係因為個 port 範圍畀 Hyper-V、WSL 或者 Docker 保留咗，或者 Winsock 目錄壞咗：\n• 喺設定（網絡）度改個 port\n• 用呢條命令 check 下保留範圍：netsh interface ipv4 show excludedportrange protocol=tcp\n• 用管理員身份修復 Winsock：netsh winsock reset（之後重開機）';
+}
+
+// Path: dialogs.startupError.addressInUse
+class Translations$dialogs$startupError$addressInUse$zh_HK extends Translations$dialogs$startupError$addressInUse$en {
+  Translations$dialogs$startupError$addressInUse$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '個 port 已經畀第二個應用程式用緊。';
+  @override
+  String get advice => '另一個程式（或者第二個 LocalSend）正在呢個 port 上面聽緊：\n• 閂咗嗰個應用程式，或者\n• 喺設定（網絡）度改個 port';
+}
+
+// Path: dialogs.startupError.generic
+class Translations$dialogs$startupError$generic$zh_HK extends Translations$dialogs$startupError$generic$en {
+  Translations$dialogs$startupError$generic$zh_HK.internal(TranslationsZhHk root) : this._root = root, super.internal(root);
+
+  final TranslationsZhHk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => '個 server 開唔到。';
+  @override
+  String get advice => '• 檢查你嘅防火牆同網絡設定\n• 試下喺設定（網絡）度改個 port';
 }

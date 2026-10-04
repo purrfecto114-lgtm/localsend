@@ -231,6 +231,8 @@ class _Translations$sendTab$be extends Translations$sendTab$en {
   String get help => 'Упэўніцеся, што патрэбная прылада знаходзіцца ў той жа сетцы Wi-Fi.';
   @override
   String get placeItems => 'Змясціце элементы для абагульвання.';
+  @override
+  late final _Translations$sendTab$diagnosis$be diagnosis = _Translations$sendTab$diagnosis$be._(_root);
 }
 
 // Path: settingsTab
@@ -455,6 +457,8 @@ class _Translations$progressPage$be extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Захавана ў галерэі';
   @override
+  late final _Translations$progressPage$checksum$be checksum = _Translations$progressPage$checksum$be._(_root);
+  @override
   late final _Translations$progressPage$total$be total = _Translations$progressPage$total$be._(_root);
   @override
   late final _Translations$progressPage$remainingTime$be remainingTime = _Translations$progressPage$remainingTime$be._(_root);
@@ -594,6 +598,11 @@ class _Translations$dialogs$be extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$be cancelSession = _Translations$dialogs$cancelSession$be._(_root);
   @override
+  late final _Translations$dialogs$connectionError$be connectionError = _Translations$dialogs$connectionError$be._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$be deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$be._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$be cannotOpenFile = _Translations$dialogs$cannotOpenFile$be._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$be encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$be._(_root);
@@ -634,6 +643,8 @@ class _Translations$dialogs$be extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$be pin = _Translations$dialogs$pin$be._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$be sendModeHelp = _Translations$dialogs$sendModeHelp$be._(_root);
+  @override
+  late final _Translations$dialogs$startupError$be startupError = _Translations$dialogs$startupError$be._(_root);
   @override
   late final _Translations$dialogs$zoom$be zoom = _Translations$dialogs$zoom$be._(_root);
 }
@@ -838,6 +849,32 @@ class _Translations$sendTab$sendModes$be extends Translations$sendTab$sendModes$
   String get link => 'Абагуліць праз спасылку';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$be extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Пошук прылад побач…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$be noInterface = _Translations$sendTab$diagnosis$noInterface$be._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$be multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$be._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$be scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$be._(_root);
+  @override
+  String get rescan => 'Шукаць зноў';
+  @override
+  String get bleHint =>
+      'Выяўленне праз BLE актыўна: прылады знаходзяцца праз Bluetooth, толькі калі на іх таксама запушчаны гэты форк з уключанай опцыяй; сама перадача файлаў усё роўна ідзе праз сетку.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$be manualFallback = _Translations$sendTab$diagnosis$manualFallback$be._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$be extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$be._(TranslationsBe root) : this._root = root, super.internal(root);
@@ -919,6 +956,8 @@ class _Translations$settingsTab$send$be extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Аўтаматычна прымаць запыты ў рэжыме «Абагуліць праз спасылку»';
   @override
   String get createChecksums => 'Ствараць кантрольныя сумы пры адпраўцы файлаў';
+  @override
+  String get deleteSourceAfterSend => 'Выдаляць зыходныя файлы пасля паспяховай адпраўкі';
 }
 
 // Path: settingsTab.network
@@ -949,6 +988,13 @@ class _Translations$settingsTab$network$be extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Час чакання выяўлення';
   @override
+  String get maxInterfaces => 'Максімум інтэрфейсаў (разумнае сканіраванне)';
+  @override
+  String get vpnInterfaces => 'Улічваць інтэрфейсы VPN (разумнае сканіраванне)';
+  @override
+  String get vpnInterfacesHint =>
+      'Таксама сканіраваць падсеткі тунэльных інтэрфейсаў VPN (Tailscale, WireGuard, ...). VPN звычайна не перадае multicast, таму іх падсеткі правяраюцца з дапамогай рэзервовага HTTP-сканіравання.';
+  @override
   String get useSystemName => 'Выкарыстоўваць сістэмную назву';
   @override
   String get generateRandomAlias => 'Стварыць выпадковую назву';
@@ -962,6 +1008,34 @@ class _Translations$settingsTab$network$be extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Іншыя прылады могуць не выявіць вас, бо вы выкарыстоўваеце ўласны multicast-адрас. (Прадвызначана: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Выяўленне праз BLE (эксперыментальна)';
+  @override
+  String get bleDiscoveryHint =>
+      'Знаходзіць прылады побач праз Bluetooth, нават калі сетка блакіруе multicast (ізаляцыя пункта доступу). Працуе на Android, iOS, macOS і Windows; на Linux гэтая прылада можа знаходзіць іншыя, але сама знойдзена быць не можа. Абедзве прылады павінны выкарыстоўваць гэты форк з уключанай опцыяй; сама перадача файлаў усё роўна ідзе праз сетку.';
+  @override
+  String get bleStatusActive =>
+      'Актыўна: сканіраванне і аб\'ява пра сябе. Прылады побач з\'яўляюцца, толькі калі на іх таксама запушчаны гэты форк з уключанай опцыяй.';
+  @override
+  String get bleStatusScanOnly =>
+      'Актыўна: толькі сканіраванне. Гэтая прылада зараз не можа быць выяўленая праз Bluetooth (на гэтай платформе няма падтрымкі BLE-аб\'яў або яшчэ няма прыдатнага сеткавага адраса).';
+  @override
+  String get bleStatusPaused => 'Прыпынена. Узнаўляецца, калі праграма вяртаецца на пярэдні план.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Дазволы для Bluetooth адхілены. Дайце дазвол «Прылады побач» (або «Месцазнаходжанне» на Android 11 і ніжэй) у сістэмных наладах, потым выключыце і зноў уключыце гэтую опцыю.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth выключаны або недаступны. Пошук узнаўляецца аўтаматычна, калі Bluetooth зноў стане даступным.';
+  @override
+  String get bleStatusUnsupported =>
+      'Не падтрымліваецца на гэтай прыладзе: для выяўлення праз BLE патрэбны Android 7 або навейшы і радыёмодуль Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'У гэтай версіі Android для пошуку іншых прылад трэба таксама ўключыць сістэмныя службы геалакацыі (дазвол запрашваецца аўтаматычна; гэтую прыладу ўжо могуць знаходзіць іншыя).';
+  @override
+  String get bleStatusError => 'Не ўдалося запусціць выяўленне праз BLE. Падрабязнасці ў раздзеле «Выпраўленне непаладак» > «Журнал».';
+  @override
+  String get bleOpenSystemSettings => 'Адкрыць сістэмныя налады';
 }
 
 // Path: settingsTab.other
@@ -1078,6 +1152,25 @@ class _Translations$deviceDetailsPage$logs$be extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Абноўлена праз ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$be extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Кантрольныя сумы спраўджаны';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Кантрольныя сумы спраўджаны для ${curr} / ${n} файлаў';
+  @override
+  String get notVerifiable => 'Адпраўнік не прадаставіў кантрольных сум';
+  @override
+  String get disabled => 'Спраўджванне кантрольных сум адключана';
+  @override
+  String attached({required Object curr, required Object n}) => 'Кантрольныя сумы далучаны (${curr} / ${n} файлаў)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$be extends Translations$progressPage$total$en {
   _Translations$progressPage$total$be._(TranslationsBe root) : this._root = root, super.internal(root);
@@ -1167,6 +1260,11 @@ class _Translations$dialogs$addressInput$be extends Translations$dialogs$address
   String get title => 'Увядзіце адрас';
   @override
   String get recentlyUsed => 'Нядаўнія: ';
+  @override
+  String get noHashtagCandidates =>
+      'У бягучай сеткі няма IPv4-адраса, таму хэштэг нельга разгарнуць у адрас-кандыдат. Увядзіце поўны адрас (напрыклад, 192.168.1.5 або fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$be validation = _Translations$dialogs$addressInput$validation$be._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1180,6 +1278,42 @@ class _Translations$dialogs$cancelSession$be extends Translations$dialogs$cancel
   String get title => 'Скасаваць перадачу файлаў';
   @override
   String get content => 'Вы сапраўды хочаце скасаваць перадачу файлаў?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$be extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Не ўдалося злучыцца';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$be timeout = _Translations$dialogs$connectionError$timeout$be._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$be refused = _Translations$dialogs$connectionError$refused$be._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$be forbidden = _Translations$dialogs$connectionError$forbidden$be._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$be other = _Translations$dialogs$connectionError$other$be._(_root);
+  @override
+  String get retry => 'Паўтарыць';
+  @override
+  String get details => 'Падрабязнасці памылкі:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$be extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Выдаленне зыходных файлаў';
+  @override
+  String get content => 'Пасля паспяховай адпраўкі файлы будуць выдалены з гэтай прылады. Гэта дзеянне нельга будзе скасаваць.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1471,6 +1605,32 @@ class _Translations$dialogs$sendModeHelp$be extends Translations$dialogs$sendMod
   String get link => 'Атрымальнікі, у якіх не ўсталяваны LocalSend, могуць спампаваць выбраныя файлы, адкрыўшы спасылку ў браўзеры.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$be extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Не ўдалося запусціць сервер';
+  @override
+  String port({required Object port}) => 'Порт: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$be windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$be._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$be addressInUse = _Translations$dialogs$startupError$addressInUse$be._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$be generic = _Translations$dialogs$startupError$generic$be._(_root);
+  @override
+  String get details => 'Падрабязнасці памылкі:';
+  @override
+  String get copyDetails => 'Капіраваць падрабязнасці';
+  @override
+  String get openSettings => 'Адкрыць налады';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$be extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$be._(TranslationsBe root) : this._root = root, super.internal(root);
@@ -1480,6 +1640,68 @@ class _Translations$dialogs$zoom$be extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL-адрас';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$be extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Няма злучэння з сеткай';
+  @override
+  String get advice => 'Гэтая прылада не падключана ні да адной сеткі. Праверце падключэнне гэтай прылады па Wi-Fi або сеткавым кабелем.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$be extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast недаступны';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend не можа выкарыстоўваць выяўленне праз multicast у гэтай сетцы. Упэўніцеся, што абедзве прылады знаходзяцца ў адной сетцы і што міжсеткавы экран ці ізаляцыя пункта доступу (AP) не блакуюць UDP-порт ${port}.';
+  @override
+  String reason({required Object reason}) => 'Прычына: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$be extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Прылад не знойдзена';
+  @override
+  String get advice =>
+      'Пошук працуе, але ніводная прылада не адказала на аб\'явы ці сеткавае сканіраванне. Іншая прылада можа быць па-за сеткай, у рэжыме сну або заблакіраваная міжсеткавым экранам. Упэўніцеся, што на другой прыладзе запушчаны LocalSend.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Адпраўлена ${announcements} аб\'яў і выканана ${scans} сеткавых сканіраванняў — без адказу.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$be extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP-адрасы часта змяняюцца. Вы ўсё роўна можаце звярнуцца да прылады, якой няма ў спісе: дадайце яе ў абраныя або ўвядзіце яе адрас уручную.';
+  @override
+  String get openFavorites => 'Адкрыць абраныя';
+  @override
+  String get manualInput => 'Увесці адрас уручную';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1566,4 +1788,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$be extends Translations$whatsNe
     'Запыты ад абраных прылад цяпер прымаюцца аўтаматычна. Гэтая функцыя ўключана прадвызначана, і яе можна адключыць у наладах.',
     'На Android перадача працягваецца, пакуль праграма працуе ў фонавым рэжыме ці экран выключаны. На iOS праграма па-ранейшаму мусіць заставацца на пярэднім плане.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$be extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Увядзіце карэктны IPv4-адрас, IPv6-адрас або імя хоста.';
+  @override
+  String get scheme => 'Увядзіце толькі адрас, без «http://» або «https://».';
+  @override
+  String get port => 'Увядзіце толькі адрас. Порт бярэцца з наладаў.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$be extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Прылада не адказала своечасова.';
+  @override
+  String get advice =>
+      'Хутчэй за ўсё, яна па-за сеткай, у рэжыме сну або міжсеткавы экран блакуе злучэнне. Упэўніцеся, што на другой прыладзе запушчаны LocalSend і што абедзве прылады знаходзяцца ў адной сетцы.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$be extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Прылада адмовіла ў злучэнні.';
+  @override
+  String get advice =>
+      'Падобна на тое, што на мэтавай прыладзе не запушчаны LocalSend або ён праслухоўвае іншы порт. Запусціце LocalSend на другой прыладзе або праверце порт.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$be extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Прылада адхіліла запыт.';
+  @override
+  String get advice =>
+      'Магчыма, патрэбны PIN-код або злучэнне з прыладай змянілася. Праверце PIN-код і налады хуткага захавання на мэтавай прыладзе.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$be extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Не ўдалося ўстанавіць злучэнне.';
+  @override
+  String get advice =>
+      'Праверце адрас і порт, упэўніцеся, што на мэтавай прыладзе запушчаны LocalSend і што злучэнне не блакуе міжсеткавы экран або VPN.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$be extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows забараніла доступ да порта (памылка сокета 10013).';
+  @override
+  String get advice =>
+      'Звычайна гэта выклікана дыяпазонам портаў, зарэзерваваным Hyper-V, WSL або Docker, або пашкоджаным каталогам Winsock:\n• Змяніце порт у наладах (раздзел «Сетка»)\n• Праверце зарэзерваваныя дыяпазоны камандай: netsh interface ipv4 show excludedportrange protocol=tcp\n• Аднавіце Winsock ад імя адміністратара камандай: netsh winsock reset (пасля гэтага перазагрузіце камп\'ютар)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$be extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Порт ужо выкарыстоўваецца іншай праграмай.';
+  @override
+  String get advice =>
+      'Іншая праграма (або другі асобнік LocalSend) праслухоўвае гэты порт:\n• Закрыйце іншую праграму або\n• Змяніце порт у наладах (раздзел «Сетка»)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$be extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$be._(TranslationsBe root) : this._root = root, super.internal(root);
+
+  final TranslationsBe _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Не ўдалося запусціць сервер.';
+  @override
+  String get advice => '• Праверце міжсеткавы экран і налады сеткі\n• Паспрабуйце змяніць порт у наладах (раздзел «Сетка»)';
 }

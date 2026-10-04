@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Explicação",
     "help": "Certifique-se de que ambos os dispositivos estejam na mesma rede Wi-Fi.",
-    "placeItems": "Coloque os itens para partilhar."
+    "placeItems": "Coloque os itens para partilhar.",
+    "diagnosis": {
+      "scanning": "A procurar dispositivos próximos…",
+      "noInterface": {
+        "title": "Sem ligação à rede",
+        "advice": "Este dispositivo não está ligado a nenhuma rede. Verifique a ligação Wi-Fi ou por cabo deste dispositivo."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast indisponível",
+        "advice": "O LocalSend não consegue usar a deteção por multicast nesta rede. Certifique-se de que ambos os dispositivos estão na mesma rede e de que o isolamento AP ou uma firewall não está a bloquear a porta UDP {port}.",
+        "reason": "Motivo: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nenhum dispositivo encontrado",
+        "advice": "A deteção está a funcionar, mas nenhum dispositivo respondeu aos anúncios nem à análise de rede. O outro dispositivo pode estar desligado, em suspensão ou bloqueado por uma firewall. Certifique-se de que o LocalSend está em execução no outro dispositivo.",
+        "detail": "Foram enviados {announcements} anúncios e {scans} análises de rede sem resposta."
+      },
+      "rescan": "Procurar de novo",
+      "bleHint": "A deteção BLE está ativa: os dispositivos são encontrados por Bluetooth apenas se também usarem este fork com a opção ativada; a própria transferência continua a ser feita pela rede.",
+      "manualFallback": {
+        "message": "Os endereços IP mudam com frequência. Ainda pode aceder a um dispositivo que não esteja na lista: adicione-o aos favoritos ou digite o seu endereço manualmente.",
+        "openFavorites": "Abrir favoritos",
+        "manualInput": "Digitar o endereço manualmente"
+      }
+    }
   },
   "settingsTab": {
     "title": "Definições",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Enviar",
       "shareViaLinkAutoAccept": "Partilhar via link: Aceitar automaticamente",
-      "createChecksums": "Criar somas de verificação ao enviar ficheiros"
+      "createChecksums": "Criar somas de verificação ao enviar ficheiros",
+      "deleteSourceAfterSend": "Eliminar os ficheiros de origem após um envio bem-sucedido"
     },
     "network": {
       "title": "Rede",
@@ -143,12 +168,26 @@
         "filtered": "Filtrado"
       },
       "discoveryTimeout": "Tempo limite de deteção",
+      "maxInterfaces": "N.º máx. de interfaces (pesquisa inteligente)",
+      "vpnInterfaces": "Incluir interfaces de VPN (pesquisa inteligente)",
+      "vpnInterfacesHint": "Analisa também as sub-redes das interfaces de túnel VPN (Tailscale, WireGuard, …). As VPN normalmente não transportam multicast, por isso as suas sub-redes são sondadas pela análise HTTP alternativa.",
       "useSystemName": "Usar nome do sistema",
       "generateRandomAlias": "Gerar apelido aleatório",
       "portWarning": "Pode estar indetectável para outros dispositivos por estar a usar uma porta personalizada. (Padrão: {defaultPort})",
       "encryption": "Encriptação",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Pode estar indetectável para outros dispositivos por estar a usar um endereço multicast personalizado. (Padrão: {defaultMulticast})"
+      "multicastGroupWarning": "Pode estar indetectável para outros dispositivos por estar a usar um endereço multicast personalizado. (Padrão: {defaultMulticast})",
+      "bleDiscovery": "Deteção BLE (experimental)",
+      "bleDiscoveryHint": "Deteta dispositivos próximos via Bluetooth mesmo quando a rede bloqueia o multicast (isolamento AP). Funciona no Android, iOS, macOS e Windows; no Linux, este dispositivo consegue encontrar os outros, mas não pode ser encontrado. Ambos os dispositivos precisam deste fork com a opção ativada; a transferência de ficheiros em si continua a usar a rede.",
+      "bleStatusActive": "Ativa: a analisar e a divulgar. Os dispositivos próximos só aparecem se também usarem este fork com a opção ativada.",
+      "bleStatusScanOnly": "Ativa: apenas a analisar. Este dispositivo não pode ser detetado por Bluetooth neste momento (sem suporte para divulgação BLE nesta plataforma, ou ainda sem um endereço de rede utilizável).",
+      "bleStatusPaused": "Em pausa. Retoma quando a aplicação voltar ao primeiro plano.",
+      "bleStatusPermissionDenied": "Permissões de Bluetooth negadas. Conceda a permissão \"Dispositivos próximos\" (ou \"Localização\" no Android 11 e anteriores) nas definições do sistema e, em seguida, desative e volte a ativar esta opção.",
+      "bleStatusAdapterOff": "O Bluetooth está desligado ou indisponível. A deteção reinicia-se sozinha quando o Bluetooth voltar a estar disponível.",
+      "bleStatusUnsupported": "Não suportado neste dispositivo: a deteção BLE requer Android 7 ou mais recente e um rádio Bluetooth LE.",
+      "bleStatusLegacyLocation": "Nesta versão do Android, encontrar outros dispositivos também exige que os serviços de localização do sistema estejam ativados (a permissão é pedida automaticamente; este dispositivo já pode ser encontrado pelos outros).",
+      "bleStatusError": "Não foi possível iniciar a deteção BLE. Consulte Diagnosticar problemas > Registos para mais detalhes.",
+      "bleOpenSystemSettings": "Abrir definições do sistema"
     },
     "other": {
       "title": "Outros",
@@ -256,6 +295,13 @@
     "titleSending": "A enviar ficheiros",
     "titleReceiving": "A receber ficheiros",
     "savedToGallery": "Guardado na Galeria",
+    "checksum": {
+      "verified": "Somas de verificação verificadas",
+      "partiallyVerified": "Somas de verificação verificadas para {curr} / {n} ficheiros",
+      "notVerifiable": "O remetente não forneceu somas de verificação",
+      "disabled": "A verificação de somas de verificação está desativada",
+      "attached": "Somas de verificação anexadas ({curr} / {n} ficheiros)"
+    },
     "total": {
       "title": {
         "sending": "Progresso total ({time})",
@@ -421,11 +467,42 @@
       "title": "Digite o endereço",
       "hashtag": "Hashtag",
       "ip": "Endereço IP",
-      "recentlyUsed": "Recém ligado: "
+      "recentlyUsed": "Recém ligado: ",
+      "noHashtagCandidates": "A rede atual não tem endereço IPv4, pelo que a hashtag não pode ser expandida para um endereço candidato. Digite o endereço completo (por exemplo, 192.168.1.5 ou fe80::1).",
+      "validation": {
+        "invalid": "Digite um endereço IPv4, um endereço IPv6 ou um nome de anfitrião válido.",
+        "scheme": "Digite apenas o endereço, sem \"http://\" ou \"https://\".",
+        "port": "Digite apenas o endereço. A porta é obtida das definições."
+      }
     },
     "cancelSession": {
       "title": "Cancelar transferência de ficheiros",
       "content": "Cancelar a transferência de ficheiros?"
+    },
+    "connectionError": {
+      "title": "Falha na ligação",
+      "timeout": {
+        "message": "O dispositivo não respondeu a tempo.",
+        "advice": "Provavelmente está desligado, em suspensão ou uma firewall está a bloquear a ligação. Certifique-se de que o LocalSend está em execução no outro dispositivo e de que ambos os dispositivos estão na mesma rede."
+      },
+      "refused": {
+        "message": "O dispositivo recusou a ligação.",
+        "advice": "O LocalSend não parece estar em execução no dispositivo de destino, ou está à escuta numa porta diferente. Inicie o LocalSend no outro dispositivo ou verifique a porta."
+      },
+      "forbidden": {
+        "message": "O dispositivo rejeitou o pedido.",
+        "advice": "Poderá ser necessário um PIN, ou o emparelhamento com o dispositivo mudou. Verifique o PIN e as definições de guardar rápido no dispositivo de destino."
+      },
+      "other": {
+        "message": "Não foi possível estabelecer a ligação.",
+        "advice": "Verifique o endereço e a porta, certifique-se de que o LocalSend está em execução no dispositivo de destino e de que nenhuma firewall ou VPN está a bloquear a ligação."
+      },
+      "retry": "Tentar novamente",
+      "details": "Detalhes do erro:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Eliminar ficheiros de origem",
+      "content": "Após os ficheiros serem enviados com sucesso, serão eliminados deste dispositivo. Esta ação não pode ser anulada."
     },
     "cannotOpenFile": {
       "title": "Não foi possível abrir o ficheiro",
@@ -521,6 +598,25 @@
       "single": "Envia ficheiros para um destinatário. A seleção será apagada após a conclusão da transferência dos ficheiros.",
       "multiple": "Envia ficheiros para vários destinatários. A seleção não será apagada.",
       "link": "Os destinatários que não têm o LocalSend instalado podem descarregar os ficheiros selecionados abrindo o link fornecido no navegador."
+    },
+    "startupError": {
+      "title": "Não foi possível iniciar o servidor",
+      "port": "Porta: {port}",
+      "windowsAccessDenied": {
+        "hint": "O Windows negou o acesso à porta (erro de socket 10013).",
+        "advice": "Isto é normalmente causado por um intervalo de portas reservado pelo Hyper-V, WSL ou Docker, ou por um catálogo Winsock danificado:\n• Mude a porta nas Definições (Rede)\n• Verifique os intervalos reservados com: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repare o Winsock como administrador com: netsh winsock reset (reinicie depois)"
+      },
+      "addressInUse": {
+        "hint": "A porta já está a ser usada por outra aplicação.",
+        "advice": "Outro programa (ou uma segunda instância do LocalSend) está à escuta nesta porta:\n• Feche a outra aplicação, ou\n• Mude a porta nas Definições (Rede)"
+      },
+      "generic": {
+        "hint": "Não foi possível iniciar o servidor.",
+        "advice": "• Verifique a sua firewall e as definições de rede\n• Tente mudar a porta nas Definições (Rede)"
+      },
+      "details": "Detalhes do erro:",
+      "copyDetails": "Copiar detalhes",
+      "openSettings": "Abrir definições"
     },
     "zoom": {
       "title": "URL"

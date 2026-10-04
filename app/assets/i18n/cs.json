@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Vysvětlení",
     "help": "Ujistěte se, že se požadovaný cíl nachází ve stejné síti Wi-Fi.",
-    "placeItems": "Vložte položky, které chcete sdílet."
+    "placeItems": "Vložte položky, které chcete sdílet.",
+    "diagnosis": {
+      "scanning": "Vyhledávání zařízení v okolí...",
+      "noInterface": {
+        "title": "Žádné připojení k síti",
+        "advice": "Toto zařízení není připojeno k žádné síti. Zkontrolujte připojení tohoto zařízení k síti Wi-Fi nebo kabelu."
+      },
+      "multicastUnavailable": {
+        "title": "Vícesměrové vysílání není dostupné",
+        "advice": "LocalSend nemůže v této síti použít zjišťování pomocí vícesměrového vysílání. Ujistěte se, že jsou obě zařízení ve stejné síti a že izolace AP ani firewall neblokují UDP port {port}.",
+        "reason": "Příčina: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nenalezena žádná zařízení",
+        "advice": "Vyhledávání funguje, ale žádné zařízení neodpovědělo na oznámení ani na skenování sítě. Druhé zařízení může být offline, v režimu spánku nebo blokováno firewallem. Ujistěte se, že na druhém zařízení běží LocalSend.",
+        "detail": "Odesláno {announcements} oznámení a provedeno {scans} skenování sítě bez odpovědi."
+      },
+      "rescan": "Hledat znovu",
+      "bleHint": "Zjišťování BLE je aktivní: zařízení jsou pomocí Bluetooth nalezena, jen pokud také používají tento fork se zapnutou možností; samotný přenos souborů stále probíhá přes síť.",
+      "manualFallback": {
+        "message": "IP adresy se často mění. K zařízení, které není v seznamu, se stále můžete dostat: přidejte si ho do oblíbených nebo zadejte jeho adresu ručně.",
+        "openFavorites": "Otevřít oblíbené",
+        "manualInput": "Zadat adresu ručně"
+      }
+    }
   },
   "settingsTab": {
     "title": "Nastavení",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Poslat",
       "shareViaLinkAutoAccept": "Automaticky přijímat požadavky v režimu \"Sdílet přes odkaz\".",
-      "createChecksums": "Vytvářet kontrolní součty při odesílání souborů"
+      "createChecksums": "Vytvářet kontrolní součty při odesílání souborů",
+      "deleteSourceAfterSend": "Po úspěšném odeslání smazat zdrojové soubory"
     },
     "network": {
       "title": "Síť",
@@ -143,12 +168,26 @@
         "filtered": "Filtrované"
       },
       "discoveryTimeout": "Časový limit zjišťování",
+      "maxInterfaces": "Maximální počet rozhraní (chytré skenování)",
+      "vpnInterfaces": "Zahrnout rozhraní VPN (chytré skenování)",
+      "vpnInterfacesHint": "Skenovat také podsítě rozhraní VPN tunelů (Tailscale, WireGuard, ...). VPN obvykle nepřenáší vícesměrové vysílání, proto se jejich podsítě prozkoumávají náhradním HTTP skenováním.",
       "useSystemName": "Použít název systému",
       "generateRandomAlias": "Generovat náhodný alias",
       "portWarning": "Je možné, že vás ostatní zařízení nezjistí, protože používáte vlastní port. (výchozí: {defaultPort})",
       "encryption": "Šifrování",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Je možné, že vás ostatní zařízení nezjistí, protože používáte vlastní adresu vícesměrového vysílání. (výchozí: {defaultMulticast})"
+      "multicastGroupWarning": "Je možné, že vás ostatní zařízení nezjistí, protože používáte vlastní adresu vícesměrového vysílání. (výchozí: {defaultMulticast})",
+      "bleDiscovery": "Zjišťování BLE (experimentální)",
+      "bleDiscoveryHint": "Najde okolní zařízení pomocí Bluetooth, i když síť blokuje vícesměrové vysílání (izolace AP). Funguje na Androidu, iOS, macOS a Windows; na Linuxu může toto zařízení najít ostatní, ale samo nalezeno být nemůže. Obě zařízení musí používat tento fork se zapnutou možností; samotný přenos souborů stále probíhá přes síť.",
+      "bleStatusActive": "Aktivní: skenování i oznamování. Zařízení v okolí se zobrazí, jen pokud také používají tento fork se zapnutou možností.",
+      "bleStatusScanOnly": "Aktivní: pouze skenování. Toto zařízení teď nemůže být přes Bluetooth zjištěno (tato platforma nepodporuje BLE oznamování, nebo ještě není k dispozici použitelná síťová adresa).",
+      "bleStatusPaused": "Pozastaveno. Obnoví se, když se aplikace vrátí do popředí.",
+      "bleStatusPermissionDenied": "Oprávnění k Bluetooth byla zamítnuta. Udělte oprávnění \"Zařízení v okolí\" (nebo \"Poloha\" na Androidu 11 a starším) v nastavení systému, pak tuto možnost vypněte a znovu zapněte.",
+      "bleStatusAdapterOff": "Bluetooth je vypnuté nebo nedostupné. Zjišťování se samo restartuje, až bude Bluetooth znovu k dispozici.",
+      "bleStatusUnsupported": "Na tomto zařízení nepodporováno: zjišťování BLE vyžaduje Android 7 a novější a rádio Bluetooth LE.",
+      "bleStatusLegacyLocation": "V této verzi Androidu vyžaduje hledání jiných zařízení také zapnuté systémové služby určování polohy (oprávnění se vyžaduje automaticky; toto zařízení už může být ostatními nalezeno).",
+      "bleStatusError": "Zjišťování BLE se nepodařilo spustit. Podrobnosti najdete v části Odstraňování problémů > Záznamy.",
+      "bleOpenSystemSettings": "Otevřít nastavení systému"
     },
     "other": {
       "title": "Ostatní",
@@ -256,6 +295,13 @@
     "titleSending": "Odesílání souborů",
     "titleReceiving": "Přijímání souborů",
     "savedToGallery": "Uloženo ve Fotkách",
+    "checksum": {
+      "verified": "Kontrolní součty ověřeny",
+      "partiallyVerified": "Kontrolní součty ověřeny pro {curr} / {n} souborů",
+      "notVerifiable": "Odesílatel neposkytl kontrolní součty",
+      "disabled": "Ověřování kontrolních součtů je vypnuto",
+      "attached": "Kontrolní součty připojeny ({curr} / {n} souborů)"
+    },
     "total": {
       "title": {
         "sending": "Celkový průběh ({time})",
@@ -348,11 +394,42 @@
       "title": "Zadat adresu",
       "hashtag": "Hashtag",
       "ip": "IP Adresa",
-      "recentlyUsed": "Nedávno použité: "
+      "recentlyUsed": "Nedávno použité: ",
+      "noHashtagCandidates": "Aktuální síť nemá IPv4 adresu, takže hashtag nelze rozšířit na kandidátskou adresu. Zadejte prosím celou adresu (např. 192.168.1.5 nebo fe80::1).",
+      "validation": {
+        "invalid": "Zadejte platnou IPv4 adresu, IPv6 adresu nebo název hostitele.",
+        "scheme": "Zadejte pouze adresu, bez \"http://\" nebo \"https://\".",
+        "port": "Zadejte pouze adresu. Port se bere z nastavení."
+      }
     },
     "cancelSession": {
       "title": "Zrušit přenos souborů",
       "content": "Opravdu chcete zrušit přenos souborů?"
+    },
+    "connectionError": {
+      "title": "Připojení se nezdařilo",
+      "timeout": {
+        "message": "Zařízení včas neodpovědělo.",
+        "advice": "Pravděpodobně je offline, v režimu spánku nebo připojení blokuje firewall. Ujistěte se, že na druhém zařízení běží LocalSend a že jsou obě zařízení ve stejné síti."
+      },
+      "refused": {
+        "message": "Zařízení odmítlo připojení.",
+        "advice": "Zdá se, že na cílovém zařízení LocalSend neběží, nebo naslouchá na jiném portu. Spusťte LocalSend na druhém zařízení nebo zkontrolujte port."
+      },
+      "forbidden": {
+        "message": "Zařízení požadavek odmítlo.",
+        "advice": "Možná je vyžadován PIN nebo se změnilo spárování se zařízením. Zkontrolujte PIN a nastavení rychlého uložení na cílovém zařízení."
+      },
+      "other": {
+        "message": "Připojení se nepodařilo navázat.",
+        "advice": "Zkontrolujte adresu a port, ujistěte se, že na cílovém zařízení běží LocalSend a že připojení neblokuje firewall ani VPN."
+      },
+      "retry": "Zkusit znovu",
+      "details": "Podrobnosti chyby:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Smazat zdrojové soubory",
+      "content": "Po úspěšném odeslání budou soubory z tohoto zařízení smazány. Tuto akci nelze vrátit zpět."
     },
     "cannotOpenFile": {
       "title": "Nelze otevřít soubor",
@@ -448,6 +525,25 @@
       "single": "Odešle soubory jednomu příjemci. Po dokončení přenosu souboru bude výběr vymazán.",
       "multiple": "Odešle soubory více příjemcům. Výběr nebude vymazán.",
       "link": "Příjemci, kteří nemají nainstalovaný LocalSend, si mohou vybrané soubory stáhnout otevřením odkazu ve svém prohlížeči."
+    },
+    "startupError": {
+      "title": "Server se nepodařilo spustit",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows zamítly přístup k portu (chyba soketu 10013).",
+        "advice": "Obvykle je to způsobeno rozsahem portů rezervovaným pro Hyper-V, WSL nebo Docker, nebo poškozeným katalogem Winsock:\n• Změňte port v nastavení (Síť)\n• Zkontrolujte rezervované rozsahy příkazem: netsh interface ipv4 show excludedportrange protocol=tcp\n• Opravte Winsock jako správce příkazem: netsh winsock reset (následně restartujte počítač)"
+      },
+      "addressInUse": {
+        "hint": "Port již používá jiná aplikace.",
+        "advice": "Na tomto portu naslouchá jiný program (nebo druhá instance LocalSend):\n• Zavřete druhou aplikaci, nebo\n• Změňte port v nastavení (Síť)"
+      },
+      "generic": {
+        "hint": "Server se nepodařilo spustit.",
+        "advice": "• Zkontrolujte firewall a nastavení sítě\n• Zkuste změnit port v nastavení (Síť)"
+      },
+      "details": "Podrobnosti chyby:",
+      "copyDetails": "Zkopírovat podrobnosti",
+      "openSettings": "Otevřít nastavení"
     },
     "zoom": {
       "title": "URL"

@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "설명",
     "help": "파일을 전송받을 기기도 동일한 Wi-Fi 네트워크에 연결되어 있어야 합니다.",
-    "placeItems": "드롭하여 공유하기"
+    "placeItems": "드롭하여 공유하기",
+    "diagnosis": {
+      "scanning": "근처 기기를 검색하는 중...",
+      "noInterface": {
+        "title": "네트워크에 연결되어 있지 않음",
+        "advice": "이 기기가 어떤 네트워크에도 연결되어 있지 않습니다. 이 기기의 Wi-Fi 또는 케이블 연결을 확인하세요."
+      },
+      "multicastUnavailable": {
+        "title": "멀티캐스트를 사용할 수 없음",
+        "advice": "LocalSend가 이 네트워크에서 멀티캐스트 탐색을 사용할 수 없습니다. 두 기기가 같은 네트워크에 있는지, 그리고 AP 격리나 방화벽이 UDP 포트 {port}를 차단하고 있지 않은지 확인하세요.",
+        "reason": "원인: {reason}"
+      },
+      "scanNoResult": {
+        "title": "기기를 찾을 수 없음",
+        "advice": "탐색은 정상 작동하고 있지만 공지 메시지나 네트워크 스캔에 응답한 기기가 없습니다. 상대 기기가 오프라인이거나 절전 모드이거나 방화벽에 의해 차단되었을 수 있습니다. 상대 기기에서 LocalSend가 실행 중인지 확인하세요.",
+        "detail": "공지 메시지 {announcements}회와 네트워크 스캔 {scans}회를 보냈지만 응답이 없습니다."
+      },
+      "rescan": "다시 검색",
+      "bleHint": "BLE 탐색이 활성화되어 있습니다: 상대 기기도 이 포크 버전을 실행하고 이 옵션을 켠 경우에만 블루투스로 기기를 찾을 수 있습니다. 파일 전송 자체는 여전히 네트워크를 통해 이루어집니다.",
+      "manualFallback": {
+        "message": "IP 주소는 자주 바뀝니다. 목록에 없는 기기에도 연결할 수 있습니다: 즐겨찾기에 추가하거나 주소를 직접 입력하세요.",
+        "openFavorites": "즐겨찾기 열기",
+        "manualInput": "주소 직접 입력"
+      }
+    }
   },
   "settingsTab": {
     "title": "설정",
@@ -127,7 +151,8 @@
     "send": {
       "title": "보내기",
       "shareViaLinkAutoAccept": "\"링크로 공유하기\" 요청 자동 수락",
-      "createChecksums": "파일을 보낼 때 체크섬 생성"
+      "createChecksums": "파일을 보낼 때 체크섬 생성",
+      "deleteSourceAfterSend": "보내기 성공 후 원본 파일 삭제"
     },
     "network": {
       "title": "네트워크",
@@ -143,12 +168,26 @@
         "filtered": "일부 허용"
       },
       "discoveryTimeout": "탐색 제한시간",
+      "maxInterfaces": "최대 인터페이스 수 (스마트 스캔)",
+      "vpnInterfaces": "VPN 인터페이스 포함 (스마트 스캔)",
+      "vpnInterfacesHint": "VPN 터널 인터페이스의 서브넷도 스캔합니다 (Tailscale, WireGuard 등). VPN은 보통 멀티캐스트를 전달하지 못하므로, 해당 서브넷은 HTTP 폴백 스캔으로 탐색합니다.",
       "useSystemName": "시스템 이름 사용",
       "generateRandomAlias": "무작위 별명 생성",
       "portWarning": "사용자 지정 포트를 사용하면 다른 장치에서 기기가 감지되지 않을 수 있습니다. (기본값: {defaultPort})",
       "encryption": "암호화",
       "multicastGroup": "멀티캐스트",
-      "multicastGroupWarning": "사용자 지정 멀티캐스트 주소를 사용하면 다른 장치에서 기기가 감지되지 않을 수 있습니다. (기본값: {defaultMulticast})"
+      "multicastGroupWarning": "사용자 지정 멀티캐스트 주소를 사용하면 다른 장치에서 기기가 감지되지 않을 수 있습니다. (기본값: {defaultMulticast})",
+      "bleDiscovery": "BLE 탐색 (실험적)",
+      "bleDiscoveryHint": "네트워크가 멀티캐스트를 차단하는 경우(AP 격리)에도 블루투스로 근처 기기를 탐색합니다. Android, iOS, macOS, Windows에서 작동하며, Linux에서는 이 기기가 다른 기기를 찾을 수 있지만 이 기기가 다른 기기에 발견되지는 않습니다. 두 기기 모두 이 포크 버전에서 이 옵션을 켜야 합니다. 파일 전송 자체는 여전히 네트워크를 사용합니다.",
+      "bleStatusActive": "활성화됨: 스캔 및 광고 중. 근처 기기는 상대 기기도 이 포크 버전을 실행하고 이 옵션을 켠 경우에만 표시됩니다.",
+      "bleStatusScanOnly": "활성화됨: 스캔 전용. 이 기기는 현재 블루투스로 탐색될 수 없습니다(이 플랫폼이 BLE 광고를 지원하지 않거나, 아직 사용 가능한 네트워크 주소가 없음).",
+      "bleStatusPaused": "일시중지됨. 앱이 포그라운드로 돌아오면 다시 시작됩니다.",
+      "bleStatusPermissionDenied": "블루투스 권한이 거부되었습니다. 시스템 설정에서 \"주변 기기\" 권한(Android 11 이하에서는 \"위치\")을 허용한 다음, 이 옵션을 끄고 다시 켜세요.",
+      "bleStatusAdapterOff": "블루투스가 꺼져 있거나 사용할 수 없습니다. 블루투스를 다시 사용할 수 있게 되면 탐색이 자동으로 재시작됩니다.",
+      "bleStatusUnsupported": "이 기기에서는 지원되지 않습니다: BLE 탐색에는 Android 7 이상과 Bluetooth LE 무선 모듈이 필요합니다.",
+      "bleStatusLegacyLocation": "이 Android 버전에서는 다른 기기를 찾기 위해 시스템 위치 서비스도 켜야 합니다(권한은 자동으로 요청되며, 이 기기는 이미 다른 기기에서 찾을 수 있습니다).",
+      "bleStatusError": "BLE 탐색을 시작할 수 없습니다. 자세한 내용은 문제 해결 > 로그를 참고하세요.",
+      "bleOpenSystemSettings": "시스템 설정 열기"
     },
     "other": {
       "title": "기타",
@@ -256,6 +295,13 @@
     "titleSending": "파일 보내는 중",
     "titleReceiving": "파일 받는 중",
     "savedToGallery": "갤러리에 저장했습니다.",
+    "checksum": {
+      "verified": "체크섬 검증됨",
+      "partiallyVerified": "{curr} / {n}개 파일의 체크섬이 검증되었습니다",
+      "notVerifiable": "보내는 쪽에서 체크섬을 제공하지 않았습니다",
+      "disabled": "체크섬 검증이 비활성화되어 있습니다",
+      "attached": "체크섬이 첨부되었습니다 ({curr} / {n}개 파일)"
+    },
     "total": {
       "title": {
         "sending": "진행 시간 ({time})",
@@ -348,11 +394,42 @@
       "title": "주소 입력",
       "hashtag": "해시태그",
       "ip": "IP 주소",
-      "recentlyUsed": "최근 사용된 주소: "
+      "recentlyUsed": "최근 사용된 주소: ",
+      "noHashtagCandidates": "현재 네트워크에 IPv4 주소가 없어 해시태그를 후보 주소로 확장할 수 없습니다. 전체 주소를 직접 입력해 주세요 (예: 192.168.1.5 또는 fe80::1).",
+      "validation": {
+        "invalid": "유효한 IPv4 주소, IPv6 주소 또는 호스트 이름을 입력하세요.",
+        "scheme": "주소만 입력하세요. \"http://\" 또는 \"https://\"는 포함하지 마세요.",
+        "port": "주소만 입력하세요. 포트는 설정에서 가져옵니다."
+      }
     },
     "cancelSession": {
       "title": "파일 전송 취소",
       "content": "정말로 파일 전송을 취소할까요?"
+    },
+    "connectionError": {
+      "title": "연결 실패",
+      "timeout": {
+        "message": "기기가 시간 내에 응답하지 않았습니다.",
+        "advice": "상대 기기가 오프라인이거나 절전 모드이거나 방화벽이 연결을 차단하고 있을 수 있습니다. 상대 기기에서 LocalSend가 실행 중이고 두 기기가 같은 네트워크에 있는지 확인하세요."
+      },
+      "refused": {
+        "message": "기기가 연결을 거부했습니다.",
+        "advice": "대상 기기에서 LocalSend가 실행되고 있지 않거나 다른 포트에서 대기 중인 것 같습니다. 상대 기기에서 LocalSend를 시작하거나 포트를 확인하세요."
+      },
+      "forbidden": {
+        "message": "기기가 요청을 거부했습니다.",
+        "advice": "PIN 번호가 필요하거나 기기와의 페어링이 변경되었을 수 있습니다. 대상 기기의 PIN 번호 및 빠른 저장 설정을 확인하세요."
+      },
+      "other": {
+        "message": "연결할 수 없습니다.",
+        "advice": "주소와 포트를 확인하고, 대상 기기에서 LocalSend가 실행 중인지, 방화벽이나 VPN이 연결을 차단하지 않는지 확인하세요."
+      },
+      "retry": "다시 시도",
+      "details": "오류 세부 정보:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "원본 파일 삭제",
+      "content": "파일을 성공적으로 보낸 후 해당 파일이 이 기기에서 삭제됩니다. 이 작업은 되돌릴 수 없습니다."
     },
     "cannotOpenFile": {
       "title": "열 수 없는 파일",
@@ -448,6 +525,25 @@
       "single": "파일을 하나의 기기에 보냅니다. 파일 전송이 완료된 후 선택 항목이 초기화됩니다.",
       "multiple": "파일을 여러 기기에 보냅니다. 파일 전송이 완료된 뒤에도 선택 항목이 유지됩니다.",
       "link": "LocalSend가 설치되지 않은 기기에서도 브라우저를 통해 링크에 접속하여 파일을 다운로드 받을 수 있습니다."
+    },
+    "startupError": {
+      "title": "서버를 시작할 수 없습니다",
+      "port": "포트: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows가 포트 액세스를 거부했습니다 (소켓 오류 10013).",
+        "advice": "이는 보통 Hyper-V, WSL 또는 Docker가 예약한 포트 범위 또는 손상된 Winsock 카탈로그가 원인입니다:\n• 설정(네트워크)에서 포트를 변경하세요\n• 예약된 범위는 다음 명령으로 확인하세요: netsh interface ipv4 show excludedportrange protocol=tcp\n• 관리자 권한으로 Winsock을 복구하세요: netsh winsock reset (이후 재부팅)"
+      },
+      "addressInUse": {
+        "hint": "이 포트는 이미 다른 애플리케이션이 사용하고 있습니다.",
+        "advice": "다른 프로그램(또는 두 번째 LocalSend 인스턴스)이 이 포트에서 대기 중입니다:\n• 해당 애플리케이션을 닫거나\n• 설정(네트워크)에서 포트를 변경하세요"
+      },
+      "generic": {
+        "hint": "서버를 시작할 수 없습니다.",
+        "advice": "• 방화벽과 네트워크 설정을 확인하세요\n• 설정(네트워크)에서 포트를 변경해 보세요"
+      },
+      "details": "오류 세부 정보:",
+      "copyDetails": "세부 정보 복사",
+      "openSettings": "설정 열기"
     },
     "zoom": {
       "title": "URL"

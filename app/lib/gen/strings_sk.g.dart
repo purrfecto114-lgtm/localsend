@@ -233,6 +233,8 @@ class _Translations$sendTab$sk extends Translations$sendTab$en {
   String get help => 'Uistite sa, že je požadované zariadenie v rovnakej Wi-Fi sieti.';
   @override
   String get placeItems => 'Umiestnite položky na zdieľanie.';
+  @override
+  late final _Translations$sendTab$diagnosis$sk diagnosis = _Translations$sendTab$diagnosis$sk._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$sk extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Uložené vo Fotkách';
   @override
+  late final _Translations$progressPage$checksum$sk checksum = _Translations$progressPage$checksum$sk._(_root);
+  @override
   late final _Translations$progressPage$total$sk total = _Translations$progressPage$total$sk._(_root);
   @override
   late final _Translations$progressPage$remainingTime$sk remainingTime = _Translations$progressPage$remainingTime$sk._(_root);
@@ -678,6 +682,11 @@ class _Translations$dialogs$sk extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$sk cancelSession = _Translations$dialogs$cancelSession$sk._(_root);
   @override
+  late final _Translations$dialogs$connectionError$sk connectionError = _Translations$dialogs$connectionError$sk._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$sk deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$sk._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$sk cannotOpenFile = _Translations$dialogs$cannotOpenFile$sk._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$sk encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$sk._(_root);
@@ -718,6 +727,8 @@ class _Translations$dialogs$sk extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$sk pin = _Translations$dialogs$pin$sk._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$sk sendModeHelp = _Translations$dialogs$sendModeHelp$sk._(_root);
+  @override
+  late final _Translations$dialogs$startupError$sk startupError = _Translations$dialogs$startupError$sk._(_root);
   @override
   late final _Translations$dialogs$zoom$sk zoom = _Translations$dialogs$zoom$sk._(_root);
 }
@@ -922,6 +933,32 @@ class _Translations$sendTab$sendModes$sk extends Translations$sendTab$sendModes$
   String get link => 'Zdieľať cez odkaz';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$sk extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Vyhľadávajú sa zariadenia v blízkosti…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$sk noInterface = _Translations$sendTab$diagnosis$noInterface$sk._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$sk multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$sk._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$sk scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$sk._(_root);
+  @override
+  String get rescan => 'Hľadať znova';
+  @override
+  String get bleHint =>
+      'Vyhľadávanie BLE je aktívne: zariadenia sa nájdu cez Bluetooth, len ak tiež používajú tento fork so zapnutou možnosťou; samotný prenos súborov stále prebieha cez sieť.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$sk manualFallback = _Translations$sendTab$diagnosis$manualFallback$sk._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$sk extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$sk._(TranslationsSk root) : this._root = root, super.internal(root);
@@ -1003,6 +1040,8 @@ class _Translations$settingsTab$send$sk extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Automaticky prijímať žiadosti v režime "Zdieľať cez odkaz"';
   @override
   String get createChecksums => 'Vytvárať kontrolné súčty pri odosielaní súborov';
+  @override
+  String get deleteSourceAfterSend => 'Po úspešnom odoslaní odstrániť zdrojové súbory';
 }
 
 // Path: settingsTab.network
@@ -1033,6 +1072,13 @@ class _Translations$settingsTab$network$sk extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Časový limit hľadania';
   @override
+  String get maxInterfaces => 'Maximálny počet rozhraní (inteligentné skenovanie)';
+  @override
+  String get vpnInterfaces => 'Zahrnúť rozhrania VPN (inteligentné skenovanie)';
+  @override
+  String get vpnInterfacesHint =>
+      'Skenovať aj podsiete rozhraní VPN tunelov (Tailscale, WireGuard, ...). VPN zvyčajne neprenáša multicast, preto sa ich podsiete preskúmavajú náhradným HTTP skenovaním.';
+  @override
   String get useSystemName => 'Použiť systémové meno';
   @override
   String get generateRandomAlias => 'Generovať náhodnú prezývku';
@@ -1046,6 +1092,33 @@ class _Translations$settingsTab$network$sk extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Iné zariadenia vás nemusia rozpoznať, pretože používate vlastnú multicast adresu. (predvolené: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Vyhľadávanie BLE (experimentálne)';
+  @override
+  String get bleDiscoveryHint =>
+      'Nájde zariadenia v blízkosti cez Bluetooth, aj keď sieť blokuje multicast (izolácia prístupového bodu). Funguje na Androide, iOS, macOS a Windows; na Linuxe môže toto zariadenie nájsť ostatné, ale samo nájdené byť nemôže. Obe zariadenia musia používať tento fork so zapnutou možnosťou; samotný prenos súborov stále prebieha cez sieť.';
+  @override
+  String get bleStatusActive =>
+      'Aktívne: skenovanie aj oznamovanie. Zariadenia v blízkosti sa zobrazia, len ak tiež používajú tento fork so zapnutou možnosťou.';
+  @override
+  String get bleStatusScanOnly =>
+      'Aktívne: iba skenovanie. Toto zariadenie teraz nemôže byť cez Bluetooth nájdené (táto platforma nepodporuje BLE oznamovanie alebo ešte nie je k dispozícii použiteľná sieťová adresa).';
+  @override
+  String get bleStatusPaused => 'Pozastavené. Obnoví sa, keď sa aplikácia vráti do popredia.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Povolenia pre Bluetooth boli zamietnuté. Udeľte povolenie "Zariadenia v blízkosti" (alebo "Poloha" na Androide 11 a staršom) v systémových nastaveniach a potom túto možnosť vypnite a znova zapnite.';
+  @override
+  String get bleStatusAdapterOff => 'Bluetooth je vypnutý alebo nedostupný. Vyhľadávanie sa samo reštartuje, keď bude Bluetooth znova k dispozícii.';
+  @override
+  String get bleStatusUnsupported => 'Na tomto zariadení nepodporované: vyhľadávanie BLE vyžaduje Android 7 alebo novší a rádio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'V tejto verzii Androidu vyžaduje hľadanie iných zariadení tiež zapnuté systémové služby určovania polohy (povolenie sa vyžaduje automaticky; toto zariadenie už môžu ostatní nájsť).';
+  @override
+  String get bleStatusError => 'Vyhľadávanie BLE sa nepodarilo spustiť. Podrobnosti nájdete v časti Riešenie problémov > Záznamy.';
+  @override
+  String get bleOpenSystemSettings => 'Otvoriť systémové nastavenia';
 }
 
 // Path: settingsTab.other
@@ -1162,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$sk extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Aktualizované cez ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$sk extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Kontrolné súčty overené';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Kontrolné súčty overené pre ${curr} / ${n} súborov';
+  @override
+  String get notVerifiable => 'Odosielateľ neposkytol kontrolné súčty';
+  @override
+  String get disabled => 'Overovanie kontrolných súčtov je vypnuté';
+  @override
+  String attached({required Object curr, required Object n}) => 'Kontrolné súčty priložené (${curr} / ${n} súborov)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$sk extends Translations$progressPage$total$en {
   _Translations$progressPage$total$sk._(TranslationsSk root) : this._root = root, super.internal(root);
@@ -1255,6 +1347,11 @@ class _Translations$dialogs$addressInput$sk extends Translations$dialogs$address
   String get ip => 'IP adresa';
   @override
   String get recentlyUsed => 'Nedávno použité: ';
+  @override
+  String get noHashtagCandidates =>
+      'Aktuálna sieť nemá IPv4 adresu, takže hashtag nemožno rozšíriť na kandidátsku adresu. Zadajte prosím celú adresu (napr. 192.168.1.5 alebo fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$sk validation = _Translations$dialogs$addressInput$validation$sk._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1268,6 +1365,42 @@ class _Translations$dialogs$cancelSession$sk extends Translations$dialogs$cancel
   String get title => 'Zrušiť prenos súborov';
   @override
   String get content => 'Naozaj chcete zrušiť prenos súborov?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$sk extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Pripojenie zlyhalo';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$sk timeout = _Translations$dialogs$connectionError$timeout$sk._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$sk refused = _Translations$dialogs$connectionError$refused$sk._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$sk forbidden = _Translations$dialogs$connectionError$forbidden$sk._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$sk other = _Translations$dialogs$connectionError$other$sk._(_root);
+  @override
+  String get retry => 'Skúsiť znova';
+  @override
+  String get details => 'Podrobnosti chyby:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$sk extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Odstrániť zdrojové súbory';
+  @override
+  String get content => 'Po úspešnom odoslaní budú súbory z tohto zariadenia odstránené. Túto akciu nie je možné vrátiť späť.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1559,6 +1692,32 @@ class _Translations$dialogs$sendModeHelp$sk extends Translations$dialogs$sendMod
   String get link => 'Príjemcovia, ktorí nemajú nainštalovaný LocalSend, si môžu stiahnuť vybrané súbory otvorením odkazu vo svojom prehliadači.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$sk extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Server sa nepodarilo spustiť';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$sk windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$sk._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$sk addressInUse = _Translations$dialogs$startupError$addressInUse$sk._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$sk generic = _Translations$dialogs$startupError$generic$sk._(_root);
+  @override
+  String get details => 'Podrobnosti chyby:';
+  @override
+  String get copyDetails => 'Skopírovať podrobnosti';
+  @override
+  String get openSettings => 'Otvoriť nastavenia';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$sk extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$sk._(TranslationsSk root) : this._root = root, super.internal(root);
@@ -1568,6 +1727,68 @@ class _Translations$dialogs$zoom$sk extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$sk extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Žiadne pripojenie k sieti';
+  @override
+  String get advice => 'Toto zariadenie nie je pripojené k žiadnej sieti. Skontrolujte pripojenie tohto zariadenia k Wi-Fi alebo káblu.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$sk extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast nie je dostupný';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend nemôže v tejto sieti použiť vyhľadávanie pomocou multicastu. Uistite sa, že sú obe zariadenia v rovnakej sieti a že izolácia prístupového bodu (AP) ani firewall neblokujú UDP port ${port}.';
+  @override
+  String reason({required Object reason}) => 'Príčina: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$sk extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nenašli sa žiadne zariadenia';
+  @override
+  String get advice =>
+      'Vyhľadávanie funguje, ale žiadne zariadenie neodpovedalo na oznámenia ani na skenovanie siete. Druhé zariadenie môže byť offline, v režime spánku alebo blokované firewallom. Uistite sa, že na druhom zariadení beží LocalSend.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Odoslaných ${announcements} oznámení a vykonaných ${scans} skenovaní siete bez odpovede.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$sk extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'IP adresy sa často menia. Ku zariadeniu, ktoré nie je v zozname, sa stále môžete dostať: pridajte ho do obľúbených alebo zadajte jeho adresu ručne.';
+  @override
+  String get openFavorites => 'Otvoriť obľúbené';
+  @override
+  String get manualInput => 'Zadať adresu ručne';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1654,4 +1875,115 @@ class _Translations$whatsNewPage$changes$v1_18_0$sk extends Translations$whatsNe
     'Žiadosti od obľúbených sa teraz prijímajú automaticky. Táto funkcia je štandardne zapnutá a je možné ju vypnúť v nastaveniach.',
     'V systéme Android prebiehajú prenosy aj vtedy, keď je aplikácia spustená na pozadí alebo je obrazovka vypnutá. V systéme iOS musí aplikácia zostať spustená v popredí.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$sk extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Zadajte platnú IPv4 adresu, IPv6 adresu alebo názov hostiteľa.';
+  @override
+  String get scheme => 'Zadajte iba adresu, bez "http://" alebo "https://".';
+  @override
+  String get port => 'Zadajte iba adresu. Port sa berie z nastavení.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$sk extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zariadenie včas neodpovedalo.';
+  @override
+  String get advice =>
+      'Pravdepodobne je offline, v režime spánku alebo pripojenie blokuje firewall. Uistite sa, že na druhom zariadení beží LocalSend a že sú obe zariadenia v rovnakej sieti.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$sk extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zariadenie odmietlo pripojenie.';
+  @override
+  String get advice =>
+      'Zdá sa, že na cieľovom zariadení LocalSend nebeží, alebo počúva na inom porte. Spustite LocalSend na druhom zariadení alebo skontrolujte port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$sk extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Zariadenie zamietlo žiadosť.';
+  @override
+  String get advice =>
+      'Možno je vyžadovaný PIN alebo sa zmenilo spárovanie so zariadením. Skontrolujte PIN a nastavenia rýchleho uloženia na cieľovom zariadení.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$sk extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Pripojenie sa nepodarilo nadviazať.';
+  @override
+  String get advice => 'Skontrolujte adresu a port, uistite sa, že na cieľovom zariadení beží LocalSend a že pripojenie neblokuje firewall ani VPN.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$sk extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows zamietli prístup k portu (chyba soketu 10013).';
+  @override
+  String get advice =>
+      'Obvykle je to spôsobené rozsahom portov rezervovaným pre Hyper-V, WSL alebo Docker, alebo poškodeným katalógom Winsock:\n• Zmeňte port v nastaveniach (Sieť)\n• Skontrolujte rezervované rozsahy príkazom: netsh interface ipv4 show excludedportrange protocol=tcp\n• Opravte Winsock ako správca príkazom: netsh winsock reset (následne reštartujte počítač)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$sk extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Port už používa iná aplikácia.';
+  @override
+  String get advice =>
+      'Na tomto porte počúva iný program (alebo druhá inštancia LocalSend):\n• Zavrite druhú aplikáciu alebo\n• Zmeňte port v nastaveniach (Sieť)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$sk extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$sk._(TranslationsSk root) : this._root = root, super.internal(root);
+
+  final TranslationsSk _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Server sa nepodarilo spustiť.';
+  @override
+  String get advice => '• Skontrolujte firewall a nastavenia siete\n• Skúste zmeniť port v nastaveniach (Sieť)';
 }

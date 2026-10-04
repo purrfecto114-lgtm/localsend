@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Spiegazione",
     "help": "Assicurati che il destinatario desiderato si trovi sulla stessa rete Wi-Fi.",
-    "placeItems": "Rilascia qui gli elementi da condividere."
+    "placeItems": "Rilascia qui gli elementi da condividere.",
+    "diagnosis": {
+      "scanning": "Ricerca di dispositivi vicini…",
+      "noInterface": {
+        "title": "Nessuna connessione di rete",
+        "advice": "Questo dispositivo non è collegato ad alcuna rete. Controlla la connessione Wi-Fi o via cavo di questo dispositivo."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast non disponibile",
+        "advice": "LocalSend non può utilizzare il rilevamento via multicast su questa rete. Assicurati che entrambi i dispositivi siano sulla stessa rete e che l'isolamento dell'Access Point o un firewall non stia bloccando la porta UDP {port}.",
+        "reason": "Motivo: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nessun dispositivo trovato",
+        "advice": "Il rilevamento funziona, ma nessun dispositivo ha risposto agli annunci né alla scansione della rete. L'altro dispositivo potrebbe essere offline, in sospensione o bloccato da un firewall. Assicurati che LocalSend sia in esecuzione sull'altro dispositivo.",
+        "detail": "Inviati {announcements} annunci e {scans} scansioni della rete senza ricevere risposta."
+      },
+      "rescan": "Cerca di nuovo",
+      "bleHint": "Il rilevamento BLE è attivo: i dispositivi vengono trovati via Bluetooth solo se eseguono anche loro questo fork con l'opzione attivata; il trasferimento vero e proprio avviene comunque tramite la rete.",
+      "manualFallback": {
+        "message": "Gli indirizzi IP cambiano spesso. Puoi comunque raggiungere un dispositivo non presente in elenco: aggiungilo ai preferiti oppure inserisci manualmente il suo indirizzo.",
+        "openFavorites": "Apri i preferiti",
+        "manualInput": "Inserisci l'indirizzo manualmente"
+      }
+    }
   },
   "settingsTab": {
     "title": "Impostazioni",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Invia",
       "shareViaLinkAutoAccept": "Accetta automaticamente le richieste in modalità \"Condividi tramite link\"",
-      "createChecksums": "Crea i checksum durante l'invio dei file"
+      "createChecksums": "Crea i checksum durante l'invio dei file",
+      "deleteSourceAfterSend": "Elimina i file di origine dopo un invio riuscito"
     },
     "network": {
       "title": "Rete",
@@ -143,12 +168,26 @@
         "filtered": "Filtrato"
       },
       "discoveryTimeout": "Timeout di rilevamento",
+      "maxInterfaces": "Numero massimo di interfacce (scansione intelligente)",
+      "vpnInterfaces": "Includi le interfacce VPN (scansione intelligente)",
+      "vpnInterfacesHint": "Analizza anche le sottoreti delle interfacce di tunnel VPN (Tailscale, WireGuard, …). Le VPN di norma non supportano il multicast, quindi le loro sottoreti vengono sondate tramite la scansione HTTP di fallback.",
       "useSystemName": "Usa il nome di sistema",
       "generateRandomAlias": "Genera un alias casuale",
       "portWarning": "Potresti non essere rilevato da altri dispositivi perché stai utilizzando una porta personalizzata. (predefinita: {defaultPort})",
       "encryption": "Crittografia",
       "multicastGroup": "Indirizzo Multicast",
-      "multicastGroupWarning": "Potresti non essere rilevato dagli altri dispositivi perché stai utilizzando un indirizzo multicast personalizzato. (predefinito: {defaultMulticast})"
+      "multicastGroupWarning": "Potresti non essere rilevato dagli altri dispositivi perché stai utilizzando un indirizzo multicast personalizzato. (predefinito: {defaultMulticast})",
+      "bleDiscovery": "Rilevamento BLE (sperimentale)",
+      "bleDiscoveryHint": "Trova i dispositivi vicini tramite Bluetooth anche quando la rete blocca il multicast (isolamento dell'Access Point). Funziona su Android, iOS, macOS e Windows; su Linux questo dispositivo può trovare gli altri ma non può essere trovato a sua volta. Entrambi i dispositivi devono eseguire questo fork con l'opzione attivata; il trasferimento dei file avviene comunque tramite la rete.",
+      "bleStatusActive": "Attivo: scansione e annuncio. I dispositivi vicini compaiono solo se eseguono anche loro questo fork con l'opzione attivata.",
+      "bleStatusScanOnly": "Attivo: solo scansione. Questo dispositivo al momento non può essere trovato via Bluetooth (nessun supporto per l'annuncio BLE su questa piattaforma, o nessun indirizzo di rete utilizzabile).",
+      "bleStatusPaused": "In pausa. Riprende quando l'app torna in primo piano.",
+      "bleStatusPermissionDenied": "Permessi Bluetooth negati. Concedi il permesso \"Dispositivi nelle vicinanze\" (o \"Posizione\" su Android 11 e precedenti) nelle impostazioni di sistema, poi disattiva e riattiva questa opzione.",
+      "bleStatusAdapterOff": "Il Bluetooth è spento o non disponibile. Il rilevamento si riavvia automaticamente quando il Bluetooth torna disponibile.",
+      "bleStatusUnsupported": "Non supportato su questo dispositivo: il rilevamento BLE richiede Android 7 o successivo e una radio Bluetooth LE.",
+      "bleStatusLegacyLocation": "In questa versione di Android, trovare altri dispositivi richiede inoltre che i servizi di localizzazione del sistema siano attivi (il permesso viene richiesto automaticamente; questo dispositivo può già essere trovato dagli altri).",
+      "bleStatusError": "Impossibile avviare il rilevamento BLE. Consulta Risoluzione dei problemi > Log per i dettagli.",
+      "bleOpenSystemSettings": "Apri le impostazioni di sistema"
     },
     "other": {
       "title": "Altro",
@@ -256,6 +295,13 @@
     "titleSending": "Invio di file in corso",
     "titleReceiving": "Ricezione di file in corso",
     "savedToGallery": "Salvato in Galleria",
+    "checksum": {
+      "verified": "Checksum verificati",
+      "partiallyVerified": "Checksum verificati per {curr} / {n} file",
+      "notVerifiable": "Nessun checksum fornito dal mittente",
+      "disabled": "La verifica dei checksum è disattivata",
+      "attached": "Checksum allegati ({curr} / {n} file)"
+    },
     "total": {
       "title": {
         "sending": "Progresso complessivo ({time})",
@@ -348,11 +394,42 @@
       "title": "Inserisci l'indirizzo",
       "hashtag": "Hashtag",
       "ip": "Indirizzo IP",
-      "recentlyUsed": "Usato di recente: "
+      "recentlyUsed": "Usato di recente: ",
+      "noHashtagCandidates": "La rete attuale non ha un indirizzo IPv4, quindi l'hashtag non può essere espanso in un indirizzo candidato. Inserisci l'indirizzo completo (ad es. 192.168.1.5 o fe80::1).",
+      "validation": {
+        "invalid": "Inserisci un indirizzo IPv4, un indirizzo IPv6 o un nome host valido.",
+        "scheme": "Inserisci solo l'indirizzo, senza \"http://\" o \"https://\".",
+        "port": "Inserisci solo l'indirizzo. La porta è presa dalle impostazioni."
+      }
     },
     "cancelSession": {
       "title": "Interrompi trasferimento",
       "content": "Sei sicuro di voler interrompere il trasferimento?"
+    },
+    "connectionError": {
+      "title": "Connessione non riuscita",
+      "timeout": {
+        "message": "Il dispositivo non ha risposto in tempo.",
+        "advice": "È probabilmente offline, in sospensione oppure un firewall sta bloccando la connessione. Assicurati che LocalSend sia in esecuzione sull'altro dispositivo e che entrambi i dispositivi siano sulla stessa rete."
+      },
+      "refused": {
+        "message": "Il dispositivo ha rifiutato la connessione.",
+        "advice": "Sembra che LocalSend non sia in esecuzione sul dispositivo di destinazione, oppure che sia in ascolto su una porta diversa. Avvia LocalSend sull'altro dispositivo o controlla la porta."
+      },
+      "forbidden": {
+        "message": "Il dispositivo ha rifiutato la richiesta.",
+        "advice": "Potrebbe essere richiesto un PIN oppure l'associazione con il dispositivo è cambiata. Controlla il PIN e le impostazioni di salvataggio rapido sul dispositivo di destinazione."
+      },
+      "other": {
+        "message": "Non è stato possibile stabilire la connessione.",
+        "advice": "Controlla l'indirizzo e la porta, assicurati che LocalSend sia in esecuzione sul dispositivo di destinazione e che nessun firewall o VPN stia bloccando la connessione."
+      },
+      "retry": "Riprova",
+      "details": "Dettagli dell'errore:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Elimina i file di origine",
+      "content": "Dopo che i file sono stati inviati correttamente, verranno eliminati da questo dispositivo. Questa azione non può essere annullata."
     },
     "cannotOpenFile": {
       "title": "Impossibile aprire il file",
@@ -448,6 +525,25 @@
       "single": "Invia file a un destinatario. Gli elementi saranno deselezionati dopo il trasferimento dei file.",
       "multiple": "Invia file a più destinatari. Gli elementi non saranno deselezionati dopo il trasferimento dei file.",
       "link": "I destinatari che non hanno installato LocalSend possono scaricare i file selezionati aprendo il link nel loro browser."
+    },
+    "startupError": {
+      "title": "Impossibile avviare il server",
+      "port": "Porta: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows ha negato l'accesso alla porta (errore socket 10013).",
+        "advice": "Ciò è generalmente causato da un intervallo di porte riservato da Hyper-V, WSL o Docker, o da un catalogo Winsock danneggiato:\n• Cambia la porta nelle Impostazioni (Rete)\n• Controlla gli intervalli riservati con: netsh interface ipv4 show excludedportrange protocol=tcp\n• Ripara Winsock come amministratore con: netsh winsock reset (riavvia in seguito)"
+      },
+      "addressInUse": {
+        "hint": "La porta è già utilizzata da un'altra applicazione.",
+        "advice": "Un altro programma (o una seconda istanza di LocalSend) è in ascolto su questa porta:\n• Chiudi l'altra applicazione, oppure\n• Cambia la porta nelle Impostazioni (Rete)"
+      },
+      "generic": {
+        "hint": "Non è stato possibile avviare il server.",
+        "advice": "• Controlla il firewall e le impostazioni di rete\n• Prova a cambiare la porta nelle Impostazioni (Rete)"
+      },
+      "details": "Dettagli dell'errore:",
+      "copyDetails": "Copia i dettagli",
+      "openSettings": "Apri le impostazioni"
     },
     "zoom": {
       "title": "URL"

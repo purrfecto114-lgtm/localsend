@@ -233,6 +233,8 @@ class _Translations$sendTab$lo extends Translations$sendTab$en {
   String get help => 'ກະລຸນາໝັ້ນໃຈວ່າເປົ້າໝາຍທີ່ຕ້ອງການຢູ່ໃນເຄືອຂ່າຍ Wi-Fi ດຽວກັນ.';
   @override
   String get placeItems => 'ວາງລາຍການເພື່ອແບ່ງປັນ.';
+  @override
+  late final _Translations$sendTab$diagnosis$lo diagnosis = _Translations$sendTab$diagnosis$lo._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$lo extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'ບັນທຶກໃນ Photos';
   @override
+  late final _Translations$progressPage$checksum$lo checksum = _Translations$progressPage$checksum$lo._(_root);
+  @override
   late final _Translations$progressPage$total$lo total = _Translations$progressPage$total$lo._(_root);
   @override
   late final _Translations$progressPage$remainingTime$lo remainingTime = _Translations$progressPage$remainingTime$lo._(_root);
@@ -676,6 +680,11 @@ class _Translations$dialogs$lo extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$lo cancelSession = _Translations$dialogs$cancelSession$lo._(_root);
   @override
+  late final _Translations$dialogs$connectionError$lo connectionError = _Translations$dialogs$connectionError$lo._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$lo deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$lo._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$lo cannotOpenFile = _Translations$dialogs$cannotOpenFile$lo._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$lo encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$lo._(_root);
@@ -716,6 +725,8 @@ class _Translations$dialogs$lo extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$lo pin = _Translations$dialogs$pin$lo._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$lo sendModeHelp = _Translations$dialogs$sendModeHelp$lo._(_root);
+  @override
+  late final _Translations$dialogs$startupError$lo startupError = _Translations$dialogs$startupError$lo._(_root);
   @override
   late final _Translations$dialogs$zoom$lo zoom = _Translations$dialogs$zoom$lo._(_root);
 }
@@ -919,6 +930,32 @@ class _Translations$sendTab$sendModes$lo extends Translations$sendTab$sendModes$
   String get link => 'ແບ່ງປັນຜ່ານລິ້ງ';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$lo extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'ກຳລັງຄົ້ນຫາອຸປະກອນທີ່ຢູ່ໃກ້ຄຽງ...';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$lo noInterface = _Translations$sendTab$diagnosis$noInterface$lo._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$lo multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$lo._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$lo scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$lo._(_root);
+  @override
+  String get rescan => 'ຄົ້ນຫາອີກຄັ້ງ';
+  @override
+  String get bleHint =>
+      'ການຄົ້ນຫາຜ່ານ BLE ເປີດໃຊ້ງານຢູ່: ຈະຄົ້ນພົບອຸປະກອນຜ່ານບລູທູດໄດ້ ກໍຕໍ່ເມື່ອຝ່າຍກົງກັນຂ້າມກໍໃຊ້ສະບັບດັດແກ້ນີ້ (fork) ພ້ອມທັງເປີດຕົວເລືອກນີ້; ຕົວການສົ່ງໄຟລ໌ເອງຍັງຄົງໃຊ້ເຄືອຂ່າຍ.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$lo manualFallback = _Translations$sendTab$diagnosis$manualFallback$lo._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$lo extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$lo._(TranslationsLo root) : this._root = root, super.internal(root);
@@ -1000,6 +1037,8 @@ class _Translations$settingsTab$send$lo extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'ຍອມຮັບຄຳຂໍອັດຕະໂນມັດໃນໂໝດ "ແບ່ງປັນຜ່ານລິ້ງ"';
   @override
   String get createChecksums => 'ສ້າງ checksum ເມື່ອສົ່ງໄຟລ໌';
+  @override
+  String get deleteSourceAfterSend => 'ລຶບໄຟລ໌ຕົ້ນສະບັບຫຼັງຈາກສົ່ງສຳເລັດ';
 }
 
 // Path: settingsTab.network
@@ -1030,6 +1069,13 @@ class _Translations$settingsTab$network$lo extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'ໝົດເວລາການຄົ້ນຫາ';
   @override
+  String get maxInterfaces => 'ຈຳນວນອິນເຕີເຟສສູງສຸດ (ສະແກນອັດສະລິຍ)';
+  @override
+  String get vpnInterfaces => 'ລວມອິນເຕີເຟສ VPN (ສະແກນອັດສະລິຍ)';
+  @override
+  String get vpnInterfacesHint =>
+      'ສະແກນ subnet ຂອງອິນເຕີເຟສ tunnel VPN ນຳ (Tailscale, WireGuard, ...). VPN ໂດຍທົ່ວໄປບໍ່ຮອງຮັບ multicast ດັ່ງນັ້ນ subnet ຂອງມັນຈຶ່ງຖືກກວດສອບດ້ວຍການສະແກນ HTTP ແທນ.';
+  @override
   String get useSystemName => 'ໃຊ້ຊື່ລະບົບ';
   @override
   String get generateRandomAlias => 'ສ້າງຊື່ແບບສຸ່ມ';
@@ -1043,6 +1089,33 @@ class _Translations$settingsTab$network$lo extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'ທ່ານອາດຈະບໍ່ຖືກກວດພົບໂດຍອຸປະກອນອື່ນ ເພາະທ່ານໃຊ້ທີ່ຢູ່ multicast ແບບກຳນົດເອງ. (ຄ່າເລີ່ມຕົ້ນ: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'ການຄົ້ນຫາຜ່ານ BLE (ທົດລອງ)';
+  @override
+  String get bleDiscoveryHint =>
+      'ຄົ້ນຫາອຸປະກອນທີ່ຢູ່ໃກ່ຄຽງຜ່ານບລູທູດ ເຖິງແມ່ນວ່າເຄືອຂ່າຍປິດກັ້ນ multicast (ການແຍກ Access Point - AP) ກໍຕາມ. ໃຊ້ໄດ້ໃນ Android, iOS, macOS ແລະ Windows; ໃນ Linux ອຸປະກອນນີ້ຄົ້ນຫາຄົນອື່ນໄດ້ ແຕ່ຄົນອື່ນຄົ້ນຫາມັນບໍ່ໄດ້. ອຸປະກອນທັງສອງຕ້ອງໃຊ້ສະບັບດັດແກ້ນີ້ (fork) ພ້ອມທັງເປີດຕົວເລືອກນີ້; ຕົວການສົ່ງໄຟລ໌ເອງຍັງຄົງໃຊ້ເຄືອຂ່າຍ.';
+  @override
+  String get bleStatusActive =>
+      'ເປີດໃຊ້ງານ: ກຳລັງສະແກນ ແລະ ປະກາດ. ອຸປະກອນທີ່ຢູ່ໃກ່ຄຽງຈະປາກົດຂຶ້ນ ກໍຕໍ່ເມື່ອມັນກໍໃຊ້ສະບັບດັດແກ້ນີ້ (fork) ພ້ອມທັງເປີດຕົວເລືອກນີ້.';
+  @override
+  String get bleStatusScanOnly =>
+      'ເປີດໃຊ້ງານ: ສະແກນຢ່າງດຽວ. ອຸປະກອນນີ້ຍັງບໍ່ສາມາດຖືກຄົ້ນພົບຜ່ານບລູທູດໄດ້ (ລະບົບນີ້ບໍ່ຮອງຮັບການປະກາດ BLE ຫຼື ຍັງບໍ່ມີທີ່ຢູ່ເຄືອຂ່າຍທີ່ໃຊ້ໄດ້).';
+  @override
+  String get bleStatusPaused => 'ຢຸດຊົ່ວຄາວ. ຈະເຮັດວຽກຕໍ່ເມື່ອແອັບກັບຄືນມາຢູ່ໜ້າຈໍ.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'ສິດນຳໃຊ້ບລູທູດຖືກປະຕິເສດ. ກະລຸນາອະນຸຍາດສິດ "ອຸປະກອນທີ່ຢູ່ໃກ້ຄຽງ" (ຫຼື "ຕຳແໜ່ງ" ໃນ Android 11 ແລະຕໍ່າກວ່າ) ໃນການຕັ້ງຄ່າລະບົບ ແລ້ວປິດຕົວເລືອກນີ້ ແລ້ວເປີດຄືນໃໝ່.';
+  @override
+  String get bleStatusAdapterOff => 'ບລູທູດຖືກປິດ ຫຼື ບໍ່ສາມາດໃຊ້ໄດ້. ການຄົ້ນຫາຈະເລີ່ມຕົ້ນຄືນເອງເມື່ອບລູທູດໃຊ້ໄດ້ອີກຄັ້ງ.';
+  @override
+  String get bleStatusUnsupported => 'ບໍ່ຮອງຮັບໃນອຸປະກອນນີ້: ການຄົ້ນຫາຜ່ານ BLE ຕ້ອງການ Android 7 ຫຼືໃໝ່ກວ່າ ພ້ອມກັບວິທະຍຸ Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'ໃນເວີຊັນ Android ນີ້, ການຄົ້ນຫາອຸປະກອນອື່ນຕ້ອງເປີດບໍລິການຕຳແໜ່ງຂອງລະບົບນຳ (ສິດຈະຖືກຮ້ອງຂໍໂດຍອັດຕະໂນມັດ; ອຸປະກອນນີ້ຄົນອື່ນຄົ້ນຫາພົບແລ້ວ).';
+  @override
+  String get bleStatusError => 'ບໍ່ສາມາດເລີ່ມການຄົ້ນຫາຜ່ານ BLE ໄດ້. ລາຍລະອຽດເບິ່ງທີ່ ແກ້ໄຂບັນຫາ > ບັນທຶກ.';
+  @override
+  String get bleOpenSystemSettings => 'ເປີດການຕັ້ງຄ່າລະບົບ';
 }
 
 // Path: settingsTab.other
@@ -1158,6 +1231,25 @@ class _Translations$deviceDetailsPage$logs$lo extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'ອັບເດດຜ່ານ ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$lo extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'ກວດສອບ checksum ແລ້ວ';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'ກວດສອບ checksum ແລ້ວສຳລັບ ${curr} / ${n} ໄຟລ໌';
+  @override
+  String get notVerifiable => 'ຜູ້ສົ່ງບໍ່ໄດ້ໃຫ້ checksum';
+  @override
+  String get disabled => 'ການກວດສອບ checksum ຖືກປິດໃຊ້ງານ';
+  @override
+  String attached({required Object curr, required Object n}) => 'ໄດ້ແນບ checksum (${curr} / ${n} ໄຟລ໌)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$lo extends Translations$progressPage$total$en {
   _Translations$progressPage$total$lo._(TranslationsLo root) : this._root = root, super.internal(root);
@@ -1251,6 +1343,11 @@ class _Translations$dialogs$addressInput$lo extends Translations$dialogs$address
   String get ip => 'ທີ່ຢູ່ IP';
   @override
   String get recentlyUsed => 'ໃຊ້ຫຼ້າສຸດ: ';
+  @override
+  String get noHashtagCandidates =>
+      'ເຄືອຂ່າຍປັດຈຸບັນບໍ່ມີທີ່ຢູ່ IPv4 ດັ່ງນັ້ນ hashtag ຈຶ່ງບໍ່ສາມາດຂະຫຍາຍເປັນທີ່ຢູ່ຕົວເລືອກໄດ້. ກະລຸນາໃສ່ທີ່ຢູ່ເຕັມແທນ (ຕົວຢ່າງ 192.168.1.5 ຫຼື fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$lo validation = _Translations$dialogs$addressInput$validation$lo._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1264,6 +1361,42 @@ class _Translations$dialogs$cancelSession$lo extends Translations$dialogs$cancel
   String get title => 'ຍົກເລີກການໂອນໄຟລ໌';
   @override
   String get content => 'ທ່ານຕ້ອງການຍົກເລີກການໂອນໄຟລ໌ແທ້ບໍ?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$lo extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ການເຊື່ອມຕໍ່ລົ້ມເຫຼວ';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$lo timeout = _Translations$dialogs$connectionError$timeout$lo._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$lo refused = _Translations$dialogs$connectionError$refused$lo._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$lo forbidden = _Translations$dialogs$connectionError$forbidden$lo._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$lo other = _Translations$dialogs$connectionError$other$lo._(_root);
+  @override
+  String get retry => 'ລອງໃໝ່';
+  @override
+  String get details => 'ລາຍລະອຽດຂໍ້ຜິດພາດ:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$lo extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ລຶບໄຟລ໌ຕົ້ນສະບັບ';
+  @override
+  String get content => 'ຫຼັງຈາກສົ່ງໄຟລ໌ສຳເລັດແລ້ວ ໄຟລ໌ເຫຼົ່ານັ້ນຈະຖືກລຶບອອກຈາກອຸປະກອນນີ້. ບໍ່ສາມາດຍົກເລີກໄດ້.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1554,6 +1687,32 @@ class _Translations$dialogs$sendModeHelp$lo extends Translations$dialogs$sendMod
   String get link => 'ຜູ້ຮັບທີ່ບໍ່ໄດ້ຕິດຕັ້ງ LocalSend ສາມາດດາວໂຫຼດໄຟລ໌ທີ່ເລືອກໄດ້ ໂດຍການເປີດລິ້ງໃນບຣາວເຊີ.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$lo extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ບໍ່ສາມາດເລີ່ມເຊີບເວີໄດ້';
+  @override
+  String port({required Object port}) => 'ພອດ: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$lo windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$lo._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$lo addressInUse = _Translations$dialogs$startupError$addressInUse$lo._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$lo generic = _Translations$dialogs$startupError$generic$lo._(_root);
+  @override
+  String get details => 'ລາຍລະອຽດຂໍ້ຜິດພາດ:';
+  @override
+  String get copyDetails => 'ສຳເນົາລາຍລະອຽດ';
+  @override
+  String get openSettings => 'ເປີດການຕັ້ງຄ່າ';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$lo extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$lo._(TranslationsLo root) : this._root = root, super.internal(root);
@@ -1563,6 +1722,68 @@ class _Translations$dialogs$zoom$lo extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$lo extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ບໍ່ມີການເຊື່ອມຕໍ່ເຄືອຂ່າຍ';
+  @override
+  String get advice => 'ອຸປະກອນນີ້ບໍ່ໄດ້ເຊື່ອມຕໍ່ກັບເຄືອຂ່າຍໃດເລີຍ. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ Wi-Fi ຫຼື ສາຍເຄເບີນຂອງອຸປະກອນນີ້.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$lo extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ບໍ່ສາມາດໃຊ້ multicast ໄດ້';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend ບໍ່ສາມາດໃຊ້ການຄົ້ນຫາຜ່ານ multicast ໃນເຄືອຂ່າຍນີ້ໄດ້. ກະລຸນາໝັ້ນໃຈວ່າອຸປະກອນທັງສອງຢູ່ໃນເຄືອຂ່າຍດຽວກັນ ແລະ ການແຍກ Access Point (AP) ຫຼື ໄຟວໍບໍ່ໄດ້ປິດກັ້ນພອດ UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'ເຫດຜົນ: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$lo extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'ບໍ່ພົບອຸປະກອນ';
+  @override
+  String get advice =>
+      'ການຄົ້ນຫາເຮັດວຽກປົກກະຕິ ແຕ່ບໍ່ມີອຸປະກອນໃດຕອບສະໜອງການແຈ້ງ ຫຼື ການສະແກນເຄືອຂ່າຍ. ອຸປະກອນອີກເຄື່ອງອາດປິດຢູ່ ຫຼື ຢູ່ໃນໂໝດນອນ ຫຼື ຖືກປິດກັ້ນໂດຍໄຟວໍ. ກະລຸນາໝັ້ນໃຈວ່າ LocalSend ກຳລັງເຮັດວຽກຢູ່ໃນອຸປະກອນອີກເຄື່ອງນັ້ນ.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'ໄດ້ສົ່ງການແຈ້ງ ${announcements} ຄັ້ງ ແລະ ການສະແກນເຄືອຂ່າຍ ${scans} ຄັ້ງ ແຕ່ບໍ່ມີການຕອບສະໜອງ.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$lo extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'ທີ່ຢູ່ IP ມັກປ່ຽນແປງຫຼາຍ. ທ່ານຍັງສາມາດຕິດຕໍ່ກັບອຸປະກອນທີ່ບໍ່ຢູ່ໃນລາຍການໄດ້: ເພີ່ມມັນໃສ່ລາຍການໂປຣດ ຫຼື ໃສ່ທີ່ຢູ່ຂອງມັນດ້ວຍຕົນເອງ.';
+  @override
+  String get openFavorites => 'ເປີດລາຍການໂປຣດ';
+  @override
+  String get manualInput => 'ໃສ່ທີ່ຢູ່ດ້ວຍຕົນເອງ';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1649,4 +1870,113 @@ class _Translations$whatsNewPage$changes$v1_18_0$lo extends Translations$whatsNe
     'ຄຳຮ້ອງຂໍຈາກລາຍການໂປດຖືກຍອມຮັບໂດຍອັດຕະໂນມັດແລ້ວ. ມັນຖືກເປີດໃຊ້ໂດຍຄ່າເລີ່ມຕົ້ນ ແລະສາມາດປິດໄດ້ໃນການຕັ້ງຄ່າ.',
     'ໃນ Android, ການໂອນໄຟລ໌ຍັງດຳເນີນຕໍ່ໃນຂະນະທີ່ແອັບຢູ່ເບື້ອງຫຼັງ ຫຼື ໜ້າຈໍດັບຢູ່. ໃນ iOS, ແອັບຍັງຕ້ອງຄົງຢູ່ໜ້າຈໍ.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$lo extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'ໃສ່ທີ່ຢູ່ IPv4, IPv6 ຫຼື ຊື່ໂຮສຕ໌ທີ່ຖືກຕ້ອງ.';
+  @override
+  String get scheme => 'ໃສ່ທີ່ຢູ່ຢ່າງດຽວ ໂດຍບໍ່ຕ້ອງມີ "http://" ຫຼື "https://".';
+  @override
+  String get port => 'ໃສ່ທີ່ຢູ່ຢ່າງດຽວ. ພອດຈະຖືກເອົາມາຈາກການຕັ້ງຄ່າ.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$lo extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ອຸປະກອນບໍ່ໄດ້ຕອບສະໜອງທັນເວລາ.';
+  @override
+  String get advice =>
+      'ມັນອາດປິດຢູ່, ຢູ່ໃນໂໝດນອນ ຫຼື ຖືກໄຟວໍປິດກັ້ນການເຊື່ອມຕໍ່. ກະລຸນາໝັ້ນໃຈວ່າ LocalSend ກຳລັງເຮັດວຽກຢູ່ໃນອຸປະກອນອີກເຄື່ອງ ແລະ ອຸປະກອນທັງສອງຢູ່ໃນເຄືອຂ່າຍດຽວກັນ.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$lo extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ອຸປະກອນປະຕິເສດການເຊື່ອມຕໍ່.';
+  @override
+  String get advice =>
+      'LocalSend ດຽວກັນກັບບໍ່ໄດ້ເຮັດວຽກຢູ່ໃນອຸປະກອນເປົ້າໝາຍ ຫຼື ມັນກຳລັງຮັບຟັງຢູ່ພອດອື່ນ. ເລີ່ມ LocalSend ໃນອຸປະກອນອີກເຄື່ອງ ຫຼື ກວດສອບພອດ.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$lo extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ອຸປະກອນປະຕິເສດຄຳຂໍ.';
+  @override
+  String get advice => 'ອາດຈະຕ້ອງໃຊ້ PIN ຫຼື ການຈັບຄູ່ກັບອຸປະກອນນັ້ນໄດ້ປ່ຽນໄປ. ກວດສອບ PIN ແລະ ການຕັ້ງຄ່າບັນທຶກດ່ວນໃນອຸປະກອນເປົ້າໝາຍ.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$lo extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ໄດ້.';
+  @override
+  String get advice => 'ກວດສອບທີ່ຢູ່ ແລະ ພອດ, ໝັ້ນໃຈວ່າ LocalSend ກຳລັງເຮັດວຽກຢູ່ໃນອຸປະກອນເປົ້າໝາຍ ແລະ ບໍ່ມີໄຟວໍ ຫຼື VPN ປິດກັ້ນການເຊື່ອມຕໍ່.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$lo extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows ປະຕິເສດການເຂົ້າເຖິງພອດນີ້ (ຂໍ້ຜິດພາດ socket 10013).';
+  @override
+  String get advice =>
+      'ເຫດຜົນທົ່ວໄປແມ່ນຊ່ວງພອດທີ່ຖືກຈອງໄວ້ໂດຍ Hyper-V, WSL ຫຼື Docker ຫຼື Winsock catalog ເສຍຫາຍ:\n• ປ່ຽນພອດໃນການຕັ້ງຄ່າ (ເຄືອຂ່າຍ)\n• ກວດສອບຊ່ວງທີ່ຈອງໄວ້ດ້ວຍຄຳສັ່ງ: netsh interface ipv4 show excludedportrange protocol=tcp\n• ສ້ອມແປງ Winsock ໃນຖານະຜູ້ດູແລລະບົບດ້ວຍຄຳສັ່ງ: netsh winsock reset (ອອກຈາກລະບົບຄືນໃໝ່ຫຼັງຈາກນັ້ນ)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$lo extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ພອດນີ້ຖືກໃຊ້ໂດຍໂປຣແກຣມອື່ນແລ້ວ.';
+  @override
+  String get advice => 'ໂປຣແກຣມອື່ນ (ຫຼື LocalSend ຕົວທີສອງ) ກຳລັງຮັບຟັງຢູ່ພອດນີ້:\n• ປິດໂປຣແກຣມນັ້ນ, ຫຼື\n• ປ່ຽນພອດໃນການຕັ້ງຄ່າ (ເຄືອຂ່າຍ)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$lo extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$lo._(TranslationsLo root) : this._root = root, super.internal(root);
+
+  final TranslationsLo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'ບໍ່ສາມາດເລີ່ມເຊີບເວີໄດ້.';
+  @override
+  String get advice => '• ກວດສອບໄຟວໍ ແລະ ການຕັ້ງຄ່າເຄືອຂ່າຍຂອງທ່ານ\n• ລອງປ່ຽນພອດໃນການຕັ້ງຄ່າ (ເຄືອຂ່າຍ)';
 }

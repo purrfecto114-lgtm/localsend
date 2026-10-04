@@ -81,7 +81,31 @@
     },
     "sendModeHelp": "Explanation",
     "help": "Please ensure that the desired target is also on the same Wi-Fi network.",
-    "placeItems": "Place items to share."
+    "placeItems": "Place items to share.",
+    "diagnosis": {
+      "scanning": "Searching for nearby devices…",
+      "noInterface": {
+        "title": "No network connection",
+        "advice": "This device is not connected to any network. Check the Wi-Fi or cable connection of this device."
+      },
+      "multicastUnavailable": {
+        "title": "Multicast unavailable",
+        "advice": "LocalSend cannot use multicast discovery on this network. Make sure both devices are on the same network, and that AP isolation or a firewall is not blocking UDP port {port}.",
+        "reason": "Reason: {reason}"
+      },
+      "scanNoResult": {
+        "title": "No devices found",
+        "advice": "Discovery is working, but no device answered the announcements or the network scan. The other device may be offline, asleep, or blocked by a firewall. Make sure LocalSend is running on the other device.",
+        "detail": "Sent {announcements} announcements and {scans} network scans without a response."
+      },
+      "rescan": "Search again",
+      "bleHint": "BLE discovery is active: devices are found over Bluetooth only if they also run this fork with the option enabled; the transfer itself still goes over the network.",
+      "manualFallback": {
+        "message": "IP addresses often change. You can still reach a device that is not listed: add it to your favourites or enter its address manually.",
+        "openFavorites": "Open favourites",
+        "manualInput": "Enter address manually"
+      }
+    }
   },
   "settingsTab": {
     "title": "Settings",
@@ -123,7 +147,8 @@
     },
     "send": {
       "title": "Send",
-      "shareViaLinkAutoAccept": "Share via link: Auto accept"
+      "shareViaLinkAutoAccept": "Share via link: Auto accept",
+      "deleteSourceAfterSend": "Delete source files after a successful send"
     },
     "network": {
       "title": "Network",
@@ -139,12 +164,26 @@
         "filtered": "Filtered"
       },
       "discoveryTimeout": "Discovery Timeout",
+      "maxInterfaces": "Max Interfaces (Smart Scan)",
+      "vpnInterfaces": "Include VPN interfaces (Smart Scan)",
+      "vpnInterfacesHint": "Also scan the subnets of VPN tunnel interfaces (Tailscale, WireGuard, ...). VPNs usually do not carry multicast, so their subnets are probed by the HTTP fallback scan instead.",
       "useSystemName": "Use system name",
       "generateRandomAlias": "Generate random alias",
       "portWarning": "You might not be detected by other devices because you are using a custom port. (default: {defaultPort})",
       "encryption": "Encryption",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})"
+      "multicastGroupWarning": "You might not be detected by other devices because you are using a custom multicast address. (default: {defaultMulticast})",
+      "bleDiscovery": "BLE discovery (experimental)",
+      "bleDiscoveryHint": "Discovers nearby devices via Bluetooth even when the network blocks multicast (AP isolation). Works on Android, iOS, macOS and Windows; on Linux this device can find others but cannot be found itself. Both devices need this fork with the option enabled; the file transfer itself still uses the network.",
+      "bleStatusActive": "Active: scanning and advertising. Nearby devices appear only if they also run this fork with the option enabled.",
+      "bleStatusScanOnly": "Active: scanning only. This device cannot be discovered over Bluetooth right now (no BLE advertising support on this platform, or no usable network address yet).",
+      "bleStatusPaused": "Paused. Resumes when the app returns to the foreground.",
+      "bleStatusPermissionDenied": "Bluetooth permissions denied. Grant the \"Nearby devices\" (or \"Location\" on Android 11 and below) permission in the system settings, then toggle this option off and on again.",
+      "bleStatusAdapterOff": "Bluetooth is switched off or unavailable. The discovery restarts itself when Bluetooth becomes available again.",
+      "bleStatusUnsupported": "Not supported on this device: BLE discovery needs Android 7 or newer and a Bluetooth LE radio.",
+      "bleStatusLegacyLocation": "On this Android version, finding other devices also needs the system location services to be turned on (the permission is requested automatically; this device can already be found by others).",
+      "bleStatusError": "BLE discovery could not start. See Troubleshoot > Logs for details.",
+      "bleOpenSystemSettings": "Open system settings"
     },
     "other": {
       "title": "Other",
@@ -228,6 +267,13 @@
     "titleSending": "Sending files",
     "titleReceiving": "Receiving files",
     "savedToGallery": "Saved in Photos",
+    "checksum": {
+      "verified": "Checksums verified",
+      "partiallyVerified": "Checksums verified for {curr} / {n} files",
+      "notVerifiable": "No checksums provided by the sender",
+      "disabled": "Checksum verification is disabled",
+      "attached": "Checksums attached ({curr} / {n} files)"
+    },
     "total": {
       "title": {
         "sending": "Total progress ({time})",
@@ -365,11 +411,42 @@
       "title": "Enter address",
       "hashtag": "Hashtag",
       "ip": "IP Address",
-      "recentlyUsed": "Recently used: "
+      "recentlyUsed": "Recently used: ",
+      "noHashtagCandidates": "The current network has no IPv4 address, so the hashtag cannot be expanded to a candidate address. Please enter the full address instead (e.g. 192.168.1.5 or fe80::1).",
+      "validation": {
+        "invalid": "Enter a valid IPv4 address, IPv6 address or host name.",
+        "scheme": "Enter the address only, without \"http://\" or \"https://\".",
+        "port": "Enter the address only. The port is taken from the settings."
+      }
     },
     "cancelSession": {
       "title": "Cancel file transfer",
       "content": "Do you really want to cancel the file transfer?"
+    },
+    "connectionError": {
+      "title": "Connection failed",
+      "timeout": {
+        "message": "The device did not respond in time.",
+        "advice": "It is probably offline, asleep, or a firewall is blocking the connection. Make sure LocalSend is running on the other device and that both devices are on the same network."
+      },
+      "refused": {
+        "message": "The device refused the connection.",
+        "advice": "LocalSend does not seem to be running on the target device, or it is listening on a different port. Start LocalSend on the other device or check the port."
+      },
+      "forbidden": {
+        "message": "The device rejected the request.",
+        "advice": "A PIN may be required, or the pairing with the device has changed. Check the PIN and quick save settings on the target device."
+      },
+      "other": {
+        "message": "The connection could not be established.",
+        "advice": "Check the address and port, make sure LocalSend is running on the target device, and that no firewall or VPN is blocking the connection."
+      },
+      "retry": "Retry",
+      "details": "Error details:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Delete source files",
+      "content": "After files have been sent successfully, they will be deleted from this device. This cannot be undone."
     },
     "cannotOpenFile": {
       "title": "Cannot open file",
@@ -465,6 +542,25 @@
       "single": "Sends files to one recipient. Selection will be cleared after finished file transfer.",
       "multiple": "Sends files to multiple recipients. Selection will not be cleared.",
       "link": "Recipients who do not have LocalSend installed can download the selected files by opening the link in their browser."
+    },
+    "startupError": {
+      "title": "Could not start the server",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "Windows denied access to the port (socket error 10013).",
+        "advice": "This is usually caused by a port range reserved by Hyper-V, WSL or Docker, or by a broken Winsock catalog:\n• Change the port in Settings (Network)\n• Check the reserved ranges with: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repair Winsock as administrator with: netsh winsock reset (reboot afterwards)"
+      },
+      "addressInUse": {
+        "hint": "The port is already used by another application.",
+        "advice": "Another program (or a second LocalSend instance) is listening on this port:\n• Close the other application, or\n• Change the port in Settings (Network)"
+      },
+      "generic": {
+        "hint": "The server could not be started.",
+        "advice": "• Check your firewall and network settings\n• Try changing the port in Settings (Network)"
+      },
+      "details": "Error details:",
+      "copyDetails": "Copy details",
+      "openSettings": "Open settings"
     },
     "zoom": {
       "title": "URL"

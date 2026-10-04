@@ -233,6 +233,8 @@ class _Translations$sendTab$ro extends Translations$sendTab$en {
   String get help => 'Verifică dacă destinația se află în aceeași rețea Wi-Fi.';
   @override
   String get placeItems => 'Adaugă elemente pentru a partaja.';
+  @override
+  late final _Translations$sendTab$diagnosis$ro diagnosis = _Translations$sendTab$diagnosis$ro._(_root);
 }
 
 // Path: settingsTab
@@ -457,6 +459,8 @@ class _Translations$progressPage$ro extends Translations$progressPage$en {
   @override
   String get savedToGallery => 'Salvat în Galerie';
   @override
+  late final _Translations$progressPage$checksum$ro checksum = _Translations$progressPage$checksum$ro._(_root);
+  @override
   late final _Translations$progressPage$total$ro total = _Translations$progressPage$total$ro._(_root);
   @override
   late final _Translations$progressPage$remainingTime$ro remainingTime = _Translations$progressPage$remainingTime$ro._(_root);
@@ -676,6 +680,11 @@ class _Translations$dialogs$ro extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ro cancelSession = _Translations$dialogs$cancelSession$ro._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ro connectionError = _Translations$dialogs$connectionError$ro._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ro deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ro._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ro cannotOpenFile = _Translations$dialogs$cannotOpenFile$ro._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ro encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ro._(_root);
@@ -716,6 +725,8 @@ class _Translations$dialogs$ro extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ro pin = _Translations$dialogs$pin$ro._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ro sendModeHelp = _Translations$dialogs$sendModeHelp$ro._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ro startupError = _Translations$dialogs$startupError$ro._(_root);
   @override
   late final _Translations$dialogs$zoom$ro zoom = _Translations$dialogs$zoom$ro._(_root);
 }
@@ -920,6 +931,32 @@ class _Translations$sendTab$sendModes$ro extends Translations$sendTab$sendModes$
   String get link => 'Partajează prin link';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ro extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Se caută dispozitive în apropiere…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ro noInterface = _Translations$sendTab$diagnosis$noInterface$ro._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ro multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ro._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ro scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ro._(_root);
+  @override
+  String get rescan => 'Caută din nou';
+  @override
+  String get bleHint =>
+      'Descoperirea BLE este activă: dispozitivele sunt găsite prin Bluetooth doar dacă rulează și ele acest fork cu opțiunea activată; transferul în sine se face tot prin rețea.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ro manualFallback = _Translations$sendTab$diagnosis$manualFallback$ro._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ro extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ro._(TranslationsRo root) : this._root = root, super.internal(root);
@@ -1001,6 +1038,8 @@ class _Translations$settingsTab$send$ro extends Translations$settingsTab$send$en
   String get shareViaLinkAutoAccept => 'Acceptă automat cererile în modul „Partajare prin link”';
   @override
   String get createChecksums => 'Creează sume de control la trimiterea fișierelor';
+  @override
+  String get deleteSourceAfterSend => 'Șterge fișierele sursă după o trimitere reușită';
 }
 
 // Path: settingsTab.network
@@ -1031,6 +1070,13 @@ class _Translations$settingsTab$network$ro extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Expirare descoperire';
   @override
+  String get maxInterfaces => 'Număr maxim de interfețe (scanare inteligentă)';
+  @override
+  String get vpnInterfaces => 'Include interfețele VPN (scanare inteligentă)';
+  @override
+  String get vpnInterfacesHint =>
+      'Scanează și subrețelele interfețelor de tunel VPN (Tailscale, WireGuard, …). VPN-urile de obicei nu transportă multicast, deci subrețelele lor sunt sondate prin scanarea HTTP de rezervă.';
+  @override
   String get useSystemName => 'Folosește numele sistemului';
   @override
   String get generateRandomAlias => 'Generează alias aleatoriu';
@@ -1044,6 +1090,34 @@ class _Translations$settingsTab$network$ro extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'Este posibil să nu fii detectat de alte dispozitive pentru că folosești o adresă multicast personalizată. (implicit: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Descoperire BLE (experimental)';
+  @override
+  String get bleDiscoveryHint =>
+      'Descoperă dispozitivele din apropiere prin Bluetooth chiar și când rețeaua blochează multicastul (izolarea AP). Funcționează pe Android, iOS, macOS și Windows; pe Linux, acest dispozitiv îi poate găsi pe ceilalți, dar nu poate fi găsit el însuși. Ambele dispozitive au nevoie de acest fork cu opțiunea activată; transferul de fișiere în sine folosește în continuare rețeaua.';
+  @override
+  String get bleStatusActive =>
+      'Activă: scanare și difuzare. Dispozitivele din apropiere apar doar dacă rulează și ele acest fork cu opțiunea activată.';
+  @override
+  String get bleStatusScanOnly =>
+      'Activă: doar scanare. Acest dispozitiv nu poate fi găsit prin Bluetooth în acest moment (fără suport pentru difuzare BLE pe această platformă, sau încă fără o adresă de rețea utilizabilă).';
+  @override
+  String get bleStatusPaused => 'În pauză. Se reia când aplicația revine în prim-plan.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Permisiunile de Bluetooth au fost refuzate. Acordă permisiunea „Dispozitive din apropiere” (sau „Locație” pe Android 11 și versiunile anterioare) din setările sistemului, apoi dezactivează și reactivează această opțiune.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Bluetooth-ul este oprit sau indisponibil. Descoperirea se repornește singură când Bluetooth devine din nou disponibil.';
+  @override
+  String get bleStatusUnsupported => 'Necompatibil pe acest dispozitiv: descoperirea BLE necesită Android 7 sau mai nou și un radio Bluetooth LE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Pe această versiune de Android, găsirea altor dispozitive necesită în plus ca serviciile de locație ale sistemului să fie activate (permisiunea se solicită automat; acest dispozitiv poate fi deja găsit de ceilalți).';
+  @override
+  String get bleStatusError => 'Descoperirea BLE nu a putut porni. Vezi Depanare > Jurnale pentru detalii.';
+  @override
+  String get bleOpenSystemSettings => 'Deschide setările sistemului';
 }
 
 // Path: settingsTab.other
@@ -1161,6 +1235,25 @@ class _Translations$deviceDetailsPage$logs$ro extends Translations$deviceDetails
   String updated({required Object protocol, required Object host}) => 'Actualizat prin ${protocol} (${host})';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ro extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Sume de control verificate';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Sume de control verificate pentru ${curr} / ${n} fișiere';
+  @override
+  String get notVerifiable => 'Expeditorul nu a furnizat sume de control';
+  @override
+  String get disabled => 'Verificarea sumelor de control este dezactivată';
+  @override
+  String attached({required Object curr, required Object n}) => 'Sume de control atașate (${curr} / ${n} fișiere)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ro extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ro._(TranslationsRo root) : this._root = root, super.internal(root);
@@ -1254,6 +1347,11 @@ class _Translations$dialogs$addressInput$ro extends Translations$dialogs$address
   String get ip => 'Adresă IP';
   @override
   String get recentlyUsed => 'Folosit recent: ';
+  @override
+  String get noHashtagCandidates =>
+      'Rețeaua actuală nu are adresă IPv4, deci hashtagul nu poate fi extins la o adresă candidată. Te rugăm să introduci adresa completă (de ex. 192.168.1.5 sau fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ro validation = _Translations$dialogs$addressInput$validation$ro._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1267,6 +1365,42 @@ class _Translations$dialogs$cancelSession$ro extends Translations$dialogs$cancel
   String get title => 'Anulează trimiterea fișierelor';
   @override
   String get content => 'Chiar vrei să anulezi transferul fișierelor?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ro extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Conectare eșuată';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ro timeout = _Translations$dialogs$connectionError$timeout$ro._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ro refused = _Translations$dialogs$connectionError$refused$ro._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ro forbidden = _Translations$dialogs$connectionError$forbidden$ro._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ro other = _Translations$dialogs$connectionError$other$ro._(_root);
+  @override
+  String get retry => 'Încearcă din nou';
+  @override
+  String get details => 'Detalii despre eroare:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ro extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Ștergerea fișierelor sursă';
+  @override
+  String get content => 'După ce fișierele sunt trimise cu succes, ele vor fi șterse de pe acest dispozitiv. Această acțiune nu poate fi anulată.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1558,6 +1692,32 @@ class _Translations$dialogs$sendModeHelp$ro extends Translations$dialogs$sendMod
   String get link => 'Destinatarii care nu au LocalSend instalat pot descărca fișierele selectate prin deschiderea linkului în browserul lor.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ro extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Serverul nu a putut porni';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ro windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ro._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ro addressInUse = _Translations$dialogs$startupError$addressInUse$ro._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ro generic = _Translations$dialogs$startupError$generic$ro._(_root);
+  @override
+  String get details => 'Detalii despre eroare:';
+  @override
+  String get copyDetails => 'Copiază detaliile';
+  @override
+  String get openSettings => 'Deschide setările';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ro extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ro._(TranslationsRo root) : this._root = root, super.internal(root);
@@ -1567,6 +1727,68 @@ class _Translations$dialogs$zoom$ro extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ro extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Nicio conexiune la rețea';
+  @override
+  String get advice => 'Acest dispozitiv nu este conectat la nicio rețea. Verifică conexiunea Wi-Fi sau prin cablu a acestui dispozitiv.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ro extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Multicast indisponibil';
+  @override
+  String advice({required Object port}) =>
+      'LocalSend nu poate folosi descoperirea prin multicast în această rețea. Asigură-te că ambele dispozitive sunt în aceeași rețea și că izolarea AP sau un firewall nu blochează portul UDP ${port}.';
+  @override
+  String reason({required Object reason}) => 'Motiv: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ro extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Niciun dispozitiv găsit';
+  @override
+  String get advice =>
+      'Descoperirea funcționează, dar niciun dispozitiv nu a răspuns nici la anunțuri, nici la scanarea rețelei. Celălalt dispozitiv poate fi offline, în repaus sau blocat de un firewall. Asigură-te că LocalSend rulează pe celălalt dispozitiv.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'S-au trimis ${announcements} anunțuri și ${scans} scanări de rețea fără răspuns.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ro extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Adresele IP se schimbă des. Tot poți ajunge la un dispozitiv care nu apare în listă: adaugă-l la favorite sau introdu adresa lui manual.';
+  @override
+  String get openFavorites => 'Deschide favoritele';
+  @override
+  String get manualInput => 'Introdu adresa manual';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1653,4 +1875,116 @@ class _Translations$whatsNewPage$changes$v1_18_0$ro extends Translations$whatsNe
     'Cererile de la favorite sunt acum acceptate automat. Această opțiune este activată implicit și poate fi dezactivată din setări.',
     'Pe Android, transferurile continuă cât timp aplicația este în fundal sau ecranul este stins. Pe iOS, aplicația trebuie în continuare să rămână în prim-plan.',
   ];
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ro extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Introdu o adresă IPv4, o adresă IPv6 sau un nume de gazdă valid.';
+  @override
+  String get scheme => 'Introdu doar adresa, fără "http://" sau "https://".';
+  @override
+  String get port => 'Introdu doar adresa. Portul este preluat din setări.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ro extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Dispozitivul nu a răspuns la timp.';
+  @override
+  String get advice =>
+      'Probabil este offline, în repaus sau un firewall blochează conexiunea. Asigură-te că LocalSend rulează pe celălalt dispozitiv și că ambele dispozitive sunt în aceeași rețea.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ro extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Dispozitivul a refuzat conexiunea.';
+  @override
+  String get advice =>
+      'Se pare că LocalSend nu rulează pe dispozitivul țintă sau că ascultă pe un alt port. Pornește LocalSend pe celălalt dispozitiv sau verifică portul.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ro extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Dispozitivul a respins cererea.';
+  @override
+  String get advice =>
+      'Poate fi necesar un PIN sau asocierea cu dispozitivul s-a schimbat. Verifică codul PIN și setările de salvare rapidă pe dispozitivul țintă.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ro extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Conexiunea nu a putut fi stabilită.';
+  @override
+  String get advice =>
+      'Verifică adresa și portul, asigură-te că LocalSend rulează pe dispozitivul țintă și că niciun firewall sau VPN nu blochează conexiunea.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ro extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Windows a refuzat accesul la port (eroare de socket 10013).';
+  @override
+  String get advice =>
+      'Aceasta este cauzată de obicei de un interval de porturi rezervat de Hyper-V, WSL sau Docker, sau de un catalog Winsock corupt:\n• Schimbă portul din Setări (Rețea)\n• Verifică intervalele rezervate cu: netsh interface ipv4 show excludedportrange protocol=tcp\n• Repară Winsock ca administrator cu: netsh winsock reset (repornește după)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ro extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Portul este deja folosit de altă aplicație.';
+  @override
+  String get advice =>
+      'Un alt program (sau a doua instanță de LocalSend) ascultă pe acest port:\n• Închide cealaltă aplicație, sau\n• Schimbă portul din Setări (Rețea)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ro extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ro._(TranslationsRo root) : this._root = root, super.internal(root);
+
+  final TranslationsRo _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Serverul nu a putut fi pornit.';
+  @override
+  String get advice => '• Verifică firewall-ul și setările de rețea\n• Încearcă să schimbi portul din Setări (Rețea)';
 }

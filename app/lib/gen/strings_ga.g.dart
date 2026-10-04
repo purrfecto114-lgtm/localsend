@@ -224,6 +224,8 @@ class _Translations$sendTab$ga extends Translations$sendTab$en {
   String get help => 'Cinntigh le do thoil go bhfuil an sprioc atá uait ar an líonra Wi-Fi céanna freisin.';
   @override
   String get placeItems => 'Cuir míreanna le roinnt.';
+  @override
+  late final _Translations$sendTab$diagnosis$ga diagnosis = _Translations$sendTab$diagnosis$ga._(_root);
 }
 
 // Path: settingsTab
@@ -410,6 +412,8 @@ class _Translations$progressPage$ga extends Translations$progressPage$en {
   String get titleReceiving => 'Ag fáil comhad';
   @override
   String get savedToGallery => 'Sábháilte i nGrianghraif';
+  @override
+  late final _Translations$progressPage$checksum$ga checksum = _Translations$progressPage$checksum$ga._(_root);
   @override
   late final _Translations$progressPage$total$ga total = _Translations$progressPage$total$ga._(_root);
 }
@@ -607,6 +611,11 @@ class _Translations$dialogs$ga extends Translations$dialogs$en {
   @override
   late final _Translations$dialogs$cancelSession$ga cancelSession = _Translations$dialogs$cancelSession$ga._(_root);
   @override
+  late final _Translations$dialogs$connectionError$ga connectionError = _Translations$dialogs$connectionError$ga._(_root);
+  @override
+  late final _Translations$dialogs$deleteSourceAfterSendDialog$ga deleteSourceAfterSendDialog =
+      _Translations$dialogs$deleteSourceAfterSendDialog$ga._(_root);
+  @override
   late final _Translations$dialogs$cannotOpenFile$ga cannotOpenFile = _Translations$dialogs$cannotOpenFile$ga._(_root);
   @override
   late final _Translations$dialogs$encryptionDisabledNotice$ga encryptionDisabledNotice = _Translations$dialogs$encryptionDisabledNotice$ga._(_root);
@@ -647,6 +656,8 @@ class _Translations$dialogs$ga extends Translations$dialogs$en {
   late final _Translations$dialogs$pin$ga pin = _Translations$dialogs$pin$ga._(_root);
   @override
   late final _Translations$dialogs$sendModeHelp$ga sendModeHelp = _Translations$dialogs$sendModeHelp$ga._(_root);
+  @override
+  late final _Translations$dialogs$startupError$ga startupError = _Translations$dialogs$startupError$ga._(_root);
   @override
   late final _Translations$dialogs$zoom$ga zoom = _Translations$dialogs$zoom$ga._(_root);
 }
@@ -851,6 +862,32 @@ class _Translations$sendTab$sendModes$ga extends Translations$sendTab$sendModes$
   String get link => 'Comhroinn trí nasc';
 }
 
+// Path: sendTab.diagnosis
+class _Translations$sendTab$diagnosis$ga extends Translations$sendTab$diagnosis$en {
+  _Translations$sendTab$diagnosis$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get scanning => 'Gléasanna in aice láimhe á gcuardach…';
+  @override
+  late final _Translations$sendTab$diagnosis$noInterface$ga noInterface = _Translations$sendTab$diagnosis$noInterface$ga._(_root);
+  @override
+  late final _Translations$sendTab$diagnosis$multicastUnavailable$ga multicastUnavailable = _Translations$sendTab$diagnosis$multicastUnavailable$ga._(
+    _root,
+  );
+  @override
+  late final _Translations$sendTab$diagnosis$scanNoResult$ga scanNoResult = _Translations$sendTab$diagnosis$scanNoResult$ga._(_root);
+  @override
+  String get rescan => 'Cuardaigh arís';
+  @override
+  String get bleHint =>
+      'Tá fionnachtan BLE gníomhach: ní aimsítear gléasanna thar Bluetooth mura bhfuil an fork seo acu freisin leis an rogha cumasaithe; téann an t-aistriú féin thar an líonra fós.';
+  @override
+  late final _Translations$sendTab$diagnosis$manualFallback$ga manualFallback = _Translations$sendTab$diagnosis$manualFallback$ga._(_root);
+}
+
 // Path: settingsTab.general
 class _Translations$settingsTab$general$ga extends Translations$settingsTab$general$en {
   _Translations$settingsTab$general$ga._(TranslationsGa root) : this._root = root, super.internal(root);
@@ -928,6 +965,8 @@ class _Translations$settingsTab$send$ga extends Translations$settingsTab$send$en
   String get title => 'Seol';
   @override
   String get shareViaLinkAutoAccept => 'Glac le hiarratais go huathoibríoch sa mhód "Comhroinn trí nasc"';
+  @override
+  String get deleteSourceAfterSend => 'Scrios comhaid fhoinseacha tar éis seolta rathúil';
 }
 
 // Path: settingsTab.network
@@ -958,6 +997,13 @@ class _Translations$settingsTab$network$ga extends Translations$settingsTab$netw
   @override
   String get discoveryTimeout => 'Am Teorann Fionnachtana';
   @override
+  String get maxInterfaces => 'Uaschomhéadain (Scan Cliste)';
+  @override
+  String get vpnInterfaces => 'Cuir comhéadain VPN san áireamh (Scan Cliste)';
+  @override
+  String get vpnInterfacesHint =>
+      'Scanadh fo-líonraí comhéadain tolláin VPN freisin (Tailscale, WireGuard, ...). Ní iompraíonn VPNanna ilchraoladh de ghnáth, mar sin úsáidtear an scanadh cúltaca HTTP chun a bhfo-líonraí a iniúchadh.';
+  @override
   String get useSystemName => 'Úsáid ainm an chórais';
   @override
   String get generateRandomAlias => 'Gin leasainm randamach';
@@ -971,6 +1017,35 @@ class _Translations$settingsTab$network$ga extends Translations$settingsTab$netw
   @override
   String multicastGroupWarning({required Object defaultMulticast}) =>
       'B’fhéidir nach mbraithfidh gléasanna eile thú mar go bhfuil seoladh ilchraolta saincheaptha in úsáid agat. (réamhshocrú: ${defaultMulticast})';
+  @override
+  String get bleDiscovery => 'Fionnachtan BLE (turgnamhach)';
+  @override
+  String get bleDiscoveryHint =>
+      'Aimsíonn sé gléasanna in aice láimhe trí Bluetooth fiú nuair a chuireann an líonra ilchraoladh ar cosc (Leithlisiú Pointe Rochtana (AP)). Oibríonn sé ar Android, iOS, macOS agus Windows; ar Linux is féidir leis an ngléas seo cinn eile a aimsiú ach ní féidir é féin a aimsiú. Teastaíonn an fork seo ón dá ghléas leis an rogha cumasaithe; úsáideann aistriú na gcomhad an líonra fós.';
+  @override
+  String get bleStatusActive =>
+      'Gníomhach: ag scanadh agus ag fógairt. Ní thaispeánfar gléasanna in aice láimhe mura bhfuil an fork seo acu freisin leis an rogha cumasaithe.';
+  @override
+  String get bleStatusScanOnly =>
+      'Gníomhach: scanadh amháin. Ní féidir an gléas seo a aimsiú thar Bluetooth faoi láthair (ní thacaítear le fógairt BLE ar an ardán seo, nó níl seoladh líonra inúsáidte ann go fóill).';
+  @override
+  String get bleStatusPaused => 'Cuirtha ar sos. Atosóidh sé nuair a théann an aip ar ais chuig an tulra tosaigh.';
+  @override
+  String get bleStatusPermissionDenied =>
+      'Diúltaiodh do cheadanna Bluetooth. Deonaigh an cead "Gléasanna in aice láimhe" (nó "Suíomh" ar Android 11 agus níos sine) i socruithe an chórais, ansin múch agus cumasaigh an rogha seo arís.';
+  @override
+  String get bleStatusAdapterOff =>
+      'Tá Bluetooth múchta nó nach bhfuil ar fáil. Atosaíonn an fionnachtan é féin nuair a bheidh Bluetooth ar fáil arís.';
+  @override
+  String get bleStatusUnsupported =>
+      'Ní thacaítear leis ar an ngléas seo: teastaíonn Android 7 nó níos nuaí agus raidió Bluetooth LE le haghaidh fionnachtain BLE.';
+  @override
+  String get bleStatusLegacyLocation =>
+      'Ar an leagan Android seo, teastaíonn seirbhísí suímh an chórais a bheith curtha ar siúl freisin chun gléasanna eile a aimsiú (iarrtar an cead go huathoibríoch; is féidir le gléasanna eile an gléas seo a aimsiú cheana féin).';
+  @override
+  String get bleStatusError => 'Níorbh fhéidir fionnachtan BLE a thosú. Féach Fabhtcheartú > Loganna chun sonraí a fháil.';
+  @override
+  String get bleOpenSystemSettings => 'Oscail socruithe an chórais';
 }
 
 // Path: settingsTab.other
@@ -1054,6 +1129,25 @@ class _Translations$receiveHistoryPage$entryActions$ga extends Translations$rece
   String get deleteFromHistory => 'Scrios ón stair';
 }
 
+// Path: progressPage.checksum
+class _Translations$progressPage$checksum$ga extends Translations$progressPage$checksum$en {
+  _Translations$progressPage$checksum$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get verified => 'Suimeanna seiceála fíoraithe';
+  @override
+  String partiallyVerified({required Object curr, required Object n}) => 'Suimeanna seiceála fíoraithe do ${curr} / ${n} comhad';
+  @override
+  String get notVerifiable => 'Níor chuir an seoltóir aon suimeanna seiceála ar fáil';
+  @override
+  String get disabled => 'Tá fíorú suimeanna seiceála díchumasaithe';
+  @override
+  String attached({required Object curr, required Object n}) => 'Suimeanna seiceála ceangailte (${curr} / ${n} comhad)';
+}
+
 // Path: progressPage.total
 class _Translations$progressPage$total$ga extends Translations$progressPage$total$en {
   _Translations$progressPage$total$ga._(TranslationsGa root) : this._root = root, super.internal(root);
@@ -1108,6 +1202,11 @@ class _Translations$dialogs$addressInput$ga extends Translations$dialogs$address
   String get title => 'Iontráil seoladh';
   @override
   String get recentlyUsed => 'Úsáidte le déanaí: ';
+  @override
+  String get noHashtagCandidates =>
+      'Níl aon seoladh IPv4 ag an líonra reatha, mar sin ní féidir an hashtag a leathnú go seoladh iarrthóra. Cuir isteach an seoladh iomlán ina ionad (m.sh. 192.168.1.5 nó fe80::1).';
+  @override
+  late final _Translations$dialogs$addressInput$validation$ga validation = _Translations$dialogs$addressInput$validation$ga._(_root);
 }
 
 // Path: dialogs.cancelSession
@@ -1121,6 +1220,42 @@ class _Translations$dialogs$cancelSession$ga extends Translations$dialogs$cancel
   String get title => 'Cealaigh aistriú comhad';
   @override
   String get content => 'An bhfuil tú cinnte gur mhaith leat an t-aistriú comhad a chealú?';
+}
+
+// Path: dialogs.connectionError
+class _Translations$dialogs$connectionError$ga extends Translations$dialogs$connectionError$en {
+  _Translations$dialogs$connectionError$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Theip ar an nasc';
+  @override
+  late final _Translations$dialogs$connectionError$timeout$ga timeout = _Translations$dialogs$connectionError$timeout$ga._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$refused$ga refused = _Translations$dialogs$connectionError$refused$ga._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$forbidden$ga forbidden = _Translations$dialogs$connectionError$forbidden$ga._(_root);
+  @override
+  late final _Translations$dialogs$connectionError$other$ga other = _Translations$dialogs$connectionError$other$ga._(_root);
+  @override
+  String get retry => 'Bain triail eile as';
+  @override
+  String get details => 'Sonraí na hearráide:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class _Translations$dialogs$deleteSourceAfterSendDialog$ga extends Translations$dialogs$deleteSourceAfterSendDialog$en {
+  _Translations$dialogs$deleteSourceAfterSendDialog$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Scrios comhaid fhoinseacha';
+  @override
+  String get content => 'Tar éis comhaid a sheoladh go rathúil, scriosfar ón ngléas seo iad. Ní féidir é seo a chealú.';
 }
 
 // Path: dialogs.cannotOpenFile
@@ -1416,6 +1551,32 @@ class _Translations$dialogs$sendModeHelp$ga extends Translations$dialogs$sendMod
       'Is féidir le faighteoirí nach bhfuil LocalSend suiteáilte acu na comhaid roghnaithe a íoslódáil tríd an nasc a oscailt ina mbrabhsálaí.';
 }
 
+// Path: dialogs.startupError
+class _Translations$dialogs$startupError$ga extends Translations$dialogs$startupError$en {
+  _Translations$dialogs$startupError$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Níorbh fhéidir an freastalaí a thosú';
+  @override
+  String port({required Object port}) => 'Port: ${port}';
+  @override
+  late final _Translations$dialogs$startupError$windowsAccessDenied$ga windowsAccessDenied =
+      _Translations$dialogs$startupError$windowsAccessDenied$ga._(_root);
+  @override
+  late final _Translations$dialogs$startupError$addressInUse$ga addressInUse = _Translations$dialogs$startupError$addressInUse$ga._(_root);
+  @override
+  late final _Translations$dialogs$startupError$generic$ga generic = _Translations$dialogs$startupError$generic$ga._(_root);
+  @override
+  String get details => 'Sonraí na hearráide:';
+  @override
+  String get copyDetails => 'Cóipeáil na sonraí';
+  @override
+  String get openSettings => 'Oscail na socruithe';
+}
+
 // Path: dialogs.zoom
 class _Translations$dialogs$zoom$ga extends Translations$dialogs$zoom$en {
   _Translations$dialogs$zoom$ga._(TranslationsGa root) : this._root = root, super.internal(root);
@@ -1425,6 +1586,68 @@ class _Translations$dialogs$zoom$ga extends Translations$dialogs$zoom$en {
   // Translations
   @override
   String get title => 'URL';
+}
+
+// Path: sendTab.diagnosis.noInterface
+class _Translations$sendTab$diagnosis$noInterface$ga extends Translations$sendTab$diagnosis$noInterface$en {
+  _Translations$sendTab$diagnosis$noInterface$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Gan nasc líonra';
+  @override
+  String get advice => 'Níl an gléas seo ceangailte le líonra ar bith. Seiceáil nasc Wi-Fi nó cábla an ghléis seo.';
+}
+
+// Path: sendTab.diagnosis.multicastUnavailable
+class _Translations$sendTab$diagnosis$multicastUnavailable$ga extends Translations$sendTab$diagnosis$multicastUnavailable$en {
+  _Translations$sendTab$diagnosis$multicastUnavailable$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Níl ilchraoladh ar fáil';
+  @override
+  String advice({required Object port}) =>
+      'Ní féidir le LocalSend fionnachtan ilchraolta a úsáid ar an líonra seo. Cinntigh go bhfuil an dá ghléas ar an líonra céanna, agus nach bhfuil Leithlisiú Pointe Rochtana (AP) ná balla dóiteáin ag cur port UDP ${port} ar cosc.';
+  @override
+  String reason({required Object reason}) => 'Fáth: ${reason}';
+}
+
+// Path: sendTab.diagnosis.scanNoResult
+class _Translations$sendTab$diagnosis$scanNoResult$ga extends Translations$sendTab$diagnosis$scanNoResult$en {
+  _Translations$sendTab$diagnosis$scanNoResult$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'Níor aimsíodh aon ghléasanna';
+  @override
+  String get advice =>
+      'Tá an fionnachtan ag obair, ach ní fhreagair aon ghléas na fógraí ná an scanadh líonra. B\'fhéidir go bhfuil an gléas eile as líne, ina chodladh, nó curtha ar cosc ag balla dóiteáin. Cinntigh go bhfuil LocalSend ag rith ar an ngléas eile.';
+  @override
+  String detail({required Object announcements, required Object scans}) =>
+      'Seoladh ${announcements} fhógra agus ${scans} scanadh líonra gan freagra.';
+}
+
+// Path: sendTab.diagnosis.manualFallback
+class _Translations$sendTab$diagnosis$manualFallback$ga extends Translations$sendTab$diagnosis$manualFallback$en {
+  _Translations$sendTab$diagnosis$manualFallback$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message =>
+      'Athraíonn seoltaí IP go minic. Is féidir gléas nach bhfuil ar an liosta a bhaint amach fós: cuir leis na ceanáin é, nó cuir a sheoladh isteach de láimh.';
+  @override
+  String get openFavorites => 'Oscail ceanáin';
+  @override
+  String get manualInput => 'Cuir an seoladh isteach de láimh';
 }
 
 // Path: settingsTab.general.brightnessOptions
@@ -1494,4 +1717,116 @@ class _Translations$progressPage$total$title$ga extends Translations$progressPag
   String get canceledSender => 'Cealaithe ag an seoltóir';
   @override
   String get canceledReceiver => 'Cealaithe ag an nglacadóir';
+}
+
+// Path: dialogs.addressInput.validation
+class _Translations$dialogs$addressInput$validation$ga extends Translations$dialogs$addressInput$validation$en {
+  _Translations$dialogs$addressInput$validation$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get invalid => 'Cuir isteach seoladh IPv4 bailí, seoladh IPv6 bailí nó ainm óstach.';
+  @override
+  String get scheme => 'Cuir isteach an seoladh amháin, gan "http://" nó "https://".';
+  @override
+  String get port => 'Cuir isteach an seoladh amháin. Glactar an port as na socruithe.';
+}
+
+// Path: dialogs.connectionError.timeout
+class _Translations$dialogs$connectionError$timeout$ga extends Translations$dialogs$connectionError$timeout$en {
+  _Translations$dialogs$connectionError$timeout$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Níor fhreagair an gléas in am.';
+  @override
+  String get advice =>
+      'Is dócha go bhfuil sé as líne, ina chodladh, nó go bhfuil balla dóiteáin ag cur bac ar an nasc. Cinntigh go bhfuil LocalSend ag rith ar an ngléas eile agus go bhfuil an dá ghléas ar an líonra céanna.';
+}
+
+// Path: dialogs.connectionError.refused
+class _Translations$dialogs$connectionError$refused$ga extends Translations$dialogs$connectionError$refused$en {
+  _Translations$dialogs$connectionError$refused$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Dhiúltaigh an gléas don nasc.';
+  @override
+  String get advice =>
+      'Dealraíonn sé nach bhfuil LocalSend ag rith ar an ngléas sprice, nó go bhfuil sé ag éisteacht ar phort eile. Tosaigh LocalSend ar an ngléas eile nó seiceáil an port.';
+}
+
+// Path: dialogs.connectionError.forbidden
+class _Translations$dialogs$connectionError$forbidden$ga extends Translations$dialogs$connectionError$forbidden$en {
+  _Translations$dialogs$connectionError$forbidden$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Dhiúltaigh an gléas don iarratas.';
+  @override
+  String get advice =>
+      'B\'fhéidir go bhfuil UAP de dhíth, nó go bhfuil an phéireáil leis an ngléas athraithe. Seiceáil an UAP agus na socruithe sábhála thapa ar an ngléas sprice.';
+}
+
+// Path: dialogs.connectionError.other
+class _Translations$dialogs$connectionError$other$ga extends Translations$dialogs$connectionError$other$en {
+  _Translations$dialogs$connectionError$other$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get message => 'Níorbh fhéidir an nasc a bhunú.';
+  @override
+  String get advice =>
+      'Seiceáil an seoladh agus an port, cinntigh go bhfuil LocalSend ag rith ar an ngléas sprice, agus nach bhfuil balla dóiteáin ná VPN ag cur bac ar an nasc.';
+}
+
+// Path: dialogs.startupError.windowsAccessDenied
+class _Translations$dialogs$startupError$windowsAccessDenied$ga extends Translations$dialogs$startupError$windowsAccessDenied$en {
+  _Translations$dialogs$startupError$windowsAccessDenied$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Dhiúltaigh Windows rochtain ar an bport (earráid soicéad 10013).';
+  @override
+  String get advice =>
+      'Is gnách gurb é is cúis leis seo raon port in áirithe ag Hyper-V, WSL nó Docker, nó catalóg Winsock lofa:\n• Athraigh an port sna Socruithe (Líonra)\n• Seiceáil na raonta in áirithe le: netsh interface ipv4 show excludedportrange protocol=tcp\n• Deisigh Winsock mar riarthóir le: netsh winsock reset (atosú ina dhiaidh sin)';
+}
+
+// Path: dialogs.startupError.addressInUse
+class _Translations$dialogs$startupError$addressInUse$ga extends Translations$dialogs$startupError$addressInUse$en {
+  _Translations$dialogs$startupError$addressInUse$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Tá an port in úsáid ag feidhmchlár eile cheana.';
+  @override
+  String get advice =>
+      'Tá clár eile (nó dara hásc LocalSend) ag éisteacht ar an bport seo:\n• Dún an feidhmchlár eile, nó\n• Athraigh an port sna Socruithe (Líonra)';
+}
+
+// Path: dialogs.startupError.generic
+class _Translations$dialogs$startupError$generic$ga extends Translations$dialogs$startupError$generic$en {
+  _Translations$dialogs$startupError$generic$ga._(TranslationsGa root) : this._root = root, super.internal(root);
+
+  final TranslationsGa _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get hint => 'Níorbh fhéidir an freastalaí a thosú.';
+  @override
+  String get advice => '• Seiceáil do bhalla dóiteáin agus do shocruithe líonra\n• Bain triail as an bport a athrú sna Socruithe (Líonra)';
 }

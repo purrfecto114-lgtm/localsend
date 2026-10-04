@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "Magyarázat",
     "help": "Győződjön meg arról, hogy a kívánt eszköz is ugyanazon a wifi hálózaton van.",
-    "placeItems": "Helyezze el a megosztandó elemeket."
+    "placeItems": "Helyezze el a megosztandó elemeket.",
+    "diagnosis": {
+      "scanning": "Közeli eszközök keresése…",
+      "noInterface": {
+        "title": "Nincs hálózati kapcsolat",
+        "advice": "Ez az eszköz nincs csatlakoztatva egyetlen hálózathoz sem. Ellenőrizze az eszköz Wi-Fi- vagy kábeles kapcsolatát."
+      },
+      "multicastUnavailable": {
+        "title": "A multicast nem érhető el",
+        "advice": "A LocalSend nem tud multicast felfedezést használni ezen a hálózaton. Győződjön meg róla, hogy mindkét eszköz ugyanazon a hálózaton van, és hogy AP-izoláció vagy tűzfal nem blokkolja a(z) {port} UDP-portot.",
+        "reason": "Ok: {reason}"
+      },
+      "scanNoResult": {
+        "title": "Nem találhatók eszközök",
+        "advice": "A felfedezés működik, de egyetlen eszköz sem válaszolt a bejelentésekre vagy a hálózati pásztázásra. A másik eszköz offline lehet, alvó állapotban lehet, vagy tűzfal blokkolja. Győződjön meg róla, hogy a LocalSend fut a másik eszközön.",
+        "detail": "{announcements} bejelentés és {scans} hálózati pásztázás történt válasz nélkül."
+      },
+      "rescan": "Keressen újra",
+      "bleHint": "A BLE-felfedezés aktív: az eszközök csak akkor találhatók meg Bluetooth-n keresztül, ha ők is ezt a forkot futtatják az engedélyezett beállítással; maga az átvitel továbbra is a hálózaton keresztül történik.",
+      "manualFallback": {
+        "message": "Az IP-címek gyakran változnak. Egy nem listázott eszköz is elérhető: adja hozzá a kedvencekhez, vagy írja be a címét manuálisan.",
+        "openFavorites": "Kedvencek megnyitása",
+        "manualInput": "Manuális címmegadás"
+      }
+    }
   },
   "settingsTab": {
     "title": "Beállítások",
@@ -127,7 +151,8 @@
     "send": {
       "title": "Küld",
       "shareViaLinkAutoAccept": "Megosztás linken keresztül: Auto. elfogadás",
-      "createChecksums": "Ellenőrzőösszegek létrehozása fájlok küldésekor"
+      "createChecksums": "Ellenőrzőösszegek létrehozása fájlok küldésekor",
+      "deleteSourceAfterSend": "Forrásfájlok törlése sikeres küldés után"
     },
     "network": {
       "title": "Hálózat",
@@ -143,12 +168,26 @@
         "filtered": "Szűrt"
       },
       "discoveryTimeout": "Felfedezési időtúllépés",
+      "maxInterfaces": "Interfészek max. száma (okos pásztázás)",
+      "vpnInterfaces": "VPN-interfészek belefoglalása (okos pásztázás)",
+      "vpnInterfacesHint": "A VPN-alagút interfészek alhálózatai (Tailscale, WireGuard, ...) is pásztázásra kerülnek. A VPN-ek általában nem továbbítanak multicast forgalmat, ezért alhálózataikat a HTTP tartalék pásztázás vizsgálja.",
       "useSystemName": "Rendszernév használata",
       "generateRandomAlias": "Véletlenszerű álnév generálás",
       "portWarning": "Előfordulhat, hogy más eszközök nem észlelik eszközét, mert egyéni portot használ. (alapértelmezett: {defaultPort})",
       "encryption": "Titkosítás",
       "multicastGroup": "Multicast",
-      "multicastGroupWarning": "Előfordulhat, hogy más eszközök nem észlelik eszközét, mert egyéni multicast címet használ. (alapérték: {defaultMulticast})"
+      "multicastGroupWarning": "Előfordulhat, hogy más eszközök nem észlelik eszközét, mert egyéni multicast címet használ. (alapérték: {defaultMulticast})",
+      "bleDiscovery": "BLE-felfedezés (kísérleti)",
+      "bleDiscoveryHint": "A közeli eszközöket Bluetooth-n keresztül is felfedezi, még ha a hálózat blokkolja is a multicastot (AP-izoláció). Androidon, iOS-en, macOS-en és Windowson működik; Linuxon ez az eszköz megtalálja a többieket, de maga nem található meg. Mindkét eszköznek ezt a forkot kell futtatnia az engedélyezett beállítással; maga a fájlátvitel továbbra is a hálózatot használja.",
+      "bleStatusActive": "Aktív: pásztázás és hirdetés. A közeli eszközök csak akkor jelennek meg, ha ők is ezt a forkot futtatják az engedélyezett beállítással.",
+      "bleStatusScanOnly": "Aktív: csak pásztázás. Ez az eszköz jelenleg nem fedezhető fel Bluetooth-n keresztül (ezen a platformon a BLE-hirdetés nem támogatott, vagy még nincs használható hálózati cím).",
+      "bleStatusPaused": "Szüneteltetve. Akkor folytatódik, amikor az alkalmazás visszatér az előtérbe.",
+      "bleStatusPermissionDenied": "A Bluetooth-engedélyek megtagadva. Adja meg a \"Közeli eszközök\" (Android 11 és korábbi verzióknál a \"Tartózkodási hely\") engedélyt a rendszerbeállításokban, majd kapcsolja ki és vissza ezt a beállítást.",
+      "bleStatusAdapterOff": "A Bluetooth ki van kapcsolva vagy nem érhető el. A felfedezés magától újraindul, amikor a Bluetooth újra elérhetővé válik.",
+      "bleStatusUnsupported": "Ezen az eszközön nem támogatott: a BLE-felfedezéshez Android 7 vagy újabb, valamint Bluetooth LE rádió szükséges.",
+      "bleStatusLegacyLocation": "Ezen az Android-verzión a többi eszköz megtalálásához a rendszer helymeghatározási szolgáltatásainak is bekapcsolva kell lenniük (az engedélyt a rendszer automatikusan kéri; ezt az eszközt a többiek már megtalálhatják).",
+      "bleStatusError": "A BLE-felfedezés nem tudott elindulni. Részletek a Hibaelhárítás > Naplókban.",
+      "bleOpenSystemSettings": "Rendszerbeállítások megnyitása"
     },
     "other": {
       "title": "Egyéb",
@@ -256,6 +295,13 @@
     "titleSending": "Fájlok küldése",
     "titleReceiving": "Fájlok fogadása",
     "savedToGallery": "Mentve a Galériába",
+    "checksum": {
+      "verified": "Ellenőrzőösszegek ellenőrizve",
+      "partiallyVerified": "Ellenőrzőösszegek ellenőrizve ({curr} / {n} fájl)",
+      "notVerifiable": "A küldő nem adott meg ellenőrzőösszegeket",
+      "disabled": "Az ellenőrzőösszeg-ellenőrzés le van tiltva",
+      "attached": "Ellenőrzőösszegek csatolva ({curr} / {n} fájl)"
+    },
     "total": {
       "title": {
         "sending": "Teljes folyamat ({time})",
@@ -348,11 +394,42 @@
       "title": "Adja meg a címet",
       "hashtag": "Hashtag",
       "ip": "IP cím",
-      "recentlyUsed": "Nemrég használt: "
+      "recentlyUsed": "Nemrég használt: ",
+      "noHashtagCandidates": "A jelenlegi hálózatnak nincs IPv4-címe, így a hashtag nem bővíthető jelöltcímmé. Kérjük, adja meg a teljes címet (pl. 192.168.1.5 vagy fe80::1).",
+      "validation": {
+        "invalid": "Adjon meg érvényes IPv4-címet, IPv6-címet vagy gazdanevet.",
+        "scheme": "Csak a címet adja meg, \"http://\" vagy \"https://\" nélkül.",
+        "port": "Csak a címet adja meg. A port a beállításokból származik."
+      }
     },
     "cancelSession": {
       "title": "Fájlátvitel megszakítása",
       "content": "Valóban meg akarja szakítani a fájlátvitelt?"
+    },
+    "connectionError": {
+      "title": "A kapcsolódás sikertelen",
+      "timeout": {
+        "message": "Az eszköz nem válaszolt időben.",
+        "advice": "Valószínűleg offline, alvó állapotban van, vagy egy tűzfal blokkolja a kapcsolatot. Győződjön meg róla, hogy a LocalSend fut a másik eszközön, és hogy mindkét eszköz ugyanazon a hálózaton van."
+      },
+      "refused": {
+        "message": "Az eszköz elutasította a kapcsolatot.",
+        "advice": "Úgy tűnik, a LocalSend nem fut a céleszközön, vagy más porton figyel. Indítsa el a LocalSendet a másik eszközön, vagy ellenőrizze a portot."
+      },
+      "forbidden": {
+        "message": "Az eszköz elutasította a kérést.",
+        "advice": "Lehet, hogy PIN kód szükséges, vagy megváltozott az eszközzel való párosítás. Ellenőrizze a PIN kódot és a gyors mentés beállításait a céleszközön."
+      },
+      "other": {
+        "message": "A kapcsolat nem jött létre.",
+        "advice": "Ellenőrizze a címet és a portot, győződjön meg róla, hogy a LocalSend fut a céleszközön, és hogy semmilyen tűzfal vagy VPN nem blokkolja a kapcsolatot."
+      },
+      "retry": "Újrapróbálkozás",
+      "details": "Hiba részletei:"
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "Forrásfájlok törlése",
+      "content": "A fájlok sikeres elküldése után törlődnek erről az eszközről. Ez nem vonható vissza."
     },
     "cannotOpenFile": {
       "title": "A fájl nem nyitható meg",
@@ -448,6 +525,25 @@
       "single": "Fájlokat küld egy címzettnek. Az átvitel befejezése után a kijelölés törlődik.",
       "multiple": "Fájlokat küld több címzettnek. A kijelölés nem törlődik.",
       "link": "Azok a címzettek, akiknél nincs telepítve a LocalSend, letölthetik a kiválasztott fájlokat a hivatkozás megnyitásával a böngészőjükben."
+    },
+    "startupError": {
+      "title": "A szerver nem indult el",
+      "port": "Port: {port}",
+      "windowsAccessDenied": {
+        "hint": "A Windows megtagadta a hozzáférést a porthoz (socket-hiba 10013).",
+        "advice": "Ezt általában a Hyper-V, a WSL vagy a Docker által lefoglalt porttartomány okozza, vagy egy sérült Winsock-katalógus:\n• Módosítsa a portot a Beállításokban (Hálózat)\n• Ellenőrizze a lefoglalt tartományokat ezzel: netsh interface ipv4 show excludedportrange protocol=tcp\n• Javítsa meg a Winsock katalógust rendszergazdaként ezzel: netsh winsock reset (utána indítsa újra a számítógépet)"
+      },
+      "addressInUse": {
+        "hint": "A portot már használja egy másik alkalmazás.",
+        "advice": "Egy másik program (vagy egy második LocalSend-példány) figyel ezen a porton:\n• Zárja be a másik alkalmazást, vagy\n• Módosítsa a portot a Beállításokban (Hálózat)"
+      },
+      "generic": {
+        "hint": "A szervert nem sikerült elindítani.",
+        "advice": "• Ellenőrizze a tűzfalat és a hálózati beállításokat\n• Próbálja meg megváltoztatni a portot a Beállításokban (Hálózat)"
+      },
+      "details": "Hiba részletei:",
+      "copyDetails": "Részletek másolása",
+      "openSettings": "Beállítások megnyitása"
     },
     "zoom": {
       "title": "URL"

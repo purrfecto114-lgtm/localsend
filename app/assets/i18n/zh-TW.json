@@ -82,7 +82,31 @@
     },
     "sendModeHelp": "說明",
     "help": "請確認目標裝置也已連線至相同的 Wi‑Fi 網路。",
-    "placeItems": "列出要分享的項目。"
+    "placeItems": "列出要分享的項目。",
+    "diagnosis": {
+      "scanning": "正在搜尋附近的裝置…",
+      "noInterface": {
+        "title": "未連線至網路",
+        "advice": "此裝置未連線至任何網路。請檢查此裝置的 Wi‑Fi 或網路線連線。"
+      },
+      "multicastUnavailable": {
+        "title": "無法使用多點傳送",
+        "advice": "LocalSend 無法在此網路上使用多點傳送來探索裝置。請確認兩部裝置位於相同網路，且「無線存取點（AP）隔離」或防火牆沒有封鎖 UDP 連接埠 {port}。",
+        "reason": "原因：{reason}"
+      },
+      "scanNoResult": {
+        "title": "找不到裝置",
+        "advice": "探索功能正常運作，但沒有裝置回應公告或網路掃描。對方裝置可能已離線、休眠中，或遭防火牆封鎖。請確認對方裝置正在執行 LocalSend。",
+        "detail": "已傳送 {announcements} 次公告和 {scans} 次網路掃描，皆未收到回應。"
+      },
+      "rescan": "重新搜尋",
+      "bleHint": "BLE 探索已啟用：只有對方裝置也執行此修改版並啟用該選項，才能透過藍牙找到裝置；檔案傳輸本身仍透過網路進行。",
+      "manualFallback": {
+        "message": "IP 位址經常變動。您仍可連線至未列於清單中的裝置：將它加入最愛，或手動輸入其位址。",
+        "openFavorites": "開啟最愛",
+        "manualInput": "手動輸入位址"
+      }
+    }
   },
   "settingsTab": {
     "title": "設定",
@@ -127,7 +151,8 @@
     "send": {
       "title": "傳送",
       "shareViaLinkAutoAccept": "透過連結分享：自動同意接收要求",
-      "createChecksums": "傳送檔案時建立校驗碼"
+      "createChecksums": "傳送檔案時建立校驗碼",
+      "deleteSourceAfterSend": "傳送成功後刪除來源檔案"
     },
     "network": {
       "title": "網路",
@@ -143,12 +168,26 @@
         "filtered": "已篩選"
       },
       "discoveryTimeout": "探索裝置逾時",
+      "maxInterfaces": "最多介面數（智慧掃描）",
+      "vpnInterfaces": "包含 VPN 介面（智慧掃描）",
+      "vpnInterfacesHint": "同時掃描 VPN 通道介面的子網路（Tailscale、WireGuard 等）。VPN 通常不支援多點傳送，因此其子網路會改由 HTTP 後備掃描來探測。",
       "useSystemName": "使用系統名稱",
       "generateRandomAlias": "隨機產生別名",
       "portWarning": "您使用了自訂通訊埠，因此其他裝置可能無法偵測到您。（預設值：{defaultPort}）",
       "encryption": "加密",
       "multicastGroup": "多點傳送位址",
-      "multicastGroupWarning": "您使用了自訂多點傳送位址，因此其他裝置可能無法偵測到您。（預設值：{defaultMulticast}）"
+      "multicastGroupWarning": "您使用了自訂多點傳送位址，因此其他裝置可能無法偵測到您。（預設值：{defaultMulticast}）",
+      "bleDiscovery": "BLE 探索（實驗性）",
+      "bleDiscoveryHint": "即使網路封鎖多點傳送（無線存取點（AP）隔離），仍可透過藍牙探索附近的裝置。支援 Android、iOS、macOS 與 Windows；在 Linux 上此裝置可以找到其他裝置，但無法被其他裝置找到。雙方裝置皆需執行此修改版並啟用該選項；檔案傳輸本身仍使用網路。",
+      "bleStatusActive": "已啟用：正在掃描與廣告。只有對方裝置也執行此修改版並啟用該選項，附近裝置才會出現。",
+      "bleStatusScanOnly": "已啟用：僅掃描。此裝置目前無法透過藍牙被探索（此平台不支援 BLE 廣告，或尚無可用的網路位址）。",
+      "bleStatusPaused": "已暫停。應用程式回到前景時會自動恢復。",
+      "bleStatusPermissionDenied": "藍牙權限遭拒。請在系統設定中授予「附近裝置」權限（在 Android 11 及以下版本為「位置」權限），然後將此選項關閉後再重新開啟。",
+      "bleStatusAdapterOff": "藍牙已關閉或無法使用。當藍牙再次可用時，探索會自動重新啟動。",
+      "bleStatusUnsupported": "此裝置不支援：BLE 探索需要 Android 7 以上版本與藍牙 LE 無線電。",
+      "bleStatusLegacyLocation": "在此 Android 版本上，尋找其他裝置還需要開啟系統定位服務（權限會自動請求；此裝置已可被其他裝置找到）。",
+      "bleStatusError": "BLE 探索無法啟動。詳情請參閱 疑難排解 > 記錄。",
+      "bleOpenSystemSettings": "開啟系統設定"
     },
     "other": {
       "title": "其他",
@@ -256,6 +295,13 @@
     "titleSending": "正在傳送檔案",
     "titleReceiving": "正在接收檔案",
     "savedToGallery": "已儲存至相簿",
+    "checksum": {
+      "verified": "核對和已驗證",
+      "partiallyVerified": "已驗證 {curr} / {n} 個檔案的核對和",
+      "notVerifiable": "傳送者未提供核對和",
+      "disabled": "核對和驗證已停用",
+      "attached": "已附加核對和（{curr} / {n} 個檔案）"
+    },
     "total": {
       "title": {
         "sending": "整體進度 ({time})",
@@ -348,11 +394,42 @@
       "title": "輸入位址",
       "hashtag": "雜湊標記",
       "ip": "IP 位址",
-      "recentlyUsed": "最近使用： "
+      "recentlyUsed": "最近使用： ",
+      "noHashtagCandidates": "目前的網路沒有 IPv4 位址，因此無法將雜湊標記展開為候選位址。請改為輸入完整位址（例如 192.168.1.5 或 fe80::1）。",
+      "validation": {
+        "invalid": "請輸入有效的 IPv4 位址、IPv6 位址或主機名稱。",
+        "scheme": "僅輸入位址即可，不需包含「http://」或「https://」。",
+        "port": "僅輸入位址即可。通訊埠將使用設定中的值。"
+      }
     },
     "cancelSession": {
       "title": "取消檔案傳輸",
       "content": "您確定要取消檔案傳輸嗎？"
+    },
+    "connectionError": {
+      "title": "連線失敗",
+      "timeout": {
+        "message": "裝置未在時間內回應。",
+        "advice": "它可能已離線、休眠中，或遭防火牆封鎖連線。請確認對方裝置正在執行 LocalSend，且兩部裝置位於相同網路。"
+      },
+      "refused": {
+        "message": "裝置拒絕了連線。",
+        "advice": "目標裝置上似乎沒有執行 LocalSend，或是它正在監聽其他通訊埠。請在對方裝置上啟動 LocalSend，或檢查通訊埠。"
+      },
+      "forbidden": {
+        "message": "裝置拒絕了請求。",
+        "advice": "可能需要 PIN 碼，或與該裝置的配對已變更。請檢查目標裝置上的 PIN 碼與快速儲存設定。"
+      },
+      "other": {
+        "message": "無法建立連線。",
+        "advice": "請檢查位址與通訊埠，確認目標裝置正在執行 LocalSend，並確認沒有防火牆或 VPN 封鎖連線。"
+      },
+      "retry": "重試",
+      "details": "錯誤詳細資訊："
+    },
+    "deleteSourceAfterSendDialog": {
+      "title": "刪除來源檔案",
+      "content": "檔案傳送成功後，這些檔案將從此裝置中刪除。此操作無法復原。"
     },
     "cannotOpenFile": {
       "title": "無法開啟檔案",
@@ -448,6 +525,25 @@
       "single": "傳送檔案給單一接收者；檔案傳輸完成後，系統會清除選取項目。",
       "multiple": "傳送檔案給多位接收者；檔案傳輸完成後，系統不會清除選取項目。",
       "link": "未安裝 LocalSend 的接收者可以在瀏覽器中開啟連結，以下載選取的檔案。"
+    },
+    "startupError": {
+      "title": "無法啟動伺服器",
+      "port": "連接埠：{port}",
+      "windowsAccessDenied": {
+        "hint": "Windows 拒絕存取該連接埠（socket 錯誤 10013）。",
+        "advice": "這通常是由 Hyper-V、WSL 或 Docker 保留的連接埠範圍，或損壞的 Winsock 目錄所造成：\n• 在設定（網路）中變更連接埠\n• 使用下列命令檢查保留範圍：netsh interface ipv4 show excludedportrange protocol=tcp\n• 以系統管理員身分修復 Winsock：netsh winsock reset（之後重新開機）"
+      },
+      "addressInUse": {
+        "hint": "此連接埠已由其他應用程式使用。",
+        "advice": "另一個程式（或第二個 LocalSend 實例）正在監聽此連接埠：\n• 關閉該應用程式，或\n• 在設定（網路）中變更連接埠"
+      },
+      "generic": {
+        "hint": "伺服器無法啟動。",
+        "advice": "• 檢查您的防火牆與網路設定\n• 嘗試在設定（網路）中變更連接埠"
+      },
+      "details": "錯誤詳細資訊：",
+      "copyDetails": "複製詳細資訊",
+      "openSettings": "開啟設定"
     },
     "zoom": {
       "title": "網址"
