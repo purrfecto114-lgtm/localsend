@@ -1228,6 +1228,13 @@ class Translations$settingsTab$network$en {
   /// en: 'Max Interfaces (Smart Scan)'
   String get maxInterfaces => 'Max Interfaces (Smart Scan)';
 
+  /// en: 'Include VPN interfaces (Smart Scan)'
+  String get vpnInterfaces => 'Include VPN interfaces (Smart Scan)';
+
+  /// en: 'Also scan the subnets of VPN tunnel interfaces (Tailscale, WireGuard, ...). VPNs usually do not carry multicast, so their subnets are probed by the HTTP fallback scan instead.'
+  String get vpnInterfacesHint =>
+      'Also scan the subnets of VPN tunnel interfaces (Tailscale, WireGuard, ...). VPNs usually do not carry multicast, so their subnets are probed by the HTTP fallback scan instead.';
+
   /// en: 'Use system name'
   String get useSystemName => 'Use system name';
 

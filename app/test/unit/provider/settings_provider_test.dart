@@ -161,6 +161,56 @@ void main() {
     expect(settings2.state.maxInterfaces, 8);
   });
 
+  test('includeVpnInterfaces defaults to false and loads from persistence on init', () async {
+    // The fresh container above uses the default stub: false.
+    expect(settings.state.includeVpnInterfaces, isFalse);
+
+    final container2 = RefenaContainer(
+      observers: [_NoopObserver()],
+      overrides: [
+        persistenceProvider.overrideWithValue(_persistence(includeVpnInterfaces: true)),
+        parentIsolateProvider.overrideWithNotifier(
+          (ref) => IsolateController(
+            initialState: ParentIsolateState(
+              syncState: _syncState(),
+              discovery: null,
+              httpUpload: null,
+              httpServer: null,
+            ),
+          ),
+        ),
+      ],
+    );
+    final settings2 = container2.notifier(settingsProvider);
+    expect(settings2.state.includeVpnInterfaces, isTrue);
+  });
+
+  test('setIncludeVpnInterfaces persists the value', () async {
+    await settings.setIncludeVpnInterfaces(true);
+    expect(settings.state.includeVpnInterfaces, isTrue);
+    expect(persistence.calls[#setIncludeVpnInterfaces], [
+      [true],
+    ]);
+
+    await settings.setIncludeVpnInterfaces(false);
+    expect(settings.state.includeVpnInterfaces, isFalse);
+    expect(persistence.calls[#setIncludeVpnInterfaces], [
+      [true],
+      [false],
+    ]);
+  });
+
+  test('includeVpnInterfaces change never touches the discovery', () async {
+    // Like maxInterfaces, the toggle is consumed by the smart scan on the
+    // main isolate when it selects the scan candidates: VPN interfaces are
+    // never excluded from the isolate-side multicast binding (the Rust side
+    // enumerates interfaces itself), so it needs no SyncState propagation
+    // and no discovery restart.
+    await settings.setIncludeVpnInterfaces(true);
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(connector.sent, isEmpty);
+  });
+
   test('bleDiscoveryEnabled defaults to false and loads from persistence on init', () async {
     // The fresh container above uses the default stub: false.
     expect(settings.state.bleDiscoveryEnabled, isFalse);
@@ -248,7 +298,11 @@ class _FakePersistence implements PersistenceService {
   }
 }
 
-_FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled = false}) => _FakePersistence({
+_FakePersistence _persistence({
+  int maxInterfaces = 5,
+  bool includeVpnInterfaces = false,
+  bool bleDiscoveryEnabled = false,
+}) => _FakePersistence({
   #getShowToken: 'token',
   #getAlias: 'alias',
   #getTheme: ThemeMode.system,
@@ -279,6 +333,7 @@ _FakePersistence _persistence({int maxInterfaces = 5, bool bleDiscoveryEnabled =
   #getVerifyChecksums: true,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: maxInterfaces,
+  #getIncludeVpnInterfaces: includeVpnInterfaces,
   #getBleDiscoveryEnabled: bleDiscoveryEnabled,
   #getAdvancedSettingsEnabled: false,
 });

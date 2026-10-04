@@ -324,6 +324,24 @@ class MockPersistenceService extends _i1.Mock implements _i4.PersistenceService 
           as _i5.Future<void>);
 
   @override
+  bool getIncludeVpnInterfaces() =>
+      (super.noSuchMethod(
+            Invocation.method(#getIncludeVpnInterfaces, []),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i5.Future<void> setIncludeVpnInterfaces(bool? value) =>
+      (super.noSuchMethod(
+            Invocation.method(#setIncludeVpnInterfaces, [value]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
   bool getBleDiscoveryEnabled() =>
       (super.noSuchMethod(
             Invocation.method(#getBleDiscoveryEnabled, []),

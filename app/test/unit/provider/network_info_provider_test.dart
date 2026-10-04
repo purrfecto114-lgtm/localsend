@@ -36,6 +36,66 @@ void main() {
     });
   });
 
+  group('extractInterfaceAddresses', () {
+    test('should flatten IPv4 addresses in interface order and classify VPN interfaces', () {
+      final result = extractInterfaceAddresses([
+        (name: 'eth0', addresses: ['192.168.1.42']),
+        (name: 'wlan0', addresses: ['10.0.0.5', 'fe80::1']),
+        (name: 'tun0', addresses: ['100.101.102.103']),
+        (name: 'ppp0', addresses: ['10.8.0.2']),
+        (name: 'utun4', addresses: ['100.64.7.9']),
+        (name: 'tailscale0', addresses: ['100.121.51.34']),
+        (name: 'en0', addresses: ['172.20.10.1']),
+      ]);
+
+      expect(result.ipv4Addresses, [
+        '192.168.1.42',
+        '10.0.0.5',
+        '100.101.102.103',
+        '10.8.0.2',
+        '100.64.7.9',
+        '100.121.51.34',
+        '172.20.10.1',
+      ]);
+      expect(result.vpnAddresses, {
+        '100.101.102.103',
+        '10.8.0.2',
+        '100.64.7.9',
+        '100.121.51.34',
+      });
+    });
+
+    test('should ignore IPv6 addresses of VPN interfaces too', () {
+      final result = extractInterfaceAddresses([
+        (name: 'tun0', addresses: ['fe80::1', '10.8.0.2', 'fd00:abcd::1']),
+      ]);
+
+      expect(result.ipv4Addresses, ['10.8.0.2']);
+      expect(result.vpnAddresses, {'10.8.0.2'});
+    });
+
+    test('should return an empty VPN set without tunnel interfaces', () {
+      final result = extractInterfaceAddresses([
+        (name: 'eth0', addresses: ['192.168.1.42']),
+        (name: 'wlan0', addresses: ['192.168.2.42']),
+        (name: 'docker0', addresses: ['172.17.0.1']),
+      ]);
+
+      expect(result.ipv4Addresses, ['192.168.1.42', '192.168.2.42', '172.17.0.1']);
+      expect(result.vpnAddresses, isEmpty);
+    });
+
+    test('should handle interfaces without addresses', () {
+      final result = extractInterfaceAddresses([
+        (name: 'tun0', addresses: []),
+        (name: 'eth0', addresses: ['192.168.1.42']),
+      ]);
+
+      expect(result.ipv4Addresses, ['192.168.1.42']);
+      expect(result.vpnAddresses, isEmpty);
+    });
+  });
+
   group('shouldRebindDiscovery', () {
     test('should not rebind when the address set is unchanged', () {
       // dart:core Set has no value equality: a naive `!=` on the sets is an

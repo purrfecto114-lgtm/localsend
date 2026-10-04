@@ -78,6 +78,7 @@ const _networkWhitelistKey = 'ls_network_whitelist';
 const _networkBlacklistKey = 'ls_network_blacklist';
 const _timeoutKey = 'ls_timeout';
 const _maxInterfacesKey = 'ls_max_interfaces';
+const _includeVpnInterfacesKey = 'ls_discovery_include_vpn_interfaces';
 const _bleDiscoveryEnabledKey = 'ls_ble_discovery_enabled';
 const _multicastGroupKey = 'ls_multicast_group';
 const _destinationKey = 'ls_destination';
@@ -389,6 +390,14 @@ class PersistenceService {
 
   Future<void> setMaxInterfaces(int maxInterfaces) async {
     await _prefs.setInt(_maxInterfacesKey, maxInterfaces.clamp(minMaxInterfaces, maxMaxInterfaces));
+  }
+
+  bool getIncludeVpnInterfaces() {
+    return _prefs.getBool(_includeVpnInterfacesKey) ?? false;
+  }
+
+  Future<void> setIncludeVpnInterfaces(bool value) async {
+    await _prefs.setBool(_includeVpnInterfacesKey, value);
   }
 
   bool getBleDiscoveryEnabled() {

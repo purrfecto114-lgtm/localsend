@@ -363,6 +363,7 @@ _FakePersistence _persistence(bool bleEnabled) => _FakePersistence({
   #getVerifyChecksums: true,
   #getDiscoveryTimeout: 3,
   #getMaxInterfaces: 5,
+  #getIncludeVpnInterfaces: false,
   #getBleDiscoveryEnabled: bleEnabled,
   #getAdvancedSettingsEnabled: false,
 });

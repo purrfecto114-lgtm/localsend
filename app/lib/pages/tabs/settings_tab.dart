@@ -493,6 +493,15 @@ class SettingsTab extends StatelessWidget {
                   ),
                 if (vm.advanced)
                   _BooleanEntry(
+                    label: t.settingsTab.network.vpnInterfaces,
+                    description: t.settingsTab.network.vpnInterfacesHint,
+                    value: vm.settings.includeVpnInterfaces,
+                    onChanged: (b) async {
+                      await ref.notifier(settingsProvider).setIncludeVpnInterfaces(b);
+                    },
+                  ),
+                if (vm.advanced)
+                  _BooleanEntry(
                     label: t.settingsTab.network.encryption,
                     value: vm.settings.https,
                     onChanged: (b) async {

@@ -169,6 +169,8 @@
       },
       "discoveryTimeout": "Discovery Timeout",
       "maxInterfaces": "Max Interfaces (Smart Scan)",
+      "vpnInterfaces": "Include VPN interfaces (Smart Scan)",
+      "vpnInterfacesHint": "Also scan the subnets of VPN tunnel interfaces (Tailscale, WireGuard, ...). VPNs usually do not carry multicast, so their subnets are probed by the HTTP fallback scan instead.",
       "useSystemName": "Use system name",
       "generateRandomAlias": "Generate random alias",
       "portWarning": "You might not be detected by other devices because you are using a custom port. (default: {defaultPort})",

@@ -174,6 +174,11 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     'maxInterfaces',
     _$maxInterfaces,
   );
+  static bool _$includeVpnInterfaces(SettingsState v) => v.includeVpnInterfaces;
+  static const Field<SettingsState, bool> _f$includeVpnInterfaces = Field(
+    'includeVpnInterfaces',
+    _$includeVpnInterfaces,
+  );
   static bool _$bleDiscoveryEnabled(SettingsState v) => v.bleDiscoveryEnabled;
   static const Field<SettingsState, bool> _f$bleDiscoveryEnabled = Field(
     'bleDiscoveryEnabled',
@@ -218,6 +223,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     #verifyChecksums: _f$verifyChecksums,
     #discoveryTimeout: _f$discoveryTimeout,
     #maxInterfaces: _f$maxInterfaces,
+    #includeVpnInterfaces: _f$includeVpnInterfaces,
     #bleDiscoveryEnabled: _f$bleDiscoveryEnabled,
     #advancedSettings: _f$advancedSettings,
   };
@@ -255,6 +261,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       verifyChecksums: data.dec(_f$verifyChecksums),
       discoveryTimeout: data.dec(_f$discoveryTimeout),
       maxInterfaces: data.dec(_f$maxInterfaces),
+      includeVpnInterfaces: data.dec(_f$includeVpnInterfaces),
       bleDiscoveryEnabled: data.dec(_f$bleDiscoveryEnabled),
       advancedSettings: data.dec(_f$advancedSettings),
     );
@@ -358,6 +365,7 @@ abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
     bool? verifyChecksums,
     int? discoveryTimeout,
     int? maxInterfaces,
+    bool? includeVpnInterfaces,
     bool? bleDiscoveryEnabled,
     bool? advancedSettings,
   });
@@ -423,6 +431,7 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     bool? verifyChecksums,
     int? discoveryTimeout,
     int? maxInterfaces,
+    bool? includeVpnInterfaces,
     bool? bleDiscoveryEnabled,
     bool? advancedSettings,
   }) => $apply(
@@ -462,6 +471,8 @@ class _SettingsStateCopyWithImpl<$R, $Out>
       if (verifyChecksums != null) #verifyChecksums: verifyChecksums,
       if (discoveryTimeout != null) #discoveryTimeout: discoveryTimeout,
       if (maxInterfaces != null) #maxInterfaces: maxInterfaces,
+      if (includeVpnInterfaces != null)
+        #includeVpnInterfaces: includeVpnInterfaces,
       if (bleDiscoveryEnabled != null)
         #bleDiscoveryEnabled: bleDiscoveryEnabled,
       if (advancedSettings != null) #advancedSettings: advancedSettings,
@@ -512,6 +523,10 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     verifyChecksums: data.get(#verifyChecksums, or: $value.verifyChecksums),
     discoveryTimeout: data.get(#discoveryTimeout, or: $value.discoveryTimeout),
     maxInterfaces: data.get(#maxInterfaces, or: $value.maxInterfaces),
+    includeVpnInterfaces: data.get(
+      #includeVpnInterfaces,
+      or: $value.includeVpnInterfaces,
+    ),
     bleDiscoveryEnabled: data.get(
       #bleDiscoveryEnabled,
       or: $value.bleDiscoveryEnabled,

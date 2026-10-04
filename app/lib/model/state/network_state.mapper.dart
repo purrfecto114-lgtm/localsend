@@ -27,6 +27,13 @@ class NetworkStateMapper extends ClassMapperBase<NetworkState> {
     'localIps',
     _$localIps,
   );
+  static Set<String> _$vpnIps(NetworkState v) => v.vpnIps;
+  static const Field<NetworkState, Set<String>> _f$vpnIps = Field(
+    'vpnIps',
+    _$vpnIps,
+    opt: true,
+    def: const {},
+  );
   static bool _$initialized(NetworkState v) => v.initialized;
   static const Field<NetworkState, bool> _f$initialized = Field(
     'initialized',
@@ -36,12 +43,14 @@ class NetworkStateMapper extends ClassMapperBase<NetworkState> {
   @override
   final MappableFields<NetworkState> fields = const {
     #localIps: _f$localIps,
+    #vpnIps: _f$vpnIps,
     #initialized: _f$initialized,
   };
 
   static NetworkState _instantiate(DecodingData data) {
     return NetworkState(
       localIps: data.dec(_f$localIps),
+      vpnIps: data.dec(_f$vpnIps),
       initialized: data.dec(_f$initialized),
     );
   }
@@ -109,7 +118,7 @@ extension NetworkStateValueCopy<$R, $Out>
 abstract class NetworkStateCopyWith<$R, $In extends NetworkState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get localIps;
-  $R call({List<String>? localIps, bool? initialized});
+  $R call({List<String>? localIps, Set<String>? vpnIps, bool? initialized});
   NetworkStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -129,15 +138,18 @@ class _NetworkStateCopyWithImpl<$R, $Out>
         (v) => call(localIps: v),
       );
   @override
-  $R call({List<String>? localIps, bool? initialized}) => $apply(
-    FieldCopyWithData({
-      if (localIps != null) #localIps: localIps,
-      if (initialized != null) #initialized: initialized,
-    }),
-  );
+  $R call({List<String>? localIps, Set<String>? vpnIps, bool? initialized}) =>
+      $apply(
+        FieldCopyWithData({
+          if (localIps != null) #localIps: localIps,
+          if (vpnIps != null) #vpnIps: vpnIps,
+          if (initialized != null) #initialized: initialized,
+        }),
+      );
   @override
   NetworkState $make(CopyWithData data) => NetworkState(
     localIps: data.get(#localIps, or: $value.localIps),
+    vpnIps: data.get(#vpnIps, or: $value.vpnIps),
     initialized: data.get(#initialized, or: $value.initialized),
   );
 
