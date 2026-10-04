@@ -10,6 +10,10 @@
 
 Fork release based on upstream `9529e915` (post-v1.18.2 main). Network protocol unchanged. Second community-driven wave; evidence per item in `ROADMAP.md`.
 
+### Release engineering
+
+- ci: multi-platform release pipeline — GitHub Actions builds Android (3 ABIs, self-signed with the committed community key), Linux x64/arm64 (DEB / TAR.GZ / AppImage), Windows x64 (installer + portable, unsigned) and macOS (universal, ad-hoc signed with the app-group entitlement dropped on CI); the release re-issue ships these binaries directly
+
 ### Fix
 
 - fix: a new share intent clears stale terminal send sessions, so an old "Finished" screen no longer blocks a new selection (localsend/localsend#3197)
