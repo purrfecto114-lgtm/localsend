@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:localsend_app/model/state/network_state.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
 import 'package:localsend_app/util/native/platform_check.dart';
+import 'package:localsend_app/util/vpn_interface.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/util/network_interfaces.dart';
 import 'package:logging/logging.dart';
@@ -38,6 +39,7 @@ class LocalIpService extends ReduxNotifier<NetworkState> {
   NetworkState init() {
     return const NetworkState(
       localIps: [],
+      vpnIps: {},
       initialized: false,
     );
   }
@@ -113,12 +115,14 @@ class FetchLocalIpAction extends AsyncReduxAction<LocalIpService, NetworkState> 
     // forever once the network appears.
     final firstFetchDone = state.initialized || fetchId > 1;
     final previousIps = state.localIps;
+    final ipResult = await _getIp(
+      whitelist: notifier._settingsService.state.networkWhitelist,
+      blacklist: notifier._settingsService.state.networkBlacklist,
+      includeWifiIp: includeWifiIp,
+    );
     final newState = NetworkState(
-      localIps: await _getIp(
-        whitelist: notifier._settingsService.state.networkWhitelist,
-        blacklist: notifier._settingsService.state.networkBlacklist,
-        includeWifiIp: includeWifiIp,
-      ),
+      localIps: ipResult.addresses,
+      vpnIps: ipResult.vpnAddresses,
       initialized: true,
     );
 
@@ -166,7 +170,7 @@ bool shouldRebindDiscovery({
   return firstFetchDone && !setEquals(previousIps.toSet(), nextIps.toSet());
 }
 
-Future<List<String>> _getIp({
+Future<({List<String> addresses, Set<String> vpnAddresses})> _getIp({
   required List<String>? whitelist,
   required List<String>? blacklist,
   bool includeWifiIp = true,
@@ -181,19 +185,46 @@ Future<List<String>> _getIp({
     }
   }
 
-  final nativeResult =
-      (await getNetworkInterfaces(
-            whitelist: whitelist,
-            blacklist: blacklist,
-          ))
-          .map((interface) => interface.addresses.map((a) => a.address).toList())
-          .expand((ip) => ip)
-          .where((ip) => !ip.contains(':')) // ignore IPv6 for now
-          .toList();
+  final extracted = extractInterfaceAddresses(
+    (await getNetworkInterfaces(
+      whitelist: whitelist,
+      blacklist: blacklist,
+    )).map((interface) => (name: interface.name, addresses: interface.addresses.map((a) => a.address).toList())),
+  );
 
-  final addresses = rankIpAddresses(nativeResult, ip);
-  _logger.info('Network state: $addresses');
-  return addresses;
+  final addresses = rankIpAddresses(extracted.ipv4Addresses, ip);
+  _logger.info('Network state: $addresses (VPN interfaces: ${extracted.vpnAddresses})');
+  return (addresses: addresses, vpnAddresses: extracted.vpnAddresses);
+}
+
+/// Flattens the given interfaces into their IPv4 addresses plus the subset
+/// of addresses that belong to VPN/tunnel interfaces (see
+/// [isVpnInterfaceName]).
+///
+/// Pure and independent of any setting so that the VPN classification is
+/// available even while the "include VPN interfaces" toggle is off; the
+/// smart scan decides whether to use it. IPv6 addresses are ignored for now,
+/// like in the previous inline expansion.
+@visibleForTesting
+({List<String> ipv4Addresses, Set<String> vpnAddresses}) extractInterfaceAddresses(
+  Iterable<({String name, List<String> addresses})> interfaces,
+) {
+  final ipv4Addresses = <String>[];
+  final vpnAddresses = <String>{};
+  for (final interface in interfaces) {
+    final isVpn = isVpnInterfaceName(interface.name);
+    for (final address in interface.addresses) {
+      if (address.contains(':')) {
+        // ignore IPv6 for now
+        continue;
+      }
+      ipv4Addresses.add(address);
+      if (isVpn) {
+        vpnAddresses.add(address);
+      }
+    }
+  }
+  return (ipv4Addresses: ipv4Addresses, vpnAddresses: vpnAddresses);
 }
 
 List<String> rankIpAddresses(List<String> nativeResult, String? thirdPartyResult) {

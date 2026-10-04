@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:localsend_app/provider/favorites_provider.dart';
 import 'package:localsend_app/provider/local_ip_provider.dart';
 import 'package:localsend_app/provider/network/discovery_diagnosis_provider.dart';
@@ -15,8 +16,17 @@ class StartSmartScan extends AsyncGlobalAction {
   Future<void> reduce() async {
     final favorites = ref.read(favoritesProvider);
     final settings = ref.read(settingsProvider);
+    final networkState = ref.read(localIpProvider);
     // The interface limit is user-configurable (advanced settings, default 5).
-    final networkInterfaces = ref.read(localIpProvider).localIps.take(settings.maxInterfaces).toList();
+    // VPN interfaces can be opted into (advanced settings, default off): they
+    // are then ranked to the front of the candidates so that they always
+    // survive the limit.
+    final networkInterfaces = selectSmartScanInterfaces(
+      rankedIps: networkState.localIps,
+      vpnIps: networkState.vpnIps,
+      includeVpnInterfaces: settings.includeVpnInterfaces,
+      maxInterfaces: settings.maxInterfaces,
+    );
 
     // Void the previous no-devices diagnosis while scanning.
     ref.notifier(discoveryDiagnosisProvider).scanStarted();
@@ -46,6 +56,32 @@ class StartSmartScan extends AsyncGlobalAction {
           devicesFound: ref.read(nearbyDevicesProvider).allDevices.isNotEmpty,
         );
   }
+}
+
+/// Selects the interfaces that the smart scan covers.
+///
+/// [rankedIps] is the ranked list of local addresses (see
+/// [rankIpAddresses]) and [vpnIps] the subset belonging to VPN/tunnel
+/// interfaces. When [includeVpnInterfaces] is off (the default, preserving
+/// the previous behavior), the first [maxInterfaces] addresses are taken as
+/// before. When it is on, the VPN addresses are stably moved to the front
+/// first, so they are never dropped by the limit even on multi-adapter
+/// machines where they would lose the ranking (e.g. behind several physical
+/// and virtual adapters, or as a ".1" gateway address of a VPN hub).
+@visibleForTesting
+List<String> selectSmartScanInterfaces({
+  required List<String> rankedIps,
+  required Set<String> vpnIps,
+  required bool includeVpnInterfaces,
+  required int maxInterfaces,
+}) {
+  final ordered = includeVpnInterfaces && vpnIps.isNotEmpty
+      ? [
+          ...rankedIps.where(vpnIps.contains),
+          ...rankedIps.where((ip) => !vpnIps.contains(ip)),
+        ]
+      : rankedIps;
+  return ordered.take(maxInterfaces).toList();
 }
 
 /// HTTP based discovery on a fixed set of subnets.
