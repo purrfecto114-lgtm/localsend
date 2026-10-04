@@ -400,7 +400,17 @@ class LoadSelectionFromArgsAction extends AsyncReduxActionWithResult<SelectedSen
 }
 
 /// Removes all files from the list.
+///
+/// [clearCache] also wipes the cache directory (the default), where picked
+/// and shared files live. Callers that immediately queue new files from that
+/// cache (e.g. a new share intent arriving while an old finished session is
+/// being closed) must pass `false`, otherwise the new files are deleted
+/// before they can be sent.
 class ClearSelectionAction extends ReduxAction<SelectedSendingFilesNotifier, List<CrossFile>> with GlobalActions {
+  final bool clearCache;
+
+  ClearSelectionAction({this.clearCache = true});
+
   @override
   List<CrossFile> reduce() {
     return const [];
@@ -408,6 +418,8 @@ class ClearSelectionAction extends ReduxAction<SelectedSendingFilesNotifier, Lis
 
   @override
   void after() {
-    global.dispatchAsync(ClearCacheAction()); // ignore: discarded_futures
+    if (clearCache) {
+      global.dispatchAsync(ClearCacheAction()); // ignore: discarded_futures
+    }
   }
 }

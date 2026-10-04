@@ -38,6 +38,18 @@ import 'package:uuid/uuid.dart';
 const _uuid = Uuid();
 final _logger = Logger('Send');
 
+/// Session statuses that no longer transfer anything and only wait for the
+/// user to leave their result screen (the enum marks them as "end of session").
+const _terminalSessionStatuses = {
+  SessionStatus.recipientBusy,
+  SessionStatus.declined,
+  SessionStatus.tooManyAttempts,
+  SessionStatus.finished,
+  SessionStatus.finishedWithErrors,
+  SessionStatus.canceledBySender,
+  SessionStatus.canceledByReceiver,
+};
+
 /// This provider manages sending files to other devices.
 ///
 /// In contrast to [serverProvider], this provider does not manage a server.
@@ -774,8 +786,14 @@ class SendNotifier extends Notifier<Map<String, SendSessionState>> {
     }
   }
 
-  /// Closes the session
-  void closeSession(String sessionId) {
+  /// Closes the session.
+  ///
+  /// [clearCache] controls whether the implicit selection reset (a finished
+  /// session in single send mode) also wipes the cache directory. Callers that
+  /// queue new files living in that cache (e.g. an incoming share intent whose
+  /// attachments were written there) must pass `false`, otherwise the new
+  /// files are deleted before they can be sent.
+  void closeSession(String sessionId, {bool clearCache = true}) {
     final sessionState = state[sessionId];
     if (sessionState == null) {
       return;
@@ -786,8 +804,30 @@ class SendNotifier extends Notifier<Map<String, SendSessionState>> {
     state = state.removeSession(ref, sessionId);
     if (sessionState.status == SessionStatus.finished && ref.read(settingsProvider).sendMode == SendMode.single) {
       // clear selected files
-      ref.redux(selectedSendingFilesProvider).dispatch(ClearSelectionAction());
+      ref.redux(selectedSendingFilesProvider).dispatch(ClearSelectionAction(clearCache: clearCache));
     }
+  }
+
+  /// Closes every session that is in a terminal state (finished, finished
+  /// with errors, declined, and so on) and returns the number of closed
+  /// sessions.
+  ///
+  /// A newly incoming share intent supersedes the old result screen: closing
+  /// the stale sessions lets their pages pop back to the home page so the
+  /// send tab shows the selection UI again. Sessions that are still in
+  /// flight ([SessionStatus.waiting] / [SessionStatus.sending]) are never
+  /// touched, so a running transfer is not interrupted.
+  ///
+  /// [clearCache] is forwarded to [closeSession].
+  int closeTerminalSessions({bool clearCache = true}) {
+    final terminalSessionIds = [
+      for (final session in state.values)
+        if (_terminalSessionStatuses.contains(session.status)) session.sessionId,
+    ];
+    for (final sessionId in terminalSessionIds) {
+      closeSession(sessionId, clearCache: clearCache);
+    }
+    return terminalSessionIds.length;
   }
 
   void clearAllSessions() {
