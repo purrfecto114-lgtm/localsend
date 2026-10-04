@@ -164,6 +164,12 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     'verifyChecksums',
     _$verifyChecksums,
   );
+  static bool _$deleteSourceAfterSend(SettingsState v) =>
+      v.deleteSourceAfterSend;
+  static const Field<SettingsState, bool> _f$deleteSourceAfterSend = Field(
+    'deleteSourceAfterSend',
+    _$deleteSourceAfterSend,
+  );
   static int _$discoveryTimeout(SettingsState v) => v.discoveryTimeout;
   static const Field<SettingsState, int> _f$discoveryTimeout = Field(
     'discoveryTimeout',
@@ -221,6 +227,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     #receiveViaLinkAutoAccept: _f$receiveViaLinkAutoAccept,
     #createChecksums: _f$createChecksums,
     #verifyChecksums: _f$verifyChecksums,
+    #deleteSourceAfterSend: _f$deleteSourceAfterSend,
     #discoveryTimeout: _f$discoveryTimeout,
     #maxInterfaces: _f$maxInterfaces,
     #includeVpnInterfaces: _f$includeVpnInterfaces,
@@ -259,6 +266,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       receiveViaLinkAutoAccept: data.dec(_f$receiveViaLinkAutoAccept),
       createChecksums: data.dec(_f$createChecksums),
       verifyChecksums: data.dec(_f$verifyChecksums),
+      deleteSourceAfterSend: data.dec(_f$deleteSourceAfterSend),
       discoveryTimeout: data.dec(_f$discoveryTimeout),
       maxInterfaces: data.dec(_f$maxInterfaces),
       includeVpnInterfaces: data.dec(_f$includeVpnInterfaces),
@@ -363,6 +371,7 @@ abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
     bool? receiveViaLinkAutoAccept,
     bool? createChecksums,
     bool? verifyChecksums,
+    bool? deleteSourceAfterSend,
     int? discoveryTimeout,
     int? maxInterfaces,
     bool? includeVpnInterfaces,
@@ -429,6 +438,7 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     bool? receiveViaLinkAutoAccept,
     bool? createChecksums,
     bool? verifyChecksums,
+    bool? deleteSourceAfterSend,
     int? discoveryTimeout,
     int? maxInterfaces,
     bool? includeVpnInterfaces,
@@ -469,6 +479,8 @@ class _SettingsStateCopyWithImpl<$R, $Out>
         #receiveViaLinkAutoAccept: receiveViaLinkAutoAccept,
       if (createChecksums != null) #createChecksums: createChecksums,
       if (verifyChecksums != null) #verifyChecksums: verifyChecksums,
+      if (deleteSourceAfterSend != null)
+        #deleteSourceAfterSend: deleteSourceAfterSend,
       if (discoveryTimeout != null) #discoveryTimeout: discoveryTimeout,
       if (maxInterfaces != null) #maxInterfaces: maxInterfaces,
       if (includeVpnInterfaces != null)
@@ -521,6 +533,10 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     ),
     createChecksums: data.get(#createChecksums, or: $value.createChecksums),
     verifyChecksums: data.get(#verifyChecksums, or: $value.verifyChecksums),
+    deleteSourceAfterSend: data.get(
+      #deleteSourceAfterSend,
+      or: $value.deleteSourceAfterSend,
+    ),
     discoveryTimeout: data.get(#discoveryTimeout, or: $value.discoveryTimeout),
     maxInterfaces: data.get(#maxInterfaces, or: $value.maxInterfaces),
     includeVpnInterfaces: data.get(

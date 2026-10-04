@@ -14,6 +14,7 @@ import 'package:localsend_app/provider/file_transfer_provider.dart';
 import 'package:localsend_app/provider/http_provider.dart';
 import 'package:localsend_app/provider/selection/selected_sending_files_provider.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
+import 'package:localsend_app/util/source_file_deletion.dart';
 import 'package:localsend_app/widget/dialogs/pin_dialog.dart';
 import 'package:localsend_isolates/isolate.dart';
 import 'package:localsend_isolates/model/device.dart';
@@ -511,10 +512,10 @@ class SendNotifier extends Notifier<Map<String, SendSessionState>> {
       files: files.values.toList(),
     );
 
-    _finish(sessionId: sessionId);
+    await _finish(sessionId: sessionId);
   }
 
-  void _finish({required String sessionId}) {
+  Future<void> _finish({required String sessionId}) async {
     final sessionState = state[sessionId];
     if (sessionState == null) {
       return;
@@ -525,28 +526,97 @@ class SendNotifier extends Notifier<Map<String, SendSessionState>> {
 
     if (state[sessionId]!.status != SessionStatus.sending) {
       _logger.info('Transfer was canceled.');
-    } else {
-      final hasError = ref.read(fileTransferProvider).getStatuses(sessionId).any((status) => status == FileStatus.failed);
-      if (!hasError && sessionState.background == true) {
-        // close session because everything is fine and it is in background
-        closeSession(sessionId);
-        _logger.info('Transfer finished and session removed.');
-      } else {
-        // keep session alive when there are errors or currently in foreground
-        state = state.updateSession(
-          sessionId: sessionId,
-          state: (s) => s?.copyWith(
-            status: hasError ? SessionStatus.finishedWithErrors : SessionStatus.finished,
-            endTime: DateTime.now().millisecondsSinceEpoch,
-          ),
-        );
+      return;
+    }
 
-        if (hasError) {
-          _logger.info('Transfer finished with errors.');
-        } else {
-          _logger.info('Transfer finished successfully.');
-        }
+    final hasError = ref.read(fileTransferProvider).getStatuses(sessionId).any((status) => status == FileStatus.failed);
+    if (!hasError && sessionState.background == true) {
+      // The deletion targets must be collected before closeSession removes
+      // this session and its per-file transfer statuses.
+      final deletablePaths = _collectDeletableSourcePaths(sessionState);
+      // close session because everything is fine and it is in background
+      closeSession(sessionId);
+      _logger.info('Transfer finished and session removed.');
+      await _deleteSourceFilesIfEnabled(deletablePaths);
+      return;
+    }
+
+    // keep session alive when there are errors or currently in foreground
+    final deletablePaths = _collectDeletableSourcePaths(sessionState);
+    state = state.updateSession(
+      sessionId: sessionId,
+      state: (s) => s?.copyWith(
+        status: hasError ? SessionStatus.finishedWithErrors : SessionStatus.finished,
+        endTime: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
+
+    if (hasError) {
+      _logger.info('Transfer finished with errors.');
+      if (ref.read(settingsProvider).deleteSourceAfterSend) {
+        // Nothing is deleted in this case: the user may want to retry the
+        // failed files, and deleting the sources of the successful ones
+        // could destroy the only remaining copy of the unsent ones.
+        _logger.info('Not deleting source files because the session finished with errors.');
       }
+    } else {
+      _logger.info('Transfer finished successfully.');
+      await _deleteSourceFilesIfEnabled(deletablePaths);
+    }
+  }
+
+  /// Collects the source files that may be deleted after [sessionState]
+  /// finished without errors.
+  ///
+  /// The whitelist is strictly limited to the files that were actually
+  /// uploaded successfully in THIS session ([FileStatus.finished]): files the
+  /// receiver deselected (skipped) were never sent, and files sent from
+  /// memory (text, clipboard) have no source on this device.
+  /// Paths that another session may still upload are excluded, so that a
+  /// successful send to one device cannot destroy the source of a transfer
+  /// that is still running towards another device.
+  List<String> _collectDeletableSourcePaths(SendSessionState sessionState) {
+    final transfer = ref.read(fileTransferProvider);
+    final pendingPaths = <String>{
+      for (final other in state.values)
+        if (other.sessionId != sessionState.sessionId && _mayStillUpload(other))
+          for (final file in other.files.values)
+            if (file.path != null) file.path!,
+    };
+    return [
+      for (final file in sessionState.files.values)
+        if (file.path != null &&
+            !pendingPaths.contains(file.path) &&
+            transfer.getStatus(sessionId: sessionState.sessionId, fileId: file.file.id) == FileStatus.finished)
+          file.path!,
+    ];
+  }
+
+  /// Whether [session] can still upload files: while waiting for the
+  /// receiver, while sending, or after errors (the user may retry).
+  bool _mayStillUpload(SendSessionState session) {
+    return switch (session.status) {
+      SessionStatus.waiting || SessionStatus.sending || SessionStatus.finishedWithErrors => true,
+      _ => false,
+    };
+  }
+
+  /// Deletes the given source files when the user enabled the setting.
+  ///
+  /// Runs after the session reached its final state. Each file is deleted
+  /// independently; failures are logged and never affect the session result.
+  Future<void> _deleteSourceFilesIfEnabled(List<String> paths) async {
+    if (paths.isEmpty || !ref.read(settingsProvider).deleteSourceAfterSend) {
+      return;
+    }
+
+    _logger.info('Deleting ${paths.length} source file(s) after the successful send.');
+    for (final path in paths) {
+      final resolved = resolveDeletableSourcePath(path);
+      if (resolved == null) {
+        continue; // already logged by the resolver
+      }
+      await deleteSourceFileQuietly(resolved);
     }
   }
 
@@ -593,7 +663,7 @@ class SendNotifier extends Notifier<Map<String, SendSessionState>> {
 
     if (isRetry) {
       if (state[sessionId] != null && ref.read(fileTransferProvider).getStatuses(sessionId).isFinishedOrError) {
-        _finish(sessionId: sessionId);
+        await _finish(sessionId: sessionId);
       }
     }
   }

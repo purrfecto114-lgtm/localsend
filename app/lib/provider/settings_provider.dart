@@ -106,6 +106,7 @@ class SettingsService extends PureNotifier<SettingsState> {
     receiveViaLinkAutoAccept: _persistence.getReceiveViaLinkAutoAccept(),
     createChecksums: _persistence.getCreateChecksums(),
     verifyChecksums: _persistence.getVerifyChecksums(),
+    deleteSourceAfterSend: _persistence.getDeleteSourceAfterSend(),
     discoveryTimeout: _persistence.getDiscoveryTimeout(),
     maxInterfaces: _persistence.getMaxInterfaces(),
     includeVpnInterfaces: _persistence.getIncludeVpnInterfaces(),
@@ -390,6 +391,19 @@ class SettingsService extends PureNotifier<SettingsState> {
     await _persistence.setVerifyChecksums(verifyChecksums);
     state = state.copyWith(
       verifyChecksums: verifyChecksums,
+    );
+  }
+
+  /// Enables or disables deleting the source files after a send session
+  /// finished without errors.
+  ///
+  /// The flag is purely app-side: it is read once when a send session
+  /// completes, so it needs no SyncState propagation and no discovery
+  /// restart.
+  Future<void> setDeleteSourceAfterSend(bool deleteSourceAfterSend) async {
+    await _persistence.setDeleteSourceAfterSend(deleteSourceAfterSend);
+    state = state.copyWith(
+      deleteSourceAfterSend: deleteSourceAfterSend,
     );
   }
 }

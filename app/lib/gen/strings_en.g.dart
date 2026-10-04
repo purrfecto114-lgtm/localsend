@@ -764,6 +764,8 @@ class Translations$dialogs$en {
   late final Translations$dialogs$addressInput$en addressInput = Translations$dialogs$addressInput$en.internal(_root);
   late final Translations$dialogs$cancelSession$en cancelSession = Translations$dialogs$cancelSession$en.internal(_root);
   late final Translations$dialogs$connectionError$en connectionError = Translations$dialogs$connectionError$en.internal(_root);
+  late final Translations$dialogs$deleteSourceAfterSendDialog$en deleteSourceAfterSendDialog =
+      Translations$dialogs$deleteSourceAfterSendDialog$en.internal(_root);
   late final Translations$dialogs$cannotOpenFile$en cannotOpenFile = Translations$dialogs$cannotOpenFile$en.internal(_root);
   late final Translations$dialogs$encryptionDisabledNotice$en encryptionDisabledNotice = Translations$dialogs$encryptionDisabledNotice$en.internal(
     _root,
@@ -1187,6 +1189,9 @@ class Translations$settingsTab$send$en {
 
   /// en: 'Create checksums when sending files'
   String get createChecksums => 'Create checksums when sending files';
+
+  /// en: 'Delete source files after a successful send'
+  String get deleteSourceAfterSend => 'Delete source files after a successful send';
 }
 
 // Path: settingsTab.network
@@ -1576,6 +1581,21 @@ class Translations$dialogs$connectionError$en {
 
   /// en: 'Error details:'
   String get details => 'Error details:';
+}
+
+// Path: dialogs.deleteSourceAfterSendDialog
+class Translations$dialogs$deleteSourceAfterSendDialog$en {
+  Translations$dialogs$deleteSourceAfterSendDialog$en.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// en: 'Delete source files'
+  String get title => 'Delete source files';
+
+  /// en: 'After files have been sent successfully, they will be deleted from this device. This cannot be undone.'
+  String get content => 'After files have been sent successfully, they will be deleted from this device. This cannot be undone.';
 }
 
 // Path: dialogs.cannotOpenFile
