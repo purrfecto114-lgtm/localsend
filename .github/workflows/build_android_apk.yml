@@ -26,6 +26,9 @@ jobs:
   build_apk:
     needs: build
     runs-on: ubuntu-22.04
+    env:
+      ANDROID_KEY_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
+      ANDROID_KEY_STORE: ${{ secrets.ANDROID_KEY_STORE }}
 
     steps:
       - name: Checkout repository
@@ -40,12 +43,14 @@ jobs:
           cp -r . $APK_BUILD_DIR
 
       - name: Decode key.properties file
+        if: ${{ env.ANDROID_KEY_PROPERTIES != '' }}
         working-directory: ${{ env.APK_BUILD_DIR }}
         env:
           ENCODED_STRING: ${{ secrets.ANDROID_KEY_PROPERTIES }}
         run: echo $ENCODED_STRING | base64 -di > app/android/key.properties
 
       - name: Decode android-keystore.jks file
+        if: ${{ env.ANDROID_KEY_STORE != '' }}
         working-directory: ${{ env.APK_BUILD_DIR }}
         env:
           ENCODED_STRING: ${{ secrets.ANDROID_KEY_STORE }}
@@ -56,6 +61,20 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      # Fork fallback: no release keystore available, so generate a throwaway one to produce a signed APK.
+      - name: Create temporary signing key
+        if: ${{ env.ANDROID_KEY_PROPERTIES == '' }}
+        working-directory: ${{ env.APK_BUILD_DIR }}
+        run: |
+          mkdir -p secrets
+          keytool -genkeypair -v -keystore secrets/android-keystore.jks -alias localsend -keyalg RSA -keysize 2048 -validity 10000 -storepass localsend-fork -keypass localsend-fork -dname "CN=LocalSend Fork, OU=Fork, O=LocalSend, C=US"
+          cat > app/android/key.properties <<EOF
+          storeFile=$PWD/secrets/android-keystore.jks
+          storePassword=localsend-fork
+          keyAlias=localsend
+          keyPassword=localsend-fork
+          EOF
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2

@@ -26,6 +26,8 @@ jobs:
   build_windows_zip_arm_64:
     needs: build
     runs-on: windows-11-arm
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
     environment: packaging
     permissions:
       id-token: write # OIDC token for Azure login
@@ -67,7 +69,11 @@ jobs:
           }
           $makepri = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\10.*\x64\makepri.exe' | Select-Object -Last 1
           & $makepri.FullName new /pr support\build\msix\content /cf support\build\msix\priconfig.xml /mn support\build\msix\content\AppxManifest.xml /of support\build\msix\content\resources.pri /o
-          & 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit\makeappx.exe' pack /o /d support\build\msix\content /nv /p app\windows\localsend_msix_helper.msix
+          # The App Certification Kit folder does not exist on windows-11-arm runners; the SDK bin folder does.
+          $makeappx = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\10.*\x64\makeappx.exe' | Select-Object -Last 1
+          if (-not $makeappx) { $makeappx = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit\makeappx.exe' | Select-Object -Last 1 }
+          if (-not $makeappx) { Write-Error "makeappx.exe not found in Windows Kits"; exit 1 }
+          & $makeappx.FullName pack /o /d support\build\msix\content /nv /p app\windows\localsend_msix_helper.msix
 
       - name: Dependencies
         working-directory: app
@@ -77,7 +83,9 @@ jobs:
         working-directory: app
         run: flutter build windows
 
+      # Skipped on forks without the packaging environment secrets; artifacts stay unsigned.
       - name: Azure login
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -86,6 +94,7 @@ jobs:
 
       # Sign before "Add DLL files" so the Microsoft-signed CRT DLLs keep their original signature
       - name: Sign app binaries (Azure Trusted Signing)
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/trusted-signing-action@v2
         with:
           endpoint: https://neu.codesigning.azure.net/
@@ -98,6 +107,7 @@ jobs:
           timestamp-digest: SHA256
 
       - name: Verify signature
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         continue-on-error: true
         run: |
           $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\10.*\arm64\signtool.exe' | Select-Object -Last 1
