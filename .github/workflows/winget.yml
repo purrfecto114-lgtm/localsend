@@ -12,8 +12,12 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
     steps:
+      # Steps skip on forks without the WINGET_TOKEN secret.
       - name: Publish LocalSend
+        if: ${{ env.WINGET_TOKEN != '' }}
         uses: vedantmgoyal9/winget-releaser@main
         with:
           identifier: LocalSend.LocalSend
@@ -21,6 +25,7 @@ jobs:
           release-tag: ${{ inputs.release_tag || github.event.release.tag_name }}
           token: ${{ secrets.WINGET_TOKEN }}
       - name: Publish LocalSend CLI
+        if: ${{ env.WINGET_TOKEN != '' }}
         uses: vedantmgoyal9/winget-releaser@main
         with:
           identifier: LocalSend.LocalSend.CLI

@@ -71,6 +71,8 @@ jobs:
       - build_cli_linux
       - build_cli_windows_exe
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # draft the release and upload assets with GITHUB_TOKEN even when repo default is read
 
     steps:
       - uses: actions/checkout@v6

@@ -25,6 +25,8 @@ jobs:
   build_windows_exe:
     needs: build
     runs-on: windows-latest
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
     environment: packaging
     permissions:
       id-token: write # OIDC token for Azure login
@@ -42,7 +44,9 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
 
+      # Skipped on forks without the packaging environment secrets; artifacts stay unsigned.
       - name: Azure login
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -59,6 +63,7 @@ jobs:
       # signing the surrounding installer does not cover it. Sign before "flutter build windows"
       # so CMake bundles the signed msix into the Release directory.
       - name: Sign MSIX helper (Azure Trusted Signing)
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/trusted-signing-action@v2
         with:
           endpoint: https://neu.codesigning.azure.net/
@@ -71,6 +76,7 @@ jobs:
           timestamp-digest: SHA256
 
       - name: Verify MSIX signature
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         continue-on-error: true
         run: |
           $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\10.*\x64\signtool.exe' | Select-Object -Last 1
@@ -85,6 +91,7 @@ jobs:
         run: flutter build windows
 
       - name: Sign app binaries (Azure Trusted Signing)
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         uses: azure/trusted-signing-action@v2
         with:
           endpoint: https://neu.codesigning.azure.net/
@@ -107,6 +114,7 @@ jobs:
       # Inno signs the setup exe AND the embedded uninstaller at compile time via the MySignTool
       # command; signing the finished installer afterwards would leave unins000.exe unsigned.
       - name: Prepare Trusted Signing sign tool for Inno Setup
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         run: |
           $dir = "${{ runner.temp }}\trusted-signing"
           New-Item -ItemType Directory -Force -Path $dir | Out-Null
@@ -127,12 +135,19 @@ jobs:
           "@
 
       - name: Compile installer (signed)
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         run: iscc "/SMySignTool=${{ runner.temp }}\trusted-signing\sign.cmd `$f" "/DPayloadDir=${{ runner.temp }}\inno" "/DResultDir=${{ runner.temp }}\inno-result" support\scripts\compile_windows_exe-inno.iss
+
+      # Fork fallback: same installer without Trusted Signing and without embedding the unsigned MSIX helper.
+      - name: Compile installer (unsigned)
+        if: ${{ env.AZURE_CLIENT_ID == '' }}
+        run: iscc /DSkipSignTool /DSkipMsixHelper "/DPayloadDir=${{ runner.temp }}\inno" "/DResultDir=${{ runner.temp }}\inno-result" support\scripts\compile_windows_exe-inno.iss
 
       - name: Rename installer
         run: Rename-Item -Path "${{ runner.temp }}\inno-result\localsend.exe" -NewName "LocalSend-${{ needs.build.outputs.version }}-windows-x86-64.exe"
 
       - name: Verify signature
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
         continue-on-error: true
         run: |
           $signtool = Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin\10.*\x64\signtool.exe' | Select-Object -Last 1
